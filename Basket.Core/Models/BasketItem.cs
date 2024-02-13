@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Basket.Core.Models
 {
-    internal class Basket_Item
+    internal class BasketItem
     {
     }
 }
