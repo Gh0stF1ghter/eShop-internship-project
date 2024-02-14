@@ -1,6 +1,9 @@
-﻿namespace Identity.Data
+﻿using Identity.Core.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
+namespace Identity.Data
 {
-    public class IdentityContext
+    public class IdentityContext : IdentityDbContext<User>
     {
 
     }
