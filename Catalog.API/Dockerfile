@@ -9,20 +9,20 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Catalog.API/Catalog.API.csproj", "Catalog.API/"]
-COPY ["Catalog.Application/Catalog.Application.csproj", "Catalog.Application/"]
-COPY ["Catalog.Domain/Catalog.Domain.csproj", "Catalog.Domain/"]
-COPY ["Catalog.Infrastructure/Catalog.Infrastructure.csproj", "Catalog.Infrastructure/"]
-RUN dotnet restore "./Catalog.API/./Catalog.API.csproj"
+COPY ["Catalog.API/Catalogs.API.csproj", "Catalog.API/"]
+COPY ["Catalog.Application/Catalogs.Application.csproj", "Catalog.Application/"]
+COPY ["Catalog.Domain/Catalogs.Domain.csproj", "Catalog.Domain/"]
+COPY ["Catalog.Infrastructure/Catalogs.Infrastructure.csproj", "Catalog.Infrastructure/"]
+RUN dotnet restore "./Catalog.API/./Catalogs.API.csproj"
 COPY . .
 WORKDIR "/src/Catalog.API"
-RUN dotnet build "./Catalog.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./Catalogs.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Catalog.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./Catalogs.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Catalog.API.dll"]
+ENTRYPOINT ["dotnet", "Catalogs.API.dll"]

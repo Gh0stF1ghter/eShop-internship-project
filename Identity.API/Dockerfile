@@ -10,8 +10,8 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Identity.API/Identity.API.csproj", "Identity.API/"]
-COPY ["Identity.Core/Identity.Core.csproj", "Identity.Core/"]
-COPY ["Identity.Data/Identity.Data.csproj", "Identity.Data/"]
+COPY ["Identity.Core/Identity.BusinessLogic.csproj", "Identity.Core/"]
+COPY ["Identity.Data/Identity.DataAccess.csproj", "Identity.Data/"]
 RUN dotnet restore "./Identity.API/./Identity.API.csproj"
 COPY . .
 WORKDIR "/src/Identity.API"

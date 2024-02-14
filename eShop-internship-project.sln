@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.API", "Catalog.API\Catalog.API.csproj", "{3C0224DF-C0C8-4028-99FB-9BEF14DCD99D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalogs.API", "Catalog.API\Catalogs.API.csproj", "{3C0224DF-C0C8-4028-99FB-9BEF14DCD99D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{103361AA-3885-45E2-A832-AB4D87FF4027} = {103361AA-3885-45E2-A832-AB4D87FF4027}
 		{C9A43597-0CE2-42D9-8348-83FC44A96478} = {C9A43597-0CE2-42D9-8348-83FC44A96478}
@@ -16,37 +16,37 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.API", "Identity.AP
 		{8B0F3C69-A6B0-40BF-A229-B3FDD42E9287} = {8B0F3C69-A6B0-40BF-A229-B3FDD42E9287}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.API", "Basket.API\Basket.API.csproj", "{2043BED4-EF92-49DF-82E7-9721345B83D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Baskets.API", "Basket.API\Baskets.API.csproj", "{2043BED4-EF92-49DF-82E7-9721345B83D4}"
 	ProjectSection(ProjectDependencies) = postProject
 		{26F8E62F-5249-4E33-919F-B45A2CE377A4} = {26F8E62F-5249-4E33-919F-B45A2CE377A4}
 		{63C8BEB3-6B4D-442D-B612-F215E48A9488} = {63C8BEB3-6B4D-442D-B612-F215E48A9488}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.Core", "Identity.Core\Identity.Core.csproj", "{7FF7E139-41D5-4027-8F1D-E4BB69CCF8CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.BusinessLogic", "Identity.Core\Identity.BusinessLogic.csproj", "{7FF7E139-41D5-4027-8F1D-E4BB69CCF8CF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3CB1A8E7-5920-4D6D-9E4F-411C732E02F0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Domain", "Catalog.Domain\Catalog.Domain.csproj", "{D38B7AF4-DBAA-44DD-BD3C-64EE129BC584}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalogs.Domain", "Catalog.Domain\Catalogs.Domain.csproj", "{D38B7AF4-DBAA-44DD-BD3C-64EE129BC584}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Application", "Catalog.Application\Catalog.Application.csproj", "{103361AA-3885-45E2-A832-AB4D87FF4027}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalogs.Application", "Catalog.Application\Catalogs.Application.csproj", "{103361AA-3885-45E2-A832-AB4D87FF4027}"
 	ProjectSection(ProjectDependencies) = postProject
 		{D38B7AF4-DBAA-44DD-BD3C-64EE129BC584} = {D38B7AF4-DBAA-44DD-BD3C-64EE129BC584}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Infrastructure", "Catalog.Infrastructure\Catalog.Infrastructure.csproj", "{C9A43597-0CE2-42D9-8348-83FC44A96478}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalogs.Infrastructure", "Catalog.Infrastructure\Catalogs.Infrastructure.csproj", "{C9A43597-0CE2-42D9-8348-83FC44A96478}"
 	ProjectSection(ProjectDependencies) = postProject
 		{103361AA-3885-45E2-A832-AB4D87FF4027} = {103361AA-3885-45E2-A832-AB4D87FF4027}
 		{D38B7AF4-DBAA-44DD-BD3C-64EE129BC584} = {D38B7AF4-DBAA-44DD-BD3C-64EE129BC584}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.Data", "Basket.Data\Basket.Data.csproj", "{26F8E62F-5249-4E33-919F-B45A2CE377A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Baskets.DataAccess", "Basket.Data\Baskets.DataAccess.csproj", "{26F8E62F-5249-4E33-919F-B45A2CE377A4}"
 	ProjectSection(ProjectDependencies) = postProject
 		{63C8BEB3-6B4D-442D-B612-F215E48A9488} = {63C8BEB3-6B4D-442D-B612-F215E48A9488}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.Core", "Basket.Core\Basket.Core.csproj", "{63C8BEB3-6B4D-442D-B612-F215E48A9488}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Baskets.BusinessLogic", "Basket.Core\Baskets.BusinessLogic.csproj", "{63C8BEB3-6B4D-442D-B612-F215E48A9488}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.Data", "Identity.Data\Identity.Data.csproj", "{8B0F3C69-A6B0-40BF-A229-B3FDD42E9287}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.DataAccess", "Identity.Data\Identity.DataAccess.csproj", "{8B0F3C69-A6B0-40BF-A229-B3FDD42E9287}"
 	ProjectSection(ProjectDependencies) = postProject
 		{7FF7E139-41D5-4027-8F1D-E4BB69CCF8CF} = {7FF7E139-41D5-4027-8F1D-E4BB69CCF8CF}
 	EndProjectSection
