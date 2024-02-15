@@ -18,6 +18,7 @@ namespace Identity.Core.Models
         [Required(ErrorMessage = "Password field should not be empty")]
         [DataType(DataType.Password)]
         [StringLength(100 , MinimumLength = 6, ErrorMessage = "Password must be longer than 6 characters")]
+        [RegularExpression("^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!#$%&? ]).*$", ErrorMessage = "Password must have at least one lowercase char, uppercase, digit and special character")]
         [DisplayName("Password")]
         public required string Password { get; init; }
         
