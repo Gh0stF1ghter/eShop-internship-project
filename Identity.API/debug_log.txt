@@ -1,0 +1,132 @@
+2024-02-15 11:33:47.858 +03:00 [INF] User profile is available. Using 'C:\Users\mrnor.DESKTOP-7OKKO48\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-15 11:33:48.179 +03:00 [INF] Now listening on: https://localhost:7288
+2024-02-15 11:33:48.181 +03:00 [INF] Now listening on: http://localhost:5290
+2024-02-15 11:33:48.183 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-15 11:33:48.184 +03:00 [INF] Hosting environment: Development
+2024-02-15 11:33:48.185 +03:00 [INF] Content root path: C:\Users\mrnor.DESKTOP-7OKKO48\Desktop\eShop-internship-project\Identity.API
+2024-02-15 11:34:00.140 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/index.html - null null
+2024-02-15 11:34:00.393 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/index.html - 200 null text/html;charset=utf-8 265.0289ms
+2024-02-15 11:34:00.455 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/_framework/aspnetcore-browser-refresh.js - null null
+2024-02-15 11:34:00.463 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/_framework/aspnetcore-browser-refresh.js - 200 13760 application/javascript; charset=utf-8 7.88ms
+2024-02-15 11:34:00.474 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/_vs/browserLink - null null
+2024-02-15 11:34:00.518 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/_vs/browserLink - 200 null text/javascript; charset=UTF-8 43.4186ms
+2024-02-15 11:34:00.609 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/v1/swagger.json - null null
+2024-02-15 11:34:00.726 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 116.922ms
+2024-02-15 11:35:19.171 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7288/api/Authentication/login - application/json 76
+2024-02-15 11:35:19.196 +03:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.Login (Identity.API)'
+2024-02-15 11:35:19.225 +03:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(Identity.Core.Models.Login) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-15 11:35:19.445 +03:00 [INF] --- Init Login endpoint -------------
+2024-02-15 11:35:19.448 +03:00 [INF] Searching for user with email admin@admin.com 
+2024-02-15 11:35:22.031 +03:00 [INF] Executed DbCommand (64ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2024-02-15 11:35:22.131 +03:00 [INF] User: 2a1d884e-c465-4643-b309-d2de1e132b5d admin@admin.com AdminTest
+2024-02-15 11:35:22.294 +03:00 [INF] Executed DbCommand (32ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2024-02-15 11:35:22.299 +03:00 [INF] User roles: Admin
+2024-02-15 11:35:22.376 +03:00 [INF] --- Login finished successfully -------------
+2024-02-15 11:35:22.386 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2024-02-15 11:35:22.392 +03:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.Login (Identity.API) in 3160.0929ms
+2024-02-15 11:35:22.394 +03:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.Login (Identity.API)'
+2024-02-15 11:35:22.405 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7288/api/Authentication/login - 200 null text/plain; charset=utf-8 3233.1865ms
+2024-02-15 11:36:37.399 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7288/api/Authentication/register - application/json 122
+2024-02-15 11:36:37.415 +03:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.Register (Identity.API)'
+2024-02-15 11:36:37.426 +03:00 [INF] Route matched with {action = "Register", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Register(Identity.Core.Models.Register) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-15 11:36:37.445 +03:00 [INF] --- Init Register endpoint -------------
+2024-02-15 11:36:37.514 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2024-02-15 11:36:37.519 +03:00 [INF] Creating new user Jd Jd@example.com
+2024-02-15 11:36:37.660 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2024-02-15 11:36:37.800 +03:00 [INF] Executed DbCommand (6ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (DbType = Int32), @p2='?' (Size = 4000), @p3='?' (Size = 256), @p4='?' (DbType = Boolean), @p5='?' (Size = 4000), @p6='?' (DbType = Boolean), @p7='?' (DbType = DateTimeOffset), @p8='?' (Size = 256), @p9='?' (Size = 256), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?' (DbType = Boolean), @p13='?' (Size = 4000), @p14='?' (DbType = Boolean), @p15='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [AspNetUsers] ([Id], [AccessFailedCount], [ConcurrencyStamp], [Email], [EmailConfirmed], [ImageUrl], [LockoutEnabled], [LockoutEnd], [NormalizedEmail], [NormalizedUserName], [PasswordHash], [PhoneNumber], [PhoneNumberConfirmed], [SecurityStamp], [TwoFactorEnabled], [UserName])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15);
+2024-02-15 11:37:07.859 +03:00 [INF] User profile is available. Using 'C:\Users\mrnor.DESKTOP-7OKKO48\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-15 11:37:08.114 +03:00 [INF] Now listening on: https://localhost:7288
+2024-02-15 11:37:08.128 +03:00 [INF] Now listening on: http://localhost:5290
+2024-02-15 11:37:08.133 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-15 11:37:08.135 +03:00 [INF] Hosting environment: Development
+2024-02-15 11:37:08.136 +03:00 [INF] Content root path: C:\Users\mrnor.DESKTOP-7OKKO48\Desktop\eShop-internship-project\Identity.API
+2024-02-15 11:37:19.178 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/index.html - null null
+2024-02-15 11:37:19.517 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/index.html - 200 null text/html;charset=utf-8 348.0265ms
+2024-02-15 11:37:19.625 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/_framework/aspnetcore-browser-refresh.js - null null
+2024-02-15 11:37:19.636 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/_framework/aspnetcore-browser-refresh.js - 200 13760 application/javascript; charset=utf-8 10.5988ms
+2024-02-15 11:37:19.663 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/_vs/browserLink - null null
+2024-02-15 11:37:19.722 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/_vs/browserLink - 200 null text/javascript; charset=UTF-8 60.1894ms
+2024-02-15 11:37:19.844 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/v1/swagger.json - null null
+2024-02-15 11:37:19.989 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 145.0125ms
+2024-02-15 11:37:59.326 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7288/api/Authentication/register - application/json 122
+2024-02-15 11:37:59.349 +03:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.Register (Identity.API)'
+2024-02-15 11:37:59.376 +03:00 [INF] Route matched with {action = "Register", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Register(Identity.Core.Models.Register) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-15 11:37:59.583 +03:00 [INF] --- Init Register endpoint -------------
+2024-02-15 11:38:01.256 +03:00 [INF] Executed DbCommand (56ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2024-02-15 11:38:01.367 +03:00 [INF] Executing BadRequestObjectResult, writing value of type 'System.String'.
+2024-02-15 11:38:01.377 +03:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.Register (Identity.API) in 1993.9451ms
+2024-02-15 11:38:01.379 +03:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.Register (Identity.API)'
+2024-02-15 11:38:01.392 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7288/api/Authentication/register - 400 null text/plain; charset=utf-8 2066.4562ms
+2024-02-15 11:38:35.455 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7288/api/Authentication/login - application/json 85
+2024-02-15 11:38:35.461 +03:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.Login (Identity.API)'
+2024-02-15 11:38:35.468 +03:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(Identity.Core.Models.Login) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-15 11:38:35.479 +03:00 [INF] --- Init Login endpoint -------------
+2024-02-15 11:38:35.482 +03:00 [INF] Searching for user with email Jd@example.com 
+2024-02-15 11:38:35.551 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2024-02-15 11:38:35.555 +03:00 [INF] User: 815fab36-bf4c-4ac5-b0b9-cafec9524c3e Jd@example.com Jd
+2024-02-15 11:38:35.713 +03:00 [INF] Executed DbCommand (31ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2024-02-15 11:38:35.788 +03:00 [INF] --- Login finished successfully -------------
+2024-02-15 11:38:35.790 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2024-02-15 11:38:35.792 +03:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.Login (Identity.API) in 321.1443ms
+2024-02-15 11:38:35.794 +03:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.Login (Identity.API)'
+2024-02-15 11:38:35.795 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7288/api/Authentication/login - 200 null text/plain; charset=utf-8 340.1168ms
+2024-02-15 11:38:44.473 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7288/api/Authentication/register - application/json 115
+2024-02-15 11:38:44.477 +03:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.Register (Identity.API)'
+2024-02-15 11:38:44.479 +03:00 [INF] Route matched with {action = "Register", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Register(Identity.Core.Models.Register) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-15 11:38:44.500 +03:00 [INF] --- Init Register endpoint -------------
+2024-02-15 11:38:44.520 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2024-02-15 11:38:44.523 +03:00 [INF] Creating new user Jd Jd@.com
+2024-02-15 11:38:44.640 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2024-02-15 11:38:44.652 +03:00 [ERR] Internal error while creating new user ["Microsoft.AspNetCore.Identity.IdentityError"]
+2024-02-15 11:38:44.656 +03:00 [INF] Executing BadRequestObjectResult, writing value of type 'System.String'.
+2024-02-15 11:38:44.658 +03:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.Register (Identity.API) in 175.6807ms
+2024-02-15 11:38:44.659 +03:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.Register (Identity.API)'
+2024-02-15 11:38:44.661 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7288/api/Authentication/register - 400 null text/plain; charset=utf-8 188.4754ms
+2024-02-15 11:38:57.125 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7288/api/Authentication/register - application/json 113
+2024-02-15 11:38:57.128 +03:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.Register (Identity.API)'
+2024-02-15 11:38:57.130 +03:00 [INF] Route matched with {action = "Register", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Register(Identity.Core.Models.Register) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-15 11:38:57.137 +03:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2024-02-15 11:38:57.153 +03:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.Register (Identity.API) in 19.8526ms
+2024-02-15 11:38:57.155 +03:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.Register (Identity.API)'
+2024-02-15 11:38:57.156 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7288/api/Authentication/register - 400 null application/problem+json; charset=utf-8 31.1562ms
+2024-02-15 11:40:52.265 +03:00 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2024-02-15 11:40:52.302 +03:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2024-02-15 11:40:52.311 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
