@@ -1,8 +1,8 @@
-﻿using Identity.Core.Models;
+﻿using Identity.DataAccess.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Identity.DataAccess
+namespace Identity.DataAccess.Data
 {
     public class UserSeed(ModelBuilder modelBuilder)
     {
@@ -14,6 +14,21 @@ namespace Identity.DataAccess
             var userRoleId = Guid.NewGuid().ToString();
 
             //Roles
+            AddRoles(adminRoleId, userRoleId);
+
+
+            var adminId = Guid.NewGuid().ToString();
+            var userId = Guid.NewGuid().ToString();
+
+            AddTestData(adminId, userId);
+
+            //Link Test Users with Roles
+            GrantRole(adminRoleId, adminId);
+            GrantRole(userRoleId, userId);
+        }
+
+        private void AddRoles(string adminRoleId, string userRoleId)
+        {
             _modelBuilder.Entity<IdentityRole>().HasData(
                 new IdentityRole
                 {
@@ -29,8 +44,12 @@ namespace Identity.DataAccess
                     Name = "User",
                     NormalizedName = "USER"
                 });
+        }
 
-            var adminId = Guid.NewGuid().ToString();
+        private void AddTestData(string adminId, string userId)
+        {
+            var passwordHasher = new PasswordHasher<User>();
+
             var adminUser = new User
             {
                 Id = adminId,
@@ -38,10 +57,10 @@ namespace Identity.DataAccess
                 EmailConfirmed = true,
                 UserName = "AdminTest",
                 NormalizedEmail = "ADMIN@ADMIN.COM",
-                NormalizedUserName = "ADMINTEST"
+                NormalizedUserName = "ADMINTEST",
             };
+            adminUser.PasswordHash = passwordHasher.HashPassword(adminUser, "0451");
 
-            var userId = Guid.NewGuid().ToString();
             var regularUser = new User
             {
                 Id = userId,
@@ -51,27 +70,19 @@ namespace Identity.DataAccess
                 NormalizedUserName = "JOEDOE",
                 NormalizedEmail = "USER@EXAMPLE.COM"
             };
-
-            //Add Hash Password
-            var passwordHasher = new PasswordHasher<User>();
-            adminUser.PasswordHash = passwordHasher.HashPassword(adminUser, "0451");
             regularUser.PasswordHash = passwordHasher.HashPassword(regularUser, "F_p@raD0x?");
-
 
             _modelBuilder.Entity<User>().HasData(
                 adminUser,
                 regularUser);
+        }
 
-            //Link Test Users with Roles
+        private void GrantRole(string roleId, string userId)
+        {
             _modelBuilder.Entity<IdentityUserRole<string>>().HasData(
                 new IdentityUserRole<string>
                 {
-                    RoleId = adminRoleId,
-                    UserId = adminId
-                },
-                new IdentityUserRole<string>
-                {
-                    RoleId = userRoleId,
+                    RoleId = roleId,
                     UserId = userId
                 });
         }

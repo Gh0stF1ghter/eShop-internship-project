@@ -1,9 +1,8 @@
-﻿using Identity.Core.Models;
-using Identity.DataAccess;
+﻿using Identity.DataAccess.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Identity.Data
+namespace Identity.DataAccess.Data
 {
     public class IdentityContext(DbContextOptions options) : IdentityDbContext<User>(options)
     {

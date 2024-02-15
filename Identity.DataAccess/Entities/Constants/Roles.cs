@@ -1,4 +1,4 @@
-﻿namespace Identity.Core.Models
+﻿namespace Identity.DataAccess.Entities.Constants
 {
     public class Roles
     {
