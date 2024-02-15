@@ -1,7 +1,6 @@
 ﻿using Identity.BusinessLogic;
 using Identity.Core.Models;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
 
 namespace Identity.API.Controllers
 {
@@ -17,7 +16,7 @@ namespace Identity.API.Controllers
         public async Task<IActionResult> Login([FromBody] Login login)
         {
             _logger.LogInformation("--- Init Login endpoint -------------");
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 _logger.LogDebug("--- Login failed. Invalid Credentials -------------");
                 return BadRequest("Invalid email or password " + ModelState);

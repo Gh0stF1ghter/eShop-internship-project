@@ -1,5 +1,4 @@
 ﻿using Identity.Core.Models;
-using System.Security.Claims;
 
 namespace Identity.BusinessLogic
 {
