@@ -1,6 +1,4 @@
-﻿using Identity.DataAccess.Exceptions;
-using Shared;
-using Shared.Exceptions;
+﻿using Identity.DataAccess.Entities.Exceptions;
 using System.Net;
 
 namespace Identity.API.Extensions
@@ -29,6 +27,7 @@ namespace Identity.API.Extensions
             ExceptionResponse response = ex switch
             {
                 BadRequestException _ => new(HttpStatusCode.BadRequest, ex.Message),
+                RefreshTokenBadRequestException _ => new(HttpStatusCode.Unauthorized, ex.Message),
                 _ => new(HttpStatusCode.InternalServerError, ex.Message),
             };
 

@@ -2,12 +2,10 @@
 using Identity.BusinessLogic.DTOs;
 using Identity.BusinessLogic.Services.Interfaces;
 using Identity.DataAccess.Entities.Constants;
+using Identity.DataAccess.Entities.Exceptions;
 using Identity.DataAccess.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using Shared.Exceptions;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 
 namespace Identity.BusinessLogic.Services.Implementations
 {
@@ -19,15 +17,13 @@ namespace Identity.BusinessLogic.Services.Implementations
         private readonly IMapper _mapper = mapper;
         private readonly ILogger<EShopAuthenticationService> _logger = logger;
 
-        public async Task<string?> AuthenticateAsync(LoginDTO loginCredentials)
+        public async Task<TokenDTO?> AuthenticateAsync(LoginDTO loginCredentials)
         {
             User user = await ValidateAuthenticationAsync(loginCredentials.Email, loginCredentials.Password);
 
-            var userClaims = await ClaimRoles(user);
+            var tokenDto = await _tokenService.CreateTokenAsync(user, populateExp: true);
 
-            var token = _tokenService.GenerateToken(userClaims);
-
-            return token;
+            return tokenDto;
         }
 
         public async Task<bool> RegisterUserAsync(RegisterDTO registerCredentials)
@@ -85,27 +81,6 @@ namespace Identity.BusinessLogic.Services.Implementations
                 _logger.LogDebug("User found: {id} {name} {email}", userNameTaken.Id, userNameTaken.UserName, userNameTaken.Email);
                 throw new BadRequestException("Username already taken");
             }
-        }
-
-        private async Task<List<Claim>> ClaimRoles(User user)
-        {
-            var userRoles = await _userManager.GetRolesAsync(user);
-
-            var userClaims = new List<Claim>
-            {
-                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
-
-            if (user.UserName is not null)
-                userClaims.Add(new Claim(ClaimTypes.Name, user.UserName));
-
-            foreach (var role in userRoles)
-            {
-                _logger.LogInformation("User roles: {role}", role);
-                userClaims.Add(new Claim(ClaimTypes.Role, role));
-            }
-
-            return userClaims;
         }
 
         private async Task CreateUserAsync(User user, string password)

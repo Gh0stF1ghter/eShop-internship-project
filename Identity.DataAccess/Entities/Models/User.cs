@@ -7,5 +7,8 @@ namespace Identity.DataAccess.Models
     {
         [Url]
         public string? ImageUrl { get; set; }
+
+        public string? RefreshToken { get; set; }
+        public DateTime RefreshTokenExpireTime { get; set; }
     }
 }

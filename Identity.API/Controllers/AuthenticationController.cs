@@ -16,9 +16,9 @@ namespace Identity.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> LoginAsync([FromBody] LoginDTO login)
         {
-            var token = await _authenticationService.AuthenticateAsync(login);
+            var tokens = await _authenticationService.AuthenticateAsync(login);
 
-            return Ok(token);
+            return Ok(tokens);
         }
 
         [HttpPost]
