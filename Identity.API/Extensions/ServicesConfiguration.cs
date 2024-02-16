@@ -1,5 +1,8 @@
-﻿using FluentValidation;
-using Identity.BusinessLogic.Services;
+﻿using AutoMapper;
+using FluentValidation;
+using Identity.BusinessLogic.Mapping;
+using Identity.BusinessLogic.Services.Implementations;
+using Identity.BusinessLogic.Services.Interfaces;
 using Identity.BusinessLogic.Validators;
 using Identity.DataAccess.Data;
 using Identity.DataAccess.Models;
@@ -39,6 +42,18 @@ namespace Identity.API.Extensions
                             ClockSkew = TimeSpan.Zero
                         };
                     });
+
+        public static void AddMapper(this IServiceCollection services)
+        {
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+        }
+
 
         public static void AddAutoValidation(this IServiceCollection services)
         {

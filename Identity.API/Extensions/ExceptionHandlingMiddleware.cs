@@ -1,4 +1,5 @@
-﻿using Shared;
+﻿using Identity.DataAccess.Exceptions;
+using Shared;
 using Shared.Exceptions;
 using System.Net;
 

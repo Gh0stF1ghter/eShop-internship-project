@@ -1,10 +1,10 @@
 ﻿using Identity.BusinessLogic.DTOs;
-using Identity.BusinessLogic.Services;
+using Identity.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Identity.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/authentication")]
     [ApiController]
     public class AuthenticationController(IAuthenticationService authenticationService) : ControllerBase
     {

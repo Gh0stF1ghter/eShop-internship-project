@@ -683,3 +683,588 @@ WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
 SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
 FROM [AspNetUsers] AS [a]
 WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2024-02-16 11:05:59.037 +03:00 [INF] Executed DbCommand (138ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [Identity];
+2024-02-16 11:05:59.095 +03:00 [INF] Executed DbCommand (45ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [Identity] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2024-02-16 11:05:59.106 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2024-02-16 11:05:59.140 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [__EFMigrationsHistory] (
+    [MigrationId] nvarchar(150) NOT NULL,
+    [ProductVersion] nvarchar(32) NOT NULL,
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+);
+2024-02-16 11:05:59.141 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2024-02-16 11:05:59.149 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2024-02-16 11:05:59.152 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2024-02-16 11:05:59.160 +03:00 [INF] Applying migration '20240215062021_init'.
+2024-02-16 11:05:59.199 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AspNetRoles] (
+    [Id] nvarchar(450) NOT NULL,
+    [Name] nvarchar(256) NULL,
+    [NormalizedName] nvarchar(256) NULL,
+    [ConcurrencyStamp] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetRoles] PRIMARY KEY ([Id])
+);
+2024-02-16 11:05:59.200 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AspNetUsers] (
+    [Id] nvarchar(450) NOT NULL,
+    [ImageUrl] nvarchar(max) NULL,
+    [UserName] nvarchar(256) NULL,
+    [NormalizedUserName] nvarchar(256) NULL,
+    [Email] nvarchar(256) NULL,
+    [NormalizedEmail] nvarchar(256) NULL,
+    [EmailConfirmed] bit NOT NULL,
+    [PasswordHash] nvarchar(max) NULL,
+    [SecurityStamp] nvarchar(max) NULL,
+    [ConcurrencyStamp] nvarchar(max) NULL,
+    [PhoneNumber] nvarchar(max) NULL,
+    [PhoneNumberConfirmed] bit NOT NULL,
+    [TwoFactorEnabled] bit NOT NULL,
+    [LockoutEnd] datetimeoffset NULL,
+    [LockoutEnabled] bit NOT NULL,
+    [AccessFailedCount] int NOT NULL,
+    CONSTRAINT [PK_AspNetUsers] PRIMARY KEY ([Id])
+);
+2024-02-16 11:05:59.201 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AspNetRoleClaims] (
+    [Id] int NOT NULL IDENTITY,
+    [RoleId] nvarchar(450) NOT NULL,
+    [ClaimType] nvarchar(max) NULL,
+    [ClaimValue] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetRoleClaims] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE
+);
+2024-02-16 11:05:59.202 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AspNetUserClaims] (
+    [Id] int NOT NULL IDENTITY,
+    [UserId] nvarchar(450) NOT NULL,
+    [ClaimType] nvarchar(max) NULL,
+    [ClaimValue] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetUserClaims] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+2024-02-16 11:05:59.203 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AspNetUserLogins] (
+    [LoginProvider] nvarchar(450) NOT NULL,
+    [ProviderKey] nvarchar(450) NOT NULL,
+    [ProviderDisplayName] nvarchar(max) NULL,
+    [UserId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_AspNetUserLogins] PRIMARY KEY ([LoginProvider], [ProviderKey]),
+    CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+2024-02-16 11:05:59.204 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AspNetUserRoles] (
+    [UserId] nvarchar(450) NOT NULL,
+    [RoleId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_AspNetUserRoles] PRIMARY KEY ([UserId], [RoleId]),
+    CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+2024-02-16 11:05:59.205 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AspNetUserTokens] (
+    [UserId] nvarchar(450) NOT NULL,
+    [LoginProvider] nvarchar(450) NOT NULL,
+    [Name] nvarchar(450) NOT NULL,
+    [Value] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetUserTokens] PRIMARY KEY ([UserId], [LoginProvider], [Name]),
+    CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+2024-02-16 11:05:59.268 +03:00 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'ConcurrencyStamp', N'Name', N'NormalizedName') AND [object_id] = OBJECT_ID(N'[AspNetRoles]'))
+    SET IDENTITY_INSERT [AspNetRoles] ON;
+INSERT INTO [AspNetRoles] ([Id], [ConcurrencyStamp], [Name], [NormalizedName])
+VALUES (N'3c544dc4-6e98-48ba-aaea-7ccf9af57f2d', N'3c544dc4-6e98-48ba-aaea-7ccf9af57f2d', N'Admin', N'ADMIN'),
+(N'8f35b520-b01b-4194-9487-ef391d17699c', N'8f35b520-b01b-4194-9487-ef391d17699c', N'User', N'USER');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'ConcurrencyStamp', N'Name', N'NormalizedName') AND [object_id] = OBJECT_ID(N'[AspNetRoles]'))
+    SET IDENTITY_INSERT [AspNetRoles] OFF;
+2024-02-16 11:05:59.275 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'AccessFailedCount', N'ConcurrencyStamp', N'Email', N'EmailConfirmed', N'ImageUrl', N'LockoutEnabled', N'LockoutEnd', N'NormalizedEmail', N'NormalizedUserName', N'PasswordHash', N'PhoneNumber', N'PhoneNumberConfirmed', N'SecurityStamp', N'TwoFactorEnabled', N'UserName') AND [object_id] = OBJECT_ID(N'[AspNetUsers]'))
+    SET IDENTITY_INSERT [AspNetUsers] ON;
+INSERT INTO [AspNetUsers] ([Id], [AccessFailedCount], [ConcurrencyStamp], [Email], [EmailConfirmed], [ImageUrl], [LockoutEnabled], [LockoutEnd], [NormalizedEmail], [NormalizedUserName], [PasswordHash], [PhoneNumber], [PhoneNumberConfirmed], [SecurityStamp], [TwoFactorEnabled], [UserName])
+VALUES (N'18636657-db44-4f76-8c92-3bd22f6855b4', 0, N'009a2a2c-36bf-4287-abe4-2601b207dcee', N'user@example.com', CAST(0 AS bit), NULL, CAST(0 AS bit), NULL, N'USER@EXAMPLE.COM', N'JOEDOE', N'AQAAAAIAAYagAAAAENOWg4EDdFFeFrP4v6mPtylY+Is+H9K2KWGrWBB/8ubV/x9dhh1NDOh0lUhAsGLDQQ==', NULL, CAST(0 AS bit), N'2d94b563-4579-49b9-be41-ecb4e13f8f01', CAST(0 AS bit), N'JoeDoe'),
+(N'2a1d884e-c465-4643-b309-d2de1e132b5d', 0, N'2cb9de87-551a-4720-bf65-3746012ead63', N'admin@admin.com', CAST(1 AS bit), NULL, CAST(0 AS bit), NULL, N'ADMIN@ADMIN.COM', N'ADMINTEST', N'AQAAAAIAAYagAAAAEIIDvKYN2mB5EFh6Hogsg//6JkNR2mHMo7BUwMDBkLI6mEaOY9JV1sKMgHU01a3L/A==', NULL, CAST(0 AS bit), N'c66dd88f-ceeb-4253-93d5-4d3dd86ba37c', CAST(0 AS bit), N'AdminTest');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'AccessFailedCount', N'ConcurrencyStamp', N'Email', N'EmailConfirmed', N'ImageUrl', N'LockoutEnabled', N'LockoutEnd', N'NormalizedEmail', N'NormalizedUserName', N'PasswordHash', N'PhoneNumber', N'PhoneNumberConfirmed', N'SecurityStamp', N'TwoFactorEnabled', N'UserName') AND [object_id] = OBJECT_ID(N'[AspNetUsers]'))
+    SET IDENTITY_INSERT [AspNetUsers] OFF;
+2024-02-16 11:05:59.282 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'RoleId', N'UserId') AND [object_id] = OBJECT_ID(N'[AspNetUserRoles]'))
+    SET IDENTITY_INSERT [AspNetUserRoles] ON;
+INSERT INTO [AspNetUserRoles] ([RoleId], [UserId])
+VALUES (N'8f35b520-b01b-4194-9487-ef391d17699c', N'18636657-db44-4f76-8c92-3bd22f6855b4'),
+(N'3c544dc4-6e98-48ba-aaea-7ccf9af57f2d', N'2a1d884e-c465-4643-b309-d2de1e132b5d');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'RoleId', N'UserId') AND [object_id] = OBJECT_ID(N'[AspNetUserRoles]'))
+    SET IDENTITY_INSERT [AspNetUserRoles] OFF;
+2024-02-16 11:05:59.283 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AspNetRoleClaims_RoleId] ON [AspNetRoleClaims] ([RoleId]);
+2024-02-16 11:06:01.818 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [RoleNameIndex] ON [AspNetRoles] ([NormalizedName]) WHERE [NormalizedName] IS NOT NULL;
+2024-02-16 11:06:01.819 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AspNetUserClaims_UserId] ON [AspNetUserClaims] ([UserId]);
+2024-02-16 11:06:01.819 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AspNetUserLogins_UserId] ON [AspNetUserLogins] ([UserId]);
+2024-02-16 11:06:01.821 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AspNetUserRoles_RoleId] ON [AspNetUserRoles] ([RoleId]);
+2024-02-16 11:06:01.822 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [EmailIndex] ON [AspNetUsers] ([NormalizedEmail]);
+2024-02-16 11:06:01.823 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [UserNameIndex] ON [AspNetUsers] ([NormalizedUserName]) WHERE [NormalizedUserName] IS NOT NULL;
+2024-02-16 11:06:01.823 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20240215062021_init', N'8.0.2');
+2024-02-16 11:07:00.696 +03:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-16 11:07:00.923 +03:00 [INF] Now listening on: https://localhost:7288
+2024-02-16 11:07:00.924 +03:00 [INF] Now listening on: http://localhost:5290
+2024-02-16 11:07:00.925 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-16 11:07:00.931 +03:00 [INF] Hosting environment: Development
+2024-02-16 11:07:00.931 +03:00 [INF] Content root path: C:\Users\Admin\Desktop\eShop-internship-project\Identity.API
+2024-02-16 11:07:01.645 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger - null null
+2024-02-16 11:07:01.811 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger - 301 0 null 170.9657ms
+2024-02-16 11:07:01.821 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/index.html - null null
+2024-02-16 11:07:01.883 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/index.html - 200 null text/html;charset=utf-8 61.784ms
+2024-02-16 11:07:01.932 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/swagger-ui.css - null null
+2024-02-16 11:07:01.936 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/swagger-ui-bundle.js - null null
+2024-02-16 11:07:01.937 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/swagger-ui-standalone-preset.js - null null
+2024-02-16 11:07:01.941 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/_vs/browserLink - null null
+2024-02-16 11:07:01.941 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/_framework/aspnetcore-browser-refresh.js - null null
+2024-02-16 11:07:01.998 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/_framework/aspnetcore-browser-refresh.js - 200 13760 application/javascript; charset=utf-8 55.8889ms
+2024-02-16 11:07:02.005 +03:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2024-02-16 11:07:02.005 +03:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2024-02-16 11:07:02.007 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/swagger-ui-standalone-preset.js - 200 312163 text/javascript 70.7875ms
+2024-02-16 11:07:02.009 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/swagger-ui.css - 200 144929 text/css 76.9561ms
+2024-02-16 11:07:02.021 +03:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2024-02-16 11:07:02.022 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/swagger-ui-bundle.js - 200 1061536 text/javascript 86.1185ms
+2024-02-16 11:07:03.659 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/_vs/browserLink - 200 null text/javascript; charset=UTF-8 1717.2076ms
+2024-02-16 11:07:03.744 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/v1/swagger.json - null null
+2024-02-16 11:07:03.769 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/favicon-32x32.png - null null
+2024-02-16 11:07:03.773 +03:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2024-02-16 11:07:03.775 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/favicon-32x32.png - 200 628 image/png 5.6232ms
+2024-02-16 11:07:03.828 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 84.23ms
+2024-02-16 11:07:16.793 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7288/api/Authentication/login - application/json 76
+2024-02-16 11:07:16.800 +03:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API)'
+2024-02-16 11:07:16.817 +03:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginAsync(Identity.BusinessLogic.DTOs.LoginDTO) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-16 11:07:16.972 +03:00 [INF] Searching for user with email admin@admin.com 
+2024-02-16 11:07:17.893 +03:00 [INF] Executed DbCommand (36ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2024-02-16 11:07:17.947 +03:00 [INF] User: 2a1d884e-c465-4643-b309-d2de1e132b5d admin@admin.com AdminTest
+2024-02-16 11:07:18.031 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2024-02-16 11:07:18.035 +03:00 [INF] User roles: Admin
+2024-02-16 11:07:18.109 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2024-02-16 11:07:18.113 +03:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API) in 1291.9652ms
+2024-02-16 11:07:18.115 +03:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API)'
+2024-02-16 11:07:18.120 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7288/api/Authentication/login - 200 null text/plain; charset=utf-8 1326.944ms
+2024-02-16 12:47:19.433 +03:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-16 12:47:19.613 +03:00 [INF] Now listening on: https://localhost:7288
+2024-02-16 12:47:19.614 +03:00 [INF] Now listening on: http://localhost:5290
+2024-02-16 12:47:19.616 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-16 12:47:19.621 +03:00 [INF] Hosting environment: Development
+2024-02-16 12:47:19.622 +03:00 [INF] Content root path: C:\Users\Admin\Desktop\eShop-internship-project\Identity.API
+2024-02-16 12:47:22.793 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/index.html - null null
+2024-02-16 12:47:22.970 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/index.html - 200 null text/html;charset=utf-8 184.2727ms
+2024-02-16 12:47:23.025 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/_framework/aspnetcore-browser-refresh.js - null null
+2024-02-16 12:47:23.034 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/_vs/browserLink - null null
+2024-02-16 12:47:23.035 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/_framework/aspnetcore-browser-refresh.js - 200 13760 application/javascript; charset=utf-8 10.0741ms
+2024-02-16 12:47:23.671 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/_vs/browserLink - 200 null text/javascript; charset=UTF-8 637.0841ms
+2024-02-16 12:47:23.729 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/v1/swagger.json - null null
+2024-02-16 12:47:23.821 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 91.752ms
+2024-02-16 12:47:44.134 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7288/api/Authentication/login - application/json 76
+2024-02-16 12:47:44.143 +03:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API)'
+2024-02-16 12:47:44.159 +03:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginAsync(Identity.BusinessLogic.DTOs.LoginDTO) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-16 12:47:44.321 +03:00 [INF] Searching for user with email admin@admin.com 
+2024-02-16 12:47:45.939 +03:00 [INF] Executed DbCommand (37ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2024-02-16 12:47:45.996 +03:00 [INF] User: 2a1d884e-c465-4643-b309-d2de1e132b5d admin@admin.com AdminTest
+2024-02-16 12:47:46.078 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2024-02-16 12:47:46.081 +03:00 [INF] User roles: Admin
+2024-02-16 12:47:46.136 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2024-02-16 12:47:46.140 +03:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API) in 1977.569ms
+2024-02-16 12:47:46.141 +03:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API)'
+2024-02-16 12:47:46.146 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7288/api/Authentication/login - 200 null text/plain; charset=utf-8 2012.4203ms
+2024-02-16 12:48:13.487 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7288/api/Authentication/login - application/json 75
+2024-02-16 12:48:13.491 +03:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API)'
+2024-02-16 12:48:13.498 +03:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginAsync(Identity.BusinessLogic.DTOs.LoginDTO) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-16 12:48:13.503 +03:00 [INF] Searching for user with email admin@admin.com 
+2024-02-16 12:48:13.538 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2024-02-16 12:48:13.542 +03:00 [INF] User: 2a1d884e-c465-4643-b309-d2de1e132b5d admin@admin.com AdminTest
+2024-02-16 12:48:13.784 +03:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API) in 283.6633ms
+2024-02-16 12:48:13.833 +03:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API)'
+2024-02-16 12:48:13.953 +03:00 [ERR] Exception Invalid Password caught
+2024-02-16 12:48:13.961 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7288/api/Authentication/login - 400 null application/json; charset=utf-8 473.8594ms
+2024-02-16 12:49:00.180 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7288/api/Authentication/register - application/json 113
+2024-02-16 12:49:00.184 +03:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API)'
+2024-02-16 12:49:00.188 +03:00 [INF] Route matched with {action = "Register", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RegisterAsync(Identity.BusinessLogic.DTOs.RegisterDTO) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-16 12:49:00.222 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2024-02-16 12:49:00.234 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2024-02-16 12:49:00.373 +03:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API) in 182.9871ms
+2024-02-16 12:49:00.414 +03:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API)'
+2024-02-16 12:49:00.511 +03:00 [ERR] Exception Username already taken caught
+2024-02-16 12:49:00.512 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7288/api/Authentication/register - 400 null application/json; charset=utf-8 334.0996ms
+2024-02-16 12:49:17.143 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7288/api/Authentication/register - application/json 112
+2024-02-16 12:49:17.145 +03:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API)'
+2024-02-16 12:49:17.146 +03:00 [INF] Route matched with {action = "Register", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RegisterAsync(Identity.BusinessLogic.DTOs.RegisterDTO) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-16 12:49:17.151 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2024-02-16 12:49:17.155 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2024-02-16 12:49:17.157 +03:00 [INF] Creating new user JoeDo jd@mail.com
+2024-02-16 12:49:17.218 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2024-02-16 12:49:17.284 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (DbType = Int32), @p2='?' (Size = 4000), @p3='?' (Size = 256), @p4='?' (DbType = Boolean), @p5='?' (Size = 4000), @p6='?' (DbType = Boolean), @p7='?' (DbType = DateTimeOffset), @p8='?' (Size = 256), @p9='?' (Size = 256), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?' (DbType = Boolean), @p13='?' (Size = 4000), @p14='?' (DbType = Boolean), @p15='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [AspNetUsers] ([Id], [AccessFailedCount], [ConcurrencyStamp], [Email], [EmailConfirmed], [ImageUrl], [LockoutEnabled], [LockoutEnd], [NormalizedEmail], [NormalizedUserName], [PasswordHash], [PhoneNumber], [PhoneNumberConfirmed], [SecurityStamp], [TwoFactorEnabled], [UserName])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15);
+2024-02-16 12:49:17.294 +03:00 [INF] Adding role User to user JoeDo
+2024-02-16 12:49:17.302 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedRoleName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedRoleName_0
+2024-02-16 12:49:17.331 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (Size = 450), @__p_1='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[UserId], [a].[RoleId]
+FROM [AspNetUserRoles] AS [a]
+WHERE [a].[UserId] = @__p_0 AND [a].[RoleId] = @__p_1
+2024-02-16 12:49:17.335 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedRoleName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedRoleName_0
+2024-02-16 12:49:17.348 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2024-02-16 12:49:17.376 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (Size = 450), @p17='?' (Size = 450), @p2='?' (DbType = Int32), @p3='?' (Size = 4000), @p18='?' (Size = 4000), @p4='?' (Size = 256), @p5='?' (DbType = Boolean), @p6='?' (Size = 4000), @p7='?' (DbType = Boolean), @p8='?' (DbType = DateTimeOffset), @p9='?' (Size = 256), @p10='?' (Size = 256), @p11='?' (Size = 4000), @p12='?' (Size = 4000), @p13='?' (DbType = Boolean), @p14='?' (Size = 4000), @p15='?' (DbType = Boolean), @p16='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AspNetUserRoles] ([RoleId], [UserId])
+VALUES (@p0, @p1);
+UPDATE [AspNetUsers] SET [AccessFailedCount] = @p2, [ConcurrencyStamp] = @p3, [Email] = @p4, [EmailConfirmed] = @p5, [ImageUrl] = @p6, [LockoutEnabled] = @p7, [LockoutEnd] = @p8, [NormalizedEmail] = @p9, [NormalizedUserName] = @p10, [PasswordHash] = @p11, [PhoneNumber] = @p12, [PhoneNumberConfirmed] = @p13, [SecurityStamp] = @p14, [TwoFactorEnabled] = @p15, [UserName] = @p16
+OUTPUT 1
+WHERE [Id] = @p17 AND [ConcurrencyStamp] = @p18;
+2024-02-16 12:49:17.388 +03:00 [INF] Executing CreatedResult, writing value of type 'null'.
+2024-02-16 12:49:17.388 +03:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API) in 240.5138ms
+2024-02-16 12:49:17.389 +03:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API)'
+2024-02-16 12:49:17.390 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7288/api/Authentication/register - 204 null null 247.6203ms
+2024-02-16 12:49:33.359 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7288/api/Authentication/register - application/json 112
+2024-02-16 12:49:33.362 +03:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API)'
+2024-02-16 12:49:33.363 +03:00 [INF] Route matched with {action = "Register", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RegisterAsync(Identity.BusinessLogic.DTOs.RegisterDTO) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-16 12:49:33.368 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2024-02-16 12:49:33.514 +03:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API) in 149.3843ms
+2024-02-16 12:49:33.553 +03:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API)'
+2024-02-16 12:49:33.660 +03:00 [ERR] Exception Email already taken caught
+2024-02-16 12:49:33.661 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7288/api/Authentication/register - 400 null application/json; charset=utf-8 302.2602ms
+2024-02-16 12:49:43.146 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7288/api/Authentication/register - application/json 103
+2024-02-16 12:49:43.148 +03:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API)'
+2024-02-16 12:49:43.149 +03:00 [INF] Route matched with {action = "Register", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RegisterAsync(Identity.BusinessLogic.DTOs.RegisterDTO) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-16 12:49:43.165 +03:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2024-02-16 12:49:43.174 +03:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API) in 23.2749ms
+2024-02-16 12:49:43.175 +03:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API)'
+2024-02-16 12:49:43.176 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7288/api/Authentication/register - 400 null application/problem+json; charset=utf-8 30.681ms
+2024-02-16 12:49:58.217 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7288/api/Authentication/register - application/json 100
+2024-02-16 12:49:58.219 +03:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API)'
+2024-02-16 12:49:58.220 +03:00 [INF] Route matched with {action = "Register", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RegisterAsync(Identity.BusinessLogic.DTOs.RegisterDTO) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-16 12:49:58.223 +03:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2024-02-16 12:49:58.224 +03:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API) in 2.5579ms
+2024-02-16 12:49:58.225 +03:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API)'
+2024-02-16 12:49:58.226 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7288/api/Authentication/register - 400 null application/problem+json; charset=utf-8 9.3686ms
+2024-02-16 12:50:13.108 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7288/api/Authentication/register - application/json 98
+2024-02-16 12:50:13.111 +03:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API)'
+2024-02-16 12:50:13.112 +03:00 [INF] Route matched with {action = "Register", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RegisterAsync(Identity.BusinessLogic.DTOs.RegisterDTO) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-16 12:50:13.115 +03:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2024-02-16 12:50:13.116 +03:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API) in 2.1896ms
+2024-02-16 12:50:13.117 +03:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API)'
+2024-02-16 12:50:13.118 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7288/api/Authentication/register - 400 null application/problem+json; charset=utf-8 9.6276ms
+2024-02-16 13:26:42.924 +03:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-16 13:26:43.157 +03:00 [INF] Now listening on: https://localhost:7288
+2024-02-16 13:26:43.157 +03:00 [INF] Now listening on: http://localhost:5290
+2024-02-16 13:26:43.159 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-16 13:26:43.160 +03:00 [INF] Hosting environment: Development
+2024-02-16 13:26:43.160 +03:00 [INF] Content root path: C:\Users\Admin\Desktop\eShop-internship-project\Identity.API
+2024-02-16 13:26:46.298 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/index.html - null null
+2024-02-16 13:26:46.487 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/index.html - 200 null text/html;charset=utf-8 192.3298ms
+2024-02-16 13:26:46.545 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/_framework/aspnetcore-browser-refresh.js - null null
+2024-02-16 13:26:46.545 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/_vs/browserLink - null null
+2024-02-16 13:26:46.553 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/_framework/aspnetcore-browser-refresh.js - 200 13760 application/javascript; charset=utf-8 8.2342ms
+2024-02-16 13:26:46.580 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/_vs/browserLink - 200 null text/javascript; charset=UTF-8 34.479ms
+2024-02-16 13:26:46.663 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/v1/swagger.json - null null
+2024-02-16 13:26:46.739 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 76.6618ms
+2024-02-16 13:28:02.193 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7288/api/Authentication/login - application/json 76
+2024-02-16 13:28:02.204 +03:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API)'
+2024-02-16 13:28:02.223 +03:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginAsync(Identity.BusinessLogic.DTOs.LoginDTO) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-16 13:28:08.670 +03:00 [INF] Searching for user with email admin@admin.com 
+2024-02-16 13:28:10.670 +03:00 [INF] Executed DbCommand (38ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2024-02-16 13:28:10.729 +03:00 [INF] User: 2a1d884e-c465-4643-b309-d2de1e132b5d admin@admin.com AdminTest
+2024-02-16 13:28:10.816 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2024-02-16 13:28:10.822 +03:00 [INF] User roles: Admin
+2024-02-16 13:28:10.876 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2024-02-16 13:28:10.880 +03:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API) in 8653.4739ms
+2024-02-16 13:28:10.884 +03:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API)'
+2024-02-16 13:28:10.891 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7288/api/Authentication/login - 200 null text/plain; charset=utf-8 8698.0744ms
+2024-02-16 13:28:32.709 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7288/api/Authentication/login - application/json 73
+2024-02-16 13:28:32.711 +03:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API)'
+2024-02-16 13:28:32.713 +03:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginAsync(Identity.BusinessLogic.DTOs.LoginDTO) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-16 13:28:37.456 +03:00 [INF] Searching for user with email admin@admin.com 
+2024-02-16 13:28:37.492 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2024-02-16 13:28:37.497 +03:00 [INF] User: 2a1d884e-c465-4643-b309-d2de1e132b5d admin@admin.com AdminTest
+2024-02-16 13:28:37.716 +03:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API) in 4997.0551ms
+2024-02-16 13:28:37.753 +03:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API)'
+2024-02-16 13:28:37.852 +03:00 [ERR] Exception Invalid Password caught
+2024-02-16 13:28:37.861 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7288/api/Authentication/login - 400 null application/json; charset=utf-8 5152.8369ms
+2024-02-16 13:28:44.513 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7288/api/Authentication/login - application/json 66
+2024-02-16 13:28:44.516 +03:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API)'
+2024-02-16 13:28:44.517 +03:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginAsync(Identity.BusinessLogic.DTOs.LoginDTO) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-16 13:28:44.526 +03:00 [INF] Searching for user with email admin@ad 
+2024-02-16 13:28:44.536 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2024-02-16 13:28:44.697 +03:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API) in 177.3494ms
+2024-02-16 13:28:44.736 +03:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API)'
+2024-02-16 13:28:44.835 +03:00 [ERR] Exception User does not exist caught
+2024-02-16 13:28:44.836 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7288/api/Authentication/login - 400 null application/json; charset=utf-8 323.4977ms
+2024-02-16 13:32:16.410 +03:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-16 13:32:16.674 +03:00 [INF] Now listening on: https://localhost:7288
+2024-02-16 13:32:16.675 +03:00 [INF] Now listening on: http://localhost:5290
+2024-02-16 13:32:16.677 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-16 13:32:16.678 +03:00 [INF] Hosting environment: Development
+2024-02-16 13:32:16.679 +03:00 [INF] Content root path: C:\Users\Admin\Desktop\eShop-internship-project\Identity.API
+2024-02-16 13:32:17.026 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/index.html - null null
+2024-02-16 13:32:17.177 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/index.html - 200 null text/html;charset=utf-8 155.5108ms
+2024-02-16 13:32:17.224 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/_framework/aspnetcore-browser-refresh.js - null null
+2024-02-16 13:32:17.226 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/_vs/browserLink - null null
+2024-02-16 13:32:17.230 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/_framework/aspnetcore-browser-refresh.js - 200 13760 application/javascript; charset=utf-8 6.1623ms
+2024-02-16 13:32:17.261 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/_vs/browserLink - 200 null text/javascript; charset=UTF-8 35.3329ms
+2024-02-16 13:32:17.301 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/v1/swagger.json - null null
+2024-02-16 13:32:17.374 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 73.3356ms
+2024-02-16 13:32:48.344 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7288/api/Authentication/login - application/json 83
+2024-02-16 13:32:48.357 +03:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API)'
+2024-02-16 13:32:48.373 +03:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginAsync(Identity.BusinessLogic.DTOs.LoginDTO) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-16 13:32:48.528 +03:00 [INF] Searching for user with email user@example.com 
+2024-02-16 13:32:49.474 +03:00 [INF] Executed DbCommand (34ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2024-02-16 13:32:49.534 +03:00 [INF] User: 18636657-db44-4f76-8c92-3bd22f6855b4 user@example.com JoeDoe
+2024-02-16 13:32:49.628 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2024-02-16 13:32:49.633 +03:00 [INF] User roles: User
+2024-02-16 13:32:49.679 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2024-02-16 13:32:49.683 +03:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API) in 1306.8172ms
+2024-02-16 13:32:49.684 +03:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API)'
+2024-02-16 13:32:49.691 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7288/api/Authentication/login - 200 null text/plain; charset=utf-8 1346.2616ms
+2024-02-16 13:33:51.980 +03:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-16 13:33:52.226 +03:00 [INF] Now listening on: https://localhost:7288
+2024-02-16 13:33:52.228 +03:00 [INF] Now listening on: http://localhost:5290
+2024-02-16 13:33:52.230 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-16 13:33:52.232 +03:00 [INF] Hosting environment: Development
+2024-02-16 13:33:52.234 +03:00 [INF] Content root path: C:\Users\Admin\Desktop\eShop-internship-project\Identity.API
+2024-02-16 13:33:55.233 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/index.html - null null
+2024-02-16 13:33:55.389 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/index.html - 200 null text/html;charset=utf-8 158.9066ms
+2024-02-16 13:33:55.437 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/_framework/aspnetcore-browser-refresh.js - null null
+2024-02-16 13:33:55.445 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/_framework/aspnetcore-browser-refresh.js - 200 13760 application/javascript; charset=utf-8 7.9845ms
+2024-02-16 13:33:55.448 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/_vs/browserLink - null null
+2024-02-16 13:33:55.479 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/_vs/browserLink - 200 null text/javascript; charset=UTF-8 30.7395ms
+2024-02-16 13:33:55.518 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/v1/swagger.json - null null
+2024-02-16 13:33:55.600 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 82.2385ms
+2024-02-16 13:34:30.918 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7288/api/Authentication/register - application/json 119
+2024-02-16 13:34:30.930 +03:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API)'
+2024-02-16 13:34:30.946 +03:00 [INF] Route matched with {action = "Register", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RegisterAsync(Identity.BusinessLogic.DTOs.RegisterDTO) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-16 13:34:32.100 +03:00 [INF] Executed DbCommand (36ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2024-02-16 13:34:32.126 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2024-02-16 13:34:32.318 +03:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API) in 1366.9838ms
+2024-02-16 13:34:32.364 +03:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API)'
+2024-02-16 13:34:32.485 +03:00 [ERR] Exception Missing type map configuration or unsupported mapping.
+
+Mapping types:
+RegisterDTO -> User
+Identity.BusinessLogic.DTOs.RegisterDTO -> Identity.DataAccess.Models.User caught
+2024-02-16 13:34:32.499 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7288/api/Authentication/register - 500 null application/json; charset=utf-8 1581.1959ms
+2024-02-16 13:36:24.975 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7288/api/Authentication/register - application/json 119
+2024-02-16 13:36:24.982 +03:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API)'
+2024-02-16 13:36:24.983 +03:00 [INF] Route matched with {action = "Register", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RegisterAsync(Identity.BusinessLogic.DTOs.RegisterDTO) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-16 13:36:25.020 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2024-02-16 13:36:25.025 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2024-02-16 13:38:25.600 +03:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-16 13:38:25.755 +03:00 [INF] Now listening on: https://localhost:7288
+2024-02-16 13:38:25.760 +03:00 [INF] Now listening on: http://localhost:5290
+2024-02-16 13:38:25.761 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-16 13:38:25.762 +03:00 [INF] Hosting environment: Development
+2024-02-16 13:38:25.763 +03:00 [INF] Content root path: C:\Users\Admin\Desktop\eShop-internship-project\Identity.API
+2024-02-16 13:38:27.016 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/index.html - null null
+2024-02-16 13:38:27.159 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/index.html - 200 null text/html;charset=utf-8 146.7517ms
+2024-02-16 13:38:27.205 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/_framework/aspnetcore-browser-refresh.js - null null
+2024-02-16 13:38:27.206 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/_vs/browserLink - null null
+2024-02-16 13:38:27.218 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/_framework/aspnetcore-browser-refresh.js - 200 13760 application/javascript; charset=utf-8 13.3431ms
+2024-02-16 13:38:27.243 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/_vs/browserLink - 200 null text/javascript; charset=UTF-8 36.2456ms
+2024-02-16 13:38:27.286 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/v1/swagger.json - null null
+2024-02-16 13:38:27.357 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 71.7063ms
+2024-02-16 13:47:44.550 +03:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-16 13:47:44.703 +03:00 [INF] Now listening on: https://localhost:7288
+2024-02-16 13:47:44.704 +03:00 [INF] Now listening on: http://localhost:5290
+2024-02-16 13:47:44.705 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-16 13:47:44.706 +03:00 [INF] Hosting environment: Development
+2024-02-16 13:47:44.707 +03:00 [INF] Content root path: C:\Users\Admin\Desktop\eShop-internship-project\Identity.API
+2024-02-16 13:47:45.208 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/index.html - null null
+2024-02-16 13:47:45.351 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/index.html - 200 null text/html;charset=utf-8 146.628ms
+2024-02-16 13:47:45.395 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/_framework/aspnetcore-browser-refresh.js - null null
+2024-02-16 13:47:45.396 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/_vs/browserLink - null null
+2024-02-16 13:47:45.402 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/_framework/aspnetcore-browser-refresh.js - 200 13760 application/javascript; charset=utf-8 6.9086ms
+2024-02-16 13:47:45.427 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/_vs/browserLink - 200 null text/javascript; charset=UTF-8 31.4926ms
+2024-02-16 13:47:45.466 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/v1/swagger.json - null null
+2024-02-16 13:47:45.532 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 66.5659ms
+2024-02-16 13:51:27.941 +03:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-16 13:51:28.089 +03:00 [INF] Now listening on: https://localhost:7288
+2024-02-16 13:51:28.090 +03:00 [INF] Now listening on: http://localhost:5290
+2024-02-16 13:51:28.092 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-16 13:51:28.092 +03:00 [INF] Hosting environment: Development
+2024-02-16 13:51:28.093 +03:00 [INF] Content root path: C:\Users\Admin\Desktop\eShop-internship-project\Identity.API
+2024-02-16 13:51:38.174 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/index.html - null null
+2024-02-16 13:51:38.323 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/index.html - 200 null text/html;charset=utf-8 151.0448ms
+2024-02-16 13:51:38.372 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/_framework/aspnetcore-browser-refresh.js - null null
+2024-02-16 13:51:38.374 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/_vs/browserLink - null null
+2024-02-16 13:51:38.381 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/_framework/aspnetcore-browser-refresh.js - 200 13760 application/javascript; charset=utf-8 8.8382ms
+2024-02-16 13:51:38.410 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/_vs/browserLink - 200 null text/javascript; charset=UTF-8 35.8137ms
+2024-02-16 13:51:38.451 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/v1/swagger.json - null null
+2024-02-16 13:51:38.523 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 72.4028ms
+2024-02-16 13:52:05.895 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7288/api/authentication/register - application/json 116
+2024-02-16 13:52:05.908 +03:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API)'
+2024-02-16 13:52:05.923 +03:00 [INF] Route matched with {action = "Register", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RegisterAsync(Identity.BusinessLogic.DTOs.RegisterDTO) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-16 13:52:07.531 +03:00 [INF] Executed DbCommand (31ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2024-02-16 13:52:07.558 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2024-02-16 13:52:11.463 +03:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API) in 5536.1997ms
+2024-02-16 13:52:11.504 +03:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API)'
+2024-02-16 13:52:11.602 +03:00 [ERR] Exception Missing type map configuration or unsupported mapping.
+
+Mapping types:
+RegisterDTO -> User
+Identity.BusinessLogic.DTOs.RegisterDTO -> Identity.DataAccess.Models.User caught
+2024-02-16 13:52:11.619 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7288/api/authentication/register - 500 null application/json; charset=utf-8 5724.0493ms
+2024-02-16 13:59:46.714 +03:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-16 13:59:46.857 +03:00 [INF] Now listening on: https://localhost:7288
+2024-02-16 13:59:46.861 +03:00 [INF] Now listening on: http://localhost:5290
+2024-02-16 13:59:46.863 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-16 13:59:46.864 +03:00 [INF] Hosting environment: Development
+2024-02-16 13:59:46.865 +03:00 [INF] Content root path: C:\Users\Admin\Desktop\eShop-internship-project\Identity.API
+2024-02-16 13:59:58.329 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/index.html - null null
+2024-02-16 13:59:58.473 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/index.html - 200 null text/html;charset=utf-8 146.7048ms
+2024-02-16 13:59:58.519 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/_framework/aspnetcore-browser-refresh.js - null null
+2024-02-16 13:59:58.522 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/_vs/browserLink - null null
+2024-02-16 13:59:58.527 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/_framework/aspnetcore-browser-refresh.js - 200 13760 application/javascript; charset=utf-8 8.4544ms
+2024-02-16 13:59:58.551 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/_vs/browserLink - 200 null text/javascript; charset=UTF-8 28.7041ms
+2024-02-16 13:59:58.591 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7288/swagger/v1/swagger.json - null null
+2024-02-16 13:59:58.668 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7288/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 77.0412ms
+2024-02-16 14:01:34.055 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7288/api/authentication/register - application/json 116
+2024-02-16 14:01:34.067 +03:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API)'
+2024-02-16 14:01:34.080 +03:00 [INF] Route matched with {action = "Register", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RegisterAsync(Identity.BusinessLogic.DTOs.RegisterDTO) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-16 14:01:35.723 +03:00 [INF] Executed DbCommand (31ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2024-02-16 14:01:35.749 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2024-02-16 14:01:38.898 +03:00 [INF] Creating new user string string@mail.ri
+2024-02-16 14:01:38.959 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2024-02-16 14:01:39.052 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (DbType = Int32), @p2='?' (Size = 4000), @p3='?' (Size = 256), @p4='?' (DbType = Boolean), @p5='?' (Size = 4000), @p6='?' (DbType = Boolean), @p7='?' (DbType = DateTimeOffset), @p8='?' (Size = 256), @p9='?' (Size = 256), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?' (DbType = Boolean), @p13='?' (Size = 4000), @p14='?' (DbType = Boolean), @p15='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [AspNetUsers] ([Id], [AccessFailedCount], [ConcurrencyStamp], [Email], [EmailConfirmed], [ImageUrl], [LockoutEnabled], [LockoutEnd], [NormalizedEmail], [NormalizedUserName], [PasswordHash], [PhoneNumber], [PhoneNumberConfirmed], [SecurityStamp], [TwoFactorEnabled], [UserName])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15);
+2024-02-16 14:01:39.061 +03:00 [INF] Adding role User to user string
+2024-02-16 14:01:39.069 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedRoleName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedRoleName_0
+2024-02-16 14:01:39.102 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (Size = 450), @__p_1='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[UserId], [a].[RoleId]
+FROM [AspNetUserRoles] AS [a]
+WHERE [a].[UserId] = @__p_0 AND [a].[RoleId] = @__p_1
+2024-02-16 14:01:39.106 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedRoleName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedRoleName_0
+2024-02-16 14:01:39.115 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2024-02-16 14:01:39.142 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (Size = 450), @p17='?' (Size = 450), @p2='?' (DbType = Int32), @p3='?' (Size = 4000), @p18='?' (Size = 4000), @p4='?' (Size = 256), @p5='?' (DbType = Boolean), @p6='?' (Size = 4000), @p7='?' (DbType = Boolean), @p8='?' (DbType = DateTimeOffset), @p9='?' (Size = 256), @p10='?' (Size = 256), @p11='?' (Size = 4000), @p12='?' (Size = 4000), @p13='?' (DbType = Boolean), @p14='?' (Size = 4000), @p15='?' (DbType = Boolean), @p16='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AspNetUserRoles] ([RoleId], [UserId])
+VALUES (@p0, @p1);
+UPDATE [AspNetUsers] SET [AccessFailedCount] = @p2, [ConcurrencyStamp] = @p3, [Email] = @p4, [EmailConfirmed] = @p5, [ImageUrl] = @p6, [LockoutEnabled] = @p7, [LockoutEnd] = @p8, [NormalizedEmail] = @p9, [NormalizedUserName] = @p10, [PasswordHash] = @p11, [PhoneNumber] = @p12, [PhoneNumberConfirmed] = @p13, [SecurityStamp] = @p14, [TwoFactorEnabled] = @p15, [UserName] = @p16
+OUTPUT 1
+WHERE [Id] = @p17 AND [ConcurrencyStamp] = @p18;
+2024-02-16 14:01:39.156 +03:00 [INF] Executing CreatedResult, writing value of type 'null'.
+2024-02-16 14:01:39.159 +03:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API) in 5075.9097ms
+2024-02-16 14:01:39.160 +03:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API)'
+2024-02-16 14:01:39.166 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7288/api/authentication/register - 204 null null 5110.5621ms

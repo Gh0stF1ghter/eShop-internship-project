@@ -7,12 +7,13 @@ var services = builder.Services;
 builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console()
 .WriteTo.File("debug_log.txt"));
 
-// Add services to the container.
 services.AddIdentityDbContext(builder.Configuration);
 
 services.AddIdentitySupport();
 
 services.AddAuthentication(builder.Configuration);
+
+services.AddMapper();
 
 services.AddAutoValidation();
 
@@ -28,7 +29,6 @@ var app = builder.Build();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
