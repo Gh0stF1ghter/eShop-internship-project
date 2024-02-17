@@ -96,10 +96,6 @@ namespace Identity.BusinessLogic.Services.Implementations
             var tokenHandler = new JwtSecurityTokenHandler();
             var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
 
-            var jwtSecurityToken = securityToken as JwtSecurityToken;
-
-
-
             return principal;
         }
 
