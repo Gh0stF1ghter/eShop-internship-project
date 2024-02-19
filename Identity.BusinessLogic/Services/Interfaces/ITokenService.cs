@@ -8,6 +8,6 @@ namespace Identity.BusinessLogic.Services.Interfaces
     {
         string GenerateToken(IEnumerable<Claim> claims);
         Task<TokenDTO> CreateTokenAsync(User user, bool populateExp);
-        Task<TokenDTO> RefreshTokenAsync(TokenDTO tokenDto);
+        Task<TokenDTO> RefreshTokenAsync(TokenDTO tokenDto, CancellationToken token);
     }
 }

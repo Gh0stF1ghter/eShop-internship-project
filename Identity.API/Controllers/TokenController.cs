@@ -14,9 +14,9 @@ namespace Identity.API.Controllers
         [Route("refresh")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> LoginAsync([FromBody] TokenDTO tokenDTO)
+        public async Task<IActionResult> RefreshTokenAsync([FromBody] TokenDTO tokenDTO, CancellationToken token = default)
         {
-            var tokens = await _tokenService.RefreshTokenAsync(tokenDTO);
+            var tokens = await _tokenService.RefreshTokenAsync(tokenDTO, token);
 
             return Ok(tokens);
         }

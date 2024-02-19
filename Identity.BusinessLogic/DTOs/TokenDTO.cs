@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Identity.BusinessLogic.DTOs
+﻿namespace Identity.BusinessLogic.DTOs
 {
     public record TokenDTO(string AccessToken, string RefreshToken);
 }

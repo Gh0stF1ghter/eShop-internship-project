@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
-using System.Reflection;
 using System.Text;
 
 namespace Identity.API.Extensions
@@ -23,8 +22,8 @@ namespace Identity.API.Extensions
 
         public static void AddIdentitySupport(this IServiceCollection services) =>
             services.AddIdentity<User, IdentityRole>()
-        .AddEntityFrameworkStores<IdentityContext>()
-        .AddDefaultTokenProviders();
+            .AddEntityFrameworkStores<IdentityContext>()
+            .AddDefaultTokenProviders();
 
         public static void AddAuthentication(this IServiceCollection services, IConfiguration configuration) =>
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -54,7 +53,6 @@ namespace Identity.API.Extensions
             services.AddSingleton(mapper);
         }
 
-
         public static void AddAutoValidation(this IServiceCollection services)
         {
             services.AddValidatorsFromAssemblyContaining<RegisterValidator>();
@@ -64,7 +62,7 @@ namespace Identity.API.Extensions
         public static void AddDependencies(this IServiceCollection services)
         {
             services.AddTransient<ITokenService, TokenService>();
-            services.AddTransient<IAuthenticationService, EShopAuthenticationService>();
+            services.AddTransient<IAuthenticationService, AuthenticationService>();
         }
     }
 }

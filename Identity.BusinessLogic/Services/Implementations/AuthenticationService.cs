@@ -9,15 +9,20 @@ using Microsoft.Extensions.Logging;
 
 namespace Identity.BusinessLogic.Services.Implementations
 {
-    public class EShopAuthenticationService(UserManager<User> userManager, ITokenService tokenService, IMapper mapper, ILogger<EShopAuthenticationService> logger) : IAuthenticationService
+    public class AuthenticationService(
+        UserManager<User> userManager,
+        ITokenService tokenService,
+        IMapper mapper,
+        ILogger<AuthenticationService> logger
+        ) : IAuthenticationService
     {
         private readonly UserManager<User> _userManager = userManager;
 
         private readonly ITokenService _tokenService = tokenService;
         private readonly IMapper _mapper = mapper;
-        private readonly ILogger<EShopAuthenticationService> _logger = logger;
+        private readonly ILogger<AuthenticationService> _logger = logger;
 
-        public async Task<TokenDTO?> AuthenticateAsync(LoginDTO loginCredentials)
+        public async Task<TokenDTO?> AuthenticateAsync(LoginDTO loginCredentials, CancellationToken cancellationToken)
         {
             User user = await ValidateAuthenticationAsync(loginCredentials.Email, loginCredentials.Password);
 
@@ -26,15 +31,16 @@ namespace Identity.BusinessLogic.Services.Implementations
             return tokenDto;
         }
 
-        public async Task<bool> RegisterUserAsync(RegisterDTO registerCredentials)
+        public async Task<bool> RegisterUserAsync(RegisterDTO registerCredentials, CancellationToken token)
         {
-            await ValidateRegisterAsync(registerCredentials.Email, registerCredentials.Username);
+            await ValidateRegisterAsync(registerCredentials.Email);
 
             var user = _mapper.Map<User>(registerCredentials);
 
             await CreateUserAsync(user, registerCredentials.Password);
 
             _logger.LogInformation("Adding role {role} to user {name}", Roles.User, user.UserName);
+
             await _userManager.AddToRoleAsync(user, Roles.User);
 
             return true;
@@ -48,7 +54,7 @@ namespace Identity.BusinessLogic.Services.Implementations
             if (user is null)
             {
                 _logger.LogDebug("No User");
-                throw new BadRequestException("User does not exist");
+                throw new BadRequestException(Messages.NoUser);
             }
 
             _logger.LogInformation("User: {id} {email} {name}", user.Id, user.Email, user.UserName);
@@ -57,13 +63,13 @@ namespace Identity.BusinessLogic.Services.Implementations
             if (!IsPasswordValid)
             {
                 _logger.LogDebug("Invalid Password");
-                throw new BadRequestException("Invalid Password");
+                throw new BadRequestException(Messages.InvalidPassword);
             }
 
             return user;
         }
 
-        private async Task ValidateRegisterAsync(string email, string username)
+        private async Task ValidateRegisterAsync(string email)
         {
             _logger.LogDebug("Searching for user with email {email} ", email);
             var emailTaken = await _userManager.FindByEmailAsync(email);
@@ -71,15 +77,7 @@ namespace Identity.BusinessLogic.Services.Implementations
             if (emailTaken is not null)
             {
                 _logger.LogDebug("User found: {id} {name} {email}", emailTaken.Id, emailTaken.UserName, emailTaken.Email);
-                throw new BadRequestException("Email already taken");
-            }
-
-            var userNameTaken = await _userManager.FindByNameAsync(username);
-
-            if (userNameTaken is not null)
-            {
-                _logger.LogDebug("User found: {id} {name} {email}", userNameTaken.Id, userNameTaken.UserName, userNameTaken.Email);
-                throw new BadRequestException("Username already taken");
+                throw new BadRequestException(Messages.EmailTaken);
             }
         }
 
@@ -90,8 +88,9 @@ namespace Identity.BusinessLogic.Services.Implementations
 
             if (!createUser.Succeeded)
             {
-                _logger.LogError("Internal error while creating new user {errrors}", createUser.Errors);
-                throw new InvalidOperationException();
+                _logger.LogError("Error while creating new user {errors}", createUser.Errors);
+
+                throw new BadRequestException(Messages.RegisterFailed);
             }
         }
     }

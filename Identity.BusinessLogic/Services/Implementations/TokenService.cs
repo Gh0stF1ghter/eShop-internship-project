@@ -1,5 +1,6 @@
 ﻿using Identity.BusinessLogic.DTOs;
 using Identity.BusinessLogic.Services.Interfaces;
+using Identity.DataAccess.Entities.Constants;
 using Identity.DataAccess.Entities.Exceptions;
 using Identity.DataAccess.Models;
 using Microsoft.AspNetCore.Identity;
@@ -27,7 +28,9 @@ namespace Identity.BusinessLogic.Services.Implementations
             var accessToken = GenerateToken(claims);
 
             if (populateExp)
+            {
                 user.RefreshTokenExpireTime = DateTime.UtcNow.AddDays(7);
+            }
 
             await _userManager.UpdateAsync(user);
 
@@ -54,21 +57,21 @@ namespace Identity.BusinessLogic.Services.Implementations
             return tokenHandler.WriteToken(token);
         }
 
-        public async Task<TokenDTO> RefreshTokenAsync(TokenDTO tokenDto)
+        public async Task<TokenDTO> RefreshTokenAsync(TokenDTO tokenDto, CancellationToken token)
         {
             var principal = GetPrincipalFromExpiredToken(tokenDto.AccessToken);
 
             var user = await _userManager.FindByNameAsync(principal.Identity.Name);
-            if (user is null || user.RefreshToken != tokenDto.RefreshToken ||
-            user.RefreshTokenExpireTime <= DateTime.Now)
-                throw new RefreshTokenBadRequestException("Token is invalid");
+
+            if (user is null || user.RefreshToken != tokenDto.RefreshToken || user.RefreshTokenExpireTime <= DateTime.Now)
+            {
+                throw new RefreshTokenBadRequestException(Messages.InvalidToken);
+            }
 
             return await CreateTokenAsync(user, populateExp: false);
-
-            throw new NotImplementedException();
         }
 
-        private string GenerateRefreshToken()
+        private static string GenerateRefreshToken()
         {
             var randomNumer = new byte[32];
 
@@ -109,15 +112,15 @@ namespace Identity.BusinessLogic.Services.Implementations
             };
 
             if (user.UserName is not null)
-                userClaims.Add(new Claim(ClaimTypes.Name, user.UserName));
-
-            foreach (var role in userRoles)
             {
-                userClaims.Add(new Claim(ClaimTypes.Role, role));
+                userClaims.Add(new Claim(ClaimTypes.Name, user.UserName));
             }
+
+            userRoles
+                .ToList()
+                .ForEach(ur => userClaims.Add(new Claim(ClaimTypes.Role, ur)));
 
             return userClaims;
         }
-
     }
 }
