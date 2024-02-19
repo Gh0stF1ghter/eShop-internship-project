@@ -1,21 +1,34 @@
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Identity.Web;
+using Identity.API.Extensions;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
 
-// Add services to the container.
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
+builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console()
+.WriteTo.File("debug_log.txt"));
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+services.AddIdentityDbContext(builder.Configuration);
+
+services.AddIdentitySupport();
+
+services.AddAuthentication(builder.Configuration);
+
+services.AddMapper();
+
+services.AddAutoValidation();
+
+services.AddDependencies();
+
+services.AddControllers();
+
+services.AddEndpointsApiExplorer();
+
+services.ConfigureSwagger();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
