@@ -2,14 +2,13 @@
 
 namespace Catalogs.Domain.Interfaces.Repos
 {
-    public interface IRepository<T>
+    public interface IRepository<TEntity> where TEntity : class
     {
-        Task<IQueryable<T>> GetAllAsync(bool trackChanges);
-        Task<IQueryable<T>> GetByConditionAsync(Expression<Func<T, bool>> predicate, bool trackChanges);
-        Task<T?> GetByIdAsync(Guid id);
+        IQueryable<TEntity> GetAll(bool trackChanges);
+        IQueryable<TEntity> GetByCondition(Expression<Func<TEntity, bool>> predicate, bool trackChanges);
         
-        Task CreateAsync(T entity);
-        Task UpdateAsync(T oldEntity, T newEntity);
-        void Delete(T entity);
+        void Add(TEntity entity);
+        void Update(TEntity entity);
+        void Delete(TEntity entity);
     }
 }

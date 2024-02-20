@@ -5,10 +5,7 @@ namespace Catalogs.Domain.Interfaces.Repos
 {
     public interface IVendorRepository : IRepository<Vendor>
     {
-        Task<IQueryable<Vendor>> GetAllVendorsAsync();
-
-        Task<Vendor> GetVendorByIdAsync(int id);
-
-        Task<Vendor> GetVendorByConditionAsync(Expression<Func<Vendor, bool>> condition, bool trackChanges);
+        Task<IEnumerable<Vendor>> GetAllVendorsAsync(bool trackChanges);
+        Task<Vendor?> GetVendorByIdAsync(int id, bool trackChanges);
     }
 }

@@ -6,11 +6,8 @@ namespace Catalogs.Domain.Interfaces.Repos
     public interface IItemRepository : IRepository<Item>
     {
         Task<IEnumerable<Item>> GetAllItemsAsync(bool trackChanges);
+        Task<Item?> GetItemByIdAsync(int id, bool trackChanges);
 
-        Task<Item?> GetItemByIdAsync(Guid id, bool trackChanges);
-
-        Task<Vendor> GetItemByConditionAsync(Expression<Func<Vendor, bool>> condition, bool trackChanges);
-
-        Task AddItemAsync(Guid brandId, Guid typeId, Guid Vendor, Item item);
+        void AddItem(int brandId, int typeId, int Vendor, Item item);
     }
 }

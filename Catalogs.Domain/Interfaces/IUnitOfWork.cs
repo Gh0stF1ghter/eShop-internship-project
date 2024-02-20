@@ -4,11 +4,11 @@ namespace Catalogs.Domain.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        IBrandRepository Brands { get; }
-        IItemRepository Items { get; }
-        IVendorRepository Vendors { get; }
-        IRepository<Type> Types { get; }
+        IBrandRepository Brand { get; }
+        IItemRepository Item { get; }
+        IItemTypeRepository ItemType { get; }
+        IVendorRepository Vendor { get; }
 
-        void SaveChanges();
+        Task SaveChangesAsync();
     }
 }
