@@ -11,6 +11,6 @@ namespace Catalogs.Domain.Interfaces.Repos
 
         Task<Vendor> GetItemByConditionAsync(Expression<Func<Vendor, bool>> condition, bool trackChanges);
 
-        Task AddItemOfBrandAsync(Guid brandId, Item item);
+        Task AddItemAsync(Guid brandId, Guid typeId, Guid Vendor, Item item);
     }
 }

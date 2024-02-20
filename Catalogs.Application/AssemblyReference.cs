@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Catalogs.Domain.Entities.Exceptions
+namespace Catalogs.Application
 {
-    public class BadRequestException(string message) : Exception(message);
+    public static class AssemblyReference { }
 }

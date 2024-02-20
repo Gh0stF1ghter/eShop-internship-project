@@ -1,6 +1,6 @@
 ﻿namespace Catalogs.Domain.Entities.Models
 {
-    public class Brand
+    public class ItemType
     {
         public int Id { get; set; }
 
