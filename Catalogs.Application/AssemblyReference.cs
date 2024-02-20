@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Catalogs.Application
 {
-    public static class AssemblyReference { }
+    public static class AssemblyReference;
 }
