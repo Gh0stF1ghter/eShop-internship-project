@@ -1,9 +1,12 @@
-using System.Reflection;
+using Catalogs.Domain.Interfaces;
+using Catalogs.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var services = builder.Services;
+
+services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Catalogs.Application.AssemblyReference).Assembly));
 services.AddAutoMapper(typeof(Program));

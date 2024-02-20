@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace Catalogs.Application.Queries.ItemQueries
 {
-    public sealed record GetItemQuery(Guid Id, bool TrackChanges) : IRequest<ItemDTO>;
+    public sealed record GetItemQuery(int Id, bool TrackChanges) : IRequest<ItemDto>;
 }

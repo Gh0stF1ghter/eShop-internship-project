@@ -5,9 +5,9 @@ using MediatR;
 namespace Catalogs.Application.Commands.ItemCommands
 {
     public sealed record CreateItemCommand(
-        CreateItemDTO ItemDTO,
-        Guid BrandId,
-        Guid TypeId,
-        Guid VendorId
-        ) : IRequest<ItemDTO>;
+        ItemManipulateDto ItemDTO,
+        int BrandId,
+        int TypeId,
+        int VendorId
+        ) : IRequest<ItemDto>;
 }

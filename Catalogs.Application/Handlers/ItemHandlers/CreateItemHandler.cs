@@ -9,12 +9,12 @@ using MediatR;
 
 namespace Catalogs.Application.Handlers.ItemHandlers
 {
-    public sealed class CreateItemHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<CreateItemCommand, ItemDTO>
+    public sealed class CreateItemHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<CreateItemCommand, ItemDto>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IMapper _mapper = mapper;
 
-        public async Task<ItemDTO> Handle(CreateItemCommand command, CancellationToken token)
+        public async Task<ItemDto> Handle(CreateItemCommand command, CancellationToken token)
         {
             if (command.ItemDTO is null)
             {
@@ -23,10 +23,10 @@ namespace Catalogs.Application.Handlers.ItemHandlers
 
             var newItem = _mapper.Map<Item>(command.ItemDTO);
 
-            await _unitOfWork.Items.AddItemAsync(command.BrandId, command.TypeId, command.VendorId, newItem);
-            _unitOfWork.SaveChanges();
+            _unitOfWork.Item.AddItem(command.BrandId, command.TypeId, command.VendorId, newItem);
+            await _unitOfWork.SaveChangesAsync();
 
-            var itemToReturn = _mapper.Map<ItemDTO>(newItem);
+            var itemToReturn = _mapper.Map<ItemDto>(newItem);
 
             return itemToReturn;
         }
