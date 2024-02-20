@@ -7,15 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\VendorCommands\" />
-    <Folder Include="Commands\BrandCommands\" />
-    <Folder Include="Handlers\VendorHandlers\" />
-    <Folder Include="Handlers\BrandHandlers\" />
-    <Folder Include="Queries\BrandQueries\" />
-    <Folder Include="Queries\VendorQueries\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="MediatR" Version="12.2.0" />
   </ItemGroup>

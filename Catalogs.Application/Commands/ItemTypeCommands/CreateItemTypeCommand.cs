@@ -1,0 +1,8 @@
+﻿using Catalogs.Domain.Entities.DataTransferObjects;
+using Catalogs.Domain.Entities.DataTransferObjects.CreateDTOs;
+using MediatR;
+
+namespace Catalogs.Application.Commands.ItemCommands
+{
+    public sealed record CreateItemTypeCommand(ItemTypeManipulateDto ItemDTO) : IRequest<ItemTypeDto>;
+}

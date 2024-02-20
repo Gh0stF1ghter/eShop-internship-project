@@ -9,8 +9,8 @@ namespace Catalogs.Application.MappingProfiles
     {
         public MapingProfile()
         {
-            CreateMap<Item, ItemDTO>();
-            CreateMap<CreateItemDTO, Item>();
+            CreateMap<Item, ItemDto>();
+            CreateMap<ItemManipulateDto, Item>();
         }
     }
 }

@@ -3,5 +3,5 @@ using MediatR;
 
 namespace Catalogs.Application.Queries.ItemQueries
 {
-    public sealed record GetItemQuery(int Id, bool TrackChanges) : IRequest<ItemDto>;
+    public sealed record GetVendorsQuery(bool TrackChanges) : IRequest<IEnumerable<VendorDto>>;
 }

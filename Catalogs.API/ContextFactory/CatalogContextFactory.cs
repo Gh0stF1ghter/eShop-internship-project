@@ -15,7 +15,7 @@ namespace Catalogs.API.ContextFactory
 
             var builder = new DbContextOptionsBuilder<CatalogContext>()
                 .UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
-                b=> b.MigrationsAssembly("Catalogs.API"));
+                b => b.MigrationsAssembly("Catalogs.API"));
 
             return new CatalogContext(builder.Options);
         }
