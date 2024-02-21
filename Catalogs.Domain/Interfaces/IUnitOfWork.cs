@@ -9,6 +9,6 @@ namespace Catalogs.Domain.Interfaces
         IItemTypeRepository ItemType { get; }
         IVendorRepository Vendor { get; }
 
-        Task SaveChangesAsync();
+        Task SaveChangesAsync(CancellationToken token);
     }
 }

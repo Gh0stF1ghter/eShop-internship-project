@@ -18,7 +18,7 @@ namespace Catalogs.Infrastructure.Configurations
             builder
                 .Property(x => x.Name)
                 .IsRequired()
-                .HasMaxLength(20);
+                .HasMaxLength(50);
             builder
                 .Property(x => x.Stock)
                 .IsRequired();

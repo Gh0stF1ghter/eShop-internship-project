@@ -14,7 +14,7 @@ namespace Catalogs.Application.Handlers.ItemTypeHandlers
                 ?? throw new BadRequestException(ErrorMessages.VendorNotFound);
 
             _mapper.Map(request.Vendor, typeToUpdate);
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync(token);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Catalogs.Application.Handlers.VendorHandlers
             var vendor = _mapper.Map<Vendor>(command.VendorDto);
 
             _unitOfWork.Vendor.Add(vendor);
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync(token);
 
             var vendorToReturn = _mapper.Map<VendorDto>(vendor);
 

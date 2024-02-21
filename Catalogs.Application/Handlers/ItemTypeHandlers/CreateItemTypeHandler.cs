@@ -18,7 +18,7 @@ namespace Catalogs.Application.Handlers.ItemTypeHandlers
             var type = _mapper.Map<ItemType>(command.TypeDto);
 
             _unitOfWork.ItemType.Add(type);
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync(token);
 
             var typeToReturn = _mapper.Map<ItemTypeDto>(type);
 

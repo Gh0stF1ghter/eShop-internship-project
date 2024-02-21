@@ -13,7 +13,6 @@ namespace Catalogs.Application.Validators
                 .MaximumLength(50).WithMessage("Item is longer than 20 characters");
 
             RuleFor(i => i.Price)
-                .NotEmpty().WithMessage("Item Price must not be empty")
                 .GreaterThan(0).WithMessage("Item Price must not equal zero or negative number");
 
             RuleFor(i => i.Stock)
@@ -21,10 +20,19 @@ namespace Catalogs.Application.Validators
                 .GreaterThanOrEqualTo(0).WithMessage("Item Stock must not be negative");
 
             RuleFor(i => i.ImageUrl)
-                .Must(IsValidUri).When(i => !string.IsNullOrEmpty(i.ImageUrl));
+                .Must(IsValidUri).When(i => !string.IsNullOrEmpty(i.ImageUrl)).WithMessage("Image url is invalid");
+
+            RuleFor(i => i.BrandId)
+                .GreaterThan(0).WithMessage("Brand Id must be positive");
+
+            RuleFor(i => i.VendorId)
+                .GreaterThan(0).WithMessage("Vendor Id must be positive");
         }
 
-        private bool IsValidUri(string uri) =>
-            Uri.IsWellFormedUriString(uri, UriKind.RelativeOrAbsolute);
+        private bool IsValidUri(string uri)
+        {
+           var isValid =  Uri.IsWellFormedUriString(uri, UriKind.Absolute);
+            return isValid;
+        }
     }
 }

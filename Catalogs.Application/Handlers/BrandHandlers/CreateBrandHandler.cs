@@ -18,7 +18,7 @@ namespace Catalogs.Application.Handlers.BrandHandlers
             var brand = _mapper.Map<Brand>(command.BrandDto);
 
             _unitOfWork.Brand.Add(brand);
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync(token);
             
             var brandToReturn = _mapper.Map<BrandDto>(brand);
 

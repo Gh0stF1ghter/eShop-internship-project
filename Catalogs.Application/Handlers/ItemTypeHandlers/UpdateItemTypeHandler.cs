@@ -10,11 +10,11 @@ namespace Catalogs.Application.Handlers.ItemTypeHandlers
 
         public async Task Handle(UpdateItemTypeCommand request, CancellationToken token)
         {
-            var typeToUpdate = await _unitOfWork.ItemType.GetItemTypeByIdAsync(request.Id, request.TrackChanges)
+            var typeToUpdate = await _unitOfWork.ItemType.GetItemTypeByIdAsync(request.Id, request.TrackChanges, token)
                 ?? throw new BadRequestException(ErrorMessages.TypeNotFound);
 
             _mapper.Map(request.Type, typeToUpdate);
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync(token);
         }
     }
 }

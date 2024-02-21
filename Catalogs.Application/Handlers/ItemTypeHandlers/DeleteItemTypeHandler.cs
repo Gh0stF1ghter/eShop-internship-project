@@ -9,12 +9,12 @@ namespace Catalogs.Application.Handlers.ItemTypeHandlers
 
         public async Task Handle(DeleteItemTypeComand comand, CancellationToken token)
         {
-            var brand = await _unitOfWork.ItemType.GetItemTypeByIdAsync(comand.Id, comand.TrackChanges)
+            var brand = await _unitOfWork.ItemType.GetItemTypeByIdAsync(comand.Id, comand.TrackChanges, token)
                 ?? throw new BadRequestException(ErrorMessages.TypeNotFound);
 
             _unitOfWork.ItemType.Delete(brand);
 
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync(token);
         }
     }
 }

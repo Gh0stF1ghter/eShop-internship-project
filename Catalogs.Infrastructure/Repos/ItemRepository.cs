@@ -11,23 +11,15 @@ namespace Catalogs.Infrastructure.Repos
             await GetAll(trackChanges)
                     .ToListAsync();
 
-        public async Task<IEnumerable<Item>> GetAllItemsOfBrandAsync(int brandId, bool trackChanges) =>
-            await GetByCondition(i => i.BrandId.Equals(brandId), trackChanges).ToListAsync();
-
         public async Task<IEnumerable<Item>> GetAllItemsOfTypeAsync(int typeId, bool trackChanges) =>
             await GetByCondition(i => i.TypeId.Equals(typeId), trackChanges).ToListAsync();
 
-        public async Task<IEnumerable<Item>> GetAllItemsOfVendorAsync(int vendorId, bool trackChanges) =>
-            await GetByCondition(i => i.VendorId.Equals(vendorId), trackChanges).ToListAsync();
+        public async Task<Item?> GetItemOfTypeByIdAsync(int typeid, int id, bool trackChanges) =>
+            await GetByCondition(i => i.Id.Equals(id) && i.TypeId.Equals(typeid), trackChanges).SingleOrDefaultAsync();
 
-        public async Task<Item?> GetItemByIdAsync(int id, bool trackChanges) =>
-            await GetByCondition(i => i.Id.Equals(id), trackChanges).SingleOrDefaultAsync();
-
-        public void AddItem(int brandId, int typeId, int Vendor, Item item)
+        public void AddItem(int typeId, Item item)
         {
-            item.BrandId = brandId;
             item.TypeId = typeId;
-            item.VendorId = Vendor;
 
             Add(item);
         }

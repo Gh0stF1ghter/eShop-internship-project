@@ -1,4 +1,5 @@
 using Catalogs.API.Extensions;
+using Identity.API.Extensions;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,11 +17,13 @@ services.AddAutoValidation();
 services.AddAutoMapper(typeof(Program));
 
 services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

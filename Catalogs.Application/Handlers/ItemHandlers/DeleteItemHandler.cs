@@ -10,13 +10,16 @@ namespace Catalogs.Application.Handlers.ItemHandlers
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-        public async Task Handle(DeleteItemCommand command, CancellationToken token)
+        public async Task Handle(DeleteItemCommand comand, CancellationToken token)
         {
-            var item = await _unitOfWork.Item.GetItemByIdAsync(command.Id, command.TrackChanges)
+            var itemType = await _unitOfWork.ItemType.GetItemTypeByIdAsync(comand.TypeId, comand.TrackChanges, token)
+                ?? throw new NotFoundException(ErrorMessages.TypeNotFound);
+
+            var item = await _unitOfWork.Item.GetItemOfTypeByIdAsync(comand.TypeId, comand.Id, comand.TrackChanges)
                 ?? throw new BadRequestException(ErrorMessages.ItemNotFound);
 
             _unitOfWork.Item.Delete(item);
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync(token);
         }
     }
 }

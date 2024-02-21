@@ -10,7 +10,7 @@ namespace Catalogs.Application.Handlers.ItemTypeHandlers
 
         public async Task<ItemTypeDto> Handle(GetItemTypeQuery query, CancellationToken token)
         {
-            var brand = await _unitOfWork.ItemType.GetItemTypeByIdAsync(query.Id, query.TrackChanges)
+            var brand = await _unitOfWork.ItemType.GetItemTypeByIdAsync(query.Id, query.TrackChanges, token)
                 ?? throw new NotFoundException(ErrorMessages.TypeNotFound + query.Id);
 
             var brandDto = _mapper.Map<ItemTypeDto>(brand);

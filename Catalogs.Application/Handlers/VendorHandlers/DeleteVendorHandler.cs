@@ -14,7 +14,7 @@ namespace Catalogs.Application.Handlers.ItemTypeHandlers
 
             _unitOfWork.Vendor.Delete(vendor);
 
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync(token);
         }
     }
 }

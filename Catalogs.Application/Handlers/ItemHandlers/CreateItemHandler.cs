@@ -21,14 +21,26 @@ namespace Catalogs.Application.Handlers.ItemHandlers
                 throw new BadRequestException(ErrorMessages.ItemIsNull);
             }
 
+            await FindReferences(command, token);
+
             var newItem = _mapper.Map<Item>(command.ItemDTO);
 
-            _unitOfWork.Item.AddItem(command.BrandId, command.TypeId, command.VendorId, newItem);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork.Item.AddItem(command.TypeId, newItem);
+            await _unitOfWork.SaveChangesAsync(token);
 
             var itemToReturn = _mapper.Map<ItemDto>(newItem);
 
             return itemToReturn;
+        }
+
+        private async Task FindReferences(CreateItemCommand command, CancellationToken token)
+        {
+            var itemType = await _unitOfWork.ItemType.GetItemTypeByIdAsync(command.TypeId, command.TrackChanges, token)
+                ?? throw new NotFoundException(ErrorMessages.TypeNotFound);
+            var brand = await _unitOfWork.Brand.GetBrandByIdAsync(command.ItemDTO.BrandId, command.TrackChanges)
+                ?? throw new BadRequestException(ErrorMessages.BrandNotFound);
+            var vendor = await _unitOfWork.Vendor.GetVendorByIdAsync(command.ItemDTO.VendorId, command.TrackChanges)
+                ?? throw new BadRequestException(ErrorMessages.VendorNotFound);
         }
     }
 }

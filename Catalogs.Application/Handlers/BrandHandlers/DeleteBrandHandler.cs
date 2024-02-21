@@ -13,7 +13,7 @@ namespace Catalogs.Application.Handlers.BrandHandlers
                 ?? throw new BadRequestException(ErrorMessages.BrandNotFound);
 
             _unitOfWork.Brand.DeleteBrand(brand);
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync(token);
         }
     }
 }

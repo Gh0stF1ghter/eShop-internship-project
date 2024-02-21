@@ -14,7 +14,7 @@ namespace Catalogs.Application.Handlers.BrandHandlers
                 ?? throw new BadRequestException(ErrorMessages.BrandNotFound);
 
             _mapper.Map(request.Brand, brandToUpdate);
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync(token);
         }
     }
 }

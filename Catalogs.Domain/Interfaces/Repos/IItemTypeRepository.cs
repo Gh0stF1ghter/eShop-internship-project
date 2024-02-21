@@ -9,7 +9,7 @@ namespace Catalogs.Domain.Interfaces.Repos
 {
     public interface IItemTypeRepository : IRepository<ItemType>
     {
-        Task<IEnumerable<ItemType>> GetAllItemTypesAsync(bool trackChanges);
-        Task<ItemType?> GetItemTypeByIdAsync(int id, bool trackChanges);
+        Task<IEnumerable<ItemType>> GetAllItemTypesAsync(bool trackChanges, CancellationToken token);
+        Task<ItemType?> GetItemTypeByIdAsync(int id, bool trackChanges, CancellationToken token);
     }
 }

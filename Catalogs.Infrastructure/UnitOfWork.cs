@@ -28,8 +28,8 @@ namespace Catalogs.Infrastructure
         public IItemTypeRepository ItemType => _itemTypeRepository.Value;
         public IVendorRepository Vendor => _vendorRepository.Value;
 
-        public async Task SaveChangesAsync() =>
-            await _context.SaveChangesAsync();
+        public async Task SaveChangesAsync(CancellationToken token) =>
+            await _context.SaveChangesAsync(token);
 
         private bool disposed = false;
 

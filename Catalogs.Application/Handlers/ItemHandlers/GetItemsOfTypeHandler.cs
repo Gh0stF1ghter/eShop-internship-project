@@ -1,7 +1,4 @@
-﻿using AutoMapper;
-using Catalogs.Application.Queries.ItemQueries;
-using Catalogs.Domain.Entities.DataTransferObjects;
-using Catalogs.Domain.Interfaces;
+﻿using Catalogs.Application.Queries.ItemQueries;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.ItemHandlers
@@ -13,6 +10,9 @@ namespace Catalogs.Application.Handlers.ItemHandlers
 
         public async Task<IEnumerable<ItemDto>> Handle(GetItemsOfTypeQuery query, CancellationToken token)
         {
+            var itemType = await _unitOfWork.ItemType.GetItemTypeByIdAsync(query.TypeId, query.TrackChanges, token)
+                ?? throw new NotFoundException(ErrorMessages.TypeNotFound);
+
             var items = await _unitOfWork.Item.GetAllItemsOfTypeAsync(query.TypeId, query.TrackChanges);
 
             var itemDtos = _mapper.Map<IEnumerable<ItemDto>>(items);
