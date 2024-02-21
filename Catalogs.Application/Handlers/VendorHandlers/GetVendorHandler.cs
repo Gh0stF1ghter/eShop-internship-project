@@ -10,7 +10,7 @@ namespace Catalogs.Application.Handlers.ItemTypeHandlers
 
         public async Task<VendorDto> Handle(GetVendorQuery query, CancellationToken token)
         {
-            var brand = await _unitOfWork.Vendor.GetVendorByIdAsync(query.Id, query.TrackChanges)
+            var brand = await _unitOfWork.Vendor.GetVendorByIdAsync(query.Id, query.TrackChanges, token)
                 ?? throw new NotFoundException(ErrorMessages.VendorNotFound + query.Id);
 
             var brandDto = _mapper.Map<VendorDto>(brand);

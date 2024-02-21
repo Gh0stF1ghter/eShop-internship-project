@@ -10,7 +10,7 @@ namespace Catalogs.Application.Handlers.BrandHandlers
 
         public async Task Handle(UpdateBrandCommand request, CancellationToken token)
         {
-            var brandToUpdate = await _unitOfWork.Brand.GetBrandByIdAsync(request.Id, request.TrackChanges)
+            var brandToUpdate = await _unitOfWork.Brand.GetBrandByIdAsync(request.Id, request.TrackChanges, token)
                 ?? throw new BadRequestException(ErrorMessages.BrandNotFound);
 
             _mapper.Map(request.Brand, brandToUpdate);

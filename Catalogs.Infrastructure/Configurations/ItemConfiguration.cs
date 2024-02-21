@@ -1,11 +1,6 @@
 ﻿using Catalogs.Domain.Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Catalogs.Infrastructure.Configurations
 {
@@ -33,7 +28,7 @@ namespace Catalogs.Infrastructure.Configurations
             builder
                 .HasOne(x => x.Type)
                 .WithMany(t => t.Items)
-                .HasForeignKey(x=> x.TypeId);
+                .HasForeignKey(x => x.TypeId);
             builder
                 .HasOne(x => x.Vendor)
                 .WithMany(v => v.Items)

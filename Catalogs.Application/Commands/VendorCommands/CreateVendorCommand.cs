@@ -1,5 +1,4 @@
-﻿using Catalogs.Domain.Entities.DataTransferObjects;
-using Catalogs.Domain.Entities.DataTransferObjects.CreateDTOs;
+﻿using Catalogs.Domain.Entities.DataTransferObjects.CreateDTOs;
 using MediatR;
 
 namespace Catalogs.Application.Commands.ItemCommands

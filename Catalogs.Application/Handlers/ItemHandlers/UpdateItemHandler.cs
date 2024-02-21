@@ -12,7 +12,7 @@ namespace Catalogs.Application.Handlers.ItemHandlers
         {
             await FindReferences(comand, token);
 
-            var itemToUpdate = await _unitOfWork.Item.GetItemOfTypeByIdAsync(comand.TypeId, comand.Id, comand.TrackChanges)
+            var itemToUpdate = await _unitOfWork.Item.GetItemOfTypeByIdAsync(comand.TypeId, comand.Id, comand.TrackChanges, token)
                 ?? throw new BadRequestException(ErrorMessages.ItemNotFound);
 
             _mapper.Map(comand.Item, itemToUpdate);
@@ -23,9 +23,9 @@ namespace Catalogs.Application.Handlers.ItemHandlers
         {
             var itemType = await _unitOfWork.ItemType.GetItemTypeByIdAsync(command.TypeId, command.TrackChanges, token)
                 ?? throw new NotFoundException(ErrorMessages.TypeNotFound);
-            var brand = await _unitOfWork.Brand.GetBrandByIdAsync(command.Item.BrandId, command.TrackChanges)
+            var brand = await _unitOfWork.Brand.GetBrandByIdAsync(command.Item.BrandId, command.TrackChanges, token)
                 ?? throw new BadRequestException(ErrorMessages.BrandNotFound);
-            var vendor = await _unitOfWork.Vendor.GetVendorByIdAsync(command.Item.VendorId, command.TrackChanges)
+            var vendor = await _unitOfWork.Vendor.GetVendorByIdAsync(command.Item.VendorId, command.TrackChanges, token)
                 ?? throw new BadRequestException(ErrorMessages.VendorNotFound);
         }
 

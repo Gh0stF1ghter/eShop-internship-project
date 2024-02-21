@@ -9,7 +9,7 @@ namespace Catalogs.Application.Handlers.ItemTypeHandlers
 
         public async Task Handle(DeleteVendorComand comand, CancellationToken token)
         {
-            var vendor = await _unitOfWork.Vendor.GetVendorByIdAsync(comand.Id, comand.TrackChanges)
+            var vendor = await _unitOfWork.Vendor.GetVendorByIdAsync(comand.Id, comand.TrackChanges, token)
                 ?? throw new BadRequestException(ErrorMessages.VendorNotFound);
 
             _unitOfWork.Vendor.Delete(vendor);

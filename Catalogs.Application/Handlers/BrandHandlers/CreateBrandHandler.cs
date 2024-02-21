@@ -19,7 +19,7 @@ namespace Catalogs.Application.Handlers.BrandHandlers
 
             _unitOfWork.Brand.Add(brand);
             await _unitOfWork.SaveChangesAsync(token);
-            
+
             var brandToReturn = _mapper.Map<BrandDto>(brand);
 
             return brandToReturn;

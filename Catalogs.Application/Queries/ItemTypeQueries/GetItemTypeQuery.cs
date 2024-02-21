@@ -1,5 +1,4 @@
-﻿using Catalogs.Domain.Entities.DataTransferObjects;
-using MediatR;
+﻿using MediatR;
 
 namespace Catalogs.Application.Queries.ItemQueries
 {

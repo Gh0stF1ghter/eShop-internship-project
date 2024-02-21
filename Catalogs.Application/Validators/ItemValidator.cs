@@ -31,7 +31,7 @@ namespace Catalogs.Application.Validators
 
         private bool IsValidUri(string uri)
         {
-           var isValid =  Uri.IsWellFormedUriString(uri, UriKind.Absolute);
+            var isValid = Uri.IsWellFormedUriString(uri, UriKind.Absolute);
             return isValid;
         }
     }

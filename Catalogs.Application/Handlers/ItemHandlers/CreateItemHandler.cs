@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using Catalogs.Application.Commands.ItemCommands;
-using Catalogs.Domain.Entities.Constants;
-using Catalogs.Domain.Entities.DataTransferObjects;
-using Catalogs.Domain.Entities.Exceptions;
-using Catalogs.Domain.Entities.Models;
-using Catalogs.Domain.Interfaces;
+﻿using Catalogs.Application.Commands.ItemCommands;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.ItemHandlers
@@ -37,9 +31,9 @@ namespace Catalogs.Application.Handlers.ItemHandlers
         {
             var itemType = await _unitOfWork.ItemType.GetItemTypeByIdAsync(command.TypeId, command.TrackChanges, token)
                 ?? throw new NotFoundException(ErrorMessages.TypeNotFound);
-            var brand = await _unitOfWork.Brand.GetBrandByIdAsync(command.ItemDTO.BrandId, command.TrackChanges)
+            var brand = await _unitOfWork.Brand.GetBrandByIdAsync(command.ItemDTO.BrandId, command.TrackChanges, token)
                 ?? throw new BadRequestException(ErrorMessages.BrandNotFound);
-            var vendor = await _unitOfWork.Vendor.GetVendorByIdAsync(command.ItemDTO.VendorId, command.TrackChanges)
+            var vendor = await _unitOfWork.Vendor.GetVendorByIdAsync(command.ItemDTO.VendorId, command.TrackChanges, token)
                 ?? throw new BadRequestException(ErrorMessages.VendorNotFound);
         }
     }

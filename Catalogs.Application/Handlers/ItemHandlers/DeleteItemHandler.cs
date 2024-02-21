@@ -1,7 +1,4 @@
 ﻿using Catalogs.Application.Commands.ItemCommands;
-using Catalogs.Domain.Entities.Constants;
-using Catalogs.Domain.Entities.Exceptions;
-using Catalogs.Domain.Interfaces;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.ItemHandlers
@@ -15,7 +12,7 @@ namespace Catalogs.Application.Handlers.ItemHandlers
             var itemType = await _unitOfWork.ItemType.GetItemTypeByIdAsync(comand.TypeId, comand.TrackChanges, token)
                 ?? throw new NotFoundException(ErrorMessages.TypeNotFound);
 
-            var item = await _unitOfWork.Item.GetItemOfTypeByIdAsync(comand.TypeId, comand.Id, comand.TrackChanges)
+            var item = await _unitOfWork.Item.GetItemOfTypeByIdAsync(comand.TypeId, comand.Id, comand.TrackChanges, token)
                 ?? throw new BadRequestException(ErrorMessages.ItemNotFound);
 
             _unitOfWork.Item.Delete(item);

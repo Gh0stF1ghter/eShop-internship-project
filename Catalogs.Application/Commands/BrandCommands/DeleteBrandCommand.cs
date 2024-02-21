@@ -2,5 +2,5 @@
 
 namespace Catalogs.Application.Commands.ItemCommands
 {
-    public record DeleteBrandComand(int Id, bool TrackChanges) : IRequest;
+    public sealed record DeleteBrandComand(int Id, bool TrackChanges) : IRequest;
 }

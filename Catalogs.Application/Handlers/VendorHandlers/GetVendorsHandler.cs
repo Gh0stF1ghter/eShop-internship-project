@@ -10,7 +10,7 @@ namespace Catalogs.Application.Handlers.ItemTypeHandlers
 
         public async Task<IEnumerable<VendorDto>> Handle(GetVendorsQuery query, CancellationToken token)
         {
-            var vendors = await _unitOfWork.Vendor.GetAllVendorsAsync(query.TrackChanges);
+            var vendors = await _unitOfWork.Vendor.GetAllVendorsAsync(query.TrackChanges, token);
 
             var vendorDtos = _mapper.Map<IEnumerable<VendorDto>>(vendors);
 

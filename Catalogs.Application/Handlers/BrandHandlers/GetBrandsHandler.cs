@@ -10,7 +10,7 @@ namespace Catalogs.Application.Handlers.BrandHandlers
 
         public async Task<IEnumerable<BrandDto>> Handle(GetBrandsQuery query, CancellationToken token)
         {
-            var brand = await _unitOfWork.Brand.GetAllBrandsAsync(query.TrackChanges);
+            var brand = await _unitOfWork.Brand.GetAllBrandsAsync(query.TrackChanges, token);
 
             var brandDtos = _mapper.Map<IEnumerable<BrandDto>>(brand);
 

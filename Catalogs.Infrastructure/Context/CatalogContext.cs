@@ -1,7 +1,6 @@
 ﻿using Catalogs.Domain.Entities.Models;
 using Catalogs.Infrastructure.Configurations;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
 
 namespace Catalogs.Infrastructure.Context
 {

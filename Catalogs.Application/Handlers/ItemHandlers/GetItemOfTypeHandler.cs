@@ -1,9 +1,4 @@
-﻿using AutoMapper;
-using Catalogs.Application.Queries.ItemQueries;
-using Catalogs.Domain.Entities.Constants;
-using Catalogs.Domain.Entities.DataTransferObjects;
-using Catalogs.Domain.Entities.Exceptions;
-using Catalogs.Domain.Interfaces;
+﻿using Catalogs.Application.Queries.ItemQueries;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.ItemHandlers
@@ -18,7 +13,7 @@ namespace Catalogs.Application.Handlers.ItemHandlers
             var itemType = await _unitOfWork.ItemType.GetItemTypeByIdAsync(query.TypeId, query.TrackChanges, token)
                 ?? throw new NotFoundException(ErrorMessages.TypeNotFound);
 
-            var item = await _unitOfWork.Item.GetItemOfTypeByIdAsync(query.TypeId, query.Id, query.TrackChanges)
+            var item = await _unitOfWork.Item.GetItemOfTypeByIdAsync(query.TypeId, query.Id, query.TrackChanges, token)
                 ?? throw new NotFoundException(ErrorMessages.ItemNotFound + query.Id);
 
             var itemDto = _mapper.Map<ItemDto>(item);

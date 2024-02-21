@@ -13,7 +13,7 @@ namespace Catalogs.Application.Handlers.ItemHandlers
             var itemType = await _unitOfWork.ItemType.GetItemTypeByIdAsync(query.TypeId, query.TrackChanges, token)
                 ?? throw new NotFoundException(ErrorMessages.TypeNotFound);
 
-            var items = await _unitOfWork.Item.GetAllItemsOfTypeAsync(query.TypeId, query.TrackChanges);
+            var items = await _unitOfWork.Item.GetAllItemsOfTypeAsync(query.TypeId, query.TrackChanges, token);
 
             var itemDtos = _mapper.Map<IEnumerable<ItemDto>>(items);
 

@@ -10,7 +10,7 @@ namespace Catalogs.Application.Handlers.ItemTypeHandlers
 
         public async Task Handle(UpdateVendorComand request, CancellationToken token)
         {
-            var typeToUpdate = await _unitOfWork.Vendor.GetVendorByIdAsync(request.Id, request.TrackChanges)
+            var typeToUpdate = await _unitOfWork.Vendor.GetVendorByIdAsync(request.Id, request.TrackChanges, token)
                 ?? throw new BadRequestException(ErrorMessages.VendorNotFound);
 
             _mapper.Map(request.Vendor, typeToUpdate);
