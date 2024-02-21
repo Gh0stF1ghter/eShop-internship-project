@@ -4,5 +4,5 @@ using MediatR;
 
 namespace Catalogs.Application.Commands.ItemCommands
 {
-    public sealed record CreateItemTypeCommand(ItemTypeManipulateDto ItemDTO) : IRequest<ItemTypeDto>;
+    public sealed record CreateItemTypeCommand(ItemTypeManipulateDto TypeDto) : IRequest<ItemTypeDto>;
 }

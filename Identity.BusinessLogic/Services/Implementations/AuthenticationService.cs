@@ -89,7 +89,6 @@ namespace Identity.BusinessLogic.Services.Implementations
             if (!createUser.Succeeded)
             {
                 _logger.LogError("Error while creating new user {errors}", createUser.Errors);
-
                 throw new BadRequestException(Messages.RegisterFailed);
             }
         }

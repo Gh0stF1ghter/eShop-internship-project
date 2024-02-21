@@ -28,7 +28,8 @@ namespace Catalogs.Infrastructure.Configurations
             builder
                 .HasOne(x => x.Brand)
                 .WithMany(b => b.Items)
-                .HasForeignKey(b => b.BrandId);
+                .HasForeignKey(b => b.BrandId)
+                .OnDelete(DeleteBehavior.Cascade);
             builder
                 .HasOne(x => x.Type)
                 .WithMany(t => t.Items)
@@ -36,7 +37,8 @@ namespace Catalogs.Infrastructure.Configurations
             builder
                 .HasOne(x => x.Vendor)
                 .WithMany(v => v.Items)
-                .HasForeignKey(x => x.VendorId);
+                .HasForeignKey(x => x.VendorId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .ToTable("item");

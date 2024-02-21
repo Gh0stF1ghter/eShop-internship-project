@@ -11,6 +11,15 @@ namespace Catalogs.Application.MappingProfiles
         {
             CreateMap<Item, ItemDto>();
             CreateMap<ItemManipulateDto, Item>();
+
+            CreateMap<Brand, BrandDto>();
+            CreateMap<BrandManipulateDto, Brand>();
+
+            CreateMap<ItemType, ItemTypeDto>();
+            CreateMap<ItemTypeManipulateDto, ItemType>();
+
+            CreateMap<Vendor, VendorDto>();
+            CreateMap<VendorManipulateDto, Vendor>();
         }
     }
 }

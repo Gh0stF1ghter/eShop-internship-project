@@ -85,8 +85,8 @@ namespace Catalogs.API.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.Property<int>("Stock")
                         .HasColumnType("int");
@@ -114,7 +114,7 @@ namespace Catalogs.API.Migrations
                             BrandId = 2,
                             ImageUrl = "headphones.jpg",
                             Name = "Headphones",
-                            Price = 49.99m,
+                            Price = 49.990000000000002,
                             Stock = 15,
                             TypeId = 2,
                             VendorId = 5
@@ -125,7 +125,7 @@ namespace Catalogs.API.Migrations
                             BrandId = 4,
                             ImageUrl = "book.jpg",
                             Name = "Book",
-                            Price = 19.99m,
+                            Price = 19.989999999999998,
                             Stock = 50,
                             TypeId = 1,
                             VendorId = 1
@@ -136,7 +136,7 @@ namespace Catalogs.API.Migrations
                             BrandId = 1,
                             ImageUrl = "mug.jpg",
                             Name = "Coffee Mug",
-                            Price = 9.99m,
+                            Price = 9.9900000000000002,
                             Stock = 20,
                             TypeId = 4,
                             VendorId = 3
@@ -147,7 +147,7 @@ namespace Catalogs.API.Migrations
                             BrandId = 3,
                             ImageUrl = "tshirt.jpg",
                             Name = "T-Shirt",
-                            Price = 14.99m,
+                            Price = 14.99,
                             Stock = 30,
                             TypeId = 3,
                             VendorId = 1
@@ -158,7 +158,7 @@ namespace Catalogs.API.Migrations
                             BrandId = 2,
                             ImageUrl = "headphones.jpg",
                             Name = "Headphones",
-                            Price = 49.99m,
+                            Price = 49.990000000000002,
                             Stock = 15,
                             TypeId = 2,
                             VendorId = 5

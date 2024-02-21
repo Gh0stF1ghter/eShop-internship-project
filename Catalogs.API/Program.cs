@@ -1,14 +1,18 @@
-using Catalogs.Domain.Interfaces;
-using Catalogs.Infrastructure;
+using Catalogs.API.Extensions;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var services = builder.Services;
 
-services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
 
-services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Catalogs.Application.AssemblyReference).Assembly));
+services.CongigureSqlContext(builder.Configuration);
+
+services.AddUnitOfWork();
+services.ConfigureMediatR();
+services.AddAutoValidation();
 services.AddAutoMapper(typeof(Program));
 
 services.AddControllers();

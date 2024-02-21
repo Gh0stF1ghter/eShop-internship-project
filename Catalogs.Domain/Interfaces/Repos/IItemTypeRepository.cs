@@ -1,13 +1,15 @@
 ﻿using Catalogs.Domain.Entities.Models;
-using System.Linq.Expressions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Catalogs.Domain.Interfaces.Repos
 {
-    public interface IItemRepository : IRepository<Item>
+    public interface IItemTypeRepository : IRepository<ItemType>
     {
-        Task<IEnumerable<Item>> GetAllItemsAsync(bool trackChanges);
-        Task<Item?> GetItemByIdAsync(int id, bool trackChanges);
-
-        void AddItem(int brandId, int typeId, int Vendor, Item item);
+        Task<IEnumerable<ItemType>> GetAllItemTypesAsync(bool trackChanges);
+        Task<ItemType?> GetItemTypeByIdAsync(int id, bool trackChanges);
     }
 }

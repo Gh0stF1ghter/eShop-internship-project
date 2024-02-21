@@ -1,7 +1,4 @@
-﻿using AutoMapper;
-using Catalogs.Application.Queries.ItemQueries;
-using Catalogs.Domain.Entities.DataTransferObjects;
-using Catalogs.Domain.Interfaces;
+﻿using Catalogs.Application.Queries.ItemQueries;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.ItemHandlers

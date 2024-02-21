@@ -7,5 +7,7 @@ namespace Catalogs.Domain.Interfaces.Repos
     {
         Task<IEnumerable<Brand>> GetAllBrandsAsync(bool trackChanges);
         Task<Brand?> GetBrandByIdAsync(int id, bool trackChanges);
+
+        void DeleteBrand(Brand brand);
     }
 }

@@ -12,12 +12,12 @@ namespace Catalogs.Infrastructure.Repos
 {
     public sealed class VendorRepository(CatalogContext context) : Repository<Vendor>(context), IVendorRepository
     {
-        private readonly CatalogContext _context = context;
-
         public async Task<IEnumerable<Vendor>> GetAllVendorsAsync(bool trackChanges) =>
             await GetAll(trackChanges).ToListAsync();
 
         public async Task<Vendor?> GetVendorByIdAsync(int id, bool trackChanges) => 
             await GetByCondition(v => v.Id.Equals(id), trackChanges).SingleOrDefaultAsync();
+
+        public void DeleteVendor(Vendor vendor) => Delete(vendor);
     }
 }

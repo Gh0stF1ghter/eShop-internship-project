@@ -1,6 +1,28 @@
-﻿namespace Catalogs.Application.Handlers.ItemTypeHandlers
+﻿using Catalogs.Application.Commands.ItemCommands;
+using MediatR;
+
+namespace Catalogs.Application.Handlers.ItemTypeHandlers
 {
-    internal class CreateItemTypeHandler
+    public sealed class CreateItemTypeHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<CreateItemTypeCommand, ItemTypeDto>
     {
+        private readonly IUnitOfWork _unitOfWork = unitOfWork;
+        private readonly IMapper _mapper = mapper;
+
+        public async Task<ItemTypeDto> Handle(CreateItemTypeCommand command, CancellationToken token)
+        {
+            if (command.TypeDto is null)
+            {
+                throw new BadRequestException(ErrorMessages.TypeIsNull);
+            }
+
+            var type = _mapper.Map<ItemType>(command.TypeDto);
+
+            _unitOfWork.ItemType.Add(type);
+            await _unitOfWork.SaveChangesAsync();
+
+            var typeToReturn = _mapper.Map<ItemTypeDto>(type);
+
+            return typeToReturn;
+        }
     }
 }

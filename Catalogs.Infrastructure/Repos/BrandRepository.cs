@@ -21,5 +21,7 @@ namespace Catalogs.Infrastructure.Repos
 
         public async Task<Brand?> GetBrandByIdAsync(int id, bool trackChanges) => 
             await GetByCondition(b => b.Id.Equals(id), trackChanges).SingleOrDefaultAsync();
+
+        public void DeleteBrand(Brand brand) => Delete(brand);
     }
 }

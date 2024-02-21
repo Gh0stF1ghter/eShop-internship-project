@@ -7,5 +7,7 @@ namespace Catalogs.Domain.Interfaces.Repos
     {
         Task<IEnumerable<Vendor>> GetAllVendorsAsync(bool trackChanges);
         Task<Vendor?> GetVendorByIdAsync(int id, bool trackChanges);
+
+        void DeleteVendor(Vendor vendor);
     }
 }

@@ -10,8 +10,7 @@ namespace Catalogs.API.Controllers
     {
         private readonly ISender _sender = sender;
 
-        [HttpGet]
-        [ActionName("GetItems")]
+        [HttpGet(Name = "GetItems")]
         public async Task<IActionResult> GetItemsAsync(CancellationToken token = default)
         {
             var items = await _sender.Send(new GetItemsQuery(TrackChanges: false), token);

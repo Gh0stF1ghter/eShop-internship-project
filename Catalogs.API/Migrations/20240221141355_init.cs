@@ -59,7 +59,7 @@ namespace Catalogs.API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Stock = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BrandId = table.Column<int>(type: "int", nullable: false),
                     TypeId = table.Column<int>(type: "int", nullable: false),
@@ -129,11 +129,11 @@ namespace Catalogs.API.Migrations
                 columns: new[] { "Id", "BrandId", "ImageUrl", "Name", "Price", "Stock", "TypeId", "VendorId" },
                 values: new object[,]
                 {
-                    { 1, 2, "headphones.jpg", "Headphones", 49.99m, 15, 2, 5 },
-                    { 2, 4, "book.jpg", "Book", 19.99m, 50, 1, 1 },
-                    { 3, 1, "mug.jpg", "Coffee Mug", 9.99m, 20, 4, 3 },
-                    { 4, 3, "tshirt.jpg", "T-Shirt", 14.99m, 30, 3, 1 },
-                    { 5, 2, "headphones.jpg", "Headphones", 49.99m, 15, 2, 5 }
+                    { 1, 2, "headphones.jpg", "Headphones", 49.990000000000002, 15, 2, 5 },
+                    { 2, 4, "book.jpg", "Book", 19.989999999999998, 50, 1, 1 },
+                    { 3, 1, "mug.jpg", "Coffee Mug", 9.9900000000000002, 20, 4, 3 },
+                    { 4, 3, "tshirt.jpg", "T-Shirt", 14.99, 30, 3, 1 },
+                    { 5, 2, "headphones.jpg", "Headphones", 49.990000000000002, 15, 2, 5 }
                 });
 
             migrationBuilder.CreateIndex(

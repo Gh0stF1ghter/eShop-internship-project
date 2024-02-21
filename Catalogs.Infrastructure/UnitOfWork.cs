@@ -1,13 +1,7 @@
-﻿using Catalogs.Domain.Entities.Models;
-using Catalogs.Domain.Interfaces;
+﻿using Catalogs.Domain.Interfaces;
 using Catalogs.Domain.Interfaces.Repos;
 using Catalogs.Infrastructure.Context;
 using Catalogs.Infrastructure.Repos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Catalogs.Infrastructure
 {
