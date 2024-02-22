@@ -23,5 +23,16 @@ namespace Catalogs.API.Extensions
 
         public static void AddUnitOfWork(this IServiceCollection services) =>
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        public static void ConfigureCors(this IServiceCollection services) =>
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                        .AllowAnyHeader()
+                        .WithExposedHeaders("Pagination"));
+            });
     }
 }

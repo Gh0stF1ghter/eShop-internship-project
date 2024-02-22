@@ -9,8 +9,7 @@ namespace Catalogs.Infrastructure.Repos
     {
         public async Task<IEnumerable<Vendor>> GetAllVendorsAsync(bool trackChanges, CancellationToken token) =>
             await GetAll(trackChanges)
-                .Include(v => v.Items)
-                .ToListAsync(token);
+            .ToListAsync(token);
 
         public async Task<Vendor?> GetVendorByIdAsync(int id, bool trackChanges, CancellationToken token) =>
             await GetByCondition(v => v.Id.Equals(id), trackChanges)

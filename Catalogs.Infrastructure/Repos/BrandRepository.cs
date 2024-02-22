@@ -10,7 +10,6 @@ namespace Catalogs.Infrastructure.Repos
         public async Task<IEnumerable<Brand>> GetAllBrandsAsync(bool trackChanges, CancellationToken token) =>
             await GetAll(trackChanges)
                     .OrderBy(b => b.Name)
-                    .Include(b => b.Items)
                     .ToListAsync(token);
 
         public async Task<Brand?> GetBrandByIdAsync(int id, bool trackChanges, CancellationToken token) =>

@@ -15,6 +15,8 @@ services.ConfigureMediatR();
 services.AddAutoValidation();
 services.AddAutoMapper(typeof(Program));
 
+services.ConfigureCors();
+
 services.AddControllers();
 
 services.AddEndpointsApiExplorer();
