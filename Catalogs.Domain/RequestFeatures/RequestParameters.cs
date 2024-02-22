@@ -12,6 +12,9 @@
             set =>
                 _pageSize = value < maxPageSize ? value : maxPageSize;
         }
+
         public int PageNumber { get; set; } = 1;
+
+        public string? Fields { get; set; }
     }
 }

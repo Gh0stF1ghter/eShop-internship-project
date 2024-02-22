@@ -10,7 +10,7 @@ builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
 
 services.CongigureSqlContext(builder.Configuration);
 
-services.AddUnitOfWork();
+services.AddCustomDependencies();
 services.ConfigureMediatR();
 services.AddAutoValidation();
 services.AddAutoMapper(typeof(Program));
@@ -38,4 +38,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+ app.Run();

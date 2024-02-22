@@ -1,4 +1,6 @@
-﻿using Catalogs.Domain.Interfaces;
+﻿using Catalogs.Application.DataShaping;
+using Catalogs.Domain.Entities.DataTransferObjects;
+using Catalogs.Domain.Interfaces;
 using Catalogs.Infrastructure;
 using Catalogs.Infrastructure.Context;
 using FluentValidation;
@@ -21,8 +23,11 @@ namespace Catalogs.API.Extensions
             services.AddFluentValidationAutoValidation();
         }
 
-        public static void AddUnitOfWork(this IServiceCollection services) =>
+        public static void AddCustomDependencies(this IServiceCollection services)
+        {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IDataShaper<ItemDto>, DataShaper<ItemDto>>();
+        }
 
         public static void ConfigureCors(this IServiceCollection services) =>
             services.AddCors(options =>

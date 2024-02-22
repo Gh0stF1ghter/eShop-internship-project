@@ -42,7 +42,7 @@ namespace Catalogs.API.Controllers
             return CreatedAtAction("GetBrandById", new { newBrand.Id }, newBrand);
         }
 
-        [HttpPut(Name = "UpdateBrand")]
+        [HttpPut("{id}", Name = "UpdateBrand")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateBrandAsync(int id, BrandManipulateDto brand, CancellationToken token)
@@ -52,7 +52,7 @@ namespace Catalogs.API.Controllers
             return NoContent();
         }
 
-        [HttpDelete(Name = "DeleteBrand")]
+        [HttpDelete("{id}", Name = "DeleteBrand")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteBrandAsync(int id, CancellationToken token)

@@ -5,6 +5,7 @@ using Catalogs.Domain.Entities.DataTransferObjects.CreateDTOs;
 using Catalogs.Domain.RequestFeatures;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Dynamic;
 using System.Text.Json;
 
 namespace Catalogs.API.Controllers
@@ -16,7 +17,7 @@ namespace Catalogs.API.Controllers
         private readonly ISender _sender = sender;
 
         [HttpGet(Name = "GetItemsOfType")]
-        [ProducesResponseType(typeof(IEnumerable<ItemDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<ExpandoObject>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllItemsOfTypeAsync(int typeId, [FromQuery] ItemParameters itemParameters, CancellationToken token = default)
         {
             var pagedResult = await _sender.Send(new GetItemsOfTypeQuery(typeId, itemParameters, TrackChanges: false), token);
