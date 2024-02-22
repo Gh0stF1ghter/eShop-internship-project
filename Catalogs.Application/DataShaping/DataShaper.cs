@@ -1,5 +1,4 @@
-﻿using System.Dynamic;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace Catalogs.Application.DataShaping
 {
@@ -12,14 +11,14 @@ namespace Catalogs.Application.DataShaping
             Properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
         }
 
-        public IEnumerable<ExpandoObject> ShapeData(IEnumerable<T> entities, string fieldsString)
+        public IEnumerable<ShapedEntity> ShapeData(IEnumerable<T> entities, string fieldsString)
         {
             var properties = GetRequiredProperties(fieldsString);
 
             return FetchData(entities, properties);
         }
 
-        public ExpandoObject ShapeData(T entity, string fieldsString)
+        public ShapedEntity ShapeData(T entity, string fieldsString)
         {
             var properties = GetRequiredProperties(fieldsString);
 
@@ -30,16 +29,16 @@ namespace Catalogs.Application.DataShaping
         {
             var properties = new List<PropertyInfo>();
 
-            if(!string.IsNullOrEmpty(fieldsString))
+            if (!string.IsNullOrEmpty(fieldsString))
             {
                 var fields = fieldsString.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
-                foreach(var field in fields)
+                foreach (var field in fields)
                 {
                     var property = Properties
                                         .FirstOrDefault(p => p.Name.Equals(field.Trim(), StringComparison.InvariantCultureIgnoreCase));
 
-                    if(property != null)
+                    if (property != null)
                     {
                         properties.Add(property);
                     }
@@ -53,9 +52,9 @@ namespace Catalogs.Application.DataShaping
             return properties;
         }
 
-        private static List<ExpandoObject> FetchData(IEnumerable<T> entities, IEnumerable<PropertyInfo> properties)
+        private static List<ShapedEntity> FetchData(IEnumerable<T> entities, IEnumerable<PropertyInfo> properties)
         {
-            var shapedData = new List<ExpandoObject>();
+            var shapedData = new List<ShapedEntity>();
 
             foreach (var entity in entities)
             {
@@ -66,15 +65,18 @@ namespace Catalogs.Application.DataShaping
             return shapedData;
         }
 
-        private static ExpandoObject FetchDataForEntity(T entity, IEnumerable<PropertyInfo> properties)
+        private static ShapedEntity FetchDataForEntity(T entity, IEnumerable<PropertyInfo> properties)
         {
-            var shapedObject = new ExpandoObject();
+            var shapedObject = new ShapedEntity();
 
             foreach (var property in properties)
             {
                 var objectPropertyValue = property.GetValue(entity);
-                shapedObject.TryAdd(property.Name, objectPropertyValue);
+                shapedObject.Entity.TryAdd(property.Name, objectPropertyValue);
             }
+
+            var objectProperty = entity.GetType().GetProperty("Id");
+            shapedObject.Id = Convert.ToInt32(objectProperty.GetValue(entity));
 
             return shapedObject;
         }

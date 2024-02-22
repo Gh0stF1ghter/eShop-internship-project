@@ -10,11 +10,11 @@ namespace Catalogs.Application.Handlers.ItemTypeHandlers
 
         public async Task<IEnumerable<ItemTypeDto>> Handle(GetItemTypesQuery query, CancellationToken token)
         {
-            var types = await _unitOfWork.ItemType.GetAllItemTypesAsync(query.TrackChanges, token);
+            var itemTypes = await _unitOfWork.ItemType.GetAllItemTypesAsync(query.TrackChanges, token);
 
-            var typeDtos = _mapper.Map<IEnumerable<ItemTypeDto>>(types);
+            var itemTypesDto = _mapper.Map<IEnumerable<ItemTypeDto>>(itemTypes);
 
-            return typeDtos;
+            return itemTypesDto;
         }
     }
 }

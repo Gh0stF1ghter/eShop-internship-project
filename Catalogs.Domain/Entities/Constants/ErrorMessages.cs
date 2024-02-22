@@ -9,7 +9,7 @@
         public const string BrandIsNull = "The brand is null";
 
         public const string TypeNotFound = "The type was not found ";
-        public const string TypeIsNull = "The type is null";
+        public const string ItemTypeIsNull = "The type is null";
 
         public const string VendorNotFound = "The vendor was not found ";
         public const string VendorIsNull = "The vendor is null";

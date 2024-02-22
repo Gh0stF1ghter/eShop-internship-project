@@ -3,12 +3,12 @@ using MediatR;
 
 namespace Catalogs.Application.Handlers.ItemHandlers
 {
-    public sealed class CreateItemHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<CreateItemCommand, ItemDto>
+    public sealed class CreateItemHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<CreateItemComand, ItemDto>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IMapper _mapper = mapper;
 
-        public async Task<ItemDto> Handle(CreateItemCommand command, CancellationToken token)
+        public async Task<ItemDto> Handle(CreateItemComand command, CancellationToken token)
         {
             if (command.ItemDTO is null)
             {
@@ -27,7 +27,7 @@ namespace Catalogs.Application.Handlers.ItemHandlers
             return itemToReturn;
         }
 
-        private async Task FindReferences(CreateItemCommand command, CancellationToken token)
+        private async Task FindReferences(CreateItemComand command, CancellationToken token)
         {
             var itemType = await _unitOfWork.ItemType.GetItemTypeByIdAsync(command.TypeId, command.TrackChanges, token)
                 ?? throw new NotFoundException(ErrorMessages.TypeNotFound);

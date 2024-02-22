@@ -3,5 +3,5 @@ using MediatR;
 
 namespace Catalogs.Application.Commands.ItemCommands
 {
-    public sealed record UpdateItemCommand(int TypeId, int Id, ItemManipulateDto Item, bool TrackChanges) : IRequest;
+    public sealed record UpdateBrandComand(int Id, BrandManipulateDto Brand, bool TrackChanges) : IRequest;
 }

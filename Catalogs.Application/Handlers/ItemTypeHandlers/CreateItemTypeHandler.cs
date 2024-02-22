@@ -10,19 +10,19 @@ namespace Catalogs.Application.Handlers.ItemTypeHandlers
 
         public async Task<ItemTypeDto> Handle(CreateItemTypeCommand command, CancellationToken token)
         {
-            if (command.TypeDto is null)
+            if (command.ItemTypeDto is null)
             {
-                throw new BadRequestException(ErrorMessages.TypeIsNull);
+                throw new BadRequestException(ErrorMessages.ItemTypeIsNull);
             }
 
-            var type = _mapper.Map<ItemType>(command.TypeDto);
+            var itemType = _mapper.Map<ItemType>(command.ItemTypeDto);
 
-            _unitOfWork.ItemType.Add(type);
+            _unitOfWork.ItemType.Add(itemType);
             await _unitOfWork.SaveChangesAsync(token);
 
-            var typeToReturn = _mapper.Map<ItemTypeDto>(type);
+            var itemTypeToReturn = _mapper.Map<ItemTypeDto>(itemType);
 
-            return typeToReturn;
+            return itemTypeToReturn;
         }
     }
 }

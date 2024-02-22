@@ -3,12 +3,12 @@ using MediatR;
 
 namespace Catalogs.Application.Handlers.ItemHandlers
 {
-    public sealed class UpdateItemHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<UpdateItemCommand>
+    public sealed class UpdateItemHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<UpdateItemComand>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IMapper _mapper = mapper;
 
-        public async Task Handle(UpdateItemCommand comand, CancellationToken token)
+        public async Task Handle(UpdateItemComand comand, CancellationToken token)
         {
             await FindReferences(comand, token);
 
@@ -19,7 +19,7 @@ namespace Catalogs.Application.Handlers.ItemHandlers
             await _unitOfWork.SaveChangesAsync(token);
         }
 
-        private async Task FindReferences(UpdateItemCommand command, CancellationToken token)
+        private async Task FindReferences(UpdateItemComand command, CancellationToken token)
         {
             var itemType = await _unitOfWork.ItemType.GetItemTypeByIdAsync(command.TypeId, command.TrackChanges, token)
                 ?? throw new NotFoundException(ErrorMessages.TypeNotFound);

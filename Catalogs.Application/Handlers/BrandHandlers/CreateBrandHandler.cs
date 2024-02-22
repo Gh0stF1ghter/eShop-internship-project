@@ -3,12 +3,12 @@ using MediatR;
 
 namespace Catalogs.Application.Handlers.BrandHandlers
 {
-    public sealed class CreateBrandHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<CreateBrandCommand, BrandDto>
+    public sealed class CreateBrandHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<CreateBrandComand, BrandDto>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IMapper _mapper = mapper;
 
-        public async Task<BrandDto> Handle(CreateBrandCommand command, CancellationToken token)
+        public async Task<BrandDto> Handle(CreateBrandComand command, CancellationToken token)
         {
             if (command.BrandDto is null)
             {

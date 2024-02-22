@@ -36,8 +36,7 @@ namespace Catalogs.API.Utility
         }
 
         private static LinkResponse ReturnShapedItems(List<ExpandoObject> shapedItems) =>
-            new()
-            { ShapedEntities = shapedItems };
+            new() { ShapedEntities = shapedItems };
 
         private LinkResponse ReturnLinkedEmployees(IEnumerable<ItemDto> itemDtos, string fields, int typeId, HttpContext httpContext, List<ExpandoObject> shapedItems)
         {
@@ -50,11 +49,12 @@ namespace Catalogs.API.Utility
             }
 
             var itemCollection = new LinkCollectionWrapper<ExpandoObject>(shapedItems);
-            var linkedItems = CreateLinksForItems(httpContext, itemCollection);
+            var linkedItems = CreateLinksForItems(httpContext, itemCollection, fields);
 
             return new LinkResponse { HasLinks = true, LinkedEntities = linkedItems };
         }
 
+#pragma warning disable CS8604
         private List<Link> CreateLinksForItem(HttpContext httpContext, int typeId, int id, string fields = "")
         {
             var links = new List<Link>
@@ -79,15 +79,16 @@ namespace Catalogs.API.Utility
             return links;
         }
 
-        private LinkCollectionWrapper<ExpandoObject> CreateLinksForItems(HttpContext httpContext, LinkCollectionWrapper<ExpandoObject> itemsWrapper)
+        private LinkCollectionWrapper<ExpandoObject> CreateLinksForItems(HttpContext httpContext, LinkCollectionWrapper<ExpandoObject> itemsWrapper, string fields)
         {
             itemsWrapper.Links.Add(new(_linkGenerator.GetUriByAction(httpContext,
                                                             "GetItemsOfType",
-                                                            values: new { }),
+                                                            values: new { fields }),
                                                             "self",
                                                             "GET"));
 
             return itemsWrapper;
         }
+#pragma warning restore
     }
 }

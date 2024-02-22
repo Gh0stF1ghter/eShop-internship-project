@@ -3,11 +3,11 @@ using MediatR;
 
 namespace Catalogs.Application.Handlers.ItemHandlers
 {
-    public sealed class DeleteItemHandler(IUnitOfWork unitOfWork) : IRequestHandler<DeleteItemCommand>
+    public sealed class DeleteItemHandler(IUnitOfWork unitOfWork) : IRequestHandler<DeleteItemComand>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-        public async Task Handle(DeleteItemCommand comand, CancellationToken token)
+        public async Task Handle(DeleteItemComand comand, CancellationToken token)
         {
             var itemType = await _unitOfWork.ItemType.GetItemTypeByIdAsync(comand.TypeId, comand.TrackChanges, token)
                 ?? throw new NotFoundException(ErrorMessages.TypeNotFound);

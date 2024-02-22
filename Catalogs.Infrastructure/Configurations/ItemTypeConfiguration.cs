@@ -16,7 +16,7 @@ namespace Catalogs.Infrastructure.Configurations
                 .HasMaxLength(50);
 
             builder
-                .ToTable("type");
+                .ToTable("item_type");
         }
     }
 }

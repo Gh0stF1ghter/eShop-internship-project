@@ -13,7 +13,8 @@ namespace Catalogs.API.Controllers
     {
         private readonly ISender _sender = sender;
 
-        [HttpGet(Name = "GetVendors")]
+        [HttpGet]
+        [ActionName("GetVendors")]
         [ProducesResponseType(typeof(IEnumerable<VendorDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllVendorsAsync(CancellationToken token)
         {
@@ -22,7 +23,8 @@ namespace Catalogs.API.Controllers
             return Ok(vendors);
         }
 
-        [HttpGet("{id}", Name = "GetVendorById")]
+        [HttpGet("{id}")]
+        [ActionName("GetVendorById")]
         [ProducesResponseType(typeof(VendorDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetVendorByIdAsync(int id, CancellationToken token)
@@ -32,7 +34,8 @@ namespace Catalogs.API.Controllers
             return Ok(vendor);
         }
 
-        [HttpPost(Name = "AddVendor")]
+        [HttpPost]
+        [ActionName("AddVendor")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddVendorAsync(VendorManipulateDto vendor, CancellationToken token)
@@ -42,7 +45,8 @@ namespace Catalogs.API.Controllers
             return CreatedAtAction("GetVendorById", new { newVendor.Id }, newVendor);
         }
 
-        [HttpPut("{id}", Name = "UpdateVendor")]
+        [HttpPut("{id}")]
+        [ActionName("UpdateVendor")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateVendorAsync(int id, VendorManipulateDto vendor, CancellationToken token)
@@ -52,7 +56,8 @@ namespace Catalogs.API.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}", Name = "DeleteVendor")]
+        [HttpDelete("{id}")]
+        [ActionName("DeleteVendor")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteVendorAsync(int id, CancellationToken token)

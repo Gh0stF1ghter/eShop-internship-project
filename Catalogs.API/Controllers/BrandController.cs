@@ -13,7 +13,8 @@ namespace Catalogs.API.Controllers
     {
         private readonly ISender _sender = sender;
 
-        [HttpGet(Name = "GetBrands")]
+        [HttpGet]
+        [ActionName("GetBrands")]
         [ProducesResponseType(typeof(IEnumerable<BrandDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllBrandsAsync(CancellationToken token)
         {
@@ -22,7 +23,8 @@ namespace Catalogs.API.Controllers
             return Ok(brands);
         }
 
-        [HttpGet("{id}", Name = "GetBrandById")]
+        [HttpGet("{id}")]
+        [ActionName("GetBrandById")]
         [ProducesResponseType(typeof(BrandDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetBrandByIdAsync(int id, CancellationToken token)
@@ -32,27 +34,30 @@ namespace Catalogs.API.Controllers
             return Ok(brand);
         }
 
-        [HttpPost(Name = "AddBrand")]
+        [HttpPost]
+        [ActionName("AddBrand")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddBrandAsync(BrandManipulateDto brand, CancellationToken token)
         {
-            var newBrand = await _sender.Send(new CreateBrandCommand(brand), token);
+            var newBrand = await _sender.Send(new CreateBrandComand(brand), token);
 
             return CreatedAtAction("GetBrandById", new { newBrand.Id }, newBrand);
         }
 
-        [HttpPut("{id}", Name = "UpdateBrand")]
+        [HttpPut("{id}")]
+        [ActionName("UpdateBrand")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateBrandAsync(int id, BrandManipulateDto brand, CancellationToken token)
         {
-            await _sender.Send(new UpdateBrandCommand(id, brand, TrackChanges: true), token);
+            await _sender.Send(new UpdateBrandComand(id, brand, TrackChanges: true), token);
 
             return NoContent();
         }
 
-        [HttpDelete("{id}", Name = "DeleteBrand")]
+        [HttpDelete("{id}")]
+        [ActionName("DeleteBrand")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteBrandAsync(int id, CancellationToken token)

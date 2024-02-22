@@ -13,7 +13,8 @@ namespace Catalogs.API.Controllers
     {
         private readonly ISender _sender = sender;
 
-        [HttpGet(Name = "GetItemTypes")]
+        [HttpGet]
+        [ActionName("GetItemTypes")]
         [ProducesResponseType(typeof(IEnumerable<ItemTypeDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllItemTypesAsync(CancellationToken token)
         {
@@ -22,7 +23,8 @@ namespace Catalogs.API.Controllers
             return Ok(itemTypes);
         }
 
-        [HttpGet("{id}", Name = "GetItemTypeById")]
+        [HttpGet("{id}")]
+        [ActionName("GetItemTypeById")]
         [ProducesResponseType(typeof(ItemTypeDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetItemTypeByIdAsync(int id, CancellationToken token)
@@ -32,7 +34,8 @@ namespace Catalogs.API.Controllers
             return Ok(itemType);
         }
 
-        [HttpPost(Name = "AddItemType")]
+        [HttpPost]
+        [ActionName("AddItemType")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddItemTypeAsync(ItemTypeManipulateDto itemType, CancellationToken token)
@@ -42,7 +45,8 @@ namespace Catalogs.API.Controllers
             return CreatedAtAction("GetItemTypeById", new { newItemType.Id }, newItemType);
         }
 
-        [HttpPut("{id}", Name = "UpdateItemType")]
+        [HttpPut("{id}")]
+        [ActionName("UpdateItemType")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateItemTypeAsync(int id, ItemTypeManipulateDto itemType, CancellationToken token)
@@ -52,7 +56,8 @@ namespace Catalogs.API.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}", Name = "DeleteItemType")]
+        [HttpDelete("{id}")]
+        [ActionName("DeleteItemType")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteItemTypeAsync(int id, CancellationToken token)
