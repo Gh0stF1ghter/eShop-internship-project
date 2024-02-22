@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Catalogs.Domain.Entities.Models;
 
 namespace Catalogs.Domain.Interfaces
 {
     public interface IDataShaper<T>
     {
-        IEnumerable<ExpandoObject> ShapeData(IEnumerable<T> entitities, string fieldsString);
+        IEnumerable<ShapedEntity> ShapeData(IEnumerable<T> entities, string fieldsString);
 
-        ExpandoObject ShapeData(T entity, string fieldsString);
+        ShapedEntity ShapeData(T entity, string fieldsString);
     }
 }

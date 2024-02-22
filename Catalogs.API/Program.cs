@@ -11,6 +11,7 @@ builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
 services.CongigureSqlContext(builder.Configuration);
 
 services.AddCustomDependencies();
+
 services.ConfigureMediatR();
 services.AddAutoValidation();
 services.AddAutoMapper(typeof(Program));
@@ -21,6 +22,8 @@ services.AddControllers();
 
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
+
+services.AddCustomMediaTypes();
 
 var app = builder.Build();
 
@@ -38,4 +41,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
- app.Run();
+app.Run();

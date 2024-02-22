@@ -1,9 +1,13 @@
-﻿using Catalogs.Application.DataShaping;
+﻿using Catalogs.API.ActionFilters;
+using Catalogs.API.Utility;
+using Catalogs.Application.DataShaping;
 using Catalogs.Domain.Entities.DataTransferObjects;
 using Catalogs.Domain.Interfaces;
 using Catalogs.Infrastructure;
 using Catalogs.Infrastructure.Context;
 using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 
@@ -27,6 +31,8 @@ namespace Catalogs.API.Extensions
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IDataShaper<ItemDto>, DataShaper<ItemDto>>();
+            services.AddScoped<ValidateMediaTypeAttribute>();
+            services.AddScoped<IItemLinks, ItemLinks>();
         }
 
         public static void ConfigureCors(this IServiceCollection services) =>
@@ -39,5 +45,18 @@ namespace Catalogs.API.Extensions
                         .AllowAnyHeader()
                         .WithExposedHeaders("Pagination"));
             });
+
+        public static void AddCustomMediaTypes(this IServiceCollection services)
+        {
+            services.Configure<MvcOptions>(config =>
+            {
+                var systemTextJsonOutputFormatter = config.OutputFormatters
+                                                                .OfType<SystemTextJsonOutputFormatter>()
+                                                                .FirstOrDefault();
+
+                systemTextJsonOutputFormatter?.SupportedMediaTypes
+                        .Add("application/vnd.eShopTest.hateoas+json");
+            });
+        }
     }
 }
