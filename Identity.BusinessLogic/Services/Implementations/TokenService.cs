@@ -13,9 +13,9 @@ using System.Text;
 
 namespace Identity.BusinessLogic.Services.Implementations
 {
-    public class TokenService(IConfiguration configuration, UserManager<User> user) : ITokenService
+    public class TokenService(IConfiguration configuration, UserManager<User> userManager) : ITokenService
     {
-        private readonly UserManager<User> _userManager = user;
+        private readonly UserManager<User> _userManager = userManager;
         private readonly IConfiguration _configuration = configuration;
 
         public async Task<TokenDTO> CreateTokenAsync(User user, bool populateExp)

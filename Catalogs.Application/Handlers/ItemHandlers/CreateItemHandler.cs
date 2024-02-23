@@ -29,12 +29,26 @@ namespace Catalogs.Application.Handlers.ItemHandlers
 
         private async Task FindReferences(CreateItemComand command, CancellationToken token)
         {
-            var itemType = await _unitOfWork.ItemType.GetItemTypeByIdAsync(command.TypeId, command.TrackChanges, token)
-                ?? throw new NotFoundException(ErrorMessages.TypeNotFound);
-            var brand = await _unitOfWork.Brand.GetBrandByIdAsync(command.ItemDTO.BrandId, command.TrackChanges, token)
-                ?? throw new BadRequestException(ErrorMessages.BrandNotFound);
-            var vendor = await _unitOfWork.Vendor.GetVendorByIdAsync(command.ItemDTO.VendorId, command.TrackChanges, token)
-                ?? throw new BadRequestException(ErrorMessages.VendorNotFound);
+            var itemTypeExists = await _unitOfWork.ItemType.Exists(t => t.Id.Equals(command.TypeId), token);
+
+            if (!itemTypeExists)
+            {
+                throw new NotFoundException(ErrorMessages.TypeNotFound);
+            }
+
+            var brandExists = await _unitOfWork.Brand.Exists(b => b.Id.Equals(command.ItemDTO.BrandId), token);
+
+            if (!brandExists)
+            {
+                throw new NotFoundException(ErrorMessages.TypeNotFound);
+            }
+
+            var vendorExists = await _unitOfWork.Vendor.Exists(b => b.Id.Equals(command.ItemDTO.VendorId), token);
+
+            if (!vendorExists)
+            {
+                throw new BadRequestException(ErrorMessages.VendorNotFound);
+            }
         }
     }
 }

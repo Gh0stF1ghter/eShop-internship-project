@@ -7,6 +7,8 @@ namespace Catalogs.Domain.Interfaces.Repos
         IQueryable<TEntity> GetAll(bool trackChanges);
         IQueryable<TEntity> GetByCondition(Expression<Func<TEntity, bool>> predicate, bool trackChanges);
 
+        Task<bool> Exists(Expression<Func<TEntity, bool>> predicate, CancellationToken token);
+
         void Add(TEntity entity);
         void Update(TEntity entity);
         void Delete(TEntity entity);

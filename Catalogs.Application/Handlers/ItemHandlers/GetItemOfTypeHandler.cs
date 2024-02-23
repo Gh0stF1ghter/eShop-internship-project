@@ -1,5 +1,6 @@
 ﻿using Catalogs.Application.Queries.ItemQueries;
 using MediatR;
+using System.Windows.Input;
 
 namespace Catalogs.Application.Handlers.ItemHandlers
 {
@@ -10,8 +11,13 @@ namespace Catalogs.Application.Handlers.ItemHandlers
 
         public async Task<ItemDto> Handle(GetItemOfTypeQuery query, CancellationToken token)
         {
-            var itemType = await _unitOfWork.ItemType.GetItemTypeByIdAsync(query.TypeId, query.TrackChanges, token)
-                ?? throw new NotFoundException(ErrorMessages.TypeNotFound);
+            var itemTypeExists = await _unitOfWork.ItemType.Exists(it => it.Id.Equals(comand.TypeId), token);
+
+            if (!itemTypeExists)
+            {
+                throw new NotFoundException(ErrorMessages.TypeNotFound);
+            }
+
 
             var item = await _unitOfWork.Item.GetItemOfTypeByIdAsync(query.TypeId, query.Id, query.TrackChanges, token)
                 ?? throw new NotFoundException(ErrorMessages.ItemNotFound + query.Id);

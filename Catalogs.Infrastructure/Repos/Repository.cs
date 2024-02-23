@@ -15,6 +15,9 @@ namespace Catalogs.Infrastructure.Repos
         public IQueryable<TEntity> GetByCondition(Expression<Func<TEntity, bool>> predicate, bool trackChanges) =>
             trackChanges ? _context.Set<TEntity>().Where(predicate) : _context.Set<TEntity>().Where(predicate).AsNoTracking();
 
+        public async Task<bool> Exists(Expression<Func<TEntity, bool>> predicate, CancellationToken token) =>
+            await _context.Set<TEntity>().AnyAsync(predicate, token);
+
         public void Add(TEntity entity) =>
             _context.Set<TEntity>().Add(entity);
 

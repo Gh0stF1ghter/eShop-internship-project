@@ -13,8 +13,12 @@ namespace Catalogs.Application.Handlers.ItemHandlers
 
         public async Task<(LinkResponse linkResponse, MetaData metaData)> Handle(GetItemsOfTypeQuery query, CancellationToken token)
         {
-            var itemType = await _unitOfWork.ItemType.GetItemTypeByIdAsync(query.TypeId, query.TrackChanges, token)
-                ?? throw new NotFoundException(ErrorMessages.TypeNotFound);
+            var itemTypeExists = await _unitOfWork.ItemType.Exists(t => t.Id.Equals(query.TypeId), token); 
+
+            if (!itemTypeExists)
+            {
+                throw new NotFoundException(ErrorMessages.TypeNotFound);
+            }
 
             var items = await _unitOfWork.Item.GetAllItemsOfTypeAsync(query.TypeId, query.LinkParameters.ItemParameters, query.TrackChanges, token);
 

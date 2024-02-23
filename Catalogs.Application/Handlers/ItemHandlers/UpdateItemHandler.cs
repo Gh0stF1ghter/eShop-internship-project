@@ -19,15 +19,28 @@ namespace Catalogs.Application.Handlers.ItemHandlers
             await _unitOfWork.SaveChangesAsync(token);
         }
 
-        private async Task FindReferences(UpdateItemComand command, CancellationToken token)
+        private async Task FindReferences(UpdateItemComand comand, CancellationToken token)
         {
-            var itemType = await _unitOfWork.ItemType.GetItemTypeByIdAsync(command.TypeId, command.TrackChanges, token)
-                ?? throw new NotFoundException(ErrorMessages.TypeNotFound);
-            var brand = await _unitOfWork.Brand.GetBrandByIdAsync(command.Item.BrandId, command.TrackChanges, token)
-                ?? throw new BadRequestException(ErrorMessages.BrandNotFound);
-            var vendor = await _unitOfWork.Vendor.GetVendorByIdAsync(command.Item.VendorId, command.TrackChanges, token)
-                ?? throw new BadRequestException(ErrorMessages.VendorNotFound);
-        }
+            var itemTypeExists = await _unitOfWork.ItemType.Exists(t => t.Id.Equals(comand.TypeId), token);
 
+            if (!itemTypeExists)
+            {
+                throw new NotFoundException(ErrorMessages.TypeNotFound);
+            }
+
+            var brandExists = await _unitOfWork.Brand.Exists(b => b.Id.Equals(comand.Item.BrandId), token);
+
+            if (!brandExists)
+            {
+                throw new NotFoundException(ErrorMessages.TypeNotFound);
+            }
+
+            var vendorExists = await _unitOfWork.Vendor.Exists(b => b.Id.Equals(comand.Item.VendorId), token);
+
+            if (!vendorExists)
+            {
+                throw new BadRequestException(ErrorMessages.VendorNotFound);
+            }
+        }
     }
 }

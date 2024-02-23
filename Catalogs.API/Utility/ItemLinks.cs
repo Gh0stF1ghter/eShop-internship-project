@@ -17,7 +17,7 @@ namespace Catalogs.API.Utility
 
             if (ShouldGenerateLinks(httpContext))
             {
-                return ReturnLinkedEmployees(itemsDtos, fields, typeId, httpContext, shapedItems);
+                return ReturnLinkedItems(itemsDtos, fields, typeId, httpContext, shapedItems);
             }
 
             return ReturnShapedItems(shapedItems);
@@ -38,7 +38,7 @@ namespace Catalogs.API.Utility
         private static LinkResponse ReturnShapedItems(List<ExpandoObject> shapedItems) =>
             new() { ShapedEntities = shapedItems };
 
-        private LinkResponse ReturnLinkedEmployees(IEnumerable<ItemDto> itemDtos, string fields, int typeId, HttpContext httpContext, List<ExpandoObject> shapedItems)
+        private LinkResponse ReturnLinkedItems(IEnumerable<ItemDto> itemDtos, string fields, int typeId, HttpContext httpContext, List<ExpandoObject> shapedItems)
         {
             var itemDtoList = itemDtos.ToList();
 

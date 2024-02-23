@@ -9,8 +9,12 @@ namespace Catalogs.Application.Handlers.ItemHandlers
 
         public async Task Handle(DeleteItemComand comand, CancellationToken token)
         {
-            var itemType = await _unitOfWork.ItemType.GetItemTypeByIdAsync(comand.TypeId, comand.TrackChanges, token)
-                ?? throw new NotFoundException(ErrorMessages.TypeNotFound);
+            var itemTypeExists = await _unitOfWork.ItemType.Exists(it => it.Id.Equals(comand.TypeId), token);
+
+            if (!itemTypeExists)
+            {
+                throw new NotFoundException(ErrorMessages.TypeNotFound);
+            }
 
             var item = await _unitOfWork.Item.GetItemOfTypeByIdAsync(comand.TypeId, comand.Id, comand.TrackChanges, token)
                 ?? throw new BadRequestException(ErrorMessages.ItemNotFound);
