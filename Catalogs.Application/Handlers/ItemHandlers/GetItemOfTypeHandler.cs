@@ -11,7 +11,7 @@ namespace Catalogs.Application.Handlers.ItemHandlers
 
         public async Task<ItemDto> Handle(GetItemOfTypeQuery query, CancellationToken token)
         {
-            var itemTypeExists = await _unitOfWork.ItemType.Exists(it => it.Id.Equals(comand.TypeId), token);
+            var itemTypeExists = await _unitOfWork.ItemType.Exists(it => it.Id.Equals(query.TypeId), token);
 
             if (!itemTypeExists)
             {

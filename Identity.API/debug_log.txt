@@ -1268,3 +1268,16 @@ WHERE [Id] = @p17 AND [ConcurrencyStamp] = @p18;
 2024-02-16 14:01:39.159 +03:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API) in 5075.9097ms
 2024-02-16 14:01:39.160 +03:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.RegisterAsync (Identity.API)'
 2024-02-16 14:01:39.166 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7288/api/authentication/register - 204 null null 5110.5621ms
+2024-02-25 13:40:06.792 +03:00 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2024-02-25 13:40:06.836 +03:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2024-02-25 13:40:06.839 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2024-02-25 13:40:06.839 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2024-02-25 13:40:06.852 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2024-02-25 13:40:06.873 +03:00 [INF] No migrations were applied. The database is already up to date.
