@@ -14,15 +14,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Baskets.API", "Baskets.API\Baskets.API.csproj", "{1088394E-2266-48EC-8D7A-10DF5BA68C06}"
 	ProjectSection(ProjectDependencies) = postProject
 		{7628493C-81B5-4CDD-A484-34EBFD6FE241} = {7628493C-81B5-4CDD-A484-34EBFD6FE241}
-		{94F2AFCB-C52F-4CCA-B372-9762C22A7F6A} = {94F2AFCB-C52F-4CCA-B372-9762C22A7F6A}
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Baskets.BusinessLogic", "Baskets.BusinessLogic\Baskets.BusinessLogic.csproj", "{7628493C-81B5-4CDD-A484-34EBFD6FE241}"
+	ProjectSection(ProjectDependencies) = postProject
+		{94F2AFCB-C52F-4CCA-B372-9762C22A7F6A} = {94F2AFCB-C52F-4CCA-B372-9762C22A7F6A}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Baskets.DataAccess", "Baskets.DataAccess\Baskets.DataAccess.csproj", "{94F2AFCB-C52F-4CCA-B372-9762C22A7F6A}"
-	ProjectSection(ProjectDependencies) = postProject
-		{7628493C-81B5-4CDD-A484-34EBFD6FE241} = {7628493C-81B5-4CDD-A484-34EBFD6FE241}
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalogs.API", "Catalogs.API\Catalogs.API.csproj", "{875A47A7-24EE-474B-B191-5C9903C58D7D}"
 	ProjectSection(ProjectDependencies) = postProject

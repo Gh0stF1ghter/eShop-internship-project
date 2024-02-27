@@ -1,11 +1,29 @@
+using Baskets.DataAccess.Entities.Models;
+using MongoDB.Driver;
+using MongoDB.Driver.Core.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
+
 
 // Add services to the container.
+services.Configure<BasketDatabase>(
+    builder.Configuration.GetSection(nameof(BasketDatabase)));
 
-builder.Services.AddControllers();
+services.AddSingleton<IMongoClient>(_ => {
+    var settings = new MongoClientSettings()
+    {
+        Scheme = ConnectionStringScheme.MongoDB,
+        Server = new MongoServerAddress("localhost", 27017)
+    };
+
+    return new MongoClient(settings);
+});
+
+services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+services.AddEndpointsApiExplorer();
+services.AddSwaggerGen();
 
 var app = builder.Build();
 
