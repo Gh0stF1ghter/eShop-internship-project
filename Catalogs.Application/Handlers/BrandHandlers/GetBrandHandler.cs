@@ -1,4 +1,5 @@
-﻿using Catalogs.Application.Queries.ItemQueries;
+﻿using Catalogs.Application.DataTransferObjects;
+using Catalogs.Application.Queries.BrandQueries;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.BrandHandlers
@@ -11,7 +12,7 @@ namespace Catalogs.Application.Handlers.BrandHandlers
         public async Task<BrandDto> Handle(GetBrandQuery query, CancellationToken token)
         {
             var brand = await _unitOfWork.Brand.GetBrandByIdAsync(query.Id, query.TrackChanges, token)
-                ?? throw new NotFoundException(ErrorMessages.BrandNotFound + query.Id);
+                ?? throw new NotFoundException(BrandMessages.BrandNotFound + query.Id);
 
             var brandDto = _mapper.Map<BrandDto>(brand);
 

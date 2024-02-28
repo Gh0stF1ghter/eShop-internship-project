@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Catalogs.Application.DataTransferObjects;
+using MediatR;
 
 namespace Catalogs.Application.Queries.ItemQueries
 {

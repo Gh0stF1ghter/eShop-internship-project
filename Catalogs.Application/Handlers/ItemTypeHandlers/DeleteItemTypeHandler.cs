@@ -1,4 +1,4 @@
-﻿using Catalogs.Application.Commands.ItemCommands;
+﻿using Catalogs.Application.Comands.ItemTypeCommands;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.ItemTypeHandlers
@@ -10,7 +10,7 @@ namespace Catalogs.Application.Handlers.ItemTypeHandlers
         public async Task Handle(DeleteItemTypeComand comand, CancellationToken token)
         {
             var brand = await _unitOfWork.ItemType.GetItemTypeByIdAsync(comand.Id, comand.TrackChanges, token)
-                ?? throw new BadRequestException(ErrorMessages.TypeNotFound);
+                ?? throw new BadRequestException(ItemTypeMessages.TypeNotFound);
 
             _unitOfWork.ItemType.Delete(brand);
 

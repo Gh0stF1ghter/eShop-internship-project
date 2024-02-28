@@ -1,8 +1,8 @@
 ﻿using Catalogs.API.ActionFilters;
-using Catalogs.Application.Commands.ItemCommands;
+using Catalogs.Application.Comands.ItemCommands;
+using Catalogs.Application.DataTransferObjects;
+using Catalogs.Application.DataTransferObjects.CreateDTOs;
 using Catalogs.Application.Queries.ItemQueries;
-using Catalogs.Domain.Entities.DataTransferObjects;
-using Catalogs.Domain.Entities.DataTransferObjects.CreateDTOs;
 using Catalogs.Domain.Entities.LinkModels;
 using Catalogs.Domain.RequestFeatures;
 using MediatR;

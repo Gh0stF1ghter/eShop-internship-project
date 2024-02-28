@@ -1,4 +1,4 @@
-﻿using Catalogs.Application.Commands.ItemCommands;
+﻿using Catalogs.Application.Comands.BrandCommands;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.BrandHandlers
@@ -11,7 +11,7 @@ namespace Catalogs.Application.Handlers.BrandHandlers
         public async Task Handle(UpdateBrandComand request, CancellationToken token)
         {
             var brandToUpdate = await _unitOfWork.Brand.GetBrandByIdAsync(request.Id, request.TrackChanges, token)
-                ?? throw new BadRequestException(ErrorMessages.BrandNotFound);
+                ?? throw new BadRequestException(BrandMessages.BrandNotFound);
 
             _mapper.Map(request.Brand, brandToUpdate);
             await _unitOfWork.SaveChangesAsync(token);

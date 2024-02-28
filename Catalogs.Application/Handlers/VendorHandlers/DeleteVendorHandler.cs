@@ -1,7 +1,7 @@
-﻿using Catalogs.Application.Commands.ItemCommands;
+﻿using Catalogs.Application.Comands.VendorCommands;
 using MediatR;
 
-namespace Catalogs.Application.Handlers.ItemTypeHandlers
+namespace Catalogs.Application.Handlers.VendorHandlers
 {
     public sealed class DeleteVendorHandler(IUnitOfWork unitOfWork) : IRequestHandler<DeleteVendorComand>
     {
@@ -10,7 +10,7 @@ namespace Catalogs.Application.Handlers.ItemTypeHandlers
         public async Task Handle(DeleteVendorComand comand, CancellationToken token)
         {
             var vendor = await _unitOfWork.Vendor.GetVendorByIdAsync(comand.Id, comand.TrackChanges, token)
-                ?? throw new BadRequestException(ErrorMessages.VendorNotFound);
+                ?? throw new BadRequestException(VendorMessages.VendorNotFound);
 
             _unitOfWork.Vendor.Delete(vendor);
 

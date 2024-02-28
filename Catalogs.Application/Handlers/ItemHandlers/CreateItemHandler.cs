@@ -1,4 +1,5 @@
-﻿using Catalogs.Application.Commands.ItemCommands;
+﻿using Catalogs.Application.DataTransferObjects;
+using Catalogs.Application.Comands.ItemCommands;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.ItemHandlers
@@ -12,7 +13,7 @@ namespace Catalogs.Application.Handlers.ItemHandlers
         {
             if (command.ItemDTO is null)
             {
-                throw new BadRequestException(ErrorMessages.ItemIsNull);
+                throw new BadRequestException(ItemMessages.ItemIsNull);
             }
 
             await FindReferences(command, token);
@@ -29,25 +30,25 @@ namespace Catalogs.Application.Handlers.ItemHandlers
 
         private async Task FindReferences(CreateItemComand command, CancellationToken token)
         {
-            var itemTypeExists = await _unitOfWork.ItemType.Exists(t => t.Id.Equals(command.TypeId), token);
+            var itemTypeExists = await _unitOfWork.ItemType.IsExistAsync(t => t.Id.Equals(command.TypeId), token);
 
             if (!itemTypeExists)
             {
-                throw new NotFoundException(ErrorMessages.TypeNotFound);
+                throw new NotFoundException(ItemTypeMessages.TypeNotFound);
             }
 
-            var brandExists = await _unitOfWork.Brand.Exists(b => b.Id.Equals(command.ItemDTO.BrandId), token);
+            var brandExists = await _unitOfWork.Brand.IsExistAsync(b => b.Id.Equals(command.ItemDTO.BrandId), token);
 
             if (!brandExists)
             {
-                throw new NotFoundException(ErrorMessages.TypeNotFound);
+                throw new NotFoundException(BrandMessages.BrandNotFound);
             }
 
-            var vendorExists = await _unitOfWork.Vendor.Exists(b => b.Id.Equals(command.ItemDTO.VendorId), token);
+            var vendorExists = await _unitOfWork.Vendor.IsExistAsync(b => b.Id.Equals(command.ItemDTO.VendorId), token);
 
             if (!vendorExists)
             {
-                throw new BadRequestException(ErrorMessages.VendorNotFound);
+                throw new BadRequestException(VendorMessages.VendorNotFound);
             }
         }
     }

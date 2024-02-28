@@ -10,6 +10,7 @@ namespace Catalogs.Infrastructure.Configurations
         {
             builder
                 .HasKey(x => x.Id);
+
             builder
                 .Property(x => x.Name)
                 .IsRequired()

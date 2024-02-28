@@ -1,7 +1,7 @@
-﻿using Catalogs.Application.Commands.ItemCommands;
-using Catalogs.Application.Queries.ItemQueries;
-using Catalogs.Domain.Entities.DataTransferObjects;
-using Catalogs.Domain.Entities.DataTransferObjects.CreateDTOs;
+﻿using Catalogs.Application.Comands.ItemTypeCommands;
+using Catalogs.Application.DataTransferObjects;
+using Catalogs.Application.DataTransferObjects.CreateDTOs;
+using Catalogs.Application.Queries.ItemTypeQueries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

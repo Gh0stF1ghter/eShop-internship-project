@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Identity.BusinessLogic.DTOs;
-using Identity.DataAccess.Models;
+using Identity.DataAccess.Entities.Models;
 
 namespace Identity.BusinessLogic.Mapping
 {

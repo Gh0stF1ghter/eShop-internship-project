@@ -1,4 +1,5 @@
-﻿using Catalogs.Application.Queries.ItemQueries;
+﻿using Catalogs.Application.DataTransferObjects;
+using Catalogs.Application.Queries.BrandQueries;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.BrandHandlers

@@ -1,4 +1,4 @@
-﻿using Catalogs.Application.Commands.ItemCommands;
+﻿using Catalogs.Application.Comands.BrandCommands;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.BrandHandlers
@@ -10,9 +10,10 @@ namespace Catalogs.Application.Handlers.BrandHandlers
         public async Task Handle(DeleteBrandComand comand, CancellationToken token)
         {
             var brand = await _unitOfWork.Brand.GetBrandByIdAsync(comand.Id, comand.TrackChanges, token)
-                ?? throw new BadRequestException(ErrorMessages.BrandNotFound);
+                ?? throw new BadRequestException(BrandMessages.BrandNotFound);
 
-            _unitOfWork.Brand.DeleteBrand(brand);
+            _unitOfWork.Brand.Delete(brand);
+
             await _unitOfWork.SaveChangesAsync(token);
         }
     }

@@ -1,6 +1,6 @@
-﻿using Catalogs.Application.Queries.ItemQueries;
+﻿using Catalogs.Application.DataTransferObjects;
+using Catalogs.Application.Queries.ItemQueries;
 using MediatR;
-using System.Windows.Input;
 
 namespace Catalogs.Application.Handlers.ItemHandlers
 {
@@ -11,16 +11,15 @@ namespace Catalogs.Application.Handlers.ItemHandlers
 
         public async Task<ItemDto> Handle(GetItemOfTypeQuery query, CancellationToken token)
         {
-            var itemTypeExists = await _unitOfWork.ItemType.Exists(it => it.Id.Equals(query.TypeId), token);
+            var itemTypeExists = await _unitOfWork.ItemType.IsExistAsync(it => it.Id.Equals(query.TypeId), token);
 
             if (!itemTypeExists)
             {
-                throw new NotFoundException(ErrorMessages.TypeNotFound);
+                throw new NotFoundException(ItemTypeMessages.TypeNotFound);
             }
 
-
             var item = await _unitOfWork.Item.GetItemOfTypeByIdAsync(query.TypeId, query.Id, query.TrackChanges, token)
-                ?? throw new NotFoundException(ErrorMessages.ItemNotFound + query.Id);
+                ?? throw new NotFoundException(ItemMessages.ItemNotFound + query.Id);
 
             var itemDto = _mapper.Map<ItemDto>(item);
 

@@ -1,4 +1,4 @@
-﻿using Catalogs.Domain.Interfaces.Repos;
+﻿using Catalogs.Domain.Interfaces.Repositories;
 
 namespace Catalogs.Domain.Interfaces
 {

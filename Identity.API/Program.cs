@@ -27,6 +27,8 @@ services.ConfigureSwagger();
 
 var app = builder.Build();
 
+app.ApplyMigrations();
+
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 if (app.Environment.IsDevelopment())

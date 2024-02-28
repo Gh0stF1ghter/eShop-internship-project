@@ -15,12 +15,7 @@ namespace Catalogs.Infrastructure.Context
         {
             base.OnModelCreating(modelBuilder);
 
-            //FromAssembly
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(UnitOfWork).Assembly);
-            //modelBuilder.ApplyConfiguration(new ItemConfiguration());
-            //modelBuilder.ApplyConfiguration(new ItemTypeConfiguration());
-            //modelBuilder.ApplyConfiguration(new VendorConfiguration());
-            //modelBuilder.ApplyConfiguration(new BrandConfiguration());
 
             new CatalogSeed(modelBuilder).Seed();
         }

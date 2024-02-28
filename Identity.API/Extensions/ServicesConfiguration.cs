@@ -5,7 +5,7 @@ using Identity.BusinessLogic.Services.Implementations;
 using Identity.BusinessLogic.Services.Interfaces;
 using Identity.BusinessLogic.Validators;
 using Identity.DataAccess.Data;
-using Identity.DataAccess.Models;
+using Identity.DataAccess.Entities.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -64,5 +64,15 @@ namespace Identity.API.Extensions
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
         }
+
+        public static void ApplyMigrations(this IApplicationBuilder builder)
+        {
+            var services = builder.ApplicationServices.CreateScope();
+
+            var context = services.ServiceProvider.GetService<IdentityContext>();
+
+            context?.Database.Migrate();
+        }
+
     }
 }

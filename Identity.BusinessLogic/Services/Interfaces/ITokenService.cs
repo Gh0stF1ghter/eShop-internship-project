@@ -1,5 +1,5 @@
 ﻿using Identity.BusinessLogic.DTOs;
-using Identity.DataAccess.Models;
+using Identity.DataAccess.Entities.Models;
 using System.Security.Claims;
 
 namespace Identity.BusinessLogic.Services.Interfaces

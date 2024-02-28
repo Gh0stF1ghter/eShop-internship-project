@@ -1,4 +1,5 @@
-﻿using Catalogs.Application.Commands.ItemCommands;
+﻿using Catalogs.Application.DataTransferObjects;
+using Catalogs.Application.Comands.VendorCommands;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.VendorHandlers
@@ -12,7 +13,7 @@ namespace Catalogs.Application.Handlers.VendorHandlers
         {
             if (command.VendorDto is null)
             {
-                throw new BadRequestException(ErrorMessages.VendorIsNull);
+                throw new BadRequestException(VendorMessages.VendorIsNull);
             }
 
             var vendor = _mapper.Map<Vendor>(command.VendorDto);

@@ -1,7 +1,7 @@
-﻿using Catalogs.Application.Commands.ItemCommands;
+﻿using Catalogs.Application.Comands.VendorCommands;
 using MediatR;
 
-namespace Catalogs.Application.Handlers.ItemTypeHandlers
+namespace Catalogs.Application.Handlers.VendorHandlers
 {
     internal class UpdateVendorHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<UpdateVendorComand>
     {
@@ -11,7 +11,7 @@ namespace Catalogs.Application.Handlers.ItemTypeHandlers
         public async Task Handle(UpdateVendorComand request, CancellationToken token)
         {
             var typeToUpdate = await _unitOfWork.Vendor.GetVendorByIdAsync(request.Id, request.TrackChanges, token)
-                ?? throw new BadRequestException(ErrorMessages.VendorNotFound);
+                ?? throw new BadRequestException(VendorMessages.VendorNotFound);
 
             _mapper.Map(request.Vendor, typeToUpdate);
             await _unitOfWork.SaveChangesAsync(token);

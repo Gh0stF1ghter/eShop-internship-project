@@ -1,4 +1,4 @@
-﻿using Catalogs.Application.Commands.ItemCommands;
+﻿using Catalogs.Application.Comands.ItemTypeCommands;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.ItemTypeHandlers
@@ -11,7 +11,7 @@ namespace Catalogs.Application.Handlers.ItemTypeHandlers
         public async Task Handle(UpdateItemTypeCommand request, CancellationToken token)
         {
             var itemTypeToUpdate = await _unitOfWork.ItemType.GetItemTypeByIdAsync(request.Id, request.TrackChanges, token)
-                ?? throw new BadRequestException(ErrorMessages.TypeNotFound);
+                ?? throw new BadRequestException(ItemTypeMessages.TypeNotFound);
 
             _mapper.Map(request.Type, itemTypeToUpdate);
             await _unitOfWork.SaveChangesAsync(token);

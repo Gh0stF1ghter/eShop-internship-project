@@ -1,7 +1,8 @@
-﻿using Catalogs.API.ActionFilters;
+﻿using AutoMapper;
+using Catalogs.API.ActionFilters;
 using Catalogs.API.Utility;
 using Catalogs.Application.DataShaping;
-using Catalogs.Domain.Entities.DataTransferObjects;
+using Catalogs.Application.DataTransferObjects;
 using Catalogs.Domain.Interfaces;
 using Catalogs.Infrastructure;
 using Catalogs.Infrastructure.Context;
@@ -32,7 +33,7 @@ namespace Catalogs.API.Extensions
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IDataShaper<ItemDto>, DataShaper<ItemDto>>();
             services.AddScoped<ValidateMediaTypeAttribute>();
-            services.AddScoped<IItemLinks, ItemLinks>();
+            services.AddScoped<IItemLinks<ItemDto>, ItemLinks>();
         }
 
         public static void ConfigureCors(this IServiceCollection services) =>
@@ -57,6 +58,15 @@ namespace Catalogs.API.Extensions
                 systemTextJsonOutputFormatter?.SupportedMediaTypes
                         .Add("application/vnd.eShopTest.hateoas+json");
             });
+        }
+
+        public static void ApplyMigrations(this IApplicationBuilder builder)
+        {
+            var services = builder.ApplicationServices.CreateScope();
+
+            var context = services.ServiceProvider.GetService<CatalogContext>();
+
+            context?.Database.Migrate();
         }
     }
 }

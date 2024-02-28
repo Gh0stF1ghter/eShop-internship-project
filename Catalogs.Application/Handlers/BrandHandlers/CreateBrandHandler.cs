@@ -1,4 +1,5 @@
-﻿using Catalogs.Application.Commands.ItemCommands;
+﻿using Catalogs.Application.Comands.BrandCommands;
+using Catalogs.Application.DataTransferObjects;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.BrandHandlers
@@ -10,14 +11,17 @@ namespace Catalogs.Application.Handlers.BrandHandlers
 
         public async Task<BrandDto> Handle(CreateBrandComand command, CancellationToken token)
         {
-            if (command.BrandDto is null)
+            var isBrandExists = await _unitOfWork.Brand.IsExistAsync(b => b.Name.Equals(command.BrandDto.Name, StringComparison.OrdinalIgnoreCase), token);
+
+            if (isBrandExists)
             {
-                throw new BadRequestException(ErrorMessages.BrandIsNull);
+                throw new BadRequestException(BrandMessages.BrandExists);
             }
 
             var brand = _mapper.Map<Brand>(command.BrandDto);
 
             _unitOfWork.Brand.Add(brand);
+
             await _unitOfWork.SaveChangesAsync(token);
 
             var brandToReturn = _mapper.Map<BrandDto>(brand);

@@ -9,6 +9,17 @@ namespace Catalogs.Infrastructure.Context
 
         public void Seed()
         {
+            AddBrands();
+
+            AddItemTypes();
+
+            AddVendors();
+
+            AddItems();
+        }
+
+        private void AddBrands()
+        {
             _builder.Entity<Brand>().HasData(
                 new Brand { Id = 1, Name = "Starbucks" },
                 new Brand { Id = 2, Name = "Apple" },
@@ -16,7 +27,10 @@ namespace Catalogs.Infrastructure.Context
                 new Brand { Id = 4, Name = "CodeMaze" },
                 new Brand { Id = 5, Name = "Lego" }
                 );
+        }
 
+        private void AddItemTypes()
+        {
             _builder.Entity<ItemType>().HasData(
                 new ItemType { Id = 1, Name = "Learning" },
                 new ItemType { Id = 2, Name = "Electronics" },
@@ -24,6 +38,10 @@ namespace Catalogs.Infrastructure.Context
                 new ItemType { Id = 4, Name = "Food" },
                 new ItemType { Id = 5, Name = "Software" }
                 );
+        }
+
+        private void AddVendors()
+        {
 
             _builder.Entity<Vendor>().HasData(
                 new Vendor { Id = 1, Name = "Amazon" },
@@ -33,6 +51,10 @@ namespace Catalogs.Infrastructure.Context
                 new Vendor { Id = 5, Name = "MediaMarkt" }
                 );
 
+        }
+
+        private void AddItems()
+        {
             _builder.Entity<Item>().HasData(
                 new Item
                 {

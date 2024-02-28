@@ -1,11 +1,11 @@
-﻿using Catalogs.Domain.Entities.DataTransferObjects;
-using Catalogs.Domain.Entities.LinkModels;
+﻿using Catalogs.Domain.Entities.LinkModels;
+using Catalogs.Domain.Entities.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace Catalogs.Domain.Interfaces
 {
-    public interface IItemLinks
+    public interface IItemLinks<T> 
     {
-        LinkResponse TryGenerateLinks(IEnumerable<ItemDto> itemsDtos, string fields, int typeId, HttpContext httpContext);
+        LinkResponse TryGenerateLinks(IEnumerable<T> items, string fields, int typeId, HttpContext httpContext);
     }
 }

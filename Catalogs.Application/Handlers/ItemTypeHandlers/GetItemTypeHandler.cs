@@ -1,4 +1,5 @@
-﻿using Catalogs.Application.Queries.ItemQueries;
+﻿using Catalogs.Application.DataTransferObjects;
+using Catalogs.Application.Queries.ItemTypeQueries;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.ItemTypeHandlers
@@ -11,7 +12,7 @@ namespace Catalogs.Application.Handlers.ItemTypeHandlers
         public async Task<ItemTypeDto> Handle(GetItemTypeQuery query, CancellationToken token)
         {
             var brand = await _unitOfWork.ItemType.GetItemTypeByIdAsync(query.Id, query.TrackChanges, token)
-                ?? throw new NotFoundException(ErrorMessages.TypeNotFound);
+                ?? throw new NotFoundException(ItemTypeMessages.TypeNotFound);
 
             var itemType = _mapper.Map<ItemTypeDto>(brand);
 

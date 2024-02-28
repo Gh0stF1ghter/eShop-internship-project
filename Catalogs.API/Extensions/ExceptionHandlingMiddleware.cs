@@ -1,8 +1,7 @@
 ﻿using Catalogs.Domain.Entities.Exceptions;
-using Identity.DataAccess.Entities.Exceptions;
 using System.Net;
 
-namespace Identity.API.Extensions
+namespace Catalogs.API.Extensions
 {
     public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
     {

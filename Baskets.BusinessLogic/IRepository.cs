@@ -1,4 +1,4 @@
-﻿namespace Basket.Core
+﻿namespace Baskets.BusinessLogic
 {
     internal interface IRepository
     {

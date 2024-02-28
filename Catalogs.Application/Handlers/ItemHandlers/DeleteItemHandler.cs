@@ -1,4 +1,4 @@
-﻿using Catalogs.Application.Commands.ItemCommands;
+﻿using Catalogs.Application.Comands.ItemCommands;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.ItemHandlers
@@ -9,15 +9,15 @@ namespace Catalogs.Application.Handlers.ItemHandlers
 
         public async Task Handle(DeleteItemComand comand, CancellationToken token)
         {
-            var itemTypeExists = await _unitOfWork.ItemType.Exists(it => it.Id.Equals(comand.TypeId), token);
+            var itemTypeExists = await _unitOfWork.ItemType.IsExistAsync(it => it.Id.Equals(comand.TypeId), token);
 
             if (!itemTypeExists)
             {
-                throw new NotFoundException(ErrorMessages.TypeNotFound);
+                throw new NotFoundException(ItemTypeMessages.TypeNotFound);
             }
 
             var item = await _unitOfWork.Item.GetItemOfTypeByIdAsync(comand.TypeId, comand.Id, comand.TrackChanges, token)
-                ?? throw new BadRequestException(ErrorMessages.ItemNotFound);
+                ?? throw new BadRequestException(ItemMessages.ItemNotFound);
 
             _unitOfWork.Item.Delete(item);
             await _unitOfWork.SaveChangesAsync(token);

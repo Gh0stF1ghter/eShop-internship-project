@@ -1,7 +1,8 @@
-﻿using Catalogs.Application.Queries.ItemQueries;
+﻿using Catalogs.Application.DataTransferObjects;
+using Catalogs.Application.Queries.VendorQueries;
 using MediatR;
 
-namespace Catalogs.Application.Handlers.ItemTypeHandlers
+namespace Catalogs.Application.Handlers.VendorHandlers
 {
     public sealed class GetVendorsHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<GetVendorsQuery, IEnumerable<VendorDto>>
     {

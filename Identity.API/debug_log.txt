@@ -2044,3 +2044,376 @@ WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
 2024-02-26 22:35:39.201 +00:00 [INF] Request finished HTTP/2 GET https://localhost:60463/swagger/index.html - 200 null text/html;charset=utf-8 185.5288ms
 2024-02-26 22:35:39.372 +00:00 [INF] Request starting HTTP/2 GET https://localhost:60463/swagger/v1/swagger.json - null null
 2024-02-26 22:35:39.497 +00:00 [INF] Request finished HTTP/2 GET https://localhost:60463/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 124.8141ms
+2024-02-28 10:02:35.464 +00:00 [WRN] Using an in-memory repository. Keys will not be persisted to storage.
+2024-02-28 10:02:35.487 +00:00 [WRN] Neither user profile nor HKLM registry available. Using an ephemeral key repository. Protected data will be unavailable when application exits.
+2024-02-28 10:02:35.504 +00:00 [INF] Creating key {d1f1c281-215e-441a-965e-e26e11500e4f} with creation date 2024-02-28 10:02:35Z, activation date 2024-02-28 10:02:35Z, and expiration date 2024-05-28 10:02:35Z.
+2024-02-28 10:02:35.547 +00:00 [WRN] No XML encryptor configured. Key {d1f1c281-215e-441a-965e-e26e11500e4f} may be persisted to storage in unencrypted form.
+2024-02-28 10:02:36.089 +00:00 [INF] Now listening on: http://[::]:8080
+2024-02-28 10:02:36.090 +00:00 [INF] Now listening on: https://[::]:8081
+2024-02-28 10:02:36.093 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-28 10:02:36.094 +00:00 [INF] Hosting environment: Development
+2024-02-28 10:02:36.094 +00:00 [INF] Content root path: /app
+2024-02-28 10:02:36.760 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55217/swagger - null null
+2024-02-28 10:02:36.821 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55217/swagger - 301 0 null 61.0032ms
+2024-02-28 10:02:36.858 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55217/swagger/index.html - null null
+2024-02-28 10:02:36.936 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55217/swagger/index.html - 200 null text/html;charset=utf-8 77.6345ms
+2024-02-28 10:02:37.023 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55217/swagger/swagger-ui.css - null null
+2024-02-28 10:02:37.037 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55217/swagger/swagger-ui-bundle.js - null null
+2024-02-28 10:02:37.084 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55217/swagger/swagger-ui-standalone-preset.js - null null
+2024-02-28 10:02:37.170 +00:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2024-02-28 10:02:37.171 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55217/swagger/swagger-ui.css - 200 144929 text/css 147.394ms
+2024-02-28 10:02:37.182 +00:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2024-02-28 10:02:37.183 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55217/swagger/swagger-ui-standalone-preset.js - 200 312163 text/javascript 120.597ms
+2024-02-28 10:02:37.283 +00:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2024-02-28 10:02:37.283 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55217/swagger/swagger-ui-bundle.js - 200 1061536 text/javascript 246.6421ms
+2024-02-28 10:02:37.536 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55217/swagger/v1/swagger.json - null null
+2024-02-28 10:02:37.556 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55217/swagger/favicon-32x32.png - null null
+2024-02-28 10:02:37.557 +00:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2024-02-28 10:02:37.558 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55217/swagger/favicon-32x32.png - 200 628 image/png 1.8822ms
+2024-02-28 10:02:37.628 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55217/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 92.2621ms
+2024-02-28 10:12:35.998 +00:00 [WRN] Using an in-memory repository. Keys will not be persisted to storage.
+2024-02-28 10:12:36.036 +00:00 [WRN] Neither user profile nor HKLM registry available. Using an ephemeral key repository. Protected data will be unavailable when application exits.
+2024-02-28 10:12:36.060 +00:00 [INF] Creating key {1b23bd96-4251-4741-87f5-91bf549e56cf} with creation date 2024-02-28 10:12:36Z, activation date 2024-02-28 10:12:36Z, and expiration date 2024-05-28 10:12:36Z.
+2024-02-28 10:12:36.111 +00:00 [WRN] No XML encryptor configured. Key {1b23bd96-4251-4741-87f5-91bf549e56cf} may be persisted to storage in unencrypted form.
+2024-02-28 10:12:36.582 +00:00 [INF] Now listening on: http://[::]:8080
+2024-02-28 10:12:36.583 +00:00 [INF] Now listening on: https://[::]:8081
+2024-02-28 10:12:36.586 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-28 10:12:36.587 +00:00 [INF] Hosting environment: Development
+2024-02-28 10:12:36.587 +00:00 [INF] Content root path: /app
+2024-02-28 10:12:39.348 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55217/swagger/index.html - null null
+2024-02-28 10:12:39.516 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55217/swagger/index.html - 200 null text/html;charset=utf-8 169.6357ms
+2024-02-28 10:12:39.804 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55217/swagger/v1/swagger.json - null null
+2024-02-28 10:12:39.910 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55217/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 105.5851ms
+2024-02-28 10:28:14.144 +00:00 [WRN] Using an in-memory repository. Keys will not be persisted to storage.
+2024-02-28 10:28:14.165 +00:00 [WRN] Neither user profile nor HKLM registry available. Using an ephemeral key repository. Protected data will be unavailable when application exits.
+2024-02-28 10:28:14.179 +00:00 [INF] Creating key {7605bde7-2915-4fb3-b1f2-bc528c2e168d} with creation date 2024-02-28 10:28:14Z, activation date 2024-02-28 10:28:14Z, and expiration date 2024-05-28 10:28:14Z.
+2024-02-28 10:28:14.207 +00:00 [WRN] No XML encryptor configured. Key {7605bde7-2915-4fb3-b1f2-bc528c2e168d} may be persisted to storage in unencrypted form.
+2024-02-28 10:28:14.572 +00:00 [INF] Now listening on: http://[::]:8080
+2024-02-28 10:28:14.573 +00:00 [INF] Now listening on: https://[::]:8081
+2024-02-28 10:28:14.577 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-28 10:28:14.578 +00:00 [INF] Hosting environment: Development
+2024-02-28 10:28:14.579 +00:00 [INF] Content root path: /app
+2024-02-28 10:28:15.003 +00:00 [INF] Request starting HTTP/2 GET https://localhost:54630/swagger - null null
+2024-02-28 10:28:15.064 +00:00 [INF] Request finished HTTP/2 GET https://localhost:54630/swagger - 301 0 null 61.0668ms
+2024-02-28 10:28:15.083 +00:00 [INF] Request starting HTTP/2 GET https://localhost:54630/swagger/index.html - null null
+2024-02-28 10:28:15.164 +00:00 [INF] Request finished HTTP/2 GET https://localhost:54630/swagger/index.html - 200 null text/html;charset=utf-8 80.217ms
+2024-02-28 10:28:15.215 +00:00 [INF] Request starting HTTP/2 GET https://localhost:54630/swagger/swagger-ui.css - null null
+2024-02-28 10:28:15.230 +00:00 [INF] Request starting HTTP/2 GET https://localhost:54630/swagger/swagger-ui-bundle.js - null null
+2024-02-28 10:28:15.231 +00:00 [INF] Request starting HTTP/2 GET https://localhost:54630/swagger/swagger-ui-standalone-preset.js - null null
+2024-02-28 10:28:15.278 +00:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2024-02-28 10:28:15.279 +00:00 [INF] Request finished HTTP/2 GET https://localhost:54630/swagger/swagger-ui.css - 200 144929 text/css 64.5575ms
+2024-02-28 10:28:15.289 +00:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2024-02-28 10:28:15.290 +00:00 [INF] Request finished HTTP/2 GET https://localhost:54630/swagger/swagger-ui-standalone-preset.js - 200 312163 text/javascript 58.8453ms
+2024-02-28 10:28:15.371 +00:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2024-02-28 10:28:15.372 +00:00 [INF] Request finished HTTP/2 GET https://localhost:54630/swagger/swagger-ui-bundle.js - 200 1061536 text/javascript 142.0968ms
+2024-02-28 10:28:15.661 +00:00 [INF] Request starting HTTP/2 GET https://localhost:54630/swagger/v1/swagger.json - null null
+2024-02-28 10:28:15.688 +00:00 [INF] Request starting HTTP/2 GET https://localhost:54630/swagger/favicon-32x32.png - null null
+2024-02-28 10:28:15.689 +00:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2024-02-28 10:28:15.689 +00:00 [INF] Request finished HTTP/2 GET https://localhost:54630/swagger/favicon-32x32.png - 200 628 image/png 2.1331ms
+2024-02-28 10:28:15.767 +00:00 [INF] Request finished HTTP/2 GET https://localhost:54630/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 106.451ms
+2024-02-28 13:02:28.213 +00:00 [WRN] Using an in-memory repository. Keys will not be persisted to storage.
+2024-02-28 13:02:28.242 +00:00 [WRN] Neither user profile nor HKLM registry available. Using an ephemeral key repository. Protected data will be unavailable when application exits.
+2024-02-28 13:02:28.263 +00:00 [INF] Creating key {6d510754-70f9-4ad8-973c-ab1c89c1f45c} with creation date 2024-02-28 13:02:28Z, activation date 2024-02-28 13:02:28Z, and expiration date 2024-05-28 13:02:28Z.
+2024-02-28 13:02:28.312 +00:00 [WRN] No XML encryptor configured. Key {6d510754-70f9-4ad8-973c-ab1c89c1f45c} may be persisted to storage in unencrypted form.
+2024-02-28 13:02:28.837 +00:00 [INF] Now listening on: http://[::]:8080
+2024-02-28 13:02:28.838 +00:00 [INF] Now listening on: https://[::]:8081
+2024-02-28 13:02:28.841 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-28 13:02:28.842 +00:00 [INF] Hosting environment: Development
+2024-02-28 13:02:28.844 +00:00 [INF] Content root path: /app
+2024-02-28 13:02:32.337 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55937/swagger - null null
+2024-02-28 13:02:32.414 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55937/swagger - 301 0 null 77.8521ms
+2024-02-28 13:02:32.443 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55937/swagger/index.html - null null
+2024-02-28 13:02:32.553 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55937/swagger/index.html - 200 null text/html;charset=utf-8 109.4009ms
+2024-02-28 13:02:32.620 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55937/swagger/swagger-ui.css - null null
+2024-02-28 13:02:32.634 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55937/swagger/swagger-ui-bundle.js - null null
+2024-02-28 13:02:32.637 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55937/swagger/swagger-ui-standalone-preset.js - null null
+2024-02-28 13:02:32.700 +00:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2024-02-28 13:02:32.701 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55937/swagger/swagger-ui.css - 200 144929 text/css 81.1131ms
+2024-02-28 13:02:32.715 +00:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2024-02-28 13:02:32.717 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55937/swagger/swagger-ui-standalone-preset.js - 200 312163 text/javascript 79.2706ms
+2024-02-28 13:02:32.830 +00:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2024-02-28 13:02:32.831 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55937/swagger/swagger-ui-bundle.js - 200 1061536 text/javascript 196.7659ms
+2024-02-28 13:02:33.107 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55937/swagger/v1/swagger.json - null null
+2024-02-28 13:02:33.149 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55937/swagger/favicon-32x32.png - null null
+2024-02-28 13:02:33.171 +00:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2024-02-28 13:02:33.171 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55937/swagger/favicon-32x32.png - 200 628 image/png 22.5667ms
+2024-02-28 13:02:33.305 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55937/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 198.8735ms
+2024-02-28 13:06:30.226 +00:00 [WRN] Using an in-memory repository. Keys will not be persisted to storage.
+2024-02-28 13:06:30.253 +00:00 [WRN] Neither user profile nor HKLM registry available. Using an ephemeral key repository. Protected data will be unavailable when application exits.
+2024-02-28 13:06:30.273 +00:00 [INF] Creating key {7261853f-b833-4248-ab28-aebf1a28567f} with creation date 2024-02-28 13:06:30Z, activation date 2024-02-28 13:06:30Z, and expiration date 2024-05-28 13:06:30Z.
+2024-02-28 13:06:30.301 +00:00 [WRN] No XML encryptor configured. Key {7261853f-b833-4248-ab28-aebf1a28567f} may be persisted to storage in unencrypted form.
+2024-02-28 13:06:30.725 +00:00 [INF] Now listening on: http://[::]:8080
+2024-02-28 13:06:30.725 +00:00 [INF] Now listening on: https://[::]:8081
+2024-02-28 13:06:30.729 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-28 13:06:30.731 +00:00 [INF] Hosting environment: Development
+2024-02-28 13:06:30.732 +00:00 [INF] Content root path: /app
+2024-02-28 13:06:31.210 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55937/swagger/index.html - null null
+2024-02-28 13:06:31.374 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55937/swagger/index.html - 200 null text/html;charset=utf-8 166.7201ms
+2024-02-28 13:06:31.714 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55937/swagger/v1/swagger.json - null null
+2024-02-28 13:06:31.830 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55937/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 115.3033ms
+2024-02-28 13:06:38.834 +00:00 [INF] Request starting HTTP/2 POST https://localhost:55937/api/authentication/login - application/json 69
+2024-02-28 13:06:38.849 +00:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API)'
+2024-02-28 13:06:38.886 +00:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginAsync(Identity.BusinessLogic.DTOs.LoginDTO, System.Threading.CancellationToken) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-28 13:06:39.493 +00:00 [INF] Searching for user with email string 
+2024-02-28 13:06:51.428 +00:00 [ERR] An error occurred using the connection to database 'Identity' on server 'mssql.db'.
+2024-02-28 13:06:51.467 +00:00 [ERR] An exception occurred while iterating over the results of a query for context type 'Identity.DataAccess.Data.IdentityContext'.
+System.InvalidOperationException: An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot open database "Identity" requested by the login. The login failed.
+Login failed for user 'sa'.
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.CompleteLogin(Boolean enlistOK)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean ignoreSniOpenTimeout, TimeoutTimer timeout, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString connectionOptions, SqlCredential credential, TimeoutTimer timeout)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(TimeoutTimer timeout, SqlConnectionString connectionOptions, SqlCredential credential, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken, DbConnectionPool pool)
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.WaitForPendingOpen()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+ClientConnectionId:bfd1851c-6b86-4146-8e5c-7d17ff3942a1
+Error Number:4060,State:1,Class:11
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+System.InvalidOperationException: An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot open database "Identity" requested by the login. The login failed.
+Login failed for user 'sa'.
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.CompleteLogin(Boolean enlistOK)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean ignoreSniOpenTimeout, TimeoutTimer timeout, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString connectionOptions, SqlCredential credential, TimeoutTimer timeout)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(TimeoutTimer timeout, SqlConnectionString connectionOptions, SqlCredential credential, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken, DbConnectionPool pool)
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.WaitForPendingOpen()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+ClientConnectionId:bfd1851c-6b86-4146-8e5c-7d17ff3942a1
+Error Number:4060,State:1,Class:11
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+2024-02-28 13:06:51.593 +00:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API) in 12701.4724ms
+2024-02-28 13:06:51.595 +00:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API)'
+2024-02-28 13:06:51.662 +00:00 [ERR] Exception An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call. caught
+2024-02-28 13:06:51.696 +00:00 [INF] Request finished HTTP/2 POST https://localhost:55937/api/authentication/login - 500 null application/json; charset=utf-8 12862.4612ms
+2024-02-28 13:07:49.076 +00:00 [WRN] Using an in-memory repository. Keys will not be persisted to storage.
+2024-02-28 13:07:49.099 +00:00 [WRN] Neither user profile nor HKLM registry available. Using an ephemeral key repository. Protected data will be unavailable when application exits.
+2024-02-28 13:07:49.114 +00:00 [INF] Creating key {c057a67e-5675-4924-aba0-32907b32393f} with creation date 2024-02-28 13:07:49Z, activation date 2024-02-28 13:07:49Z, and expiration date 2024-05-28 13:07:49Z.
+2024-02-28 13:07:49.135 +00:00 [WRN] No XML encryptor configured. Key {c057a67e-5675-4924-aba0-32907b32393f} may be persisted to storage in unencrypted form.
+2024-02-28 13:07:49.570 +00:00 [INF] Now listening on: http://[::]:8080
+2024-02-28 13:07:49.571 +00:00 [INF] Now listening on: https://[::]:8081
+2024-02-28 13:07:49.579 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-28 13:07:49.580 +00:00 [INF] Hosting environment: Development
+2024-02-28 13:07:49.581 +00:00 [INF] Content root path: /app
+2024-02-28 13:07:50.173 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55937/swagger/index.html - null null
+2024-02-28 13:07:50.340 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55937/swagger/index.html - 200 null text/html;charset=utf-8 170.1468ms
+2024-02-28 13:07:50.508 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55937/swagger/v1/swagger.json - null null
+2024-02-28 13:07:50.659 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55937/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 150.8235ms
+2024-02-28 13:11:21.295 +00:00 [WRN] Using an in-memory repository. Keys will not be persisted to storage.
+2024-02-28 13:11:21.326 +00:00 [WRN] Neither user profile nor HKLM registry available. Using an ephemeral key repository. Protected data will be unavailable when application exits.
+2024-02-28 13:11:21.348 +00:00 [INF] Creating key {ea91cbce-7cc0-4cfb-98c1-ef4b5bc95ba5} with creation date 2024-02-28 13:11:21Z, activation date 2024-02-28 13:11:21Z, and expiration date 2024-05-28 13:11:21Z.
+2024-02-28 13:11:21.373 +00:00 [WRN] No XML encryptor configured. Key {ea91cbce-7cc0-4cfb-98c1-ef4b5bc95ba5} may be persisted to storage in unencrypted form.
+2024-02-28 13:11:21.789 +00:00 [INF] Now listening on: http://[::]:8080
+2024-02-28 13:11:21.790 +00:00 [INF] Now listening on: https://[::]:8081
+2024-02-28 13:11:21.792 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-28 13:11:21.793 +00:00 [INF] Hosting environment: Development
+2024-02-28 13:11:21.794 +00:00 [INF] Content root path: /app
+2024-02-28 13:11:22.337 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55937/swagger/index.html - null null
+2024-02-28 13:11:22.565 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55937/swagger/index.html - 200 null text/html;charset=utf-8 229.8593ms
+2024-02-28 13:11:22.722 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55937/swagger/v1/swagger.json - null null
+2024-02-28 13:11:22.888 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55937/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 166.2848ms
+2024-02-28 13:12:36.336 +00:00 [INF] Executed DbCommand (331ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [Identity];
+2024-02-28 13:12:36.509 +00:00 [INF] Executed DbCommand (139ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [Identity] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2024-02-28 13:12:36.555 +00:00 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2024-02-28 13:12:36.651 +00:00 [INF] Executed DbCommand (16ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [__EFMigrationsHistory] (
+    [MigrationId] nvarchar(150) NOT NULL,
+    [ProductVersion] nvarchar(32) NOT NULL,
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+);
+2024-02-28 13:12:36.655 +00:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2024-02-28 13:12:36.686 +00:00 [INF] Executed DbCommand (23ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2024-02-28 13:12:36.732 +00:00 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2024-02-28 13:12:36.751 +00:00 [INF] Applying migration '20240215062021_init'.
+2024-02-28 13:12:36.866 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AspNetRoles] (
+    [Id] nvarchar(450) NOT NULL,
+    [Name] nvarchar(256) NULL,
+    [NormalizedName] nvarchar(256) NULL,
+    [ConcurrencyStamp] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetRoles] PRIMARY KEY ([Id])
+);
+2024-02-28 13:12:36.871 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AspNetUsers] (
+    [Id] nvarchar(450) NOT NULL,
+    [ImageUrl] nvarchar(max) NULL,
+    [UserName] nvarchar(256) NULL,
+    [NormalizedUserName] nvarchar(256) NULL,
+    [Email] nvarchar(256) NULL,
+    [NormalizedEmail] nvarchar(256) NULL,
+    [EmailConfirmed] bit NOT NULL,
+    [PasswordHash] nvarchar(max) NULL,
+    [SecurityStamp] nvarchar(max) NULL,
+    [ConcurrencyStamp] nvarchar(max) NULL,
+    [PhoneNumber] nvarchar(max) NULL,
+    [PhoneNumberConfirmed] bit NOT NULL,
+    [TwoFactorEnabled] bit NOT NULL,
+    [LockoutEnd] datetimeoffset NULL,
+    [LockoutEnabled] bit NOT NULL,
+    [AccessFailedCount] int NOT NULL,
+    CONSTRAINT [PK_AspNetUsers] PRIMARY KEY ([Id])
+);
+2024-02-28 13:12:36.878 +00:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AspNetRoleClaims] (
+    [Id] int NOT NULL IDENTITY,
+    [RoleId] nvarchar(450) NOT NULL,
+    [ClaimType] nvarchar(max) NULL,
+    [ClaimValue] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetRoleClaims] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE
+);
+2024-02-28 13:12:36.925 +00:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AspNetUserClaims] (
+    [Id] int NOT NULL IDENTITY,
+    [UserId] nvarchar(450) NOT NULL,
+    [ClaimType] nvarchar(max) NULL,
+    [ClaimValue] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetUserClaims] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+2024-02-28 13:12:36.974 +00:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AspNetUserLogins] (
+    [LoginProvider] nvarchar(450) NOT NULL,
+    [ProviderKey] nvarchar(450) NOT NULL,
+    [ProviderDisplayName] nvarchar(max) NULL,
+    [UserId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_AspNetUserLogins] PRIMARY KEY ([LoginProvider], [ProviderKey]),
+    CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+2024-02-28 13:12:36.980 +00:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AspNetUserRoles] (
+    [UserId] nvarchar(450) NOT NULL,
+    [RoleId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_AspNetUserRoles] PRIMARY KEY ([UserId], [RoleId]),
+    CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+2024-02-28 13:12:37.008 +00:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AspNetUserTokens] (
+    [UserId] nvarchar(450) NOT NULL,
+    [LoginProvider] nvarchar(450) NOT NULL,
+    [Name] nvarchar(450) NOT NULL,
+    [Value] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetUserTokens] PRIMARY KEY ([UserId], [LoginProvider], [Name]),
+    CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+2024-02-28 13:12:37.075 +00:00 [INF] Executed DbCommand (65ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'ConcurrencyStamp', N'Name', N'NormalizedName') AND [object_id] = OBJECT_ID(N'[AspNetRoles]'))
+    SET IDENTITY_INSERT [AspNetRoles] ON;
+INSERT INTO [AspNetRoles] ([Id], [ConcurrencyStamp], [Name], [NormalizedName])
+VALUES (N'3c544dc4-6e98-48ba-aaea-7ccf9af57f2d', N'3c544dc4-6e98-48ba-aaea-7ccf9af57f2d', N'Admin', N'ADMIN'),
+(N'8f35b520-b01b-4194-9487-ef391d17699c', N'8f35b520-b01b-4194-9487-ef391d17699c', N'User', N'USER');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'ConcurrencyStamp', N'Name', N'NormalizedName') AND [object_id] = OBJECT_ID(N'[AspNetRoles]'))
+    SET IDENTITY_INSERT [AspNetRoles] OFF;
+2024-02-28 13:12:37.104 +00:00 [INF] Executed DbCommand (28ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'AccessFailedCount', N'ConcurrencyStamp', N'Email', N'EmailConfirmed', N'ImageUrl', N'LockoutEnabled', N'LockoutEnd', N'NormalizedEmail', N'NormalizedUserName', N'PasswordHash', N'PhoneNumber', N'PhoneNumberConfirmed', N'SecurityStamp', N'TwoFactorEnabled', N'UserName') AND [object_id] = OBJECT_ID(N'[AspNetUsers]'))
+    SET IDENTITY_INSERT [AspNetUsers] ON;
+INSERT INTO [AspNetUsers] ([Id], [AccessFailedCount], [ConcurrencyStamp], [Email], [EmailConfirmed], [ImageUrl], [LockoutEnabled], [LockoutEnd], [NormalizedEmail], [NormalizedUserName], [PasswordHash], [PhoneNumber], [PhoneNumberConfirmed], [SecurityStamp], [TwoFactorEnabled], [UserName])
+VALUES (N'18636657-db44-4f76-8c92-3bd22f6855b4', 0, N'009a2a2c-36bf-4287-abe4-2601b207dcee', N'user@example.com', CAST(0 AS bit), NULL, CAST(0 AS bit), NULL, N'USER@EXAMPLE.COM', N'JOEDOE', N'AQAAAAIAAYagAAAAENOWg4EDdFFeFrP4v6mPtylY+Is+H9K2KWGrWBB/8ubV/x9dhh1NDOh0lUhAsGLDQQ==', NULL, CAST(0 AS bit), N'2d94b563-4579-49b9-be41-ecb4e13f8f01', CAST(0 AS bit), N'JoeDoe'),
+(N'2a1d884e-c465-4643-b309-d2de1e132b5d', 0, N'2cb9de87-551a-4720-bf65-3746012ead63', N'admin@admin.com', CAST(1 AS bit), NULL, CAST(0 AS bit), NULL, N'ADMIN@ADMIN.COM', N'ADMINTEST', N'AQAAAAIAAYagAAAAEIIDvKYN2mB5EFh6Hogsg//6JkNR2mHMo7BUwMDBkLI6mEaOY9JV1sKMgHU01a3L/A==', NULL, CAST(0 AS bit), N'c66dd88f-ceeb-4253-93d5-4d3dd86ba37c', CAST(0 AS bit), N'AdminTest');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'AccessFailedCount', N'ConcurrencyStamp', N'Email', N'EmailConfirmed', N'ImageUrl', N'LockoutEnabled', N'LockoutEnd', N'NormalizedEmail', N'NormalizedUserName', N'PasswordHash', N'PhoneNumber', N'PhoneNumberConfirmed', N'SecurityStamp', N'TwoFactorEnabled', N'UserName') AND [object_id] = OBJECT_ID(N'[AspNetUsers]'))
+    SET IDENTITY_INSERT [AspNetUsers] OFF;
+2024-02-28 13:12:37.172 +00:00 [INF] Executed DbCommand (25ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'RoleId', N'UserId') AND [object_id] = OBJECT_ID(N'[AspNetUserRoles]'))
+    SET IDENTITY_INSERT [AspNetUserRoles] ON;
+INSERT INTO [AspNetUserRoles] ([RoleId], [UserId])
+VALUES (N'8f35b520-b01b-4194-9487-ef391d17699c', N'18636657-db44-4f76-8c92-3bd22f6855b4'),
+(N'3c544dc4-6e98-48ba-aaea-7ccf9af57f2d', N'2a1d884e-c465-4643-b309-d2de1e132b5d');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'RoleId', N'UserId') AND [object_id] = OBJECT_ID(N'[AspNetUserRoles]'))
+    SET IDENTITY_INSERT [AspNetUserRoles] OFF;
+2024-02-28 13:12:37.218 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AspNetRoleClaims_RoleId] ON [AspNetRoleClaims] ([RoleId]);
+2024-02-28 13:12:37.274 +00:00 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [RoleNameIndex] ON [AspNetRoles] ([NormalizedName]) WHERE [NormalizedName] IS NOT NULL;
+2024-02-28 13:12:37.298 +00:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AspNetUserClaims_UserId] ON [AspNetUserClaims] ([UserId]);
+2024-02-28 13:12:37.323 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AspNetUserLogins_UserId] ON [AspNetUserLogins] ([UserId]);
+2024-02-28 13:12:37.354 +00:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AspNetUserRoles_RoleId] ON [AspNetUserRoles] ([RoleId]);
+2024-02-28 13:12:37.407 +00:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [EmailIndex] ON [AspNetUsers] ([NormalizedEmail]);
+2024-02-28 13:12:37.448 +00:00 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [UserNameIndex] ON [AspNetUsers] ([NormalizedUserName]) WHERE [NormalizedUserName] IS NOT NULL;
+2024-02-28 13:12:37.493 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20240215062021_init', N'8.0.2');
+2024-02-28 13:12:37.516 +00:00 [INF] Applying migration '20240216123239_RefreshTokenFieldsInUser'.
+2024-02-28 13:12:37.578 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [AspNetUsers] ADD [RefreshToken] nvarchar(max) NULL;
+2024-02-28 13:12:37.604 +00:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [AspNetUsers] ADD [RefreshTokenExpireTime] datetime2 NOT NULL DEFAULT '0001-01-01T00:00:00.0000000';
+2024-02-28 13:12:37.628 +00:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20240216123239_RefreshTokenFieldsInUser', N'8.0.2');
+2024-02-28 13:12:37.829 +00:00 [WRN] Using an in-memory repository. Keys will not be persisted to storage.
+2024-02-28 13:12:37.830 +00:00 [WRN] Neither user profile nor HKLM registry available. Using an ephemeral key repository. Protected data will be unavailable when application exits.
+2024-02-28 13:12:37.848 +00:00 [INF] Creating key {9351afd7-c243-48a6-a9ea-02aea3ec699d} with creation date 2024-02-28 13:12:37Z, activation date 2024-02-28 13:12:37Z, and expiration date 2024-05-28 13:12:37Z.
+2024-02-28 13:12:37.856 +00:00 [WRN] No XML encryptor configured. Key {9351afd7-c243-48a6-a9ea-02aea3ec699d} may be persisted to storage in unencrypted form.
+2024-02-28 13:12:38.074 +00:00 [INF] Now listening on: http://[::]:8080
+2024-02-28 13:12:38.074 +00:00 [INF] Now listening on: https://[::]:8081
+2024-02-28 13:12:38.078 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-28 13:12:38.079 +00:00 [INF] Hosting environment: Development
+2024-02-28 13:12:38.080 +00:00 [INF] Content root path: /app
+2024-02-28 13:12:38.556 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55937/swagger/index.html - null null
+2024-02-28 13:12:38.758 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55937/swagger/index.html - 200 null text/html;charset=utf-8 204.9547ms
+2024-02-28 13:12:38.924 +00:00 [INF] Request starting HTTP/2 GET https://localhost:55937/swagger/v1/swagger.json - null null
+2024-02-28 13:12:39.052 +00:00 [INF] Request finished HTTP/2 GET https://localhost:55937/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 128.2292ms
+2024-02-28 13:12:51.183 +00:00 [INF] Request starting HTTP/2 POST https://localhost:55937/api/authentication/login - application/json 69
+2024-02-28 13:12:51.200 +00:00 [INF] Executing endpoint 'Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API)'
+2024-02-28 13:12:51.232 +00:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginAsync(Identity.BusinessLogic.DTOs.LoginDTO, System.Threading.CancellationToken) on controller Identity.API.Controllers.AuthenticationController (Identity.API).
+2024-02-28 13:12:51.303 +00:00 [INF] Searching for user with email string 
+2024-02-28 13:12:51.753 +00:00 [INF] Executed DbCommand (89ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[ImageUrl], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[RefreshToken], [a].[RefreshTokenExpireTime], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2024-02-28 13:12:51.868 +00:00 [INF] Executed action Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API) in 630.0572ms
+2024-02-28 13:12:51.870 +00:00 [INF] Executed endpoint 'Identity.API.Controllers.AuthenticationController.LoginAsync (Identity.API)'
+2024-02-28 13:12:51.930 +00:00 [ERR] Exception User does not exist caught
+2024-02-28 13:12:51.954 +00:00 [INF] Request finished HTTP/2 POST https://localhost:55937/api/authentication/login - 400 null application/json; charset=utf-8 770.8876ms

@@ -1,4 +1,5 @@
-﻿using Catalogs.Application.Commands.ItemCommands;
+﻿using Catalogs.Application.DataTransferObjects;
+using Catalogs.Application.Comands.ItemTypeCommands;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.ItemTypeHandlers
@@ -12,7 +13,7 @@ namespace Catalogs.Application.Handlers.ItemTypeHandlers
         {
             if (command.ItemTypeDto is null)
             {
-                throw new BadRequestException(ErrorMessages.ItemTypeIsNull);
+                throw new BadRequestException(ItemTypeMessages.ItemTypeIsNull);
             }
 
             var itemType = _mapper.Map<ItemType>(command.ItemTypeDto);

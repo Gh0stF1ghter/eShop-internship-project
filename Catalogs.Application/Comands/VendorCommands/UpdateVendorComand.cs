@@ -1,7 +1,7 @@
-﻿using Catalogs.Domain.Entities.DataTransferObjects.CreateDTOs;
+﻿using Catalogs.Application.DataTransferObjects.CreateDTOs;
 using MediatR;
 
-namespace Catalogs.Application.Commands.ItemCommands
+namespace Catalogs.Application.Comands.VendorCommands
 {
     public sealed record UpdateVendorComand(int Id, VendorManipulateDto Vendor, bool TrackChanges) : IRequest;
 }

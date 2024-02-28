@@ -12,6 +12,7 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
   catalogs.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -23,3 +24,12 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+  
+  mssql.db: 
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: mssql.db
+    ports:
+        - "1433:1433"
+    environment:
+        - ACCEPT_EULA=y
+        - MSSQL_SA_PASSWORD=A&VeryComplex123Password

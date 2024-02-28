@@ -1,23 +1,24 @@
-﻿using Catalogs.Application.Queries.ItemQueries;
+﻿using Catalogs.Application.DataTransferObjects;
+using Catalogs.Application.Queries.ItemQueries;
 using Catalogs.Domain.Entities.LinkModels;
 using Catalogs.Domain.RequestFeatures;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.ItemHandlers
 {
-    public class GetItemsOfTypeHandler(IUnitOfWork unitOfWork, IMapper mapper, IItemLinks itemLinks) : IRequestHandler<GetItemsOfTypeQuery, (LinkResponse linkResponse, MetaData metaData)>
+    public class GetItemsOfTypeHandler(IUnitOfWork unitOfWork, IMapper mapper, IItemLinks<ItemDto> itemLinks) : IRequestHandler<GetItemsOfTypeQuery, (LinkResponse linkResponse, MetaData metaData)>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IMapper _mapper = mapper;
-        private readonly IItemLinks _itemLinks = itemLinks;
+        private readonly IItemLinks<ItemDto> _itemLinks = itemLinks;
 
         public async Task<(LinkResponse linkResponse, MetaData metaData)> Handle(GetItemsOfTypeQuery query, CancellationToken token)
         {
-            var itemTypeExists = await _unitOfWork.ItemType.Exists(t => t.Id.Equals(query.TypeId), token); 
+            var itemTypeExists = await _unitOfWork.ItemType.IsExistAsync(t => t.Id.Equals(query.TypeId), token); 
 
             if (!itemTypeExists)
             {
-                throw new NotFoundException(ErrorMessages.TypeNotFound);
+                throw new NotFoundException(ItemTypeMessages.TypeNotFound);
             }
 
             var items = await _unitOfWork.Item.GetAllItemsOfTypeAsync(query.TypeId, query.LinkParameters.ItemParameters, query.TrackChanges, token);

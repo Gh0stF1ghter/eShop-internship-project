@@ -1,4 +1,4 @@
-﻿using Catalogs.Application.Commands.ItemCommands;
+﻿using Catalogs.Application.Comands.ItemCommands;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.ItemHandlers
@@ -13,7 +13,7 @@ namespace Catalogs.Application.Handlers.ItemHandlers
             await FindReferences(comand, token);
 
             var itemToUpdate = await _unitOfWork.Item.GetItemOfTypeByIdAsync(comand.TypeId, comand.Id, comand.TrackChanges, token)
-                ?? throw new BadRequestException(ErrorMessages.ItemNotFound);
+                ?? throw new BadRequestException(ItemMessages.ItemNotFound);
 
             _mapper.Map(comand.Item, itemToUpdate);
             await _unitOfWork.SaveChangesAsync(token);
@@ -21,25 +21,25 @@ namespace Catalogs.Application.Handlers.ItemHandlers
 
         private async Task FindReferences(UpdateItemComand comand, CancellationToken token)
         {
-            var itemTypeExists = await _unitOfWork.ItemType.Exists(t => t.Id.Equals(comand.TypeId), token);
+            var itemTypeExists = await _unitOfWork.ItemType.IsExistAsync(t => t.Id.Equals(comand.TypeId), token);
 
             if (!itemTypeExists)
             {
-                throw new NotFoundException(ErrorMessages.TypeNotFound);
+                throw new NotFoundException(ItemTypeMessages.TypeNotFound);
             }
 
-            var brandExists = await _unitOfWork.Brand.Exists(b => b.Id.Equals(comand.Item.BrandId), token);
+            var brandExists = await _unitOfWork.Brand.IsExistAsync(b => b.Id.Equals(comand.Item.BrandId), token);
 
             if (!brandExists)
             {
-                throw new NotFoundException(ErrorMessages.TypeNotFound);
+                throw new NotFoundException(BrandMessages.BrandNotFound);
             }
 
-            var vendorExists = await _unitOfWork.Vendor.Exists(b => b.Id.Equals(comand.Item.VendorId), token);
+            var vendorExists = await _unitOfWork.Vendor.IsExistAsync(b => b.Id.Equals(comand.Item.VendorId), token);
 
             if (!vendorExists)
             {
-                throw new BadRequestException(ErrorMessages.VendorNotFound);
+                throw new BadRequestException(VendorMessages.VendorNotFound);
             }
         }
     }

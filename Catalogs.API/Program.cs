@@ -1,6 +1,6 @@
 using Catalogs.API.Extensions;
-using Identity.API.Extensions;
 using Serilog;
+using Catalogs.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +14,7 @@ services.AddCustomDependencies();
 
 services.ConfigureMediatR();
 services.AddAutoValidation();
-services.AddAutoMapper(typeof(Program));
+services.AddAutoMapper(typeof(AssemblyReference));
 
 services.ConfigureCors();
 
@@ -26,6 +26,8 @@ services.AddSwaggerGen();
 services.AddCustomMediaTypes();
 
 var app = builder.Build();
+
+app.ApplyMigrations();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 

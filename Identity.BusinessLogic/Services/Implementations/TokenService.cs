@@ -2,7 +2,7 @@
 using Identity.BusinessLogic.Services.Interfaces;
 using Identity.DataAccess.Entities.Constants;
 using Identity.DataAccess.Entities.Exceptions;
-using Identity.DataAccess.Models;
+using Identity.DataAccess.Entities.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

@@ -1,7 +1,7 @@
 ﻿using Catalogs.Domain.Interfaces;
-using Catalogs.Domain.Interfaces.Repos;
+using Catalogs.Domain.Interfaces.Repositories;
 using Catalogs.Infrastructure.Context;
-using Catalogs.Infrastructure.Repos;
+using Catalogs.Infrastructure.Repositories;
 
 namespace Catalogs.Infrastructure
 {

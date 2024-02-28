@@ -1,12 +1,13 @@
-﻿using Catalogs.Domain.Entities.DataTransferObjects;
+﻿using Catalogs.Application.DataTransferObjects;
 using Catalogs.Domain.Entities.LinkModels;
+using Catalogs.Domain.Entities.Models;
 using Catalogs.Domain.Interfaces;
 using Microsoft.Net.Http.Headers;
 using System.Dynamic;
 
 namespace Catalogs.API.Utility
 {
-    public class ItemLinks(LinkGenerator linkGenerator, IDataShaper<ItemDto> dataShaper) : IItemLinks
+    public class ItemLinks(LinkGenerator linkGenerator, IDataShaper<ItemDto> dataShaper) : IItemLinks<ItemDto>
     {
         private readonly LinkGenerator _linkGenerator = linkGenerator;
         private readonly IDataShaper<ItemDto> _dataShaper = dataShaper;
@@ -28,7 +29,7 @@ namespace Catalogs.API.Utility
                 .Select(e => e.Entity)
                 .ToList();
 
-        private bool ShouldGenerateLinks(HttpContext httpContext)
+        private static bool ShouldGenerateLinks(HttpContext httpContext)
         {
             var mediaType = (MediaTypeHeaderValue)httpContext.Items["AcceptHeaderMediaType"];
 
