@@ -1,5 +1,4 @@
 ﻿using MongoDB.Bson;
-
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Baskets.DataAccess.Entities.Models
@@ -8,14 +7,8 @@ namespace Baskets.DataAccess.Entities.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string? Id { get; set; }
+        public string Id { get; set; } = null!;
 
         public int UserId { get; set; }
-
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string BasketId { get; set; } = null!;
-
-        [BsonIgnore]
-        public BasketCustomer BasketCustomer { get; set; } = null!;
     }
 }

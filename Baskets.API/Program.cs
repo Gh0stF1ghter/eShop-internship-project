@@ -5,10 +5,9 @@ using MongoDB.Driver.Core.Configuration;
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 
-
 // Add services to the container.
-services.Configure<BasketDatabase>(
-    builder.Configuration.GetSection(nameof(BasketDatabase)));
+services.Configure<BasketDatabaseSettings>(
+    builder.Configuration.GetSection(nameof(BasketDatabaseSettings)));
 
 services.AddSingleton<IMongoClient>(_ => {
     var settings = new MongoClientSettings()

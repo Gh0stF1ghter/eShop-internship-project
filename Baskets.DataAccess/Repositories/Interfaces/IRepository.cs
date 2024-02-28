@@ -1,6 +1,14 @@
-﻿namespace Baskets.DataAccess.Repositories.Interfaces
+﻿using System.Linq.Expressions;
+
+namespace Baskets.DataAccess.Repositories.Interfaces
 {
-    internal interface IRepository
+    public interface IRepository<T> 
     {
+        Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken);
+        Task<IEnumerable<T>> GetByConditionAsync(Expression<Func<T, bool>> condition, CancellationToken cancellationToken);
+
+        void Add(T entity);
+        void Update(T entity);
+        void Delete(T entity);
     }
 }

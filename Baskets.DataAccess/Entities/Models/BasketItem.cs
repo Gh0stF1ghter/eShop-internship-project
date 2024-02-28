@@ -10,12 +10,12 @@ namespace Baskets.DataAccess.Entities.Models
         public string? Id { get; set; }
 
         public int Quantity { get; set; }
-        public double TotalPrice { get; set; }
+        public double SumPrice { get; set; }
 
         [BsonRepresentation(BsonType.ObjectId)]
         public string? ItemId { get; set; }
 
         [BsonIgnore]
-        public Item ItemRef { get; set; } = null!;
+        public Item Item { get; set; } = null!;
     }
 }
