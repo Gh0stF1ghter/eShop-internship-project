@@ -11,10 +11,7 @@ namespace Catalogs.Application.Handlers.ItemTypeHandlers
 
         public async Task<ItemTypeDto> Handle(CreateItemTypeCommand command, CancellationToken token)
         {
-            if (command.ItemTypeDto is null)
-            {
-                throw new BadRequestException(ItemTypeMessages.ItemTypeIsNull);
-            }
+            var itemmTypeExists = await _unitOfWork.ItemType.IsExistAsync(it => it.Name.Equals(command.ItemTypeDto.Name, StringComparison.OrdinalIgnoreCase), token);
 
             var itemType = _mapper.Map<ItemType>(command.ItemTypeDto);
 

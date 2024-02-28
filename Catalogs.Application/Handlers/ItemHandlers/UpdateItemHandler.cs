@@ -1,4 +1,5 @@
 ﻿using Catalogs.Application.Comands.ItemCommands;
+using Catalogs.Domain.Entities.Models;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.ItemHandlers
@@ -12,8 +13,12 @@ namespace Catalogs.Application.Handlers.ItemHandlers
         {
             await FindReferences(comand, token);
 
-            var itemToUpdate = await _unitOfWork.Item.GetItemOfTypeByIdAsync(comand.TypeId, comand.Id, comand.TrackChanges, token)
-                ?? throw new BadRequestException(ItemMessages.ItemNotFound);
+            var itemToUpdate = await _unitOfWork.Item.GetItemOfTypeByIdAsync(comand.TypeId, comand.Id, comand.TrackChanges, token);
+
+            if (itemToUpdate == null)
+            {
+                throw new BadRequestException(ItemMessages.ItemNotFound);
+            }
 
             _mapper.Map(comand.Item, itemToUpdate);
             await _unitOfWork.SaveChangesAsync(token);

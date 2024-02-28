@@ -11,10 +11,7 @@ namespace Catalogs.Application.Handlers.VendorHandlers
 
         public async Task<VendorDto> Handle(CreateVendorCommand command, CancellationToken token)
         {
-            if (command.VendorDto is null)
-            {
-                throw new BadRequestException(VendorMessages.VendorIsNull);
-            }
+            var vendorExists = await _unitOfWork.Vendor.IsExistAsync(v => v.Name.Equals(command.VendorDto.Name), token);
 
             var vendor = _mapper.Map<Vendor>(command.VendorDto);
 

@@ -1,5 +1,6 @@
 ﻿using Catalogs.Application.DataTransferObjects;
 using Catalogs.Application.Queries.VendorQueries;
+using Catalogs.Domain.Entities.Models;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.VendorHandlers
@@ -11,12 +12,16 @@ namespace Catalogs.Application.Handlers.VendorHandlers
 
         public async Task<VendorDto> Handle(GetVendorQuery query, CancellationToken token)
         {
-            var brand = await _unitOfWork.Vendor.GetVendorByIdAsync(query.Id, query.TrackChanges, token)
-                ?? throw new NotFoundException(VendorMessages.VendorNotFound + query.Id);
+            var vendor = await _unitOfWork.Vendor.GetVendorByIdAsync(query.Id, query.TrackChanges, token);
 
-            var brandDto = _mapper.Map<VendorDto>(brand);
+            if (vendor == null)
+            {
+                throw new BadRequestException(VendorMessages.VendorNotFound);
+            }
 
-            return brandDto;
+            var vendorDto = _mapper.Map<VendorDto>(vendor);
+
+            return vendorDto;
         }
     }
 }

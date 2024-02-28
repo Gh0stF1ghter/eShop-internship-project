@@ -11,8 +11,12 @@ namespace Catalogs.Application.Handlers.BrandHandlers
 
         public async Task<BrandDto> Handle(GetBrandQuery query, CancellationToken token)
         {
-            var brand = await _unitOfWork.Brand.GetBrandByIdAsync(query.Id, query.TrackChanges, token)
-                ?? throw new NotFoundException(BrandMessages.BrandNotFound + query.Id);
+            var brand = await _unitOfWork.Brand.GetBrandByIdAsync(query.Id, query.TrackChanges, token);
+
+            if (brand == null)
+            {
+                throw new NotFoundException(BrandMessages.BrandNotFound);
+            }
 
             var brandDto = _mapper.Map<BrandDto>(brand);
 

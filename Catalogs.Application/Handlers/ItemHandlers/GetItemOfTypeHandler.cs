@@ -18,8 +18,12 @@ namespace Catalogs.Application.Handlers.ItemHandlers
                 throw new NotFoundException(ItemTypeMessages.TypeNotFound);
             }
 
-            var item = await _unitOfWork.Item.GetItemOfTypeByIdAsync(query.TypeId, query.Id, query.TrackChanges, token)
-                ?? throw new NotFoundException(ItemMessages.ItemNotFound + query.Id);
+            var item = await _unitOfWork.Item.GetItemOfTypeByIdAsync(query.TypeId, query.Id, query.TrackChanges, token);
+
+            if (item == null)
+            {
+                throw new NotFoundException(ItemMessages.ItemNotFound);
+            }
 
             var itemDto = _mapper.Map<ItemDto>(item);
 

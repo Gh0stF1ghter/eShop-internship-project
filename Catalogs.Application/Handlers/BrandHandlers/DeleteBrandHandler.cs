@@ -9,8 +9,12 @@ namespace Catalogs.Application.Handlers.BrandHandlers
 
         public async Task Handle(DeleteBrandComand comand, CancellationToken token)
         {
-            var brand = await _unitOfWork.Brand.GetBrandByIdAsync(comand.Id, comand.TrackChanges, token)
-                ?? throw new BadRequestException(BrandMessages.BrandNotFound);
+            var brand = await _unitOfWork.Brand.GetBrandByIdAsync(comand.Id, comand.TrackChanges, token);
+
+            if (brand == null)
+            {
+                throw new BadRequestException(BrandMessages.BrandNotFound); 
+            }
 
             _unitOfWork.Brand.Delete(brand);
 

@@ -11,9 +11,11 @@ namespace Catalogs.Application.Handlers.ItemHandlers
 
         public async Task<ItemDto> Handle(CreateItemComand command, CancellationToken token)
         {
-            if (command.ItemDTO is null)
+            var itemExists = await _unitOfWork.Item.IsExistAsync(i => i.Name.Equals(command.ItemDTO.Name, StringComparison.OrdinalIgnoreCase) && i.VendorId.Equals(command.ItemDTO.VendorId), token);
+
+            if (itemExists)
             {
-                throw new BadRequestException(ItemMessages.ItemIsNull);
+                throw new BadRequestException(ItemMessages.ItemExists);
             }
 
             await FindReferences(command, token);

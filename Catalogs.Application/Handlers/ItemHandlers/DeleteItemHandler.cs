@@ -16,8 +16,12 @@ namespace Catalogs.Application.Handlers.ItemHandlers
                 throw new NotFoundException(ItemTypeMessages.TypeNotFound);
             }
 
-            var item = await _unitOfWork.Item.GetItemOfTypeByIdAsync(comand.TypeId, comand.Id, comand.TrackChanges, token)
-                ?? throw new BadRequestException(ItemMessages.ItemNotFound);
+            var item = await _unitOfWork.Item.GetItemOfTypeByIdAsync(comand.TypeId, comand.Id, comand.TrackChanges, token);
+
+            if (item == null)
+            {
+                throw new BadRequestException(ItemMessages.ItemNotFound);
+            }
 
             _unitOfWork.Item.Delete(item);
             await _unitOfWork.SaveChangesAsync(token);

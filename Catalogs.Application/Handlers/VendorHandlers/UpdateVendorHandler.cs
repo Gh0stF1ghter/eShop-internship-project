@@ -10,10 +10,14 @@ namespace Catalogs.Application.Handlers.VendorHandlers
 
         public async Task Handle(UpdateVendorComand request, CancellationToken token)
         {
-            var typeToUpdate = await _unitOfWork.Vendor.GetVendorByIdAsync(request.Id, request.TrackChanges, token)
-                ?? throw new BadRequestException(VendorMessages.VendorNotFound);
+            var vendorToUpdate = await _unitOfWork.Vendor.GetVendorByIdAsync(request.Id, request.TrackChanges, token);
 
-            _mapper.Map(request.Vendor, typeToUpdate);
+            if (vendorToUpdate == null)
+            {
+                throw new BadRequestException(VendorMessages.VendorNotFound);
+            }
+
+            _mapper.Map(request.Vendor, vendorToUpdate);
             await _unitOfWork.SaveChangesAsync(token);
         }
     }
