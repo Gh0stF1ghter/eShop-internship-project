@@ -1,5 +1,4 @@
 ﻿using Baskets.BusinessLogic.Comands.BasketItem;
-using Baskets.BusinessLogic.DataTransferObjects;
 using Baskets.BusinessLogic.DataTransferObjects.CreateDTOs;
 using Baskets.BusinessLogic.Queries.BasketItem;
 using MediatR;
@@ -31,11 +30,11 @@ namespace Baskets.API.Controllers
 
         [HttpPost]
         [ActionName("CreateBasketItem")]
-        public async Task<IActionResult> CreateBasketItemAsync([FromRoute] string userId, [FromBody] CreateBasketItemDto createBasketItemDto, CancellationToken cancellationToken) 
+        public async Task<IActionResult> CreateBasketItemAsync([FromRoute] string userId, [FromBody] CreateBasketItemDto createBasketItemDto, CancellationToken cancellationToken)
         {
             var basketItem = await sender.Send(new CreateBasketItemComand(userId, createBasketItemDto), cancellationToken);
 
-            return CreatedAtAction("GetBasketItemById", basketItem);
+            return CreatedAtAction("GetBasketItemById", new { userId, basketItem.Id }, basketItem);
         }
 
         [HttpPut("{id}")]

@@ -8,5 +8,6 @@ namespace Baskets.DataAccess.UnitOfWork
         IRepository<UserBasket> Basket { get; }
         IRepository<BasketItem> BasketItem { get; }
         IRepository<User> User { get; }
+        IRepository<Item> Item { get; }
     }
 }

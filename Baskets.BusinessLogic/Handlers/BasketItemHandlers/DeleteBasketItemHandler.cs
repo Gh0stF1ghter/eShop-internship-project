@@ -4,11 +4,23 @@ using Baskets.DataAccess.UnitOfWork;
 
 namespace Baskets.BusinessLogic.Handlers.BasketItemHandlers
 {
-    public class DeleteBasketItemHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<DeleteBasketItemComand>
+    public class DeleteBasketItemHandler(IUnitOfWork unitOfWork) : IRequestHandler<DeleteBasketItemComand>
     {
-        public Task Handle(DeleteBasketItemComand command, CancellationToken cancellationToken)
+        public async Task Handle(DeleteBasketItemComand comand, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var user = await unitOfWork.User.GetByConditionAsync(u => u.Id.Equals(comand.UserId), cancellationToken);
+
+            if (user == null)
+            {
+                throw new BadRequestException(UserMessages.NotFound);
+            }
+
+            var basketItem = await unitOfWork.BasketItem.DeleteAsync(bi => bi.Id.Equals(comand.ItemId), cancellationToken);
+
+            if (basketItem == null)
+            {
+                throw new BadRequestException(BasketItemMessages.NotFound);
+            }
         }
     }
 }

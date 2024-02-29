@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Baskets.DataAccess.Entities.Constants.Messages
 {
-    public static class BasketItemMessages
+    public static class ItemMessages
     {
-        public const string NotFound = "Basket item was not found";
-        public const string Exists = "Basket item already exists";
+        public const string NotFound = "Item does nnot exist";
     }
 }

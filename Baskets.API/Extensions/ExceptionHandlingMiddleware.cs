@@ -1,7 +1,7 @@
 ﻿using Baskets.DataAccess.Entities.Exceptions;
 using System.Net;
 
-namespace Identity.API.Extensions
+namespace Baskets.API.Extensions
 {
     public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
     {

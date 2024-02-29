@@ -27,8 +27,8 @@ namespace Baskets.DataAccess.Repositories.Implementations
         public void Add(TEntity entity) =>
             _collection.InsertOne(entity);
 
-        public void Update(TEntity entity) =>
-            _collection.ReplaceOne(t => t.Equals(entity), entity);
+        public void Update(Expression<Func<TEntity, bool>> condition, TEntity entity) =>
+            _collection.ReplaceOne(condition, entity);
 
         public async Task<TEntity> DeleteAsync(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken) =>
             await _collection.FindOneAndDeleteAsync(condition, cancellationToken: cancellationToken);

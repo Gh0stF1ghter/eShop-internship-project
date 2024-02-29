@@ -1,42 +1,34 @@
+using Baskets.API.Extensions;
 using Baskets.BusinessLogic;
 using Baskets.DataAccess.Entities.Models;
 using Baskets.DataAccess.UnitOfWork;
-using Identity.API.Extensions;
+using FluentValidation;
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Configuration;
 using Serilog;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 
-// Add services to the container.
 builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
 
-services.Configure<BasketDatabaseSettings>(
-    builder.Configuration.GetSection(nameof(BasketDatabaseSettings)));
+services.ConfigureDbSettings(builder.Configuration);
 
+services.ConfigureMongoClient();
 
+services.ConfigureMediatR();
 
 services.AddAutoMapper(typeof(BLLAssemblyReference));
-services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(BLLAssemblyReference).Assembly));
 
-services.AddSingleton<IMongoClient>(_ =>
-{
-    var settings = new MongoClientSettings()
-    {
-        Scheme = ConnectionStringScheme.MongoDB,
-        Server = new MongoServerAddress("localhost", 27017)
-    };
+services.AddAutoValidation();
 
-    return new MongoClient(settings);
-});
+services.AddCustomDependencies();
 
 services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
-
-services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 

@@ -15,7 +15,7 @@ namespace Baskets.BusinessLogic.Handlers.BasketItemHandlers
                 throw new BadRequestException(UserBasketMessages.NotFound);
             }
 
-            var basketItem = await unitOfWork.BasketItem.GetByConditionAsync(bi => bi.Id.Equals(comand.ItemId), cancellationToken);
+            var basketItem = await unitOfWork.BasketItem.GetByConditionAsync(bi => bi.ItemId.Equals(comand.ItemId), cancellationToken);
 
             if (basketItem == null)
             {

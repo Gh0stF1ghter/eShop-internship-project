@@ -1,7 +1,6 @@
 ﻿using Baskets.BusinessLogic.Comands.CustomerBasket;
 using Baskets.BusinessLogic.Queries.CustomerBasket;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Baskets.API.Controllers
@@ -25,7 +24,7 @@ namespace Baskets.API.Controllers
         {
             var basket = await sender.Send(new CreateUserBasketComand(userId), cancelationToken);
 
-            return CreatedAtAction("GetUserBasket", basket);
+            return CreatedAtAction("GetUserBasket", new { userId }, basket);
         }
 
         [HttpDelete]

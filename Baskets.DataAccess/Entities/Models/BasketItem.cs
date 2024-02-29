@@ -13,7 +13,7 @@ namespace Baskets.DataAccess.Entities.Models
         public double SumPrice { get; set; }
 
         [BsonRepresentation(BsonType.ObjectId)]
-        public string BasketId { get; set; } = null!;
+        public string UserId { get; set; } = null!;
         [BsonIgnore]
         public UserBasket CustomerBasket { get; set; } = null!;
 
