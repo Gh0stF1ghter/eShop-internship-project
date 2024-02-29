@@ -5,7 +5,8 @@ namespace Baskets.DataAccess.UnitOfWork
 {
     public interface IUnitOfWork
     {
-        IRepository<CustomerBasket> Basket { get; }
+        IRepository<UserBasket> Basket { get; }
         IRepository<BasketItem> BasketItem { get; }
+        IRepository<User> User { get; }
     }
 }

@@ -20,16 +20,16 @@ namespace Baskets.DataAccess.Repositories.Implementations
             await _collection.Find(t => true)
                        .ToListAsync(cancellationToken);
 
-        public async Task<IEnumerable<TEntity>> GetByConditionAsync(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken) =>
-            await _collection.Find(condition).ToListAsync(cancellationToken);
+        public async Task<TEntity> GetByConditionAsync(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken) =>
+            await _collection.Find(condition).SingleOrDefaultAsync(cancellationToken);
 
-        public void Add(TEntity entity) => 
+        public void Add(TEntity entity) =>
             _collection.InsertOne(entity);
 
         public void Update(TEntity entity) =>
             _collection.ReplaceOne(t => t.Equals(entity), entity);
 
-        public void Delete(TEntity entity) => 
+        public void Delete(TEntity entity) =>
             _collection.DeleteOne(t => t.Equals(entity));
     }
 }
