@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Baskets.BusinessLogic.DTOs
+namespace Baskets.BusinessLogic.DataTransferObjects.CreateDTOs
 {
-    public record ItemDto(string Id, string Name, double Price, string ImageUrl);
+    public record CreateBasketItemDto(string ItemId);
 }
