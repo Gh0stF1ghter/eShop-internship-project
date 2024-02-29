@@ -1,4 +1,5 @@
-﻿using Baskets.DataAccess.Entities.Models;
+﻿using Amazon.Auth.AccessControlPolicy;
+using Baskets.DataAccess.Entities.Models;
 using Baskets.DataAccess.Repositories.Interfaces;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
@@ -29,7 +30,7 @@ namespace Baskets.DataAccess.Repositories.Implementations
         public void Update(TEntity entity) =>
             _collection.ReplaceOne(t => t.Equals(entity), entity);
 
-        public void Delete(TEntity entity) =>
-            _collection.DeleteOne(t => t.Equals(entity));
+        public async Task<TEntity> DeleteAsync(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken) =>
+            await _collection.FindOneAndDeleteAsync(condition, cancellationToken: cancellationToken);
     }
 }

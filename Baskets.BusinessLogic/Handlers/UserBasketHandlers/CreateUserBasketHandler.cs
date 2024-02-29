@@ -8,7 +8,7 @@ namespace Baskets.BusinessLogic.Handlers.CustomerBasketHandlers
     {
         public async Task<UserBasketDto> Handle(CreateUserBasketComand comand, CancellationToken cancellationToken)
         {
-            var userExists = await unitOfWork.User.GetByConditionAsync(u => u.UserId.Equals(comand.UserId), cancellationToken);
+            var userExists = await unitOfWork.User.GetByConditionAsync(u => u.Id.Equals(comand.UserId), cancellationToken);
 
             if (userExists == null)
             {
@@ -29,7 +29,7 @@ namespace Baskets.BusinessLogic.Handlers.CustomerBasketHandlers
 
             unitOfWork.Basket.Add(newBasket);
 
-            var newBasketDto = mapper.Map<UserBasketDto>(newBasket);
+            var newBasketDto = mapper.Map<UserBasket, UserBasketDto>(newBasket);
 
             return newBasketDto;
         }

@@ -8,7 +8,7 @@ namespace Baskets.API.Controllers
 {
     [ApiController]
     [Route("api/users/{userId}/basket")]
-    public class CustomerBasketController(ISender sender) : ControllerBase
+    public class UserBasketController(ISender sender) : ControllerBase
     {
         [HttpGet]
         [ActionName("GetUserBasket")]

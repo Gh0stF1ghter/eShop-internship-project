@@ -9,6 +9,6 @@ namespace Baskets.DataAccess.Repositories.Interfaces
 
         void Add(T entity);
         void Update(T entity);
-        void Delete(T entity);
+        Task<T> DeleteAsync(Expression<Func<T, bool>> condition, CancellationToken cancellationToken);
     }
 }

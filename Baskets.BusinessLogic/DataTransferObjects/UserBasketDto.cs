@@ -1,4 +1,4 @@
 ﻿namespace Baskets.BusinessLogic.DataTransferObjects
 {
-    public record UserBasketDto(string Id, string UserId, int TotalPrice);
+    public record UserBasketDto(string UserId, double TotalPrice);
 }

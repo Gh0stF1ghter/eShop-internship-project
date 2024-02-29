@@ -19,7 +19,6 @@
   <ItemGroup>
     <Folder Include="Handlers\" />
     <Folder Include="Comands\" />
-    <Folder Include="MappingProfiles\" />
     <Folder Include="Queries\" />
     <Folder Include="Validators\" />
   </ItemGroup>
