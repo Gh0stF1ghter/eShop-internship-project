@@ -1,4 +1,6 @@
+using Baskets.BusinessLogic;
 using Baskets.DataAccess.Entities.Models;
+using Identity.API.Extensions;
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Configuration;
 
@@ -9,7 +11,11 @@ var services = builder.Services;
 services.Configure<BasketDatabaseSettings>(
     builder.Configuration.GetSection(nameof(BasketDatabaseSettings)));
 
-services.AddSingleton<IMongoClient>(_ => {
+services.AddAutoMapper(typeof(BLLAssemblyReference));
+services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(BLLAssemblyReference).Assembly));
+
+services.AddSingleton<IMongoClient>(_ =>
+{
     var settings = new MongoClientSettings()
     {
         Scheme = ConnectionStringScheme.MongoDB,
@@ -25,6 +31,8 @@ services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

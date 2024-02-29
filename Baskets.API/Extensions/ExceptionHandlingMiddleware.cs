@@ -27,7 +27,7 @@ namespace Identity.API.Extensions
             ExceptionResponse response = ex switch
             {
                 BadRequestException => new(HttpStatusCode.BadRequest, ex.Message),
-                RefreshTokenBadRequestException => new(HttpStatusCode.Unauthorized, ex.Message),
+                NotFoundException => new(HttpStatusCode.NotFound, ex.Message),
                 _ => new(HttpStatusCode.InternalServerError, ex.Message),
             };
 
