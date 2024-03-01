@@ -17,7 +17,12 @@ namespace Baskets.BusinessLogic.Handlers.BasketItemHandlers
 
             await FindReferences(comand, item, cancellationToken);
 
-            var itemToUpdate = await unitOfWork.BasketItem.GetByConditionAsync(bi => bi.ItemId.Equals(comand.ItemId), cancellationToken);
+            var itemToUpdate = await unitOfWork.BasketItem.GetByConditionAsync(bi => bi.ItemId.Equals(comand.ItemId) && bi.UserId.Equals(comand.UserId), cancellationToken);
+
+            if (itemToUpdate == null)
+            {
+                throw new BadRequestException(BasketItemMessages.NotInCurrentBasket);
+            }
 
             itemToUpdate.Quantity = comand.Quantity;
             itemToUpdate.SumPrice = item.Price * comand.Quantity;

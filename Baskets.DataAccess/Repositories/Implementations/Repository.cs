@@ -16,10 +16,12 @@ namespace Baskets.DataAccess.Repositories.Implementations
     {
         private readonly IMongoCollection<TEntity> _collection = client.GetDatabase(options.Value.DatabaseName)
                                                                        .GetCollection<TEntity>(collectionName);
-
         public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken) =>
             await _collection.Find(t => true)
                        .ToListAsync(cancellationToken);
+
+        public async Task<IEnumerable<TEntity>> GetAllByConditionAsync(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken) =>
+            await _collection.Find(condition).ToListAsync(cancellationToken);
 
         public async Task<TEntity> GetByConditionAsync(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken) =>
             await _collection.Find(condition).SingleOrDefaultAsync(cancellationToken);

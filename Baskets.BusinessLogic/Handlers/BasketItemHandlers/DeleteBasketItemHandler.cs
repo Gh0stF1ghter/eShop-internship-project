@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Baskets.BusinessLogic.Comands.BasketItem;
+﻿using Baskets.BusinessLogic.Comands.BasketItem;
 using Baskets.DataAccess.UnitOfWork;
 
 namespace Baskets.BusinessLogic.Handlers.BasketItemHandlers
@@ -15,7 +14,7 @@ namespace Baskets.BusinessLogic.Handlers.BasketItemHandlers
                 throw new BadRequestException(UserMessages.NotFound);
             }
 
-            var basketItem = await unitOfWork.BasketItem.DeleteAsync(bi => bi.Id.Equals(comand.ItemId), cancellationToken);
+            var basketItem = await unitOfWork.BasketItem.DeleteAsync(bi => bi.Id.Equals(comand.ItemId) && bi.UserId.Equals(comand.UserId), cancellationToken);
 
             if (basketItem == null)
             {
