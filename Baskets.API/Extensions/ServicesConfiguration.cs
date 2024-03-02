@@ -7,6 +7,7 @@ using MongoDB.Driver;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using static System.Net.Mime.MediaTypeNames;
 using Baskets.DataAccess.UnitOfWork;
+using Baskets.DataAccess.DBContext;
 
 namespace Baskets.API.Extensions
 {
@@ -39,6 +40,7 @@ namespace Baskets.API.Extensions
         public static void AddCustomDependencies(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IMongoDbContext, MongoDbContext>();
         }
     }
 }

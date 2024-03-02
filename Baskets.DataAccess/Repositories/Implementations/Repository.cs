@@ -1,4 +1,5 @@
 ﻿using Amazon.Auth.AccessControlPolicy;
+using Baskets.DataAccess.DBContext;
 using Baskets.DataAccess.Entities.Models;
 using Baskets.DataAccess.Repositories.Interfaces;
 using Microsoft.Extensions.Options;
@@ -12,10 +13,10 @@ using System.Threading.Tasks;
 
 namespace Baskets.DataAccess.Repositories.Implementations
 {
-    public class Repository<TEntity>(IMongoClient client, IOptions<BasketDatabaseSettings> options, string collectionName) : IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity>(IMongoDbContext context, string collectionName) : IRepository<TEntity> where TEntity : class
     {
-        private readonly IMongoCollection<TEntity> _collection = client.GetDatabase(options.Value.DatabaseName)
-                                                                       .GetCollection<TEntity>(collectionName);
+        private readonly IMongoCollection<TEntity> _collection = context.GetCollection<TEntity>(collectionName);
+
         public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken) =>
             await _collection.Find(t => true)
                        .ToListAsync(cancellationToken);

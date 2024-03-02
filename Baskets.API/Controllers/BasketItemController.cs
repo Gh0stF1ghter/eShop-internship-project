@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Baskets.API.Controllers
 {
     [ApiController]
-    [Route("api/users/{userId}/basket/item")]
+    [Route("api/users/{userId}/basket/items")]
     public class BasketItemController(ISender sender) : ControllerBase
     {
         [HttpGet]
