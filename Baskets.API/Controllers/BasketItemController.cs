@@ -19,11 +19,11 @@ namespace Baskets.API.Controllers
             return Ok(basketItems);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{basketItemId}")]
         [ActionName("GetBasketItemById")]
-        public async Task<IActionResult> GetBasketItemByIdAsync([FromRoute] string userId, [FromRoute] string id, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetBasketItemByIdAsync([FromRoute] string userId, [FromRoute] string basketItemId, CancellationToken cancellationToken)
         {
-            var basketItem = await sender.Send(new GetBasketItemQuery(userId, id), cancellationToken);
+            var basketItem = await sender.Send(new GetBasketItemQuery(userId, basketItemId), cancellationToken);
 
             return Ok(basketItem);
         }
@@ -37,20 +37,20 @@ namespace Baskets.API.Controllers
             return CreatedAtAction("GetBasketItemById", new { userId, basketItem.Id }, basketItem);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{basketItemId}")]
         [ActionName("UpdateBasketItem")]
-        public async Task<IActionResult> UpdateBasketItemAsync([FromRoute] string userId, [FromRoute] string id, [FromQuery] int quantity, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateBasketItemAsync([FromRoute] string userId, [FromRoute] string basketItemId, [FromQuery] uint quantity, CancellationToken cancellationToken)
         {
-            await sender.Send(new UpdateBasketItemComand(userId, id, quantity), cancellationToken);
+            await sender.Send(new UpdateBasketItemComand(userId, basketItemId, (int)quantity), cancellationToken);
 
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{basketItemId}")]
         [ActionName("DeleteBasketItem")]
-        public async Task<IActionResult> DeleteBasketItemAsync([FromRoute] string userId, [FromRoute] string id, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteBasketItemAsync([FromRoute] string userId, [FromRoute] string basketItemId, CancellationToken cancellationToken)
         {
-            await sender.Send(new DeleteBasketItemComand(userId, id), cancellationToken);
+            await sender.Send(new DeleteBasketItemComand(userId, basketItemId), cancellationToken);
 
             return NoContent();
         }

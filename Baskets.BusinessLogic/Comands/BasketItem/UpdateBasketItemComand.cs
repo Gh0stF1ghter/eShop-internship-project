@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace Baskets.BusinessLogic.Comands.BasketItem
 {
-    public record UpdateBasketItemComand(string UserId, string ItemId, int Quantity) : IRequest;
+    public record UpdateBasketItemComand(string UserId, string BasketItemId, int Quantity) : IRequest;
 }

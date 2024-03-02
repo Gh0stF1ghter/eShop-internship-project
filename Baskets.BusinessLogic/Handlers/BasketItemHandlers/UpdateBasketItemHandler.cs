@@ -13,11 +13,9 @@ namespace Baskets.BusinessLogic.Handlers.BasketItemHandlers
     {
         public async Task Handle(UpdateBasketItemComand comand, CancellationToken cancellationToken)
         {
-            var item = await unitOfWork.Item.GetByConditionAsync(i => i.Id.Equals(comand.ItemId), cancellationToken);
+            await FindReferences(comand, cancellationToken);
 
-            await FindReferences(comand, item, cancellationToken);
-
-            var itemToUpdate = await unitOfWork.BasketItem.GetByConditionAsync(bi => bi.ItemId.Equals(comand.ItemId) && bi.UserId.Equals(comand.UserId), cancellationToken);
+            var itemToUpdate = await unitOfWork.BasketItem.GetBasketItemByConditionAsync(bi => bi.Id.Equals(comand.BasketItemId) && bi.UserId.Equals(comand.UserId), cancellationToken);
 
             if (itemToUpdate == null)
             {
@@ -25,23 +23,18 @@ namespace Baskets.BusinessLogic.Handlers.BasketItemHandlers
             }
 
             itemToUpdate.Quantity = comand.Quantity;
-            itemToUpdate.SumPrice = item.Price * comand.Quantity;
+            itemToUpdate.SumPrice = itemToUpdate.Item.Price * comand.Quantity;
 
-            unitOfWork.BasketItem.Update(bi => bi.ItemId.Equals(comand.ItemId), itemToUpdate);
+            unitOfWork.BasketItem.Update(bi => bi.Id.Equals(comand.BasketItemId), itemToUpdate);
         }
 
-        private async Task FindReferences(UpdateBasketItemComand comand, Item item, CancellationToken cancellationToken)
+        private async Task FindReferences(UpdateBasketItemComand comand, CancellationToken cancellationToken)
         {
             var user = await unitOfWork.User.GetByConditionAsync(u => u.Id.Equals(comand.UserId), cancellationToken);
 
             if (user == null)
             {
                 throw new BadRequestException(UserMessages.NotFound);
-            }
-
-            if (item == null)
-            {
-                throw new BadRequestException(ItemMessages.NotFound);
             }
         }
 

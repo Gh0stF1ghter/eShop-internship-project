@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace Baskets.BusinessLogic.Queries.BasketItem
 {
-    public record GetBasketItemQuery(string UserId, string ItemId) : IRequest<BasketItemDto>;
+    public record GetBasketItemQuery(string UserId, string BasketItemId) : IRequest<BasketItemDto>;
 }

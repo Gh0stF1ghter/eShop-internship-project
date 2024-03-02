@@ -15,7 +15,7 @@ namespace Baskets.BusinessLogic.Handlers.BasketItemHandlers
                 throw new BadRequestException(UserMessages.NotFound);
             }
 
-            var items = await unitOfWork.BasketItem.GetAllByConditionAsync(bi => bi.UserId.Equals(query.UserId), cancellationToken);
+            var items = await unitOfWork.BasketItem.GetAllBasketItemsAsync(query.UserId, cancellationToken);
 
             var itemDtos = mapper.Map<IEnumerable<BasketItemDto>>(items);
 
