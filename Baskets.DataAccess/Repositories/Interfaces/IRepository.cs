@@ -2,7 +2,7 @@
 
 namespace Baskets.DataAccess.Repositories.Interfaces
 {
-    public interface IRepository<TEntity> 
+    public interface IRepository<TEntity>
     {
         Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken);
         Task<IEnumerable<TEntity>> GetAllByConditionAsync(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken);

@@ -8,18 +8,25 @@ namespace Baskets.BusinessLogic.Handlers.BasketItemHandlers
     {
         public async Task<IEnumerable<BasketItemDto>> Handle(GetBasketItemsQuery query, CancellationToken cancellationToken)
         {
-            var user = await unitOfWork.User.GetByConditionAsync(u => u.Id.Equals(query.UserId), cancellationToken);
+            await FindBasket(query, cancellationToken);
 
-            if (user == null)
-            {
-                throw new BadRequestException(UserMessages.NotFound);
-            }
-
-            var items = await unitOfWork.BasketItem.GetAllBasketItemsAsync(query.UserId, cancellationToken);
+            var items = await unitOfWork.BasketItem
+                .GetAllBasketItemsAsync(query.UserId, cancellationToken);
 
             var itemDtos = mapper.Map<IEnumerable<BasketItemDto>>(items);
 
             return itemDtos;
+        }
+
+        private async Task FindBasket(GetBasketItemsQuery query, CancellationToken cancellationToken)
+        {
+            var basket = await unitOfWork.Basket
+                .GetByConditionAsync(b => b.UserId.Equals(query.UserId), cancellationToken);
+
+            if (basket == null)
+            {
+                throw new BadRequestException(UserBasketMessages.NotFound);
+            }
         }
     }
 }

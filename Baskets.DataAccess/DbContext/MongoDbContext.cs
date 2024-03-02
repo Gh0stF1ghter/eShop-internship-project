@@ -1,11 +1,6 @@
 ﻿using Baskets.DataAccess.Entities.Models;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Baskets.DataAccess.DBContext
 {
@@ -15,9 +10,9 @@ namespace Baskets.DataAccess.DBContext
 
         public IMongoCollection<T> GetCollection<T>(string collectionName)
         {
-           new SeedTestData(_db, options).Seed();
+            new SeedTestData(_db, options).Seed();
 
-           return _db.GetCollection<T>(collectionName);
+            return _db.GetCollection<T>(collectionName);
         }
     }
 }

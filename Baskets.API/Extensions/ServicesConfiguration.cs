@@ -1,13 +1,11 @@
 ﻿using Baskets.BusinessLogic;
-using Baskets.DataAccess.Entities.Models;
-using FluentValidation;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using MongoDB.Driver.Core.Configuration;
-using MongoDB.Driver;
-using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
-using static System.Net.Mime.MediaTypeNames;
-using Baskets.DataAccess.UnitOfWork;
 using Baskets.DataAccess.DBContext;
+using Baskets.DataAccess.Entities.Models;
+using Baskets.DataAccess.UnitOfWork;
+using FluentValidation;
+using MongoDB.Driver;
+using MongoDB.Driver.Core.Configuration;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 
 namespace Baskets.API.Extensions
 {

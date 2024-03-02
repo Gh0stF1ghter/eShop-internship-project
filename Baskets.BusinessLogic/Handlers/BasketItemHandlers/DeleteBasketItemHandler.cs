@@ -7,19 +7,32 @@ namespace Baskets.BusinessLogic.Handlers.BasketItemHandlers
     {
         public async Task Handle(DeleteBasketItemComand comand, CancellationToken cancellationToken)
         {
-            var user = await unitOfWork.User.GetByConditionAsync(u => u.Id.Equals(comand.UserId), cancellationToken);
+            var basket = await unitOfWork.Basket
+                .GetByConditionAsync(u => u.UserId.Equals(comand.UserId), cancellationToken);
 
-            if (user == null)
+            if (basket == null)
             {
-                throw new BadRequestException(UserMessages.NotFound);
+                throw new BadRequestException(UserBasketMessages.NotFound);
             }
 
-            var basketItem = await unitOfWork.BasketItem.DeleteAsync(bi => bi.Id.Equals(comand.ItemId) && bi.UserId.Equals(comand.UserId), cancellationToken);
+            var basketItem = await unitOfWork.BasketItem
+                .DeleteAsync(bi => bi.Id.Equals(comand.ItemId)
+                && bi.UserId.Equals(comand.UserId), cancellationToken);
 
             if (basketItem == null)
             {
                 throw new BadRequestException(BasketItemMessages.NotFound);
             }
+
+            UpdateBasket(basket, basketItem);
+        }
+
+        private void UpdateBasket(UserBasket basket, BasketItem basketItem)
+        {
+            basket.TotalPrice -= basketItem.SumPrice;
+
+            unitOfWork.Basket
+                .Update(u => u.UserId.Equals(basket.UserId), basket);
         }
     }
 }

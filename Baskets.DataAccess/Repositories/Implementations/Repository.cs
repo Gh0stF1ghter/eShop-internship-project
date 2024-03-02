@@ -1,15 +1,7 @@
-﻿using Amazon.Auth.AccessControlPolicy;
-using Baskets.DataAccess.DBContext;
-using Baskets.DataAccess.Entities.Models;
+﻿using Baskets.DataAccess.DBContext;
 using Baskets.DataAccess.Repositories.Interfaces;
-using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Baskets.DataAccess.Repositories.Implementations
 {
@@ -22,10 +14,12 @@ namespace Baskets.DataAccess.Repositories.Implementations
                        .ToListAsync(cancellationToken);
 
         public async Task<IEnumerable<TEntity>> GetAllByConditionAsync(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken) =>
-            await _collection.Find(condition).ToListAsync(cancellationToken);
+            await _collection.Find(condition)
+                       .ToListAsync(cancellationToken);
 
         public async Task<TEntity> GetByConditionAsync(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken) =>
-            await _collection.Find(condition).SingleOrDefaultAsync(cancellationToken);
+            await _collection.Find(condition)
+                       .SingleOrDefaultAsync(cancellationToken);
 
         public void Add(TEntity entity) =>
             _collection.InsertOne(entity);

@@ -8,14 +8,10 @@ namespace Baskets.BusinessLogic.Handlers.BasketItemHandlers
     {
         public async Task<BasketItemDto> Handle(GetBasketItemQuery query, CancellationToken cancellationToken)
         {
-            var basket = await unitOfWork.Basket.GetByConditionAsync(b => b.UserId.Equals(query.UserId), cancellationToken);
+            await FindBasket(query, cancellationToken);
 
-            if (basket == null)
-            {
-                throw new BadRequestException(UserBasketMessages.NotFound);
-            }
-
-            var basketItem = await unitOfWork.BasketItem.GetBasketItemByConditionAsync(bi => bi.Id.Equals(query.BasketItemId), cancellationToken);
+            var basketItem = await unitOfWork.BasketItem
+                .GetBasketItemByConditionAsync(bi => bi.Id.Equals(query.BasketItemId), cancellationToken);
 
             if (basketItem == null)
             {
@@ -25,6 +21,17 @@ namespace Baskets.BusinessLogic.Handlers.BasketItemHandlers
             var basketItemDto = mapper.Map<BasketItemDto>(basketItem);
 
             return basketItemDto;
+        }
+
+        private async Task FindBasket(GetBasketItemQuery query, CancellationToken cancellationToken)
+        {
+            var basket = await unitOfWork.Basket
+                .GetByConditionAsync(b => b.UserId.Equals(query.UserId), cancellationToken);
+
+            if (basket == null)
+            {
+                throw new BadRequestException(UserBasketMessages.NotFound);
+            }
         }
     }
 }

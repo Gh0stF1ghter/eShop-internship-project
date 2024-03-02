@@ -1,11 +1,6 @@
 ﻿using Baskets.DataAccess.Entities.Models;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Baskets.DataAccess
 {
@@ -17,52 +12,62 @@ namespace Baskets.DataAccess
         public void Seed()
         {
             var isUsersCollectionFilled = _users.CountDocuments(_ => true);
+
             if (isUsersCollectionFilled == 0)
             {
-                _users.InsertMany([
-                    new User
-                    {
-                        UserId = 1,
-                    },
-                    new User
-                    {
-                        UserId = 2
-                    },
-                    new User
-                    {
-                        UserId = 3
-                    }]);
-                Console.WriteLine("User empty");
+                AddUsers();
             }
 
             var isItemsCollectionFilled = _items.CountDocuments(_ => true);
+
             if (isItemsCollectionFilled == 0)
             {
-                _items.InsertMany([
-                    new Item 
-                    { 
-                        ItemId = 1,
-                        Name = "phone",
-                        Price = 500.00,
-                        ImageUrl = "phone.jpeg"
-                    },
-                    new Item
-                    {
-                        ItemId = 2,
-                        Name = "tablet",
-                        Price = 750.00,
-                        ImageUrl = "tablet.jpeg"
-                    },
-                    new Item
-                    {
-                        ItemId = 3,
-                        Name = "book",
-                        Price = 25.00,
-                        ImageUrl = "book.jpeg"
-                    },
-
-                ]);
+                AddItems();
             }
+        }
+
+        private void AddUsers()
+        {
+            _users.InsertMany([
+                new User
+                {
+                    UserId = 1,
+                },
+                new User
+                {
+                    UserId = 2
+                },
+                new User
+                {
+                    UserId = 3
+                }]);
+        }
+
+        private void AddItems()
+        {
+            _items.InsertMany([
+                new Item
+                {
+                    ItemId = 1,
+                    Name = "phone",
+                    Price = 500.00,
+                    ImageUrl = "phone.jpeg"
+                },
+                new Item
+                {
+                    ItemId = 2,
+                    Name = "tablet",
+                    Price = 750.00,
+                    ImageUrl = "tablet.jpeg"
+                },
+                new Item
+                {
+                    ItemId = 3,
+                    Name = "book",
+                    Price = 25.00,
+                    ImageUrl = "book.jpeg"
+                },
+            ]);
         }
     }
 }

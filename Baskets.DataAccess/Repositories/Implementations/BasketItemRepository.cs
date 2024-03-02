@@ -17,7 +17,9 @@ namespace Baskets.DataAccess.Repositories.Implementations
 
             foreach (var basketItem in basketItems)
             {
-                var item = await _itemCollection.Find(i => i.Id.Equals(basketItem.ItemId)).SingleOrDefaultAsync(cancellationToken);
+                var item = await _itemCollection
+                    .Find(i => i.Id.Equals(basketItem.ItemId))
+                    .SingleOrDefaultAsync(cancellationToken);
 
                 basketItem.Item = item;
             }
@@ -31,7 +33,9 @@ namespace Baskets.DataAccess.Repositories.Implementations
 
             if (basketItem != null)
             {
-                var item = await _itemCollection.Find(i => i.Id.Equals(basketItem.ItemId)).SingleOrDefaultAsync(cancellationToken);
+                var item = await _itemCollection
+                    .Find(i => i.Id.Equals(basketItem.ItemId))
+                    .SingleOrDefaultAsync(cancellationToken);
 
                 basketItem.Item = item;
             }
