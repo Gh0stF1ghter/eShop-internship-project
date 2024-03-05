@@ -18,6 +18,7 @@ namespace Catalogs.Application.Handlers.BrandHandlers
             }
 
             _mapper.Map(request.Brand, brandToUpdate);
+
             await _unitOfWork.SaveChangesAsync(token);
         }
     }

@@ -33,16 +33,7 @@ namespace Catalogs.Application.DataShaping
             {
                 var fields = fieldsString.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
-                foreach (var field in fields)
-                {
-                    var property = Properties
-                                        .FirstOrDefault(p => p.Name.Equals(field.Trim(), StringComparison.InvariantCultureIgnoreCase));
-
-                    if (property != null)
-                    {
-                        properties.Add(property);
-                    }
-                }
+                AddPropertiesToList(fields, properties);
             }
             else
             {
@@ -50,6 +41,20 @@ namespace Catalogs.Application.DataShaping
             }
 
             return properties;
+        }
+
+        private void AddPropertiesToList(string[] fields, List<PropertyInfo> properties)
+        {
+            foreach (var field in fields)
+            {
+                var property = Properties
+                                    .FirstOrDefault(p => p.Name.Equals(field.Trim(), StringComparison.InvariantCultureIgnoreCase));
+
+                if (property != null)
+                {
+                    properties.Add(property);
+                }
+            }
         }
 
         private static List<ShapedEntity> FetchData(IEnumerable<T> entities, IEnumerable<PropertyInfo> properties)

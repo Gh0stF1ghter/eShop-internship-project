@@ -23,6 +23,7 @@ namespace Catalogs.Application.Handlers.ItemHandlers
             var newItem = _mapper.Map<Item>(command.ItemDTO);
 
             _unitOfWork.Item.AddItem(command.TypeId, newItem);
+
             await _unitOfWork.SaveChangesAsync(token);
 
             var itemToReturn = _mapper.Map<ItemDto>(newItem);
