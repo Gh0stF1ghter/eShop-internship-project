@@ -1,18 +1,6 @@
 version: '3.4'
 
 services:
-  identity.api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
-    ports:
-      - "8080"
-      - "8081"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-
   catalogs.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -24,7 +12,23 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-  
+    networks:
+    - elastic
+
+  identity.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+    ports:
+      - "8080"
+      - "8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    networks:
+    - elastic
+
   mssql.db: 
     image: "mcr.microsoft.com/mssql/server:2022-latest"
     container_name: mssql.db
@@ -33,3 +37,46 @@ services:
     environment:
         - ACCEPT_EULA=y
         - MSSQL_SA_PASSWORD=A&VeryComplex123Password
+    networks:
+    - elastic
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+        - "6379:6379"
+    environment:
+        - REDIS_PORT=6379
+        - REDIS_PASSWORD=A&VeryComplex123Password
+
+  elasticsearch:
+   container_name: elasticsearch
+   image: docker.elastic.co/elasticsearch/elasticsearch:7.9.1
+   ports:
+    - 9200:9200
+   volumes:
+    - elasticsearch-data:/usr/share/elasticsearch/data
+   environment:
+    - xpack.license.self_generated.type=basic
+    - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    - discovery.type=single-node
+   networks:
+    - elastic
+
+  kibana:
+   container_name: kibana
+   image: docker.elastic.co/kibana/kibana:7.9.1
+   ports:
+    - 5601:5601
+   depends_on:
+    - elasticsearch
+   environment:
+    - ELASTICSEARCH_URL=http://elasticsearch:9200
+   networks:
+    - elastic
+  
+networks:
+  elastic:
+    driver: bridge
+volumes:
+  elasticsearch-data:
