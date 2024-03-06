@@ -1,12 +1,17 @@
 using Catalogs.API.Extensions;
-using Serilog;
 using Catalogs.Application;
+using Microsoft.AspNetCore.Hosting;
+using Serilog;
+using Serilog.Sinks.Elasticsearch;
+using System.Reflection;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-var services = builder.Services;
+SerilogConfiguration.ConfigureLogging();
+builder.Host.UseSerilog();
 
-builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
+var services = builder.Services;
 
 services.CongigureSqlContext(builder.Configuration);
 
