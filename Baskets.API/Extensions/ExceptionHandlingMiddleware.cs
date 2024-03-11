@@ -1,4 +1,4 @@
-﻿using Baskets.DataAccess.Entities.Exceptions;
+﻿using Baskets.BusinessLogic.Exceptions;
 using System.Net;
 
 namespace Baskets.API.Extensions
@@ -28,6 +28,7 @@ namespace Baskets.API.Extensions
             {
                 BadRequestException => new(HttpStatusCode.BadRequest, ex.Message),
                 NotFoundException => new(HttpStatusCode.NotFound, ex.Message),
+                AlreadyExistsException => new(HttpStatusCode.Conflict, ex.Message),
                 _ => new(HttpStatusCode.InternalServerError, ex.Message),
             };
 

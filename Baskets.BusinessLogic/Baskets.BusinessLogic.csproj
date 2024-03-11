@@ -17,8 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Comands\" />
-    <Folder Include="Queries\" />
     <Folder Include="Validators\" />
   </ItemGroup>
 

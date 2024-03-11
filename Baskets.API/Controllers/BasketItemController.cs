@@ -1,6 +1,9 @@
-﻿using Baskets.BusinessLogic.Comands.BasketItem;
+﻿using Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItemsQuery;
+using Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItemQuery;
+using Baskets.BusinessLogic.CQRS.Comands.BasketItemComands.CreateBasketItemComand;
+using Baskets.BusinessLogic.CQRS.Comands.BasketItemComands.DeleteBasketItemComand;
+using Baskets.BusinessLogic.CQRS.Comands.BasketItemComands.UpdateBasketItemComand;
 using Baskets.BusinessLogic.DataTransferObjects.CreateDTOs;
-using Baskets.BusinessLogic.Queries.BasketItem;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

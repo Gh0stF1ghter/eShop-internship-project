@@ -1,5 +1,6 @@
-﻿using Baskets.BusinessLogic.Comands.CustomerBasket;
-using Baskets.BusinessLogic.Queries.CustomerBasket;
+﻿using Baskets.BusinessLogic.CQRS.Comands.UserBasketComands.CreateUserBasketComand;
+using Baskets.BusinessLogic.CQRS.Comands.UserBasketComands.DeleteUserBasketComand;
+using Baskets.BusinessLogic.CQRS.Queries.UserBasketQueries.GetUserBasketQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
