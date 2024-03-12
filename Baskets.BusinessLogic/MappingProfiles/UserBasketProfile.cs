@@ -2,7 +2,7 @@
 
 namespace Baskets.BusinessLogic.MappingProfiles
 {
-    internal class UserBasketProfile : Profile
+    public class UserBasketProfile : Profile
     {
         public UserBasketProfile()
         {

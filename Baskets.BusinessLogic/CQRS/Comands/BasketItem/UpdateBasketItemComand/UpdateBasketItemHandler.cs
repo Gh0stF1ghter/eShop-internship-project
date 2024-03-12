@@ -18,7 +18,7 @@ namespace Baskets.BusinessLogic.CQRS.Comands.BasketItemComands.UpdateBasketItemC
 
             var itemToUpdate = await FindInBasket(comand, cancellationToken);
 
-            basket.TotalPrice -= itemToUpdate.Item.Price * itemToUpdate.Quantity;
+            basket.TotalPrice -= itemToUpdate.SumPrice;
 
             itemToUpdate.Quantity = comand.Quantity;
             itemToUpdate.SumPrice = itemToUpdate.Item.Price * comand.Quantity;
@@ -45,12 +45,12 @@ namespace Baskets.BusinessLogic.CQRS.Comands.BasketItemComands.UpdateBasketItemC
         private async Task<BasketItem> FindInBasket(UpdateBasketItemComand comand, CancellationToken cancellationToken)
         {
             var itemInBasket = await unitOfWork.BasketItem
-                .GetByConditionAsync(bi => bi.ItemId.Equals(comand.BasketItemId)
+                .GetBasketItemByConditionAsync(bi => bi.Id.Equals(comand.BasketItemId)
                 && bi.UserId.Equals(comand.UserId), cancellationToken);
 
             if (itemInBasket == null)
             {
-                throw new BadRequestException(BasketItemMessages.NotInCurrentBasket);
+                throw new NotFoundException(BasketItemMessages.NotFound);
             }
 
             return itemInBasket;
