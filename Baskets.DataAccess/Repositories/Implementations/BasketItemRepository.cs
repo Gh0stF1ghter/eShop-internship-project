@@ -7,10 +7,8 @@ using System.Linq.Expressions;
 
 namespace Baskets.DataAccess.Repositories.Implementations
 {
-    public class BasketItemRepository(IMongoDbContext context, IOptions<BasketDatabaseSettings> options) : Repository<BasketItem>(context, options.Value.BasketItemsCollectionName), IBasketItemRepository
+    public class BasketItemRepository(IMongoCollection<BasketItem> basketCollection, IMongoCollection<Item> _itemCollection) : Repository<BasketItem>(basketCollection), IBasketItemRepository
     {
-        private readonly IMongoCollection<Item> _itemCollection = context.GetCollection<Item>(options.Value.ItemsCollectionName);
-
         public async Task<IEnumerable<BasketItem>> GetAllBasketItemsAsync(string basketId, CancellationToken cancellationToken)
         {
             var basketItems = await GetAllByConditionAsync(bi => bi.UserId.Equals(basketId), cancellationToken);
