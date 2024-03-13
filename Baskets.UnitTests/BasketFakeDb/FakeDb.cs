@@ -6,11 +6,18 @@ namespace Baskets.UnitTests.BasketFakeDb
     {
         public static List<UserBasket> Baskets =
             [
+            //with user
                 new()
                 {
                     TotalPrice = 705,
                     UserId = "65e0f6b92fa24267a5c3fa13"
-                }
+                },
+            //without user
+                new()
+                {
+                    TotalPrice = 0,
+                    UserId = "65e0f6b02fa24267a5c3fa13"
+                },
             ];
 
         public static List<BasketItem> BasketItems =
@@ -70,6 +77,20 @@ namespace Baskets.UnitTests.BasketFakeDb
                     Id = "65e0f47e2fa24267a5c3fa09",
                     Name = "toothbrush",
                     Price = 120
+                },
+            ];
+
+        public static List<User> Users =
+            [
+            //with basket
+                new()
+                {
+                    Id = "65e0f6b92fa24267a5c3fa13"
+                },
+            //without basket
+                new()
+                {
+                    Id = "65e0f6b920a24267a5c3fa13"
                 },
             ];
     }

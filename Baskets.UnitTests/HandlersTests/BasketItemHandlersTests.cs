@@ -31,6 +31,7 @@ namespace Baskets.UnitTests.HandlersTests
         {
             _unitOfWork.Setup(x => x.Basket.GetByConditionAsync(It.IsAny<Expression<Func<UserBasket, bool>>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(FakeDb.Baskets.First);
+
             _unitOfWork.Setup(x => x.BasketItem.GetAllBasketItemsAsync("65e0f6b92fa24267a5c3fa13", It.IsAny<CancellationToken>()))
                 .ReturnsAsync(FakeDb.BasketItems.Where(bi => bi.UserId.Equals("65e0f6b92fa24267a5c3fa13")));
         }
@@ -98,6 +99,7 @@ namespace Baskets.UnitTests.HandlersTests
             //Arrange
             _unitOfWork.Setup(x => x.Basket.GetByConditionAsync(It.IsAny<Expression<Func<UserBasket, bool>>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(FakeDb.Baskets.Where(b => b.UserId.Equals(userId)).FirstOrDefault());
+
             _unitOfWork.Setup(uof => uof.BasketItem.GetBasketItemByConditionAsync(It.IsAny<Expression<Func<BasketItem, bool>>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(FakeDb.BasketItems.Where(bi => bi.Id.Equals(basketItemId)).FirstOrDefault());
 
@@ -122,6 +124,7 @@ namespace Baskets.UnitTests.HandlersTests
 
             _unitOfWork.Setup(uof => uof.Item.GetByConditionAsync(It.IsAny<Expression<Func<Item, bool>>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(mockedItem);
+
             _unitOfWork.Setup(uof => uof.BasketItem.GetByConditionAsync(It.IsAny<Expression<Func<BasketItem, bool>>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(FakeDb.BasketItems.Where(bi => bi.ItemId.Equals(itemId) && bi.UserId.Equals("65e0f6b92fa24267a5c3fa13")).FirstOrDefault());
 
@@ -141,6 +144,7 @@ namespace Baskets.UnitTests.HandlersTests
         {
             _unitOfWork.Setup(uof => uof.Item.GetByConditionAsync(It.IsAny<Expression<Func<Item, bool>>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(FakeDb.Items.Where(bi => bi.Id.Equals(itemId)).First());
+
             _unitOfWork.Setup(uof => uof.BasketItem.GetByConditionAsync(It.IsAny<Expression<Func<BasketItem, bool>>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(FakeDb.BasketItems.Where(bi => bi.ItemId.Equals(itemId) && bi.UserId.Equals("65e0f6b92fa24267a5c3fa13")).First());
 
@@ -161,6 +165,7 @@ namespace Baskets.UnitTests.HandlersTests
         {
             _unitOfWork.Setup(uof => uof.Basket.GetByConditionAsync(It.IsAny<Expression<Func<UserBasket, bool>>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(FakeDb.Baskets.Where(bi => bi.UserId.Equals(userId)).FirstOrDefault());
+
             _unitOfWork.Setup(uof => uof.Item.GetByConditionAsync(It.IsAny<Expression<Func<Item, bool>>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(FakeDb.Items.Where(bi => bi.Id.Equals(itemId)).FirstOrDefault());
 
@@ -181,6 +186,7 @@ namespace Baskets.UnitTests.HandlersTests
 
             _unitOfWork.Setup(uof => uof.BasketItem.DeleteAsync(It.IsAny<Expression<Func<BasketItem, bool>>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(FakeDb.BasketItems.Where(bi => bi.Id.Equals("65e2122401130591c38d52e3") && bi.UserId.Equals("65e0f6b92fa24267a5c3fa13")).First());
+
             _unitOfWork.Setup(uof => uof.Basket.Update(It.IsAny<Expression<Func<UserBasket, bool>>>(), It.IsAny<UserBasket>()));
 
             var deleteBasketItemComand = new DeleteBasketItemComand("65e0f6b92fa24267a5c3fa13", "65e2122401130591c38d52e3");
@@ -198,6 +204,7 @@ namespace Baskets.UnitTests.HandlersTests
         {
             _unitOfWork.Setup(uof => uof.Basket.GetByConditionAsync(It.IsAny<Expression<Func<UserBasket, bool>>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(FakeDb.Baskets.Where(bi => bi.UserId.Equals(userId)).FirstOrDefault());
+
             _unitOfWork.Setup(uof => uof.BasketItem.GetBasketItemByConditionAsync(It.IsAny<Expression<Func<BasketItem, bool>>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(FakeDb.BasketItems.Where(bi => bi.Id.Equals(basketItemId)).FirstOrDefault());
 
@@ -238,6 +245,7 @@ namespace Baskets.UnitTests.HandlersTests
         {
             _unitOfWork.Setup(uof => uof.Basket.GetByConditionAsync(It.IsAny<Expression<Func<UserBasket, bool>>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(FakeDb.Baskets.Where(bi => bi.UserId.Equals(userId)).FirstOrDefault());
+
             _unitOfWork.Setup(uof => uof.BasketItem.GetBasketItemByConditionAsync(It.IsAny<Expression<Func<BasketItem, bool>>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(FakeDb.BasketItems.Where(bi => bi.Id.Equals(basketItemId)).FirstOrDefault);
 

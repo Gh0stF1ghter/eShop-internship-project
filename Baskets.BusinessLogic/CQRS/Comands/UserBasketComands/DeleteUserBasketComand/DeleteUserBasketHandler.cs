@@ -26,7 +26,7 @@ namespace Baskets.BusinessLogic.CQRS.Comands.UserBasketComands.DeleteUserBasketC
 
             if (userExists != null)
             {
-                throw new AlreadyExistsException(UserBasketMessages.UserExists);
+                throw new BadRequestException(UserBasketMessages.UserExists);
             }
         }
     }
