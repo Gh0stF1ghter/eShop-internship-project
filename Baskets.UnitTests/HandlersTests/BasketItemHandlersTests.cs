@@ -169,6 +169,8 @@ namespace Baskets.UnitTests.HandlersTests
             _unitOfWork.Setup(uof => uof.Item.GetByConditionAsync(It.IsAny<Expression<Func<Item, bool>>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(FakeDb.Items.Where(bi => bi.Id.Equals(itemId)).FirstOrDefault());
 
+            _unitOfWork.Setup(uof => uof.BasketItem.Add(It.IsAny<BasketItem>()));
+
             var createBasketItemComand = new CreateBasketItemComand("65e0f6b92fa24267a5c3fa13", new("65e0f44d2fa24267a5c3fa07"));
             var handler = new CreateBasketItemHandler(_unitOfWork.Object, _mapper);
 
