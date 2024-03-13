@@ -51,7 +51,7 @@ namespace Catalogs.Application.Handlers.ItemHandlers
 
             if (!vendorExists)
             {
-                throw new BadRequestException(VendorMessages.VendorNotFound);
+                throw new NotFoundException(VendorMessages.VendorNotFound);
             }
         }
     }
