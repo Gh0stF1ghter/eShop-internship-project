@@ -13,7 +13,7 @@ namespace Catalogs.Application.Handlers.BrandHandlers
 
             if (brand == null)
             {
-                throw new BadRequestException(BrandMessages.BrandNotFound); 
+                throw new NotFoundException(BrandMessages.BrandNotFound); 
             }
 
             _unitOfWork.Brand.Delete(brand);

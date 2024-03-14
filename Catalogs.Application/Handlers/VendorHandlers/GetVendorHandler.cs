@@ -16,7 +16,7 @@ namespace Catalogs.Application.Handlers.VendorHandlers
 
             if (vendor == null)
             {
-                throw new BadRequestException(VendorMessages.VendorNotFound);
+                throw new NotFoundException(VendorMessages.VendorNotFound);
             }
 
             var vendorDto = _mapper.Map<VendorDto>(vendor);

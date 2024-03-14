@@ -37,7 +37,7 @@ namespace Catalogs.Application.Handlers.ItemHandlers
 
             if (!itemTypeExists)
             {
-                throw new NotFoundException(ItemTypeMessages.TypeNotFound);
+                throw new NotFoundException(ItemTypeMessages.ItemTypeNotFound);
             }
 
             var brandExists = await _unitOfWork.Brand.IsExistAsync(b => b.Id.Equals(command.ItemDTO.BrandId), token);
