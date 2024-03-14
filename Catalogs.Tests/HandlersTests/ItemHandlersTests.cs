@@ -92,7 +92,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Theory]
-        [InlineData(false, false, true, ItemTypeMessages.TypeNotFound)]
+        [InlineData(false, false, true, ItemTypeMessages.ItemTypeNotFound)]
         [InlineData(true, false, false, BrandMessages.BrandNotFound)]
         [InlineData(true, true, false, VendorMessages.VendorNotFound)]
         public async Task CreateItemHandler_InvalidId_ThrowsNotFoundException(bool typeExists, bool brandExists, bool vendorExists, string expectedMessage)
@@ -161,7 +161,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Theory]
-        [InlineData(false, ItemTypeMessages.TypeNotFound)]
+        [InlineData(false, ItemTypeMessages.ItemTypeNotFound)]
         [InlineData(true, ItemMessages.ItemNotFound)]
         public async Task GetItemOfTypeHandler_InvalidId_ThrowsNotFoundException(bool typeExist, string expectedMessage)
         {
@@ -228,7 +228,7 @@ namespace Catalogs.Tests.HandlersTests
 
             await response.Should()
                 .ThrowAsync<NotFoundException>()
-                .WithMessage(ItemTypeMessages.TypeNotFound);
+                .WithMessage(ItemTypeMessages.ItemTypeNotFound);
         }
 
         [Fact]
@@ -254,7 +254,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Theory]
-        [InlineData(false, false, true, ItemTypeMessages.TypeNotFound)]
+        [InlineData(false, false, true, ItemTypeMessages.ItemTypeNotFound)]
         [InlineData(true, false, false, BrandMessages.BrandNotFound)]
         [InlineData(true, true, false, VendorMessages.VendorNotFound)]
         public async Task UpdateItemHandler_InvalidId_ThrowsNotFoundException(bool typeExists, bool brandExists, bool vendorExists, string expectedMessage)
