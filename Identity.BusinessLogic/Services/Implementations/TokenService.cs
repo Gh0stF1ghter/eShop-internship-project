@@ -37,7 +37,21 @@ namespace Identity.BusinessLogic.Services.Implementations
             return new TokenDTO(accessToken, refreshToken);
         }
 
-        public string GenerateToken(IEnumerable<Claim> claims)
+        public async Task<TokenDTO> RefreshTokenAsync(TokenDTO tokenDto, CancellationToken token)
+        {
+            var principal = GetPrincipalFromExpiredToken(tokenDto.AccessToken);
+
+            var user = await _userManager.FindByNameAsync(principal.Identity.Name);
+
+            if (user is null || user.RefreshToken != tokenDto.RefreshToken || user.RefreshTokenExpireTime <= DateTime.Now)
+            {
+                throw new RefreshTokenBadRequestException(Messages.InvalidToken);
+            }
+
+            return await CreateTokenAsync(user, populateExp: false);
+        }
+
+        private string GenerateToken(IEnumerable<Claim> claims)
         {
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]));
 
@@ -57,19 +71,6 @@ namespace Identity.BusinessLogic.Services.Implementations
             return tokenHandler.WriteToken(token);
         }
 
-        public async Task<TokenDTO> RefreshTokenAsync(TokenDTO tokenDto, CancellationToken token)
-        {
-            var principal = GetPrincipalFromExpiredToken(tokenDto.AccessToken);
-
-            var user = await _userManager.FindByNameAsync(principal.Identity.Name);
-
-            if (user is null || user.RefreshToken != tokenDto.RefreshToken || user.RefreshTokenExpireTime <= DateTime.Now)
-            {
-                throw new RefreshTokenBadRequestException(Messages.InvalidToken);
-            }
-
-            return await CreateTokenAsync(user, populateExp: false);
-        }
 
         private static string GenerateRefreshToken()
         {
@@ -91,13 +92,24 @@ namespace Identity.BusinessLogic.Services.Implementations
                 ValidateIssuer = true,
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = signingKey,
-                ValidateLifetime = true,
+                ValidateLifetime = false,
                 ValidIssuer = _configuration["Jwt:Issuer"],
                 ValidAudience = _configuration["Jwt:Audience"]
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
+
+            SecurityToken securityToken;
+
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
+
+            var jwtSecurityToken = securityToken as JwtSecurityToken;
+            if (jwtSecurityToken == null ||
+           !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,
+            StringComparison.InvariantCultureIgnoreCase))
+            {
+                throw new SecurityTokenException("Invalid token");
+            }
 
             return principal;
         }
