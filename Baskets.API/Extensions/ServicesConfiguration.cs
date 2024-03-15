@@ -17,6 +17,7 @@ namespace Baskets.API.Extensions
 
         public static void ConfigureMediatR(this IServiceCollection services) =>
                     services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(BLLAssemblyReference).Assembly));
+
         public static void AddAutoValidation(this IServiceCollection services)
         {
             services.AddValidatorsFromAssembly(typeof(BLLAssemblyReference).Assembly);

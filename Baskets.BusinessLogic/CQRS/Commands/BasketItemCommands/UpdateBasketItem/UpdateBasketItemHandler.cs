@@ -1,18 +1,12 @@
 ﻿using AutoMapper;
 using Baskets.BusinessLogic.Exceptions;
-using Baskets.DataAccess.Entities.Models;
 using Baskets.DataAccess.UnitOfWork;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Baskets.BusinessLogic.CQRS.Comands.BasketItemComands.UpdateBasketItemComand
+namespace Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.UpdateBasketItem
 {
-    public class UpdateBasketItemHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<UpdateBasketItemComand>
+    public class UpdateBasketItemHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<UpdateBasketItemCommand>
     {
-        public async Task Handle(UpdateBasketItemComand comand, CancellationToken cancellationToken)
+        public async Task Handle(UpdateBasketItemCommand comand, CancellationToken cancellationToken)
         {
             var basket = await FindBasket(comand, cancellationToken);
 
@@ -23,13 +17,13 @@ namespace Baskets.BusinessLogic.CQRS.Comands.BasketItemComands.UpdateBasketItemC
             itemToUpdate.Quantity = comand.Quantity;
             itemToUpdate.SumPrice = itemToUpdate.Item.Price * comand.Quantity;
 
-            unitOfWork.BasketItem
-                .Update(bi => bi.Id.Equals(comand.BasketItemId), itemToUpdate);
+            await unitOfWork.BasketItem
+                .UpdateAsync(bi => bi.Id.Equals(comand.BasketItemId), itemToUpdate, cancellationToken);
 
-            UpdateTotalCost(basket, itemToUpdate);
+            await UpdateTotalCost(basket, itemToUpdate, cancellationToken);
         }
 
-        private async Task<UserBasket> FindBasket(UpdateBasketItemComand comand, CancellationToken cancellationToken)
+        private async Task<UserBasket> FindBasket(UpdateBasketItemCommand comand, CancellationToken cancellationToken)
         {
             var basket = await unitOfWork.Basket
                 .GetByConditionAsync(b => b.UserId.Equals(comand.UserId), cancellationToken);
@@ -42,7 +36,7 @@ namespace Baskets.BusinessLogic.CQRS.Comands.BasketItemComands.UpdateBasketItemC
             return basket;
         }
 
-        private async Task<BasketItem> FindInBasket(UpdateBasketItemComand comand, CancellationToken cancellationToken)
+        private async Task<BasketItem> FindInBasket(UpdateBasketItemCommand comand, CancellationToken cancellationToken)
         {
             var itemInBasket = await unitOfWork.BasketItem
                 .GetBasketItemByConditionAsync(bi => bi.Id.Equals(comand.BasketItemId)
@@ -56,12 +50,12 @@ namespace Baskets.BusinessLogic.CQRS.Comands.BasketItemComands.UpdateBasketItemC
             return itemInBasket;
         }
 
-        private void UpdateTotalCost(UserBasket basket, BasketItem newItem)
+        private async Task UpdateTotalCost(UserBasket basket, BasketItem newItem, CancellationToken cancellationToken)
         {
             basket.TotalPrice += newItem.SumPrice;
 
-            unitOfWork.Basket
-                .Update(u => u.UserId.Equals(basket.UserId), basket);
+            await unitOfWork.Basket
+                .UpdateAsync(u => u.UserId.Equals(basket.UserId), basket, cancellationToken);
         }
     }
 }
