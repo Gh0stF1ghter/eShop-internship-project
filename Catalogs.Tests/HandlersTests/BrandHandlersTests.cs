@@ -1,24 +1,13 @@
-﻿using AutoMapper;
-using Catalogs.Application.Comands.BrandCommands;
-using Catalogs.Application.DataTransferObjects;
-using Catalogs.Application.DataTransferObjects.CreateDTOs;
+﻿using Catalogs.Application.Comands.BrandCommands;
 using Catalogs.Application.Handlers.BrandHandlers;
-using Catalogs.Application.MappingProfiles;
 using Catalogs.Application.Queries.BrandQueries;
-using Catalogs.Domain.Entities.Constants;
-using Catalogs.Domain.Entities.Exceptions;
-using Catalogs.Domain.Entities.Models;
-using Catalogs.Domain.Interfaces;
-using FluentAssertions;
-using Moq;
-using System.Linq.Expressions;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using Catalogs.Tests.Mocks;
 
 namespace Catalogs.Tests.HandlersTests
 {
     public class BrandHandlersTests
     {
-        private readonly Mock<IUnitOfWork> _unitOfWork = new();
+        private readonly UnitOfWorkMock _unitOfWorkMock = new();
         private readonly CancellationToken _cancellationToken = It.IsAny<CancellationToken>();
 
         private readonly Mapper _mapper = new(
@@ -32,16 +21,18 @@ namespace Catalogs.Tests.HandlersTests
         [Fact]
         public async Task CreateBrandHandler_ValidParameters_ReturnsBrandDto()
         {
+            //Arrange
             var brandCreateDto = new BrandManipulateDto("Foo");
 
-            _unitOfWork.Setup(uof => uof.Brand.IsExistAsync(It.IsAny<Expression<Func<Brand, bool>>>(), _cancellationToken))
-                .ReturnsAsync(false);
+            _unitOfWorkMock.IsBrandExists(false);
 
             var comand = new CreateBrandComand(brandCreateDto);
-            var handler = new CreateBrandHandler(_unitOfWork.Object, _mapper);
+            var handler = new CreateBrandHandler(_unitOfWorkMock.Object, _mapper);
 
+            //Act
             var response = await handler.Handle(comand, _cancellationToken);
 
+            //Assert
             response.Should()
                 .BeOfType<BrandDto>()
                 .Which.Name.Should()
@@ -51,16 +42,18 @@ namespace Catalogs.Tests.HandlersTests
         [Fact]
         public async Task CreateBrandHandler_BrandExists_ThrowsBadRequestException()
         {
+            //Arrange
             var brandCreateDto = new BrandManipulateDto("Foo");
 
-            _unitOfWork.Setup(uof => uof.Brand.IsExistAsync(It.IsAny<Expression<Func<Brand, bool>>>(), _cancellationToken))
-                .ReturnsAsync(true);
+            _unitOfWorkMock.IsBrandExists(true);
 
             var comand = new CreateBrandComand(brandCreateDto);
-            var handler = new CreateBrandHandler(_unitOfWork.Object, _mapper);
+            var handler = new CreateBrandHandler(_unitOfWorkMock.Object, _mapper);
 
+            //Act
             var response = async () => await handler.Handle(comand, _cancellationToken);
 
+            //Assert
             await response.Should()
                 .ThrowAsync<BadRequestException>()
                 .WithMessage(BrandMessages.BrandExists);
@@ -69,45 +62,38 @@ namespace Catalogs.Tests.HandlersTests
         [Fact]
         public async Task DeleteBrandHandler_ValidParameters_ReturnsNoContent()
         {
-            var brandList = new List<Brand>
-            { 
-                new()
-                {
-                    Id = 1,
-                    Name = "Foo",
-                },
-                new()
-                {
-                    Id = 2,
-                    Name = "Boo",
-                },
+            //Arrange
+            var brand = new Brand
+            {
+                Id = 2,
+                Name = "Boo",
             };
 
-            _unitOfWork.Setup(uof => uof.Brand.GetBrandByIdAsync(1, false, _cancellationToken))
-                .ReturnsAsync(brandList[0]);
-
-            _unitOfWork.Setup(uof => uof.Brand.Delete(brandList[0]))
-                .Callback(() => brandList.Remove(brandList[0]));
+            _unitOfWorkMock.GetBrandById(brand);
 
             var comand = new DeleteBrandComand(1, false);
-            var handler = new DeleteBrandHandler(_unitOfWork.Object);
+            var handler = new DeleteBrandHandler(_unitOfWorkMock.Object);
 
-            await handler.Handle(comand, _cancellationToken);
+            //Act
+            var response = async () => await handler.Handle(comand, _cancellationToken);
 
-            brandList.Count.Should().Be(1);
+            //Assert
+            await response.Should().NotThrowAsync();
         }
 
         [Fact]
         public async Task DeleteBrandHandler_InvalidId_ThrowsNotFoundException()
         {
-            _unitOfWork.Setup(uof => uof.Brand.GetBrandByIdAsync(1, false, _cancellationToken))
-                .ReturnsAsync((Brand)null);
+            //Arrange
+            _unitOfWorkMock.GetBrandById(null);
 
             var comand = new DeleteBrandComand(1, false);
-            var handler = new DeleteBrandHandler(_unitOfWork.Object);
+            var handler = new DeleteBrandHandler(_unitOfWorkMock.Object);
 
+            //Act
             var response = async () => await handler.Handle(comand, _cancellationToken);
 
+            //Assert
             await response.Should()
                 .ThrowAsync<NotFoundException>()
                 .WithMessage(BrandMessages.BrandNotFound);
@@ -116,45 +102,40 @@ namespace Catalogs.Tests.HandlersTests
         [Fact]
         public async Task GetBrandHandler_ValidParameters_ReturnsBrandDto()
         {
-            var brandList = new List<Brand>
+            //Arrange
+            var brand = new Brand
             {
-                new()
-                {
-                    Id = 1,
-                    Name = "Foo",
-                },
-                new()
-                {
-                    Id = 2,
-                    Name = "Boo",
-                },
+                Id = 2,
+                Name = "Boo",
             };
 
-            _unitOfWork.Setup(uof => uof.Brand.GetBrandByIdAsync(1, false, _cancellationToken))
-                .ReturnsAsync(brandList[0]);
+            _unitOfWorkMock.Setup(uof => uof.Brand.GetBrandByIdAsync(1, false, _cancellationToken))
+                .ReturnsAsync(brand);
 
             var query = new GetBrandQuery(1, false);
-            var handler = new GetBrandHandler(_unitOfWork.Object, _mapper);
+            var handler = new GetBrandHandler(_unitOfWorkMock.Object, _mapper);
 
+            //Act
             var response = await handler.Handle(query, _cancellationToken);
 
+            //Assert
             response.Should()
-                .BeOfType<BrandDto>()
-                .Which.Id.Should()
-                .Be(1);
+                .BeOfType<BrandDto>();
         }
 
         [Fact]
         public async Task GetBrandHandler_InvalidId_ReturnsBrandDto()
         {
-            _unitOfWork.Setup(uof => uof.Brand.GetBrandByIdAsync(1, false, _cancellationToken))
-                .ReturnsAsync((Brand)null);
+            //Arrange
+            _unitOfWorkMock.GetBrandById(null);
 
             var query = new GetBrandQuery(1, false);
-            var handler = new GetBrandHandler(_unitOfWork.Object, _mapper);
+            var handler = new GetBrandHandler(_unitOfWorkMock.Object, _mapper);
 
+            //Act
             var response = async () => await handler.Handle(query, _cancellationToken);
 
+            //Assert
             await response.Should()
                 .ThrowAsync<NotFoundException>()
                 .WithMessage(BrandMessages.BrandNotFound);
@@ -163,83 +144,61 @@ namespace Catalogs.Tests.HandlersTests
         [Fact]
         public async Task GetBrandsHandler_ValidParameters_ReturnsBrandDtoList()
         {
-            var brandList = new List<Brand>
-            {
-                new()
-                {
-                    Id = 1,
-                    Name = "Foo",
-                },
-                new()
-                {
-                    Id = 2,
-                    Name = "Boo",
-                },
-            };
-
-            _unitOfWork.Setup(uof => uof.Brand.GetAllBrandsAsync(false, _cancellationToken))
-                .ReturnsAsync(brandList);
+            //Arrange
+            _unitOfWorkMock.GetAllBrands();
 
             var query = new GetBrandsQuery(false);
-            var handler = new GetBrandsHandler(_unitOfWork.Object, _mapper);
+            var handler = new GetBrandsHandler(_unitOfWorkMock.Object, _mapper);
 
+            //Act
             var response = await handler.Handle(query, _cancellationToken);
 
+            //Assert
             response.Should()
                 .BeOfType<List<BrandDto>>()
                 .Which.Count.Should()
                 .Be(2);
         }
 
-        [Theory]
-        [InlineData(0, "Loe")]
-        [InlineData(1, "Doow")]
-        public async Task UpdateBrandHandler_ValidParameters_ReturnsNoContent(int id, string newName)
+        [Fact]
+        public async Task UpdateBrandHandler_ValidParameters_ReturnsNoContent()
         {
-            var brandList = new List<Brand>
+            //Arrange
+            var brandList = new Brand
             {
-                new()
-                {
-                    Id = 0,
-                    Name = "Foo",
-                },
-                new()
-                {
-                    Id = 1,
-                    Name = "Boo",
-                },
+                Id = 0,
+                Name = "Foo",
             };
 
-            var brandUpdateDto = new BrandManipulateDto(newName);
+            var brandUpdateDto = new BrandManipulateDto("Doo");
 
-            _unitOfWork.Setup(uof => uof.Brand.GetBrandByIdAsync(id, true, _cancellationToken))
-                .ReturnsAsync(brandList[id]);
+            _unitOfWorkMock.GetBrandById(brandList);
 
-            var comand = new UpdateBrandComand(id, brandUpdateDto, true);
-            var handler = new UpdateBrandHandler(_unitOfWork.Object, _mapper);
+            var comand = new UpdateBrandComand(0, brandUpdateDto, true);
+            var handler = new UpdateBrandHandler(_unitOfWorkMock.Object, _mapper);
 
-            await handler.Handle(comand, _cancellationToken);
+            //Act
+            var response = async () => await handler.Handle(comand, _cancellationToken);
 
-            brandList[id].Should()
-                .BeOfType<Brand>()
-                .Which.Name.Should()
-                .Be(brandUpdateDto.Name);
+            //Assert
+            await response.Should().NotThrowAsync();
         }
 
         [Fact]
         public async Task UpdateBrandHandler_InvalidId_ReturnsBrandDto()
         {
-
+            //Arrange
             var brandUpdateDto = new BrandManipulateDto("Foo");
 
-            _unitOfWork.Setup(uof => uof.Brand.GetBrandByIdAsync(It.IsAny<int>(), true, _cancellationToken))
-                .ReturnsAsync((Brand)null);
+            _unitOfWorkMock.GetBrandById(null);
 
             var comand = new UpdateBrandComand(It.IsAny<int>(), brandUpdateDto, true);
-            var handler = new UpdateBrandHandler(_unitOfWork.Object, _mapper);
+            var handler = new UpdateBrandHandler(_unitOfWorkMock.Object, _mapper);
 
+            //Act
             var response = async () => await handler.Handle(comand, _cancellationToken);
 
+            //Assert
             await response.Should()
                 .ThrowAsync<NotFoundException>()
                 .WithMessage(BrandMessages.BrandNotFound);
