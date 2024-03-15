@@ -9,23 +9,18 @@ using Identity.Tests.Mocks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Identity.Tests.ServicesTests
 {
     public class AuthenticationServiceTest
     {
         private readonly Mock<UserManager<User>> _userManagerMock = UserManagerMock.MockUserManager<User>([new()
-            {
-                Id = "qwerty",
-                UserName = "Name",
-                RefreshToken = null,
-                RefreshTokenExpireTime = DateTime.UtcNow,
-            }]);
+        {
+            Id = "qwerty",
+            UserName = "Name",
+            RefreshToken = null,
+            RefreshTokenExpireTime = DateTime.UtcNow,
+        }]);
 
         private readonly Mock<ITokenService> _tokenServiceMock = new();
         private readonly Mock<ILogger<AuthenticationService>> _logger = new();
@@ -54,7 +49,7 @@ namespace Identity.Tests.ServicesTests
             _userManagerMock.Setup(um => um.CheckPasswordAsync(user, loginDto.Password))
                 .ReturnsAsync(true);
 
-            _tokenServiceMock.Setup(ts=> ts.CreateTokenAsync(user, true))
+            _tokenServiceMock.Setup(ts => ts.CreateTokenAsync(user, true))
                 .ReturnsAsync(new TokenDTO("123", "123"));
 
             var service = new AuthenticationService(_userManagerMock.Object, _tokenServiceMock.Object, _mapper, _logger.Object);

@@ -3,6 +3,7 @@ using Identity.BusinessLogic.DTOs;
 using Identity.BusinessLogic.Services.Implementations;
 using Identity.BusinessLogic.Services.Interfaces;
 using Identity.DataAccess.Entities.Constants;
+using Identity.DataAccess.Entities.Exceptions;
 using Identity.DataAccess.Entities.Models;
 using Identity.Tests.Mocks;
 using Microsoft.AspNetCore.Identity;
@@ -55,11 +56,6 @@ namespace Identity.Tests.ServicesTests
                 RefreshTokenExpireTime = DateTime.UtcNow,
             };
 
-            List<string> roles =
-            [
-                "admin"
-            ];
-
             var tokenService = new TokenService(_configurationMock.Object, usermanagerMock.Object);
 
             var response = await tokenService.CreateTokenAsync(user, true);
@@ -103,6 +99,63 @@ namespace Identity.Tests.ServicesTests
                 .NotBeNull()
                 .And
                 .NotBeEquivalentTo(tokenDto.AccessToken);
+        }
+
+        [Fact]
+        public async Task RefreshTokenAsync_ExpiredRefreshToken_ThrowsRefreshTokenBadRequestException()
+        {
+            //Arrange
+            var tokenDto = new TokenDTO(
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5OGJlNGUyMi0yNWI4LTRkZmItYjljOS01YWI3MzQ4YjA0OWEiLCJ1bmlxdWVfbmFtZSI6IlVzZXJuYW1lIiwicm9sZSI6ImFkbWluIiwibmJmIjoxNzEwNDQ1OTU4LCJleHAiOjE3MTA0NDY1NTgsImlhdCI6MTcxMDQ0NTk1OCwiaXNzIjoibG9jYWxob3N0IiwiYXVkIjoibG9jYWxob3N0In0.VmwVBiXBw8qxu06EO5rCQx_dPYp6qCca1HEDOVMzolA",
+                "G98y2fY5mF9uYOANodY4yoWW11mwukve//onCIdvj2Q=");
+
+            User user = new()
+            {
+                Id = "qwerty",
+                UserName = "Username",
+                RefreshToken = "G98y2fY5mF9uYOANodY4yoWW11mwukve//onCIdvj2Q=",
+                RefreshTokenExpireTime = DateTime.UtcNow,
+            };
+
+            usermanagerMock.Setup(um => um.FindByNameAsync(user.UserName))
+                .ReturnsAsync(user);
+
+            var tokenService = new TokenService(_configurationMock.Object, usermanagerMock.Object);
+
+            //Act
+            var response = async () => await tokenService.RefreshTokenAsync(tokenDto, token: default);
+
+            //Assert
+            await response.Should()
+                .ThrowAsync<RefreshTokenBadRequestException>()
+                .WithMessage(Messages.InvalidToken);
+        }
+
+        [Fact]
+        public async Task RefreshTokenAsync_WrongRefreshToken_ThrowsRefreshTokenBadRequestException()
+        {
+            var tokenDto = new TokenDTO(
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5OGJlNGUyMi0yNWI4LTRkZmItYjljOS01YWI3MzQ4YjA0OWEiLCJ1bmlxdWVfbmFtZSI6IlVzZXJuYW1lIiwicm9sZSI6ImFkbWluIiwibmJmIjoxNzEwNDQ1OTU4LCJleHAiOjE3MTA0NDY1NTgsImlhdCI6MTcxMDQ0NTk1OCwiaXNzIjoibG9jYWxob3N0IiwiYXVkIjoibG9jYWxob3N0In0.VmwVBiXBw8qxu06EO5rCQx_dPYp6qCca1HEDOVMzolA",
+                "G98y2fY5mF9uYOANodY4yoWW11mwukve//onCIdvj2Q=");
+
+            User user = new()
+            {
+                Id = "qwerty",
+                UserName = "Username",
+                RefreshToken = "G98y2fY5mF9uYOANodY4yoWW11mwukve//onCIdvj2",
+                RefreshTokenExpireTime = DateTime.UtcNow.AddDays(7),
+            };
+
+            usermanagerMock.Setup(um => um.FindByNameAsync(user.UserName))
+                .ReturnsAsync(user);
+
+            var tokenService = new TokenService(_configurationMock.Object, usermanagerMock.Object);
+
+            var response = async () => await tokenService.RefreshTokenAsync(tokenDto, token: default);
+
+            await response.Should()
+                .ThrowAsync<RefreshTokenBadRequestException>()
+                .WithMessage(Messages.InvalidToken);
         }
     }
 }
