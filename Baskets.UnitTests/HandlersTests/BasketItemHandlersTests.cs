@@ -37,7 +37,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task GetBasketItemsReturnsList()
+        public async Task GetBasketItems_ValidParameters_ReturnsList()
         {
             //Arrange
             var getBasketItemsQuery = new GetBasketItemsQuery("65e0f6b92fa24267a5c3fa13");
@@ -51,7 +51,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task GetBasketItemsThrowsNotFoundException()
+        public async Task GetBasketItems_InvalidBasketId_ThrowsNotFoundException()
         {
             //Arrange
             _unitOfWork.Setup(uof => uof.Basket.GetByConditionAsync(It.IsAny<Expression<Func<UserBasket, bool>>>(), It.IsAny<CancellationToken>()))
@@ -72,7 +72,7 @@ namespace Baskets.UnitTests.HandlersTests
         [Theory]
         [InlineData("65eebaf62141340b41b7052a")]
         [InlineData("65e2122401130591c38d52e3")]
-        public async Task GetBasketItemReturnsBasketItem(string id)
+        public async Task GetBasketItem_ValidParameters_ReturnsBasketItem(string id)
         {
             //Arrange
             var mockedResult = FakeDb.BasketItems.Where(bi => bi.Id.Equals(id)).First();
@@ -94,7 +94,7 @@ namespace Baskets.UnitTests.HandlersTests
         [Theory]
         [InlineData("65e0f6b92fa24267a5c3fa13", null, BasketItemMessages.NotFound)]
         [InlineData(null, "65e2122401130591c38d52e3", UserBasketMessages.NotFound)]
-        public async Task GetBasketItemThrowsNotFoundException(string userId, string basketItemId, string responseMessage)
+        public async Task GetBasketItem_InvalidId_ThrowsNotFoundException(string userId, string basketItemId, string responseMessage)
         {
             //Arrange
             _unitOfWork.Setup(x => x.Basket.GetByConditionAsync(It.IsAny<Expression<Func<UserBasket, bool>>>(), It.IsAny<CancellationToken>()))
@@ -118,7 +118,7 @@ namespace Baskets.UnitTests.HandlersTests
         [Theory]
         [InlineData("65e0f431c871865e8372ae03")]
         [InlineData("65e0f47e2fa24267a5c3fa09")]
-        public async Task CreateBasketItemReturnsBasketItem(string itemId)
+        public async Task CreateBasketItem_ValidParameters_ReturnsBasketItem(string itemId)
         {
             var mockedItem = FakeDb.Items.Where(bi => bi.Id.Equals(itemId)).First();
 
@@ -140,7 +140,7 @@ namespace Baskets.UnitTests.HandlersTests
         [Theory]
         [InlineData("65e0f44d2fa24267a5c3fa07")]
         [InlineData("65e0f45f2fa24267a5c3fa08")]
-        public async Task CreateBasketItemThrowsAlreadyExistsException(string itemId)
+        public async Task CreateBasketItem_ExistingItemId_ThrowsAlreadyExistsException(string itemId)
         {
             _unitOfWork.Setup(uof => uof.Item.GetByConditionAsync(It.IsAny<Expression<Func<Item, bool>>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(FakeDb.Items.Where(bi => bi.Id.Equals(itemId)).First());
@@ -161,7 +161,7 @@ namespace Baskets.UnitTests.HandlersTests
         [Theory]
         [InlineData("65e0f44d2fa24267a5c3fa07", "65e0f6b92fa24267a5c3fa16", UserMessages.NotFound)]
         [InlineData("65e0f6b92fa24267a5c3fa13", "65e0f6b92fa24267a5c3fa14", ItemMessages.NotFound)]
-        public async Task CreateBasketItemThrowsNotFoundException(string itemId, string userId, string responseMessage)
+        public async Task CreateBasketItem_InvalidUserOrItemIds_ThrowsNotFoundException(string itemId, string userId, string responseMessage)
         {
             _unitOfWork.Setup(uof => uof.Basket.GetByConditionAsync(It.IsAny<Expression<Func<UserBasket, bool>>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(FakeDb.Baskets.Where(bi => bi.UserId.Equals(userId)).FirstOrDefault());
@@ -182,7 +182,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task DeleteBasketItemChangesBasketPrice()
+        public async Task DeleteBasketItem_ValidParameters_ChangesBasketPrice()
         {
             UserBasket basket = FakeDb.Baskets.First();
 
@@ -202,7 +202,7 @@ namespace Baskets.UnitTests.HandlersTests
         [Theory]
         [InlineData("65e0f44d2fa24267a5c3fa07", "65e0f6b92fa24267a5c3fa16", UserBasketMessages.NotFound)]
         [InlineData("65e0f6b92fa24267a5c3fa13", "65eebaf62141340b41b7052a", BasketItemMessages.NotFound)]
-        public async void DeleteBasketItemThrowsNotFoundException(string userId, string basketItemId, string expectedResponse)
+        public async void DeleteBasketItem_InvalidUserOrItemIds_ThrowsNotFoundException(string userId, string basketItemId, string expectedResponse)
         {
             _unitOfWork.Setup(uof => uof.Basket.GetByConditionAsync(It.IsAny<Expression<Func<UserBasket, bool>>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(FakeDb.Baskets.Where(bi => bi.UserId.Equals(userId)).FirstOrDefault());
@@ -221,7 +221,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task UpdateBasketItemChangesItemCost()
+        public async Task UpdateBasketItem_ValidParameters_ChangesItemCost()
         {
             var basketItemMock = FakeDb.BasketItems.Where(bi => bi.Id.Equals("65e2122401130591c38d52e3")).First();
             var basketMock = FakeDb.Baskets.First();
@@ -243,7 +243,7 @@ namespace Baskets.UnitTests.HandlersTests
         [Theory]
         [InlineData("65e0f6b92fa24267a5c3fa13", "65e2122401130591c38d5213", BasketItemMessages.NotFound)]
         [InlineData("65e0f6b92fa24267a5c3fa19", "65e2122401130591c38d52e3", UserBasketMessages.NotFound)]
-        public async Task UpdateBasketItemThrowsNotFoundException(string userId, string basketItemId, string responseMessage)
+        public async Task UpdateBasketItem_InvalidUserOrItemIds_ThrowsNotFoundException(string userId, string basketItemId, string responseMessage)
         {
             _unitOfWork.Setup(uof => uof.Basket.GetByConditionAsync(It.IsAny<Expression<Func<UserBasket, bool>>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(FakeDb.Baskets.Where(bi => bi.UserId.Equals(userId)).FirstOrDefault());
@@ -258,7 +258,7 @@ namespace Baskets.UnitTests.HandlersTests
             var handler = new UpdateBasketItemHandler(_unitOfWork.Object, _mapper);
 
             var response = async () => await handler.Handle(updateBasketItem, cancellationToken: default);
-        
+
             await response.Should()
                 .ThrowAsync<NotFoundException>()
                 .WithMessage(responseMessage);

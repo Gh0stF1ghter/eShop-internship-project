@@ -10,12 +10,7 @@ using Baskets.DataAccess.UnitOfWork;
 using Baskets.UnitTests.BasketFakeDb;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Baskets.UnitTests.HandlersTests
 {
@@ -32,7 +27,7 @@ namespace Baskets.UnitTests.HandlersTests
         [Theory]
         [InlineData("65e0f6b92fa24267a5c3fa13", 705)]
         [InlineData("65e0f6b02fa24267a5c3fa13", 0)]
-        public async Task GetUserBasketReturnsUserBasket(string userId, double expectedTotalPrice)
+        public async Task GetUserBasket_ValidParameters_ReturnsUserBasket(string userId, double expectedTotalPrice)
         {
             var basket = FakeDb.Baskets.Where(b => b.UserId.Equals(userId)).First();
 
@@ -51,7 +46,7 @@ namespace Baskets.UnitTests.HandlersTests
         [Theory]
         [InlineData("65e0f6b920a24267a5c3fa13")]
         [InlineData("35e0f6b02fa24267a5c3fa13")]
-        public async Task GetUserBasketThrowsNotFoundException(string userId)
+        public async Task GetUserBasket_InvalidId_ThrowsNotFoundException(string userId)
         {
             _unitOfWork.Setup(uof => uof.Basket.GetByConditionAsync(It.IsAny<Expression<Func<UserBasket, bool>>>(), _cancellationToken))
                 .ReturnsAsync((UserBasket)null);
@@ -68,7 +63,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task CreateUserBasketReturnsUserBasket()
+        public async Task CreateUserBasket_ValidParameters_ReturnsUserBasket()
         {
             _unitOfWork.Setup(uof => uof.Basket.GetByConditionAsync(It.IsAny<Expression<Func<UserBasket, bool>>>(), _cancellationToken))
                 .ReturnsAsync(FakeDb.Baskets.Where(b => b.UserId.Equals("65e0f6b920a24267a5c3fa13")).FirstOrDefault());
@@ -85,7 +80,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task CreateUserBasketThrowsNotFoundException()
+        public async Task CreateUserBasket_InvalidId_ThrowsNotFoundException()
         {
             _unitOfWork.Setup(uof => uof.User.GetByConditionAsync(It.IsAny<Expression<Func<User, bool>>>(), _cancellationToken))
                 .ReturnsAsync((User)null);
@@ -101,7 +96,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task CreateUserBasketThrowsAlreadyExistException()
+        public async Task CreateUserBasket_BasketExists_ThrowsAlreadyExistException()
         {
             _unitOfWork.Setup(uof => uof.Basket.GetByConditionAsync(It.IsAny<Expression<Func<UserBasket, bool>>>(), _cancellationToken))
                 .ReturnsAsync(FakeDb.Baskets.Where(b => b.UserId.Equals("65e0f6b92fa24267a5c3fa13")).First());
@@ -119,7 +114,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task DeleteUserBasketReturnsNoContent()
+        public async Task DeleteUserBasket_ValidParameters_ReturnsNoContent()
         {
             var basket = FakeDb.Baskets.Where(b => b.UserId.Equals("65e0f6b02fa24267a5c3fa13")).First();
 
@@ -131,11 +126,13 @@ namespace Baskets.UnitTests.HandlersTests
             var comand = new DeleteUserBasketComand("65e0f6b02fa24267a5c3fa13");
             var handler = new DeleteUserBasketHandler(_unitOfWork.Object);
 
-            await handler.Handle(comand, cancellationToken: default);
+            var response = async () => await handler.Handle(comand, cancellationToken: default);
+
+            await response.Should().NotThrowAsync();
         }
 
         [Fact]
-        public async Task DeleteUserBasketThrowsBadRequestException()
+        public async Task DeleteUserBasket_UserExists_ThrowsBadRequestException()
         {
             _unitOfWork.Setup(uof => uof.User.GetByConditionAsync(It.IsAny<Expression<Func<User, bool>>>(), _cancellationToken))
                 .ReturnsAsync(FakeDb.Users.Where(b => b.Id.Equals("65e0f6b92fa24267a5c3fa13")).First());
@@ -151,7 +148,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task DeleteUserBasketThrowsNotFoundException()
+        public async Task DeleteUserBasket_InvalidId_ThrowsNotFoundException()
         {
             _unitOfWork.Setup(uof => uof.Basket.GetByConditionAsync(It.IsAny<Expression<Func<UserBasket, bool>>>(), _cancellationToken))
                 .ReturnsAsync((UserBasket)null);
