@@ -1,19 +1,42 @@
-﻿namespace Identity.Tests.Mocks
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+
+namespace Identity.Tests.Mocks
 {
-    internal class UserManagerMock
+    internal class UserManagerMock : Mock<UserManager<User>>
     {
-        public static Mock<UserManager<TUser>> MockUserManager<TUser>(List<TUser> ls) where TUser : class
+        public UserManagerMock(IUserStore<User> store,
+        IOptions<IdentityOptions> optionsAccessor,
+        IPasswordHasher<User> passwordHasher,
+        IEnumerable<IUserValidator<User>> userValidators,
+        IEnumerable<IPasswordValidator<User>> passwordValidators,
+        ILookupNormalizer keyNormalizer,
+        IdentityErrorDescriber errors,
+        IServiceProvider services,
+        ILogger<UserManager<User>> logger) : base(store, optionsAccessor, passwordHasher, userValidators, passwordValidators, keyNormalizer, errors, services, logger)
         {
-            var store = new Mock<IUserStore<TUser>>();
-            var mgr = new Mock<UserManager<TUser>>(store.Object, null, null, null, null, null, null, null, null);
-            mgr.Object.UserValidators.Add(new UserValidator<TUser>());
-            mgr.Object.PasswordValidators.Add(new PasswordValidator<TUser>());
+            Object.UserValidators.Add(new UserValidator<User>());
+            Object.PasswordValidators.Add(new PasswordValidator<User>());
 
-            mgr.Setup(x => x.DeleteAsync(It.IsAny<TUser>())).ReturnsAsync(IdentityResult.Success);
-            mgr.Setup(x => x.CreateAsync(It.IsAny<TUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success).Callback<TUser, string>((x, y) => ls.Add(x));
-            mgr.Setup(x => x.UpdateAsync(It.IsAny<TUser>())).ReturnsAsync(IdentityResult.Success);
-
-            return mgr;
+            Setup(x => x.DeleteAsync(It.IsAny<User>())).ReturnsAsync(IdentityResult.Success);
+            Setup(x => x.CreateAsync(It.IsAny<User>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
+            Setup(x => x.UpdateAsync(It.IsAny<User>())).ReturnsAsync(IdentityResult.Success);
         }
+
+        public void FindByEmail(User? user) =>
+            Setup(um => um.FindByEmailAsync(It.IsAny<string>()))
+                .ReturnsAsync(user);
+
+        public void FindByName(User? user) =>
+            Setup(um => um.FindByNameAsync(It.IsAny<string>()))
+                .ReturnsAsync(user);
+
+        public void CheckPassword(bool result) =>
+            Setup(um => um.CheckPasswordAsync(It.IsAny<User>(), It.IsAny<string>()))
+                .ReturnsAsync(result);
+
+        public void Create(IdentityResult result) =>
+            Setup(um => um.CreateAsync(It.IsAny<User>(), It.IsAny<string>()))
+                .ReturnsAsync(result);
     }
 }

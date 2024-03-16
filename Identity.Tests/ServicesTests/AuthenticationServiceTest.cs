@@ -1,26 +1,20 @@
 ﻿using AutoMapper;
-using FluentAssertions;
-using Identity.BusinessLogic.DTOs;
 using Identity.BusinessLogic.Mapping;
-using Identity.BusinessLogic.Services.Implementations;
 using Identity.BusinessLogic.Services.Interfaces;
-using Identity.DataAccess.Entities.Models;
-using Identity.Tests.Mocks;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using Moq;
 
 namespace Identity.Tests.ServicesTests
 {
     public class AuthenticationServiceTest
     {
-        private readonly Mock<UserManager<User>> _userManagerMock = UserManagerMock.MockUserManager<User>([new()
+        private readonly UserManagerMock _userManagerMock;
+
+        public AuthenticationServiceTest()
         {
-            Id = "qwerty",
-            UserName = "Name",
-            RefreshToken = null,
-            RefreshTokenExpireTime = DateTime.UtcNow,
-        }]);
+            var store = new Mock<IUserStore<User>>(); 
+
+            _userManagerMock = new(store.Object, null, null, null, null, null, null, null, null);
+        }
 
         private readonly Mock<ITokenService> _tokenServiceMock = new();
         private readonly Mock<ILogger<AuthenticationService>> _logger = new();
@@ -32,6 +26,7 @@ namespace Identity.Tests.ServicesTests
         [Fact]
         public async Task AuthenticateAsync_ValidParameters_ReturnsTokenDto()
         {
+            //Arrange
             var loginDto = new LoginDTO("1234@12.com", "123456789", false);
 
             User user = new()
@@ -43,38 +38,37 @@ namespace Identity.Tests.ServicesTests
                 RefreshTokenExpireTime = DateTime.UtcNow,
             };
 
-
-            _userManagerMock.Setup(um => um.FindByEmailAsync(loginDto.Email))
-                .ReturnsAsync(user);
-            _userManagerMock.Setup(um => um.CheckPasswordAsync(user, loginDto.Password))
-                .ReturnsAsync(true);
+            _userManagerMock.FindByEmail(user);
+            _userManagerMock.CheckPassword(true);
 
             _tokenServiceMock.Setup(ts => ts.CreateTokenAsync(user, true))
                 .ReturnsAsync(new TokenDTO("123", "123"));
 
             var service = new AuthenticationService(_userManagerMock.Object, _tokenServiceMock.Object, _mapper, _logger.Object);
 
+            //Act
             var response = await service.AuthenticateAsync(loginDto, cancellationToken: default);
 
+            //Assert
             response.Should().BeOfType<TokenDTO>();
         }
 
         [Fact]
         public async Task RegisterUserAsync_ValidParameters_ReturnsTrue()
         {
+            //Arrange
             var registerDto = new RegisterDTO("name", "mail", "12345678", "12345678");
 
-            _userManagerMock.Setup(um => um.FindByEmailAsync(registerDto.Email))
-                .ReturnsAsync((User)null);
-            _userManagerMock.Setup(um => um.CreateAsync(It.IsAny<User>(), registerDto.Password))
-                .ReturnsAsync(IdentityResult.Success);
+            _userManagerMock.FindByEmail(null);
+            _userManagerMock.Create(IdentityResult.Success);
 
             var service = new AuthenticationService(_userManagerMock.Object, _tokenServiceMock.Object, _mapper, _logger.Object);
 
+            //Act
             var response = await service.RegisterUserAsync(registerDto, token: default);
 
+            //Assert
             response.Should().Be(true);
-
         }
     }
 }
