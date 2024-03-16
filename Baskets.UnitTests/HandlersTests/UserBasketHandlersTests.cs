@@ -8,6 +8,7 @@ using Baskets.DataAccess.Entities.Constants.Messages;
 using Baskets.DataAccess.Entities.Models;
 using Baskets.DataAccess.UnitOfWork;
 using Baskets.UnitTests.BasketFakeDb;
+using Baskets.UnitTests.Mock;
 using FluentAssertions;
 using Moq;
 using System.Linq.Expressions;
@@ -16,8 +17,7 @@ namespace Baskets.UnitTests.HandlersTests
 {
     public class UserBasketHandlersTests
     {
-        private static CancellationToken _cancellationToken = It.IsAny<CancellationToken>();
-        private readonly Mock<IUnitOfWork> _unitOfWork = new();
+        private readonly UnitOfWorkMock _unitOfWorkMock = new();
         private readonly Mapper _mapper = new(
             new MapperConfiguration(mc => mc.AddProfiles(
             [
@@ -29,14 +29,15 @@ namespace Baskets.UnitTests.HandlersTests
         [InlineData("65e0f6b02fa24267a5c3fa13", 0)]
         public async Task GetUserBasket_ValidParameters_ReturnsUserBasket(string userId, double expectedTotalPrice)
         {
-            var basket = FakeDb.Baskets.Where(b => b.UserId.Equals(userId)).First();
+            //Arrange
+            var basket = FakeDb.Baskets.Find(b => b.UserId.Equals(userId));
 
-            _unitOfWork.Setup(uof => uof.Basket.GetByConditionAsync(It.IsAny<Expression<Func<UserBasket, bool>>>(), _cancellationToken))
-                .ReturnsAsync(basket);
+            _unitOfWorkMock.GetBasketByCondition(basket);
 
             var query = new GetUserBasketQuery(userId);
-            var handler = new GetUserBasketHandler(_unitOfWork.Object, _mapper);
+            var handler = new GetUserBasketHandler(_unitOfWorkMock.Object, _mapper);
 
+            //Act
             var response = await handler.Handle(query, cancellationToken: default);
 
             response.TotalPrice.Should()
@@ -48,14 +49,16 @@ namespace Baskets.UnitTests.HandlersTests
         [InlineData("35e0f6b02fa24267a5c3fa13")]
         public async Task GetUserBasket_InvalidId_ThrowsNotFoundException(string userId)
         {
-            _unitOfWork.Setup(uof => uof.Basket.GetByConditionAsync(It.IsAny<Expression<Func<UserBasket, bool>>>(), _cancellationToken))
-                .ReturnsAsync((UserBasket)null);
+            //Arrange
+            _unitOfWorkMock.GetBasketByCondition(null);
 
             var query = new GetUserBasketQuery(userId);
-            var handler = new GetUserBasketHandler(_unitOfWork.Object, _mapper);
+            var handler = new GetUserBasketHandler(_unitOfWorkMock.Object, _mapper);
 
+            //Act
             var response = async () => await handler.Handle(query, cancellationToken: default);
 
+            //Assert
             await response.Should()
                 .ThrowAsync<NotFoundException>()
                 .WithMessage(UserBasketMessages.NotFound);
@@ -65,15 +68,15 @@ namespace Baskets.UnitTests.HandlersTests
         [Fact]
         public async Task CreateUserBasket_ValidParameters_ReturnsUserBasket()
         {
-            _unitOfWork.Setup(uof => uof.Basket.GetByConditionAsync(It.IsAny<Expression<Func<UserBasket, bool>>>(), _cancellationToken))
-                .ReturnsAsync(FakeDb.Baskets.Where(b => b.UserId.Equals("65e0f6b920a24267a5c3fa13")).FirstOrDefault());
+            //Arrange
+            _unitOfWorkMock.GetBasketByCondition(FakeDb.Baskets.Find(b => b.UserId.Equals("65e0f6b920a24267a5c3fa13")));
 
-            _unitOfWork.Setup(uof => uof.User.GetByConditionAsync(It.IsAny<Expression<Func<User, bool>>>(), _cancellationToken))
-                .ReturnsAsync(FakeDb.Users.Where(b => b.Id.Equals("65e0f6b920a24267a5c3fa13")).First());
+            _unitOfWorkMock.GetUserByCondition(FakeDb.Users.Find(b => b.Id.Equals("65e0f6b920a24267a5c3fa13")));
 
             var comand = new CreateUserBasketComand("65e0f6b920a24267a5c3fa13");
-            var handler = new CreateUserBasketHandler(_unitOfWork.Object, _mapper);
+            var handler = new CreateUserBasketHandler(_unitOfWorkMock.Object, _mapper);
 
+            //Act
             var response = await handler.Handle(comand, cancellationToken: default);
 
             response.UserId.Should().Be("65e0f6b920a24267a5c3fa13");
@@ -82,14 +85,16 @@ namespace Baskets.UnitTests.HandlersTests
         [Fact]
         public async Task CreateUserBasket_InvalidId_ThrowsNotFoundException()
         {
-            _unitOfWork.Setup(uof => uof.User.GetByConditionAsync(It.IsAny<Expression<Func<User, bool>>>(), _cancellationToken))
-                .ReturnsAsync((User)null);
+            //Arrange
+            _unitOfWorkMock.GetUserByCondition(null);
 
             var comand = new CreateUserBasketComand("sample");
-            var handler = new CreateUserBasketHandler(_unitOfWork.Object, _mapper);
+            var handler = new CreateUserBasketHandler(_unitOfWorkMock.Object, _mapper);
 
+            //Act
             var response = async () => await handler.Handle(comand, cancellationToken: default);
 
+            //Assert
             await response.Should()
                 .ThrowAsync<NotFoundException>()
                 .WithMessage(UserMessages.NotFound);
@@ -98,16 +103,17 @@ namespace Baskets.UnitTests.HandlersTests
         [Fact]
         public async Task CreateUserBasket_BasketExists_ThrowsAlreadyExistException()
         {
-            _unitOfWork.Setup(uof => uof.Basket.GetByConditionAsync(It.IsAny<Expression<Func<UserBasket, bool>>>(), _cancellationToken))
-                .ReturnsAsync(FakeDb.Baskets.Where(b => b.UserId.Equals("65e0f6b92fa24267a5c3fa13")).First());
-            _unitOfWork.Setup(uof => uof.User.GetByConditionAsync(It.IsAny<Expression<Func<User, bool>>>(), _cancellationToken))
-                .ReturnsAsync(FakeDb.Users.Where(b => b.Id.Equals("65e0f6b92fa24267a5c3fa13")).First());
+            //Arrange
+            _unitOfWorkMock.GetBasketByCondition(FakeDb.Baskets.Find(b => b.UserId.Equals("65e0f6b92fa24267a5c3fa13")));
+            _unitOfWorkMock.GetUserByCondition(FakeDb.Users.Find(b => b.Id.Equals("65e0f6b92fa24267a5c3fa13")));
 
             var comand = new CreateUserBasketComand("65e0f6b92fa24267a5c3fa13");
-            var handler = new CreateUserBasketHandler(_unitOfWork.Object, _mapper);
+            var handler = new CreateUserBasketHandler(_unitOfWorkMock.Object, _mapper);
 
+            //Act
             var response = async () => await handler.Handle(comand, cancellationToken: default);
 
+            //Assert
             await response.Should()
                 .ThrowAsync<BadRequestException>()
                 .WithMessage(UserBasketMessages.Exists);
@@ -116,32 +122,35 @@ namespace Baskets.UnitTests.HandlersTests
         [Fact]
         public async Task DeleteUserBasket_ValidParameters_ReturnsNoContent()
         {
-            var basket = FakeDb.Baskets.Where(b => b.UserId.Equals("65e0f6b02fa24267a5c3fa13")).First();
+            //Arrange
+            var basket = FakeDb.Baskets.Find(b => b.UserId.Equals("65e0f6b02fa24267a5c3fa13"));
 
-            _unitOfWork.Setup(uof => uof.Basket.DeleteAsync(It.IsAny<Expression<Func<UserBasket, bool>>>(), _cancellationToken))
-                .ReturnsAsync(basket);
-            _unitOfWork.Setup(uof => uof.User.GetByConditionAsync(It.IsAny<Expression<Func<User, bool>>>(), _cancellationToken))
-                .ReturnsAsync(FakeDb.Users.Where(b => b.Id.Equals("65e0f6b02fa24267a5c3fa13")).FirstOrDefault());
+            _unitOfWorkMock.DeleteBasket(basket);
+            _unitOfWorkMock.GetUserByCondition(FakeDb.Users.Find(b => b.Id.Equals("65e0f6b02fa24267a5c3fa13")));
 
             var comand = new DeleteUserBasketComand("65e0f6b02fa24267a5c3fa13");
-            var handler = new DeleteUserBasketHandler(_unitOfWork.Object);
+            var handler = new DeleteUserBasketHandler(_unitOfWorkMock.Object);
 
+            //Act
             var response = async () => await handler.Handle(comand, cancellationToken: default);
 
+            //Assert
             await response.Should().NotThrowAsync();
         }
 
         [Fact]
         public async Task DeleteUserBasket_UserExists_ThrowsBadRequestException()
         {
-            _unitOfWork.Setup(uof => uof.User.GetByConditionAsync(It.IsAny<Expression<Func<User, bool>>>(), _cancellationToken))
-                .ReturnsAsync(FakeDb.Users.Where(b => b.Id.Equals("65e0f6b92fa24267a5c3fa13")).First());
+            //Arrange
+            _unitOfWorkMock.GetUserByCondition(FakeDb.Users.Find(b => b.Id.Equals("65e0f6b92fa24267a5c3fa13")));
 
             var comand = new DeleteUserBasketComand("65e0f6b92fa24267a5c3fa13");
-            var handler = new DeleteUserBasketHandler(_unitOfWork.Object);
+            var handler = new DeleteUserBasketHandler(_unitOfWorkMock.Object);
 
+            //Act
             var response = async () => await handler.Handle(comand, cancellationToken: default);
 
+            //Assert
             await response.Should()
                 .ThrowAsync<BadRequestException>()
                 .WithMessage(UserBasketMessages.UserExists);
@@ -150,17 +159,18 @@ namespace Baskets.UnitTests.HandlersTests
         [Fact]
         public async Task DeleteUserBasket_InvalidId_ThrowsNotFoundException()
         {
-            _unitOfWork.Setup(uof => uof.Basket.GetByConditionAsync(It.IsAny<Expression<Func<UserBasket, bool>>>(), _cancellationToken))
-                .ReturnsAsync((UserBasket)null);
-            _unitOfWork.Setup(uof => uof.User.GetByConditionAsync(It.IsAny<Expression<Func<User, bool>>>(), _cancellationToken))
-                .ReturnsAsync((User)null);
+            //Arrange
+            _unitOfWorkMock.GetBasketByCondition(null);
+            _unitOfWorkMock.GetUserByCondition(null);
 
 
             var comand = new DeleteUserBasketComand("sample");
-            var handler = new DeleteUserBasketHandler(_unitOfWork.Object);
+            var handler = new DeleteUserBasketHandler(_unitOfWorkMock.Object);
 
+            //Act
             var response = async () => await handler.Handle(comand, cancellationToken: default);
 
+            //Assert
             await response.Should()
                 .ThrowAsync<NotFoundException>()
                 .WithMessage(UserBasketMessages.NotFound);
