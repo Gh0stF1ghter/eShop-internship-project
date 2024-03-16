@@ -7,29 +7,21 @@ namespace Catalogs.Tests.Mocks
     {
         private readonly CancellationToken cancellationToken = It.IsAny<CancellationToken>();
 
-        public void IsBrandExists(bool expectedReturn)
-        {
+        public void IsBrandExists(bool expectedReturn) =>
             Setup(uof => uof.Brand.IsExistAsync(It.IsAny<Expression<Func<Brand, bool>>>(), cancellationToken))
                 .ReturnsAsync(expectedReturn);
-        }
 
-        public void IsItemExists(bool expectedReturn)
-        {
+        public void IsItemExists(bool expectedReturn) =>
             Setup(uof => uof.Item.IsExistAsync(It.IsAny<Expression<Func<Item, bool>>>(), cancellationToken))
                 .ReturnsAsync(expectedReturn);
-        }
 
-        public void IsItemTypeExists(bool expectedReturn)
-        {
+        public void IsItemTypeExists(bool expectedReturn) =>
             Setup(uof => uof.ItemType.IsExistAsync(It.IsAny<Expression<Func<ItemType, bool>>>(), cancellationToken))
                 .ReturnsAsync(expectedReturn);
-        }
 
-        public void IsVendorExists(bool expectedReturn)
-        {
+        public void IsVendorExists(bool expectedReturn) =>
             Setup(uof => uof.Vendor.IsExistAsync(It.IsAny<Expression<Func<Vendor, bool>>>(), cancellationToken))
                 .ReturnsAsync(expectedReturn);
-        }
 
         public void GetItemById(Item? item) =>
             Setup(uof => uof.Item.GetItemOfTypeByIdAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool>(), cancellationToken))

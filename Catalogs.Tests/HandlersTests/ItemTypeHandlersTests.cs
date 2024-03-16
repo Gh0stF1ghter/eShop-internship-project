@@ -131,7 +131,7 @@ namespace Catalogs.Tests.HandlersTests
 
             //Act
             var response = async () => await handler.Handle(query, _cancellationToken);
-            
+
             //Assert
             await response.Should()
                 .ThrowAsync<NotFoundException>()
