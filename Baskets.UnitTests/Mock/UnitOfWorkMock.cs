@@ -1,8 +1,6 @@
 ﻿using Baskets.DataAccess.Entities.Models;
 using Baskets.DataAccess.UnitOfWork;
-using Moq;
 using System.Linq.Expressions;
-using System.Threading;
 
 namespace Baskets.UnitTests.Mock
 {
