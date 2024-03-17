@@ -1,6 +1,7 @@
 ﻿using Catalogs.Application.Comands.ItemTypeCommands;
 using Catalogs.Application.Handlers.ItemTypeHandlers;
 using Catalogs.Application.Queries.ItemTypeQueries;
+using Catalogs.Tests.FakeData;
 using Catalogs.Tests.Mocks;
 
 namespace Catalogs.Tests.HandlersTests
@@ -13,6 +14,11 @@ namespace Catalogs.Tests.HandlersTests
         private readonly Mapper _mapper = new(
             new MapperConfiguration(mc =>
                 mc.AddProfile(new ItemTypeProfile())));
+
+        public ItemTypeHandlersTests()
+        {
+            DataGenerator.InitBogusData();
+        }
 
         [Fact]
         public async Task CreateItemTypeHandler_ValidParameters_ReturnsItemTypeDto()
@@ -59,11 +65,7 @@ namespace Catalogs.Tests.HandlersTests
         public async Task DeleteItemTypeHandler_ValidParameters_ReturnsNoContent()
         {
             //Arrange
-            var itemType = new ItemType
-            {
-                Id = 1,
-                Name = "Foo"
-            };
+            var itemType = DataGenerator.ItemTypes[0];
 
             _unitOfWorkMock.GetItemTypeById(itemType);
 
@@ -99,13 +101,9 @@ namespace Catalogs.Tests.HandlersTests
         public async Task GetItemTypeHandler_ValidParameters_ReturnsItemTypeDto()
         {
             //Arrange
-            var itemTypeList = new ItemType
-            {
-                Id = 1,
-                Name = "Foo",
-            };
+            var itemType = DataGenerator.ItemTypes[0];
 
-            _unitOfWorkMock.GetItemTypeById(itemTypeList);
+            _unitOfWorkMock.GetItemTypeById(itemType);
 
             var query = new GetItemTypeQuery(1, false);
             var handler = new GetItemTypeHandler(_unitOfWorkMock.Object, _mapper);
@@ -117,7 +115,7 @@ namespace Catalogs.Tests.HandlersTests
             response.Should()
                 .BeOfType<ItemTypeDto>()
                 .Which.Id.Should()
-                .Be(1);
+                .Be(itemType.Id);
         }
 
         [Fact]
@@ -163,11 +161,7 @@ namespace Catalogs.Tests.HandlersTests
         public async Task UpdateItemTypeHandler_ValidParameters_ReturnsNoContent(int id, string newName)
         {
             //Arrange
-            var itemType = new ItemType
-            {
-                Id = 1,
-                Name = "Foo",
-            };
+            var itemType = DataGenerator.ItemTypes[0];
 
             var itemTypeUpdateDto = new ItemTypeManipulateDto(newName);
 

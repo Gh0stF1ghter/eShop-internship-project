@@ -1,6 +1,7 @@
 ﻿using Catalogs.Application.Comands.VendorCommands;
 using Catalogs.Application.Handlers.VendorHandlers;
 using Catalogs.Application.Queries.VendorQueries;
+using Catalogs.Tests.FakeData;
 using Catalogs.Tests.Mocks;
 
 namespace Catalogs.Tests.HandlersTests
@@ -13,6 +14,11 @@ namespace Catalogs.Tests.HandlersTests
         private readonly Mapper _mapper = new(
             new MapperConfiguration(mc =>
                 mc.AddProfile(new VendorProfile())));
+
+        public VendorHandlersTests()
+        {
+            DataGenerator.InitBogusData();
+        }
 
         [Fact]
         public async Task CreateVendorHandler_ValidParameters_ReturnsVendorDto()
@@ -59,11 +65,7 @@ namespace Catalogs.Tests.HandlersTests
         public async Task DeleteVendorHandler_ValidParameters_ReturnsNoContent()
         {
             //Arrange
-            var vendor = new Vendor
-            {
-                Id = 1,
-                Name = "Foo",
-            };
+            var vendor = DataGenerator.Vendors[0];
 
             _unitOfWorkMock.GetVendorById(vendor);
 
@@ -99,11 +101,7 @@ namespace Catalogs.Tests.HandlersTests
         public async Task GetVendorHandler_ValidParameters_ReturnsVendorDto()
         {
             //Arrange
-            var vendor = new Vendor
-            {
-                Id = 1,
-                Name = "Foo"
-            };
+            var vendor = DataGenerator.Vendors[0];
 
             _unitOfWorkMock.GetVendorById(vendor);
 
@@ -117,7 +115,7 @@ namespace Catalogs.Tests.HandlersTests
             response.Should()
                 .BeOfType<VendorDto>()
                 .Which.Id.Should()
-                .Be(1);
+                .Be(vendor.Id);
         }
 
         [Fact]
@@ -163,11 +161,7 @@ namespace Catalogs.Tests.HandlersTests
         public async Task UpdateVendorHandler_ValidParameters_ReturnsNoContent(int id, string newName)
         {
             //Arrange
-            var vendor = new Vendor
-            {
-                Id = 1,
-                Name = "Foo"
-            };
+            var vendor = DataGenerator.Vendors[0];
 
             var endorUpdateDto = new VendorManipulateDto(newName);
 

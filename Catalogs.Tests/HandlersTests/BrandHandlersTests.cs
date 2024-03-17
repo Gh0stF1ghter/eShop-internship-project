@@ -1,6 +1,7 @@
 ﻿using Catalogs.Application.Comands.BrandCommands;
 using Catalogs.Application.Handlers.BrandHandlers;
 using Catalogs.Application.Queries.BrandQueries;
+using Catalogs.Tests.FakeData;
 using Catalogs.Tests.Mocks;
 
 namespace Catalogs.Tests.HandlersTests
@@ -17,6 +18,9 @@ namespace Catalogs.Tests.HandlersTests
                         new BrandProfile(),
                         new ItemProfile()
                     ])));
+
+        public BrandHandlersTests() =>
+            DataGenerator.InitBogusData();
 
         [Fact]
         public async Task CreateBrandHandler_ValidParameters_ReturnsBrandDto()
@@ -63,11 +67,7 @@ namespace Catalogs.Tests.HandlersTests
         public async Task DeleteBrandHandler_ValidParameters_ReturnsNoContent()
         {
             //Arrange
-            var brand = new Brand
-            {
-                Id = 2,
-                Name = "Boo",
-            };
+            var brand = DataGenerator.Brands[0];
 
             _unitOfWorkMock.GetBrandById(brand);
 
@@ -103,11 +103,7 @@ namespace Catalogs.Tests.HandlersTests
         public async Task GetBrandHandler_ValidParameters_ReturnsBrandDto()
         {
             //Arrange
-            var brand = new Brand
-            {
-                Id = 2,
-                Name = "Boo",
-            };
+            var brand = DataGenerator.Brands[0];
 
             _unitOfWorkMock.Setup(uof => uof.Brand.GetBrandByIdAsync(1, false, _cancellationToken))
                 .ReturnsAsync(brand);
@@ -145,7 +141,9 @@ namespace Catalogs.Tests.HandlersTests
         public async Task GetBrandsHandler_ValidParameters_ReturnsBrandDtoList()
         {
             //Arrange
-            _unitOfWorkMock.GetAllBrands();
+            var brands = DataGenerator.Brands;
+
+            _unitOfWorkMock.GetAllBrands(brands);
 
             var query = new GetBrandsQuery(false);
             var handler = new GetBrandsHandler(_unitOfWorkMock.Object, _mapper);
@@ -157,22 +155,18 @@ namespace Catalogs.Tests.HandlersTests
             response.Should()
                 .BeOfType<List<BrandDto>>()
                 .Which.Count.Should()
-                .Be(2);
+                .Be(brands.Count);
         }
 
         [Fact]
         public async Task UpdateBrandHandler_ValidParameters_ReturnsNoContent()
         {
             //Arrange
-            var brandList = new Brand
-            {
-                Id = 0,
-                Name = "Foo",
-            };
+            var brand = DataGenerator.Brands[0];
 
             var brandUpdateDto = new BrandManipulateDto("Doo");
 
-            _unitOfWorkMock.GetBrandById(brandList);
+            _unitOfWorkMock.GetBrandById(brand);
 
             var comand = new UpdateBrandComand(0, brandUpdateDto, true);
             var handler = new UpdateBrandHandler(_unitOfWorkMock.Object, _mapper);

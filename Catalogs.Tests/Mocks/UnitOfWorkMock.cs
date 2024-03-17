@@ -35,21 +35,9 @@ namespace Catalogs.Tests.Mocks
             Setup(uof => uof.Brand.GetBrandByIdAsync(It.IsAny<int>(), It.IsAny<bool>(), cancellationToken))
                 .ReturnsAsync(brand);
 
-        public void GetAllBrands() =>
+        public void GetAllBrands(List<Brand> brands) =>
             Setup(uof => uof.Brand.GetAllBrandsAsync(false, cancellationToken))
-                .ReturnsAsync(new List<Brand>
-                {
-                    new()
-                    {
-                        Id = 1,
-                        Name = "Foo",
-                    },
-                    new()
-                    {
-                        Id = 2,
-                        Name = "Boo",
-                    },
-                });
+                .ReturnsAsync(brands);
 
         public void GetItemTypeById(ItemType? itemType) =>
             Setup(uof => uof.ItemType.GetItemTypeByIdAsync(It.IsAny<int>(), It.IsAny<bool>(), cancellationToken))

@@ -3,6 +3,7 @@ using Catalogs.Application.Handlers.ItemHandlers;
 using Catalogs.Application.Queries.ItemQueries;
 using Catalogs.Domain.Entities.LinkModels;
 using Catalogs.Domain.RequestFeatures;
+using Catalogs.Tests.FakeData;
 using Catalogs.Tests.Mocks;
 using Microsoft.AspNetCore.Http;
 
@@ -10,8 +11,6 @@ namespace Catalogs.Tests.HandlersTests
 {
     public class ItemHandlersTests
     {
-        private static CancellationToken _cancelationToken = It.IsAny<CancellationToken>();
-
         private readonly UnitOfWorkMock _unitOfWorkMock = new();
 
         private readonly Mock<IItemLinks<ItemDto>> _itemLinks = new();
@@ -22,6 +21,8 @@ namespace Catalogs.Tests.HandlersTests
 
         public ItemHandlersTests()
         {
+            DataGenerator.InitBogusData();
+
             _unitOfWorkMock.IsBrandExists(true);
             _unitOfWorkMock.IsItemTypeExists(true);
             _unitOfWorkMock.IsVendorExists(true);
@@ -34,11 +35,9 @@ namespace Catalogs.Tests.HandlersTests
         public async Task DeleteItemHandler_ValidParameters_ReturnsNoContent()
         {
             //Arrange
-            _unitOfWorkMock.GetItemById(new Item()
-                {
-                    Id = 1,
-                    Name = "Foo"
-                });
+            var item = DataGenerator.Items[0];
+
+            _unitOfWorkMock.GetItemById(item);
 
             var comand = new DeleteItemComand(1, 1, false);
             var handle = new DeleteItemHandler(_unitOfWorkMock.Object);
@@ -141,11 +140,7 @@ namespace Catalogs.Tests.HandlersTests
         public async Task GetItemOfTypeHandler_ValidParameters_ReturnsItem()
         {
             //Arrange
-            var item = new Item()
-            {
-                Id = 1,
-                Name = "Foo"
-            };
+            var item = DataGenerator.Items[0];
 
             _unitOfWorkMock.GetItemById(item);
 
@@ -187,19 +182,7 @@ namespace Catalogs.Tests.HandlersTests
         public async Task GetItemsOfTypeHandler_ValidParameters_ReturnsListOfItems()
         {
             //Arrange
-            var itemList = new PagedList<Item>(
-                [
-                    new()
-                    {
-                        Id = 1,
-                        Name = "Foo"
-                    },
-                    new()
-                    {
-                        Id = 2,
-                        Name = "Boo"
-                    }
-                ], 1, 1, 5);
+            var itemList = DataGenerator.Items;
 
             var linkParameters = new LinkParameters(new ItemParameters(), It.IsAny<HttpContext>());
 
@@ -238,11 +221,7 @@ namespace Catalogs.Tests.HandlersTests
         public async Task UpdateItemHandler_ValidParameters_ReturnsNoContent()
         {
             //Arrange
-            var item = new Item()
-            {
-                Id = 1,
-                Name = "Foo"
-            };
+            var item = DataGenerator.Items[0];
 
             var itemUpdateDto = new ItemManipulateDto("boo", It.IsAny<int>(), 0, "2", It.IsAny<int>(), It.IsAny<int>());
 

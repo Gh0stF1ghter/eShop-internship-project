@@ -20,7 +20,6 @@
 
             _userManagerMock.Setup(um => um.GetRolesAsync(It.IsAny<User>()))
                 .ReturnsAsync(["admin"]);
-
         }
 
         [Theory]
