@@ -3,10 +3,16 @@
     "Docker Compose": {
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "catalogs.api",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/swagger",
       "serviceActions": {
         "identity.api": "StartDebugging",
         "catalogs.api": "StartDebugging",
-        "identity.tests": "StartDebugging"
+        "elasticsearch": "StartWithoutDebugging",
+        "kibana": "StartWithoutDebugging",
+        "mssql.db": "StartWithoutDebugging",
+        "redis": "StartWithoutDebugging"
       }
     }
   }
