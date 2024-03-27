@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  catalogs.api:
+    image: ${DOCKER_REGISTRY-}catalogsapi
+    build:
+      context: .
+      dockerfile: Catalogs.API/Dockerfile
+
+  identity.api:
+    image: ${DOCKER_REGISTRY-}identityapi
+    build:
+      context: .
+      dockerfile: Identity.API/Dockerfile
+

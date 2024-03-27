@@ -1,4 +1,4 @@
-﻿namespace Basket.Core.Models
+﻿namespace Baskets.BusinessLogic.Models
 {
     internal class User
     {

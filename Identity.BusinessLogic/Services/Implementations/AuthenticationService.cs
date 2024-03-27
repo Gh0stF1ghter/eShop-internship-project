@@ -3,7 +3,7 @@ using Identity.BusinessLogic.DTOs;
 using Identity.BusinessLogic.Services.Interfaces;
 using Identity.DataAccess.Entities.Constants;
 using Identity.DataAccess.Entities.Exceptions;
-using Identity.DataAccess.Models;
+using Identity.DataAccess.Entities.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
@@ -89,7 +89,6 @@ namespace Identity.BusinessLogic.Services.Implementations
             if (!createUser.Succeeded)
             {
                 _logger.LogError("Error while creating new user {errors}", createUser.Errors);
-
                 throw new BadRequestException(Messages.RegisterFailed);
             }
         }

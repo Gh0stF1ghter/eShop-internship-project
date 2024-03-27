@@ -1,4 +1,4 @@
-﻿namespace Basket.Data
+﻿namespace Baskets.DataAccess
 {
     internal class MongodbRepository
     {

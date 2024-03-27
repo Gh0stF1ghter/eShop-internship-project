@@ -1,5 +1,3 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
@@ -11,9 +9,9 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Catalogs.API/Catalogs.API.csproj", "Catalogs.API/"]
 COPY ["Catalogs.Infrastructure/Catalogs.Infrastructure.csproj", "Catalogs.Infrastructure/"]
-COPY ["Catalogs.Domain/Catalogs.Domain.csproj", "Catalogs.Domain/"]
 COPY ["Catalogs.Application/Catalogs.Application.csproj", "Catalogs.Application/"]
-RUN dotnet restore "./Catalogs.API/./Catalogs.API.csproj"
+COPY ["Catalogs.Domain/Catalogs.Domain.csproj", "Catalogs.Domain/"]
+RUN dotnet restore "./Catalogs.API/Catalogs.API.csproj"
 COPY . .
 WORKDIR "/src/Catalogs.API"
 RUN dotnet build "./Catalogs.API.csproj" -c $BUILD_CONFIGURATION -o /app/build

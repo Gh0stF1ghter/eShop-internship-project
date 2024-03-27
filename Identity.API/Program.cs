@@ -1,11 +1,13 @@
+using Catalogs.API.Extensions;
 using Identity.API.Extensions;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
 var services = builder.Services;
 
-builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console()
-.WriteTo.File("debug_log.txt"));
+SerilogConfiguration.ConfigureLogging();
+builder.Host.UseSerilog();
 
 services.AddIdentityDbContext(builder.Configuration);
 
@@ -26,6 +28,8 @@ services.AddEndpointsApiExplorer();
 services.ConfigureSwagger();
 
 var app = builder.Build();
+
+app.ApplyMigrations();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 

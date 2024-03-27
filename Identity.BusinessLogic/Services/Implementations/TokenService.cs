@@ -2,7 +2,7 @@
 using Identity.BusinessLogic.Services.Interfaces;
 using Identity.DataAccess.Entities.Constants;
 using Identity.DataAccess.Entities.Exceptions;
-using Identity.DataAccess.Models;
+using Identity.DataAccess.Entities.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -13,9 +13,9 @@ using System.Text;
 
 namespace Identity.BusinessLogic.Services.Implementations
 {
-    public class TokenService(IConfiguration configuration, UserManager<User> user) : ITokenService
+    public class TokenService(IConfiguration configuration, UserManager<User> userManager) : ITokenService
     {
-        private readonly UserManager<User> _userManager = user;
+        private readonly UserManager<User> _userManager = userManager;
         private readonly IConfiguration _configuration = configuration;
 
         public async Task<TokenDTO> CreateTokenAsync(User user, bool populateExp)
@@ -37,7 +37,21 @@ namespace Identity.BusinessLogic.Services.Implementations
             return new TokenDTO(accessToken, refreshToken);
         }
 
-        public string GenerateToken(IEnumerable<Claim> claims)
+        public async Task<TokenDTO> RefreshTokenAsync(TokenDTO tokenDto, CancellationToken token)
+        {
+            var principal = GetPrincipalFromExpiredToken(tokenDto.AccessToken);
+
+            var user = await _userManager.FindByNameAsync(principal.Identity.Name);
+
+            if (user is null || user.RefreshToken != tokenDto.RefreshToken || user.RefreshTokenExpireTime <= DateTime.Now)
+            {
+                throw new RefreshTokenBadRequestException(Messages.InvalidToken);
+            }
+
+            return await CreateTokenAsync(user, populateExp: false);
+        }
+
+        private string GenerateToken(IEnumerable<Claim> claims)
         {
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]));
 
@@ -57,19 +71,6 @@ namespace Identity.BusinessLogic.Services.Implementations
             return tokenHandler.WriteToken(token);
         }
 
-        public async Task<TokenDTO> RefreshTokenAsync(TokenDTO tokenDto, CancellationToken token)
-        {
-            var principal = GetPrincipalFromExpiredToken(tokenDto.AccessToken);
-
-            var user = await _userManager.FindByNameAsync(principal.Identity.Name);
-
-            if (user is null || user.RefreshToken != tokenDto.RefreshToken || user.RefreshTokenExpireTime <= DateTime.Now)
-            {
-                throw new RefreshTokenBadRequestException(Messages.InvalidToken);
-            }
-
-            return await CreateTokenAsync(user, populateExp: false);
-        }
 
         private static string GenerateRefreshToken()
         {
@@ -91,13 +92,24 @@ namespace Identity.BusinessLogic.Services.Implementations
                 ValidateIssuer = true,
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = signingKey,
-                ValidateLifetime = true,
+                ValidateLifetime = false,
                 ValidIssuer = _configuration["Jwt:Issuer"],
                 ValidAudience = _configuration["Jwt:Audience"]
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
+
+            SecurityToken securityToken;
+
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
+
+            var jwtSecurityToken = securityToken as JwtSecurityToken;
+            if (jwtSecurityToken == null ||
+           !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,
+            StringComparison.InvariantCultureIgnoreCase))
+            {
+                throw new SecurityTokenException("Invalid token");
+            }
 
             return principal;
         }

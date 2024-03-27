@@ -1,5 +1,3 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
@@ -12,7 +10,7 @@ WORKDIR /src
 COPY ["Identity.API/Identity.API.csproj", "Identity.API/"]
 COPY ["Identity.BusinessLogic/Identity.BusinessLogic.csproj", "Identity.BusinessLogic/"]
 COPY ["Identity.DataAccess/Identity.DataAccess.csproj", "Identity.DataAccess/"]
-RUN dotnet restore "./Identity.API/./Identity.API.csproj"
+RUN dotnet restore "./Identity.API/Identity.API.csproj"
 COPY . .
 WORKDIR "/src/Identity.API"
 RUN dotnet build "./Identity.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
