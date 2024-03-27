@@ -1,6 +1,6 @@
-﻿using Baskets.BusinessLogic.CQRS.Comands.UserBasketComands.CreateUserBasketComand;
-using Baskets.BusinessLogic.CQRS.Comands.UserBasketComands.DeleteUserBasketComand;
-using Baskets.BusinessLogic.CQRS.Queries.UserBasketQueries.GetUserBasketQuery;
+using Baskets.BusinessLogic.CQRS.Commands.UserBasketCommands.CreateUserBasket;
+using Baskets.BusinessLogic.CQRS.Commands.UserBasketCommands.DeleteUserBasket;
+using Baskets.BusinessLogic.CQRS.Queries.UserBasketQueries.GetUserBasket;
 using Baskets.BusinessLogic.DataTransferObjects;
 
 namespace Baskets.UnitTests.HandlersTests
@@ -62,7 +62,7 @@ namespace Baskets.UnitTests.HandlersTests
 
             _unitOfWorkMock.GetUserByCondition(DataGenerator.Users[0]);
 
-            var comand = new CreateUserBasketComand(It.IsAny<string>());
+            var comand = new CreateUserBasketCommand(It.IsAny<string>());
             var handler = new CreateUserBasketHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act
@@ -78,7 +78,7 @@ namespace Baskets.UnitTests.HandlersTests
             //Arrange
             _unitOfWorkMock.GetUserByCondition(null);
 
-            var comand = new CreateUserBasketComand(It.IsAny<string>());
+            var comand = new CreateUserBasketCommand(It.IsAny<string>());
             var handler = new CreateUserBasketHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act
@@ -97,7 +97,7 @@ namespace Baskets.UnitTests.HandlersTests
             _unitOfWorkMock.GetBasketByCondition(DataGenerator.UserBaskets[0]);
             _unitOfWorkMock.GetUserByCondition(DataGenerator.Users[0]);
 
-            var comand = new CreateUserBasketComand(It.IsAny<string>());
+            var comand = new CreateUserBasketCommand(It.IsAny<string>());
             var handler = new CreateUserBasketHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act
@@ -118,7 +118,7 @@ namespace Baskets.UnitTests.HandlersTests
             _unitOfWorkMock.DeleteBasket(basket);
             _unitOfWorkMock.GetUserByCondition(null);
 
-            var comand = new DeleteUserBasketComand(It.IsAny<string>());
+            var comand = new DeleteUserBasketCommand(It.IsAny<string>());
             var handler = new DeleteUserBasketHandler(_unitOfWorkMock.Object);
 
             //Act
@@ -134,7 +134,7 @@ namespace Baskets.UnitTests.HandlersTests
             //Arrange
             _unitOfWorkMock.GetUserByCondition(DataGenerator.Users[0]);
 
-            var comand = new DeleteUserBasketComand(It.IsAny<string>());
+            var comand = new DeleteUserBasketCommand(It.IsAny<string>());
             var handler = new DeleteUserBasketHandler(_unitOfWorkMock.Object);
 
             //Act
@@ -154,7 +154,7 @@ namespace Baskets.UnitTests.HandlersTests
             _unitOfWorkMock.GetUserByCondition(null);
 
 
-            var comand = new DeleteUserBasketComand(It.IsAny<string>());
+            var comand = new DeleteUserBasketCommand(It.IsAny<string>());
             var handler = new DeleteUserBasketHandler(_unitOfWorkMock.Object);
 
             //Act

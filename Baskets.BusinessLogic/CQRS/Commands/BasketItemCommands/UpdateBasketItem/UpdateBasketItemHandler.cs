@@ -4,7 +4,7 @@ using Baskets.DataAccess.UnitOfWork;
 
 namespace Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.UpdateBasketItem
 {
-    public class UpdateBasketItemHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<UpdateBasketItemCommand>
+    public class UpdateBasketItemHandler(IUnitOfWork unitOfWork) : IRequestHandler<UpdateBasketItemCommand>
     {
         public async Task Handle(UpdateBasketItemCommand comand, CancellationToken cancellationToken)
         {

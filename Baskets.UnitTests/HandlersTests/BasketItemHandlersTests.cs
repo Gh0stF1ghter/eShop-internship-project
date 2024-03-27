@@ -1,8 +1,8 @@
-using Baskets.BusinessLogic.CQRS.Comands.BasketItemComands.CreateBasketItemComand;
-using Baskets.BusinessLogic.CQRS.Comands.BasketItemComands.DeleteBasketItemComand;
-using Baskets.BusinessLogic.CQRS.Comands.BasketItemComands.UpdateBasketItemComand;
-using Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItemQuery;
-using Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItemsQuery;
+using Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.CreateBasketItem;
+using Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.DeleteBasketItem;
+using Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.UpdateBasketItem;
+using Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItem;
+using Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItems;
 
 namespace Baskets.UnitTests.HandlersTests
 {
@@ -73,7 +73,7 @@ namespace Baskets.UnitTests.HandlersTests
             var response = await handler.Handle(getBasketItemQuery, cancellationToken: default);
 
             //Assert
-            response.Id.Should()
+            response.BasketItemId.Should()
                 .BeEquivalentTo(mockedResult.BasketItemId);
         }
 
@@ -122,7 +122,7 @@ namespace Baskets.UnitTests.HandlersTests
             _unitOfWorkMock.GetItemByCondition(mockedItem);
             _unitOfWorkMock.GetBasketItemWithItemByCondition(null);
 
-            var createBasketItemComand = new CreateBasketItemComand(It.IsAny<string>(), new(It.IsAny<string>()));
+            var createBasketItemComand = new CreateBasketItemCommand(It.IsAny<string>(), new(It.IsAny<string>()));
             var handler = new CreateBasketItemHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act
@@ -140,7 +140,7 @@ namespace Baskets.UnitTests.HandlersTests
             _unitOfWorkMock.GetItemByCondition(DataGenerator.Items[0]);
             _unitOfWorkMock.GetBasketItemByCondition(DataGenerator.BasketItems[0]);
 
-            var createBasketItemComand = new CreateBasketItemComand(It.IsAny<string>(), new(It.IsAny<string>()));
+            var createBasketItemComand = new CreateBasketItemCommand(It.IsAny<string>(), new(It.IsAny<string>()));
             var handler = new CreateBasketItemHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act
@@ -159,7 +159,7 @@ namespace Baskets.UnitTests.HandlersTests
             _unitOfWorkMock.GetBasketByCondition(null);
             _unitOfWorkMock.GetItemByCondition(DataGenerator.Items[0]);
 
-            var createBasketItemComand = new CreateBasketItemComand(It.IsAny<string>(), new(It.IsAny<string>()));
+            var createBasketItemComand = new CreateBasketItemCommand(It.IsAny<string>(), new(It.IsAny<string>()));
             var handler = new CreateBasketItemHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act
@@ -177,7 +177,7 @@ namespace Baskets.UnitTests.HandlersTests
             //Arrange
             _unitOfWorkMock.GetItemByCondition(null);
 
-            var createBasketItemComand = new CreateBasketItemComand(It.IsAny<string>(), new(It.IsAny<string>()));
+            var createBasketItemComand = new CreateBasketItemCommand(It.IsAny<string>(), new(It.IsAny<string>()));
             var handler = new CreateBasketItemHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act
@@ -195,7 +195,7 @@ namespace Baskets.UnitTests.HandlersTests
             //Arrange
             _unitOfWorkMock.DeleteBasketItem(DataGenerator.BasketItems[0]);
 
-            var deleteBasketItemComand = new DeleteBasketItemComand(It.IsAny<string>(), It.IsAny<string>());
+            var deleteBasketItemComand = new DeleteBasketItemCommand(It.IsAny<string>(), It.IsAny<string>());
             var handler = new DeleteBasketItemHandler(_unitOfWorkMock.Object);
 
             //Act
@@ -211,7 +211,7 @@ namespace Baskets.UnitTests.HandlersTests
             //Arrange
             _unitOfWorkMock.GetBasketByCondition(null);
 
-            var deleteBasketItemComand = new DeleteBasketItemComand(It.IsAny<string>(), It.IsAny<string>());
+            var deleteBasketItemComand = new DeleteBasketItemCommand(It.IsAny<string>(), It.IsAny<string>());
             var handler = new DeleteBasketItemHandler(_unitOfWorkMock.Object);
 
             //Act
@@ -229,7 +229,7 @@ namespace Baskets.UnitTests.HandlersTests
             //Arrange
             _unitOfWorkMock.GetBasketItemWithItemByCondition(null);
 
-            var deleteBasketItemComand = new DeleteBasketItemComand(It.IsAny<string>(), It.IsAny<string>());
+            var deleteBasketItemComand = new DeleteBasketItemCommand(It.IsAny<string>(), It.IsAny<string>());
             var handler = new DeleteBasketItemHandler(_unitOfWorkMock.Object);
 
             //Act
@@ -250,8 +250,8 @@ namespace Baskets.UnitTests.HandlersTests
 
             _unitOfWorkMock.GetBasketItemWithItemByCondition(basketItemMock);
 
-            var updateBasketItem = new UpdateBasketItemComand(It.IsAny<string>(), It.IsAny<string>(), 3);
-            var handler = new UpdateBasketItemHandler(_unitOfWorkMock.Object, _mapper);
+            var updateBasketItem = new UpdateBasketItemCommand(It.IsAny<string>(), It.IsAny<string>(), 3);
+            var handler = new UpdateBasketItemHandler(_unitOfWorkMock.Object);
 
             //Act
             var response = async () => await handler.Handle(updateBasketItem, cancellationToken: default);
@@ -266,8 +266,8 @@ namespace Baskets.UnitTests.HandlersTests
             //Arrange
             _unitOfWorkMock.GetBasketByCondition(null);
 
-            var updateBasketItem = new UpdateBasketItemComand(It.IsAny<string>(), It.IsAny<string>(), 3);
-            var handler = new UpdateBasketItemHandler(_unitOfWorkMock.Object, _mapper);
+            var updateBasketItem = new UpdateBasketItemCommand(It.IsAny<string>(), It.IsAny<string>(), 3);
+            var handler = new UpdateBasketItemHandler(_unitOfWorkMock.Object);
 
             //Act
             var response = async () => await handler.Handle(updateBasketItem, cancellationToken: default);
@@ -284,8 +284,8 @@ namespace Baskets.UnitTests.HandlersTests
             //Arrange
             _unitOfWorkMock.GetBasketItemWithItemByCondition(null);
 
-            var updateBasketItem = new UpdateBasketItemComand(It.IsAny<string>(), It.IsAny<string>(), 3);
-            var handler = new UpdateBasketItemHandler(_unitOfWorkMock.Object, _mapper);
+            var updateBasketItem = new UpdateBasketItemCommand(It.IsAny<string>(), It.IsAny<string>(), 3);
+            var handler = new UpdateBasketItemHandler(_unitOfWorkMock.Object);
 
             //Act
             var response = async () => await handler.Handle(updateBasketItem, cancellationToken: default);
