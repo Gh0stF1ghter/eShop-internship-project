@@ -1,6 +1,6 @@
-﻿using Baskets.BusinessLogic.CQRS.Comands.UserBasketComands.CreateUserBasketComand;
-using Baskets.BusinessLogic.CQRS.Comands.UserBasketComands.DeleteUserBasketComand;
-using Baskets.BusinessLogic.CQRS.Queries.UserBasketQueries.GetUserBasketQuery;
+﻿using Baskets.BusinessLogic.CQRS.Commands.UserBasketCommands.CreateUserBasket;
+using Baskets.BusinessLogic.CQRS.Commands.UserBasketCommands.DeleteUserBasket;
+using Baskets.BusinessLogic.CQRS.Queries.UserBasketQueries.GetUserBasket;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +23,7 @@ namespace Baskets.API.Controllers
         [ActionName("CreateUserBasket")]
         public async Task<IActionResult> CreateUserBasketAsync([FromRoute] string userId, CancellationToken cancelationToken)
         {
-            var basket = await sender.Send(new CreateUserBasketComand(userId), cancelationToken);
+            var basket = await sender.Send(new CreateUserBasketCommand(userId), cancelationToken);
 
             return CreatedAtAction("GetUserBasket", new { userId }, basket);
         }
@@ -32,7 +32,7 @@ namespace Baskets.API.Controllers
         [ActionName("DeleteUserBasket")]
         public async Task<IActionResult> DeleteUserBasketAsync([FromRoute] string userId, CancellationToken cancellationToken)
         {
-            await sender.Send(new DeleteUserBasketComand(userId), cancellationToken);
+            await sender.Send(new DeleteUserBasketCommand(userId), cancellationToken);
 
             return NoContent();
         }

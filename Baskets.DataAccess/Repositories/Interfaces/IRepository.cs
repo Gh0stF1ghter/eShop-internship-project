@@ -8,8 +8,8 @@ namespace Baskets.DataAccess.Repositories.Interfaces
         Task<IEnumerable<TEntity>> GetAllByConditionAsync(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken);
         Task<TEntity> GetByConditionAsync(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken);
 
-        void Add(TEntity entity);
-        void Update(Expression<Func<TEntity, bool>> condition, TEntity entity);
+        Task AddAsync(TEntity entity, CancellationToken cancellationToken);
+        Task UpdateAsync(Expression<Func<TEntity, bool>> condition, TEntity entity, CancellationToken cancellationToken);
         Task<TEntity> DeleteAsync(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken);
     }
 }

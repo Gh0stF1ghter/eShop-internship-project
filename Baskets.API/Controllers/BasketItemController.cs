@@ -1,8 +1,8 @@
-﻿using Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItemsQuery;
-using Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItemQuery;
-using Baskets.BusinessLogic.CQRS.Comands.BasketItemComands.CreateBasketItemComand;
-using Baskets.BusinessLogic.CQRS.Comands.BasketItemComands.DeleteBasketItemComand;
-using Baskets.BusinessLogic.CQRS.Comands.BasketItemComands.UpdateBasketItemComand;
+﻿using Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.CreateBasketItem;
+using Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.DeleteBasketItem;
+using Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.UpdateBasketItem;
+using Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItem;
+using Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItems;
 using Baskets.BusinessLogic.DataTransferObjects.CreateDTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +35,7 @@ namespace Baskets.API.Controllers
         [ActionName("CreateBasketItem")]
         public async Task<IActionResult> CreateBasketItemAsync([FromRoute] string userId, [FromBody] CreateBasketItemDto createBasketItemDto, CancellationToken cancellationToken)
         {
-            var basketItem = await sender.Send(new CreateBasketItemComand(userId, createBasketItemDto), cancellationToken);
+            var basketItem = await sender.Send(new CreateBasketItemCommand(userId, createBasketItemDto), cancellationToken);
 
             return CreatedAtAction("GetBasketItemById", new { userId, basketItemId = basketItem.Id }, basketItem);
         }
@@ -44,7 +44,7 @@ namespace Baskets.API.Controllers
         [ActionName("UpdateBasketItem")]
         public async Task<IActionResult> UpdateBasketItemAsync([FromRoute] string userId, [FromRoute] string basketItemId, [FromQuery] uint quantity, CancellationToken cancellationToken)
         {
-            await sender.Send(new UpdateBasketItemComand(userId, basketItemId, (int)quantity), cancellationToken);
+            await sender.Send(new UpdateBasketItemCommand(userId, basketItemId, (int)quantity), cancellationToken);
 
             return NoContent();
         }
@@ -53,7 +53,7 @@ namespace Baskets.API.Controllers
         [ActionName("DeleteBasketItem")]
         public async Task<IActionResult> DeleteBasketItemAsync([FromRoute] string userId, [FromRoute] string basketItemId, CancellationToken cancellationToken)
         {
-            await sender.Send(new DeleteBasketItemComand(userId, basketItemId), cancellationToken);
+            await sender.Send(new DeleteBasketItemCommand(userId, basketItemId), cancellationToken);
 
             return NoContent();
         }

@@ -2,11 +2,12 @@
 using Baskets.BusinessLogic.Exceptions;
 using Baskets.DataAccess.UnitOfWork;
 
-namespace Baskets.BusinessLogic.CQRS.Comands.BasketItemComands.CreateBasketItemComand
+namespace Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.CreateBasketItem
 {
-    public class CreateBasketItemHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<CreateBasketItemComand, BasketItemDto>
+    public class CreateBasketItemHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        : IRequestHandler<CreateBasketItemCommand, BasketItemDto>
     {
-        public async Task<BasketItemDto> Handle(CreateBasketItemComand comand, CancellationToken cancellationToken)
+        public async Task<BasketItemDto> Handle(CreateBasketItemCommand comand, CancellationToken cancellationToken)
         {
             var item = await unitOfWork.Item
                 .GetByConditionAsync(i => i.Id.Equals(comand.CreateBasketItemDto.ItemId), cancellationToken);
@@ -32,24 +33,24 @@ namespace Baskets.BusinessLogic.CQRS.Comands.BasketItemComands.CreateBasketItemC
             newItem.UserId = comand.UserId;
             newItem.SumPrice = item.Price;
 
-            unitOfWork.BasketItem.Add(newItem);
+            await unitOfWork.BasketItem.AddAsync(newItem, cancellationToken);
 
-            UpdateTotalCost(basket, newItem);
+            await UpdateTotalCost(basket, newItem, cancellationToken);
 
             var newItemDto = mapper.Map<BasketItemDto>(newItem);
 
             return newItemDto;
         }
 
-        private void UpdateTotalCost(UserBasket basket, BasketItem newItem)
+        private async Task UpdateTotalCost(UserBasket basket, BasketItem newItem, CancellationToken cancellationToken)
         {
             basket.TotalPrice += newItem.SumPrice;
 
-            unitOfWork.Basket
-                .Update(u => u.UserId.Equals(basket.UserId), basket);
+            await unitOfWork.Basket
+                .UpdateAsync(u => u.UserId.Equals(basket.UserId), basket, cancellationToken);
         }
 
-        private async Task FindInBasketAsync(CreateBasketItemComand comand, CancellationToken cancellationToken)
+        private async Task FindInBasketAsync(CreateBasketItemCommand comand, CancellationToken cancellationToken)
         {
             var itemInBasket = await unitOfWork.BasketItem
                 .GetByConditionAsync(bi => bi.ItemId.Equals(comand.CreateBasketItemDto.ItemId)

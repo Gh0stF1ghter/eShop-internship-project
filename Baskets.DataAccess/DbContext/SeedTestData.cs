@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
-namespace Baskets.DataAccess
+namespace Baskets.DataAccess.DbContext
 {
     public class SeedTestData(IMongoDatabase database, IOptions<BasketDatabaseSettings> options)
     {

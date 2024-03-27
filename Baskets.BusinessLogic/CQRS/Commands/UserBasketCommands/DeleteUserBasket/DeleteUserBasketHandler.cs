@@ -2,11 +2,11 @@
 using Baskets.DataAccess.UnitOfWork;
 
 
-namespace Baskets.BusinessLogic.CQRS.Comands.UserBasketComands.DeleteUserBasketComand
+namespace Baskets.BusinessLogic.CQRS.Commands.UserBasketCommands.DeleteUserBasket
 {
-    public class DeleteUserBasketHandler(IUnitOfWork unitOfWork) : IRequestHandler<DeleteUserBasketComand>
+    public class DeleteUserBasketHandler(IUnitOfWork unitOfWork) : IRequestHandler<DeleteUserBasketCommand>
     {
-        public async Task Handle(DeleteUserBasketComand command, CancellationToken cancellationToken)
+        public async Task Handle(DeleteUserBasketCommand command, CancellationToken cancellationToken)
         {
             await FindUserAsync(command, cancellationToken);
 
@@ -19,7 +19,7 @@ namespace Baskets.BusinessLogic.CQRS.Comands.UserBasketComands.DeleteUserBasketC
             }
         }
 
-        public async Task FindUserAsync(DeleteUserBasketComand command, CancellationToken cancellationToken)
+        public async Task FindUserAsync(DeleteUserBasketCommand command, CancellationToken cancellationToken)
         {
             var userExists = await unitOfWork.User
                 .GetByConditionAsync(u => u.Id.Equals(command.UserId), cancellationToken);

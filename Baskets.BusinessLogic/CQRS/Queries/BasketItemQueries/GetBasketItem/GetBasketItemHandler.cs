@@ -2,9 +2,10 @@
 using Baskets.BusinessLogic.Exceptions;
 using Baskets.DataAccess.UnitOfWork;
 
-namespace Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItemQuery
+namespace Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItem
 {
-    public class GetBasketItemHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<GetBasketItemQuery, BasketItemDto>
+    public class GetBasketItemHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        : IRequestHandler<GetBasketItemQuery, BasketItemDto>
     {
         public async Task<BasketItemDto> Handle(GetBasketItemQuery query, CancellationToken cancellationToken)
         {

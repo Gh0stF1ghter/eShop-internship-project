@@ -2,11 +2,12 @@
 using Baskets.BusinessLogic.Exceptions;
 using Baskets.DataAccess.UnitOfWork;
 
-namespace Baskets.BusinessLogic.CQRS.Comands.UserBasketComands.CreateUserBasketComand
+namespace Baskets.BusinessLogic.CQRS.Commands.UserBasketCommands.CreateUserBasket
 {
-    public class CreateUserBasketHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<CreateUserBasketComand, UserBasketDto>
+    public class CreateUserBasketHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        : IRequestHandler<CreateUserBasketCommand, UserBasketDto>
     {
-        public async Task<UserBasketDto> Handle(CreateUserBasketComand comand, CancellationToken cancellationToken)
+        public async Task<UserBasketDto> Handle(CreateUserBasketCommand comand, CancellationToken cancellationToken)
         {
             await FindReferencesAsync(comand, cancellationToken);
 
@@ -15,14 +16,14 @@ namespace Baskets.BusinessLogic.CQRS.Comands.UserBasketComands.CreateUserBasketC
                 UserId = comand.UserId
             };
 
-            unitOfWork.Basket.Add(newBasket);
+            await unitOfWork.Basket.AddAsync(newBasket, cancellationToken);
 
             var newBasketDto = mapper.Map<UserBasket, UserBasketDto>(newBasket);
 
             return newBasketDto;
         }
 
-        private async Task FindReferencesAsync(CreateUserBasketComand comand, CancellationToken cancellationToken)
+        private async Task FindReferencesAsync(CreateUserBasketCommand comand, CancellationToken cancellationToken)
         {
             var userExists = await unitOfWork.User
                 .GetByConditionAsync(u => u.Id.Equals(comand.UserId), cancellationToken);

@@ -19,11 +19,11 @@ namespace Baskets.DataAccess.Repositories.Implementations
             await collection.Find(condition)
                        .SingleOrDefaultAsync(cancellationToken);
 
-        public void Add(TEntity entity) =>
-            collection.InsertOne(entity);
+        public async Task AddAsync(TEntity entity, CancellationToken cancellationToken) =>
+            await _collection.InsertOneAsync(entity, cancellationToken: cancellationToken);
 
-        public void Update(Expression<Func<TEntity, bool>> condition, TEntity entity) =>
-            collection.ReplaceOne(condition, entity);
+        public async Task UpdateAsync(Expression<Func<TEntity, bool>> condition, TEntity entity, CancellationToken cancellationToken) =>
+            await _collection.ReplaceOneAsync(condition, entity, cancellationToken: cancellationToken);
 
         public async Task<TEntity> DeleteAsync(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken) =>
             await collection.FindOneAndDeleteAsync(condition, cancellationToken: cancellationToken);

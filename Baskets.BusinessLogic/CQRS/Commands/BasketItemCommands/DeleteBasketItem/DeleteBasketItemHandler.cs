@@ -1,13 +1,11 @@
-﻿using Baskets.DataAccess.UnitOfWork;
-using Baskets.BusinessLogic.Exceptions;
-using Baskets.DataAccess.Entities.Models;
+﻿using Baskets.BusinessLogic.Exceptions;
+using Baskets.DataAccess.UnitOfWork;
 
-
-namespace Baskets.BusinessLogic.CQRS.Comands.BasketItemComands.DeleteBasketItemComand
+namespace Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.DeleteBasketItem
 {
-    public class DeleteBasketItemHandler(IUnitOfWork unitOfWork) : IRequestHandler<DeleteBasketItemComand>
+    public class DeleteBasketItemHandler(IUnitOfWork unitOfWork) : IRequestHandler<DeleteBasketItemCommand>
     {
-        public async Task Handle(DeleteBasketItemComand comand, CancellationToken cancellationToken)
+        public async Task Handle(DeleteBasketItemCommand comand, CancellationToken cancellationToken)
         {
             var basket = await unitOfWork.Basket
                 .GetByConditionAsync(u => u.UserId.Equals(comand.UserId), cancellationToken);
@@ -26,15 +24,15 @@ namespace Baskets.BusinessLogic.CQRS.Comands.BasketItemComands.DeleteBasketItemC
                 throw new NotFoundException(BasketItemMessages.NotFound);
             }
 
-            UpdateBasket(basket, basketItem);
+            await UpdateBasket(basket, basketItem, cancellationToken);
         }
 
-        private void UpdateBasket(UserBasket basket, BasketItem basketItem)
+        private async Task UpdateBasket(UserBasket basket, BasketItem basketItem, CancellationToken cancellationToken)
         {
             basket.TotalPrice -= basketItem.SumPrice;
 
-            unitOfWork.Basket
-                .Update(u => u.UserId.Equals(basket.UserId), basket);
+            await unitOfWork.Basket
+                .UpdateAsync(u => u.UserId.Equals(basket.UserId), basket, cancellationToken);
         }
     }
 }
