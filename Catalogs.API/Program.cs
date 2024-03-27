@@ -1,15 +1,41 @@
+using Catalogs.API.Extensions;
+using Catalogs.Application;
+using Microsoft.AspNetCore.Hosting;
+using Serilog;
+using Serilog.Sinks.Elasticsearch;
+using System.Reflection;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+SerilogConfiguration.ConfigureLogging();
+builder.Host.UseSerilog();
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+var services = builder.Services;
+
+services.CongigureSqlContext(builder.Configuration);
+
+services.AddCustomDependencies();
+
+services.ConfigureMediatR();
+services.AddAutoValidation();
+services.AddAutoMapper(typeof(AssemblyReference));
+
+services.ConfigureCors();
+
+services.AddControllers();
+
+services.AddEndpointsApiExplorer();
+services.AddSwaggerGen();
+
+services.AddCustomMediaTypes();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.ApplyMigrations();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

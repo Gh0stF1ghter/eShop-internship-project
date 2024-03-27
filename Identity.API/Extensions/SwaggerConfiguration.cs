@@ -12,8 +12,7 @@ namespace Identity.API.Extensions
                     "v1",
                     new OpenApiInfo
                     {
-                        Title = "Identity Service",
-                        Description = "Authent"
+                        Title = "Identity Service"
                     });
 
                 s.AddSecurityDefinition(
