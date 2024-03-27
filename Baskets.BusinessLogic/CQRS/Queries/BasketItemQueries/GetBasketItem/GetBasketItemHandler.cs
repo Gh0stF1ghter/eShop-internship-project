@@ -12,7 +12,7 @@ namespace Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItem
             await FindBasket(query, cancellationToken);
 
             var basketItem = await unitOfWork.BasketItem
-                .GetBasketItemByConditionAsync(bi => bi.Id.Equals(query.BasketItemId), cancellationToken);
+                .GetBasketItemByConditionAsync(bi => bi.BasketItemId.Equals(query.BasketItemId), cancellationToken);
 
             if (basketItem == null)
             {

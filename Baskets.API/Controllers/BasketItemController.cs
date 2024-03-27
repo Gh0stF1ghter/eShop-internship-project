@@ -37,7 +37,7 @@ namespace Baskets.API.Controllers
         {
             var basketItem = await sender.Send(new CreateBasketItemCommand(userId, createBasketItemDto), cancellationToken);
 
-            return CreatedAtAction("GetBasketItemById", new { userId, basketItemId = basketItem.Id }, basketItem);
+            return CreatedAtAction("GetBasketItemById", new { userId, basketItemId = basketItem.BasketItemId }, basketItem);
         }
 
         [HttpPut("{basketItemId}")]
