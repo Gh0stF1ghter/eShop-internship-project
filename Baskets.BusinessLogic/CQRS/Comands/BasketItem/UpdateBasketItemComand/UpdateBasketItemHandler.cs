@@ -24,7 +24,7 @@ namespace Baskets.BusinessLogic.CQRS.Comands.BasketItemComands.UpdateBasketItemC
             itemToUpdate.SumPrice = itemToUpdate.Item.Price * comand.Quantity;
 
             unitOfWork.BasketItem
-                .Update(bi => bi.Id.Equals(comand.BasketItemId), itemToUpdate);
+                .Update(bi => bi.BasketItemId.Equals(comand.BasketItemId), itemToUpdate);
 
             UpdateTotalCost(basket, itemToUpdate);
         }
@@ -45,7 +45,7 @@ namespace Baskets.BusinessLogic.CQRS.Comands.BasketItemComands.UpdateBasketItemC
         private async Task<BasketItem> FindInBasket(UpdateBasketItemComand comand, CancellationToken cancellationToken)
         {
             var itemInBasket = await unitOfWork.BasketItem
-                .GetBasketItemByConditionAsync(bi => bi.Id.Equals(comand.BasketItemId)
+                .GetBasketItemByConditionAsync(bi => bi.BasketItemId.Equals(comand.BasketItemId)
                 && bi.UserId.Equals(comand.UserId), cancellationToken);
 
             if (itemInBasket == null)

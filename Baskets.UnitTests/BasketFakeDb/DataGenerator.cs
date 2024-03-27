@@ -48,7 +48,7 @@ namespace Baskets.UnitTests.BasketFakeDb
         private static Faker<BasketItem> GetBasketItemGenerator() =>
             new Faker<BasketItem>()
                 .RuleFor(bi => bi.UserId, f => f.Random.String(24, minChar: '0', maxChar: 'F'))
-                .RuleFor(bi => bi.Id, f => f.Random.String(24, minChar: '0', maxChar: 'F'))
+                .RuleFor(bi => bi.BasketItemId, f => f.Random.String(24, minChar: '0', maxChar: 'F'))
                 .RuleFor(bi => bi.ItemId, f => f.Random.String(24, minChar: '0', maxChar: 'F'))
                 .RuleFor(bi => bi.Item, (_, bi) => GetBogusItemData(bi.ItemId));
 

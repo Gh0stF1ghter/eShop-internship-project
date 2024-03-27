@@ -27,7 +27,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task GetBasketItems_ValidParameters_ReturnsList()
+        public async Task GetBasketItemsAsync_ValidParameters_ReturnsList()
         {
             //Arrange
             var getBasketItemsQuery = new GetBasketItemsQuery(It.IsAny<string>());
@@ -41,7 +41,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task GetBasketItems_InvalidBasketId_ThrowsNotFoundException()
+        public async Task GetBasketItemsAsync_InvalidBasketId_ThrowsNotFoundException()
         {
             //Arrange
             _unitOfWorkMock.GetBasketByCondition(null);
@@ -59,7 +59,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task GetBasketItem_ValidParameters_ReturnsBasketItem()
+        public async Task GetBasketItemAsync_ValidParameters_ReturnsBasketItem()
         {
             //Arrange
             var mockedResult = DataGenerator.BasketItems[0];
@@ -74,11 +74,11 @@ namespace Baskets.UnitTests.HandlersTests
 
             //Assert
             response.Id.Should()
-                .BeEquivalentTo(mockedResult.Id);
+                .BeEquivalentTo(mockedResult.BasketItemId);
         }
 
         [Fact]
-        public async Task GetBasketItem_InvalidBasketId_ThrowsNotFoundException()
+        public async Task GetBasketItemAsync_InvalidBasketId_ThrowsNotFoundException()
         {
             //Arrange
             _unitOfWorkMock.GetBasketByCondition(null);
@@ -96,7 +96,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task GetBasketItem_InvalidBasketItemId_ThrowsNotFoundException()
+        public async Task GetBasketItemAsync_InvalidBasketItemId_ThrowsNotFoundException()
         {
             //Arrange
             _unitOfWorkMock.GetBasketItemWithItemByCondition(null);
@@ -113,9 +113,8 @@ namespace Baskets.UnitTests.HandlersTests
                 .WithMessage(BasketItemMessages.NotFound);
         }
 
-
         [Fact]
-        public async Task CreateBasketItem_ValidParameters_ReturnsBasketItem()
+        public async Task CreateBasketItemAsync_ValidParameters_ReturnsBasketItem()
         {
             //Arrange
             var mockedItem = DataGenerator.Items[0];
@@ -135,7 +134,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task CreateBasketItem_ExistingItemId_ThrowsAlreadyExistsException()
+        public async Task CreateBasketItemAsync_ExistingItemId_ThrowsAlreadyExistsException()
         {
             //Arrange
             _unitOfWorkMock.GetItemByCondition(DataGenerator.Items[0]);
@@ -154,7 +153,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task CreateBasketItem_InvalidUserId_ThrowsNotFoundException()
+        public async Task CreateBasketItemAsync_InvalidUserId_ThrowsNotFoundException()
         {
             //Arrange
             _unitOfWorkMock.GetBasketByCondition(null);
@@ -173,7 +172,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task CreateBasketItem_InvalidItemId_ThrowsNotFoundException()
+        public async Task CreateBasketItemAsync_InvalidItemId_ThrowsNotFoundException()
         {
             //Arrange
             _unitOfWorkMock.GetItemByCondition(null);
@@ -191,7 +190,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task DeleteBasketItem_ValidParameters_ChangesBasketPrice()
+        public async Task DeleteBasketItemAsync_ValidParameters_ChangesBasketPrice()
         {
             //Arrange
             _unitOfWorkMock.DeleteBasketItem(DataGenerator.BasketItems[0]);
@@ -207,7 +206,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task DeleteBasketItem_InvalidUserId_ThrowsNotFoundException()
+        public async Task DeleteBasketItemAsync_InvalidUserId_ThrowsNotFoundException()
         {
             //Arrange
             _unitOfWorkMock.GetBasketByCondition(null);
@@ -225,7 +224,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task DeleteBasketItem_InvalidItemId_ThrowsNotFoundException()
+        public async Task DeleteBasketItemAsync_InvalidItemId_ThrowsNotFoundException()
         {
             //Arrange
             _unitOfWorkMock.GetBasketItemWithItemByCondition(null);
@@ -244,7 +243,7 @@ namespace Baskets.UnitTests.HandlersTests
 
 
         [Fact]
-        public async Task UpdateBasketItem_ValidParameters_ChangesItemCost()
+        public async Task UpdateBasketItemAsync_ValidParameters_ChangesItemCost()
         {
             //Arrange
             var basketItemMock = DataGenerator.BasketItems[0];
@@ -262,7 +261,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task UpdateBasketItem_InvalidUserId_ThrowsNotFoundException()
+        public async Task UpdateBasketItemAsync_InvalidUserId_ThrowsNotFoundException()
         {
             //Arrange
             _unitOfWorkMock.GetBasketByCondition(null);
@@ -280,7 +279,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task UpdateBasketItem_InvalidItemId_ThrowsNotFoundException()
+        public async Task UpdateBasketItemAsync_InvalidItemId_ThrowsNotFoundException()
         {
             //Arrange
             _unitOfWorkMock.GetBasketItemWithItemByCondition(null);

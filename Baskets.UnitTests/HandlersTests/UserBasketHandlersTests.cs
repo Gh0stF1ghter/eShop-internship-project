@@ -18,7 +18,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task GetUserBasket_ValidParameters_ReturnsUserBasket()
+        public async Task GetUserBasketAsync_ValidParameters_ReturnsUserBasket()
         {
             //Arrange
             var basket = DataGenerator.UserBaskets[0];
@@ -31,12 +31,13 @@ namespace Baskets.UnitTests.HandlersTests
             //Act
             var response = await handler.Handle(query, cancellationToken: default);
 
+            //Assert
             response.Should()
                 .BeOfType<UserBasketDto>();
         }
 
         [Fact]
-        public async Task GetUserBasket_InvalidId_ThrowsNotFoundException()
+        public async Task GetUserBasketAsync_InvalidId_ThrowsNotFoundException()
         {
             //Arrange
             _unitOfWorkMock.GetBasketByCondition(null);
@@ -54,7 +55,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task CreateUserBasket_ValidParameters_ReturnsUserBasket()
+        public async Task CreateUserBasketAsync_ValidParameters_ReturnsUserBasket()
         {
             //Arrange
             _unitOfWorkMock.GetBasketByCondition(null);
@@ -72,7 +73,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task CreateUserBasket_InvalidId_ThrowsNotFoundException()
+        public async Task CreateUserBasketAsync_InvalidId_ThrowsNotFoundException()
         {
             //Arrange
             _unitOfWorkMock.GetUserByCondition(null);
@@ -90,7 +91,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task CreateUserBasket_BasketExists_ThrowsAlreadyExistException()
+        public async Task CreateUserBasketAsync_BasketExists_ThrowsAlreadyExistException()
         {
             //Arrange
             _unitOfWorkMock.GetBasketByCondition(DataGenerator.UserBaskets[0]);
@@ -109,7 +110,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task DeleteUserBasket_ValidParameters_ReturnsNoContent()
+        public async Task DeleteUserBasketAsync_ValidParameters_ReturnsNoContent()
         {
             //Arrange
             var basket = DataGenerator.UserBaskets[0];
@@ -128,7 +129,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task DeleteUserBasket_UserExists_ThrowsBadRequestException()
+        public async Task DeleteUserBasketAsync_UserExists_ThrowsBadRequestException()
         {
             //Arrange
             _unitOfWorkMock.GetUserByCondition(DataGenerator.Users[0]);
@@ -146,7 +147,7 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task DeleteUserBasket_InvalidId_ThrowsNotFoundException()
+        public async Task DeleteUserBasketAsync_InvalidId_ThrowsNotFoundException()
         {
             //Arrange
             _unitOfWorkMock.GetBasketByCondition(null);

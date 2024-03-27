@@ -7,7 +7,7 @@ namespace Baskets.DataAccess.Entities.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; } = null!;
+        public string BasketItemId { get; set; } = null!;
 
         public int Quantity { get; set; } = 1;
         public double SumPrice { get; set; }

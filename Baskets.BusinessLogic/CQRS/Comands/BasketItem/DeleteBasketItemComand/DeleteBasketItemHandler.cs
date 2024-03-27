@@ -18,7 +18,7 @@ namespace Baskets.BusinessLogic.CQRS.Comands.BasketItemComands.DeleteBasketItemC
             }
 
             var basketItem = await unitOfWork.BasketItem
-                .DeleteAsync(bi => bi.Id.Equals(comand.ItemId)
+                .DeleteAsync(bi => bi.BasketItemId.Equals(comand.ItemId)
                 && bi.UserId.Equals(comand.UserId), cancellationToken);
 
             if (basketItem == null)
