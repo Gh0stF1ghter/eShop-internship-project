@@ -23,7 +23,7 @@ namespace Catalogs.Tests.HandlersTests
             DataGenerator.InitBogusData();
 
         [Fact]
-        public async Task CreateBrandHandler_ValidParameters_ReturnsBrandDto()
+        public async Task CreateBrandHandlerAsync_ValidParameters_ReturnsBrandDto()
         {
             //Arrange
             var brandCreateDto = new BrandManipulateDto("Foo");
@@ -44,7 +44,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task CreateBrandHandler_BrandExists_ThrowsBadRequestException()
+        public async Task CreateBrandHandlerAsync_BrandExists_ThrowsBadRequestException()
         {
             //Arrange
             var brandCreateDto = new BrandManipulateDto("Foo");
@@ -64,7 +64,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task DeleteBrandHandler_ValidParameters_ReturnsNoContent()
+        public async Task DeleteBrandHandlerAsync_ValidParameters_ReturnsNoContent()
         {
             //Arrange
             var brand = DataGenerator.Brands[0];
@@ -82,7 +82,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task DeleteBrandHandler_InvalidId_ThrowsNotFoundException()
+        public async Task DeleteBrandHandlerAsync_InvalidId_ThrowsNotFoundException()
         {
             //Arrange
             _unitOfWorkMock.GetBrandById(null);
@@ -100,7 +100,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task GetBrandHandler_ValidParameters_ReturnsBrandDto()
+        public async Task GetBrandHandlerAsync_ValidParameters_ReturnsBrandDto()
         {
             //Arrange
             var brand = DataGenerator.Brands[0];
@@ -120,7 +120,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task GetBrandHandler_InvalidId_ReturnsBrandDto()
+        public async Task GetBrandHandlerAsync_InvalidId_ReturnsBrandDto()
         {
             //Arrange
             _unitOfWorkMock.GetBrandById(null);
@@ -138,7 +138,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task GetBrandsHandler_ValidParameters_ReturnsBrandDtoList()
+        public async Task GetBrandsHandlerAsync_ValidParameters_ReturnsBrandDtoList()
         {
             //Arrange
             var brands = DataGenerator.Brands;
@@ -159,7 +159,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task UpdateBrandHandler_ValidParameters_ReturnsNoContent()
+        public async Task UpdateBrandHandlerAsync_ValidParameters_ReturnsNoContent()
         {
             //Arrange
             var brand = DataGenerator.Brands[0];
@@ -179,7 +179,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task UpdateBrandHandler_InvalidId_ReturnsBrandDto()
+        public async Task UpdateBrandHandlerAsync_InvalidId_ReturnsBrandDto()
         {
             //Arrange
             var brandUpdateDto = new BrandManipulateDto("Foo");

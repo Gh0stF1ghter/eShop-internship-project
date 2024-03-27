@@ -12,7 +12,6 @@ namespace Catalogs.Tests.HandlersTests
     public class ItemHandlersTests
     {
         private readonly UnitOfWorkMock _unitOfWorkMock = new();
-
         private readonly Mock<IItemLinks<ItemDto>> _itemLinks = new();
 
         private readonly Mapper _mapper = new(
@@ -32,7 +31,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task DeleteItemHandler_ValidParameters_ReturnsNoContent()
+        public async Task DeleteItemHandlerAsync_ValidParameters_ReturnsNoContent()
         {
             //Arrange
             var item = DataGenerator.Items[0];
@@ -51,7 +50,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task DeleteItemHandler_InvalidId_ThrowsNotFoundException()
+        public async Task DeleteItemHandlerAsync_InvalidId_ThrowsNotFoundException()
         {
             //Arrange
             _unitOfWorkMock.GetItemById(null);
@@ -69,7 +68,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task CreateItemHandler_ValidParameters_ReturnsItem()
+        public async Task CreateItemHandlerAsync_ValidParameters_ReturnsItem()
         {
             //Arrange
             var itemCreateDto = new ItemManipulateDto("foo", It.IsAny<int>(), 0, "2", It.IsAny<int>(), It.IsAny<int>());
@@ -93,7 +92,7 @@ namespace Catalogs.Tests.HandlersTests
         [InlineData(false, false, true, ItemTypeMessages.ItemTypeNotFound)]
         [InlineData(true, false, false, BrandMessages.BrandNotFound)]
         [InlineData(true, true, false, VendorMessages.VendorNotFound)]
-        public async Task CreateItemHandler_InvalidId_ThrowsNotFoundException(bool typeExists, bool brandExists, bool vendorExists, string expectedMessage)
+        public async Task CreateItemHandlerAsync_InvalidId_ThrowsNotFoundException(bool typeExists, bool brandExists, bool vendorExists, string expectedMessage)
         {
             //Arrange
             var itemCreateDto = new ItemManipulateDto("foo", It.IsAny<int>(), 0, "2", It.IsAny<int>(), It.IsAny<int>());
@@ -117,7 +116,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task CreateItemHandler_InvalidItemId_ThrowsBadRequestException()
+        public async Task CreateItemHandlerAsync_InvalidItemId_ThrowsBadRequestException()
         {
             //Arrange
             var itemCreateDto = new ItemManipulateDto("foo", It.IsAny<int>(), 0, "2", It.IsAny<int>(), It.IsAny<int>());
@@ -137,7 +136,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task GetItemOfTypeHandler_ValidParameters_ReturnsItem()
+        public async Task GetItemOfTypeHandlerAsync_ValidParameters_ReturnsItem()
         {
             //Arrange
             var item = DataGenerator.Items[0];
@@ -160,7 +159,7 @@ namespace Catalogs.Tests.HandlersTests
         [Theory]
         [InlineData(false, ItemTypeMessages.ItemTypeNotFound)]
         [InlineData(true, ItemMessages.ItemNotFound)]
-        public async Task GetItemOfTypeHandler_InvalidId_ThrowsNotFoundException(bool typeExist, string expectedMessage)
+        public async Task GetItemOfTypeHandlerAsync_InvalidId_ThrowsNotFoundException(bool typeExist, string expectedMessage)
         {
             //Arrange
             _unitOfWorkMock.IsItemTypeExists(typeExist);
@@ -179,7 +178,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task GetItemsOfTypeHandler_ValidParameters_ReturnsListOfItems()
+        public async Task GetItemsOfTypeHandlerAsync_ValidParameters_ReturnsListOfItems()
         {
             //Arrange
             var itemList = DataGenerator.Items;
@@ -200,7 +199,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task GetItemsOfTypeHandler_InvalidTypeId_ThrowsNotFoundException()
+        public async Task GetItemsOfTypeHandlerAsync_InvalidTypeId_ThrowsNotFoundException()
         {
             //Arrange
             _unitOfWorkMock.IsItemTypeExists(false);
@@ -218,7 +217,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task UpdateItemHandler_ValidParameters_ReturnsNoContent()
+        public async Task UpdateItemHandlerAsync_ValidParameters_ReturnsNoContent()
         {
             //Arrange
             var item = DataGenerator.Items[0];
@@ -241,7 +240,7 @@ namespace Catalogs.Tests.HandlersTests
         [InlineData(false, false, true, ItemTypeMessages.ItemTypeNotFound)]
         [InlineData(true, false, false, BrandMessages.BrandNotFound)]
         [InlineData(true, true, false, VendorMessages.VendorNotFound)]
-        public async Task UpdateItemHandler_InvalidId_ThrowsNotFoundException(bool typeExists, bool brandExists, bool vendorExists, string expectedMessage)
+        public async Task UpdateItemHandlerAsync_InvalidId_ThrowsNotFoundException(bool typeExists, bool brandExists, bool vendorExists, string expectedMessage)
         {
             //Arrange
             var itemCreateDto = new ItemManipulateDto("foo", It.IsAny<int>(), 0, "2", It.IsAny<int>(), It.IsAny<int>());
@@ -262,7 +261,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task UpdateItemHandler_NullItemToUpdate_ThrowsBadRequestException()
+        public async Task UpdateItemHandlerAsync_NullItemToUpdate_ThrowsBadRequestException()
         {
             //Arrange
             var itemCreateDto = new ItemManipulateDto("foo", It.IsAny<int>(), 0, "2", It.IsAny<int>(), It.IsAny<int>());

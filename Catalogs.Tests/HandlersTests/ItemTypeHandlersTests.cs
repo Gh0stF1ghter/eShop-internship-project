@@ -21,7 +21,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task CreateItemTypeHandler_ValidParameters_ReturnsItemTypeDto()
+        public async Task CreateItemTypeHandlerAsync_ValidParameters_ReturnsItemTypeDto()
         {
             //Arrange
             var itemTypeCreateDto = new ItemTypeManipulateDto("Foo");
@@ -42,7 +42,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task CreateItemTypeHandler_ItemTypeExists_ThrowsBadRequestException()
+        public async Task CreateItemTypeHandlerAsync_ItemTypeExists_ThrowsBadRequestException()
         {
             //Arrange
             var itemTypeCreateDto = new ItemTypeManipulateDto("Foo");
@@ -62,7 +62,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task DeleteItemTypeHandler_ValidParameters_ReturnsNoContent()
+        public async Task DeleteItemTypeHandlerAsync_ValidParameters_ReturnsNoContent()
         {
             //Arrange
             var itemType = DataGenerator.ItemTypes[0];
@@ -80,7 +80,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task DeleteItemTypeHandler_InvalidId_ThrowsNotFoundException()
+        public async Task DeleteItemTypeHandlerAsync_InvalidId_ThrowsNotFoundException()
         {
             //Arrange
             _unitOfWorkMock.GetItemTypeById(null);
@@ -98,7 +98,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task GetItemTypeHandler_ValidParameters_ReturnsItemTypeDto()
+        public async Task GetItemTypeHandlerAsync_ValidParameters_ReturnsItemTypeDto()
         {
             //Arrange
             var itemType = DataGenerator.ItemTypes[0];
@@ -119,7 +119,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task GetItemTypeHandler_InvalidId_ThrowsNotFoundException()
+        public async Task GetItemTypeHandlerAsync_InvalidId_ThrowsNotFoundException()
         {
             //Arrange
             _unitOfWorkMock.GetItemTypeById(null);
@@ -137,7 +137,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task GetItemTypesHandler_ValidParameters_ReturnsItemTypeDtoList()
+        public async Task GetItemTypesHandlerAsync_ValidParameters_ReturnsItemTypeDtoList()
         {
             //Arrange
             _unitOfWorkMock.GetAllItemTypes();
@@ -158,7 +158,7 @@ namespace Catalogs.Tests.HandlersTests
         [Theory]
         [InlineData(0, "Loe")]
         [InlineData(1, "Doow")]
-        public async Task UpdateItemTypeHandler_ValidParameters_ReturnsNoContent(int id, string newName)
+        public async Task UpdateItemTypeHandlerAsync_ValidParameters_ReturnsNoContent(int id, string newName)
         {
             //Arrange
             var itemType = DataGenerator.ItemTypes[0];
@@ -178,7 +178,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task UpdateItemTypeHandler_InvalidId_ThrowsNotFoundException()
+        public async Task UpdateItemTypeHandlerAsync_InvalidId_ThrowsNotFoundException()
         {
             //Arrange
             var itemTypeUpdateDto = new ItemTypeManipulateDto("Foo");

@@ -21,7 +21,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task CreateVendorHandler_ValidParameters_ReturnsVendorDto()
+        public async Task CreateVendorHandlerAsync_ValidParameters_ReturnsVendorDto()
         {
             //Arrange
             var vendorCreateDto = new VendorManipulateDto("Foo");
@@ -42,7 +42,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task CreateVendorHandler_VendorExists_ThrowsBadRequestException()
+        public async Task CreateVendorHandlerAsync_VendorExists_ThrowsBadRequestException()
         {
             //Arrange
             var vendorCreateDto = new VendorManipulateDto("Foo");
@@ -62,7 +62,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task DeleteVendorHandler_ValidParameters_ReturnsNoContent()
+        public async Task DeleteVendorHandlerAsync_ValidParameters_ReturnsNoContent()
         {
             //Arrange
             var vendor = DataGenerator.Vendors[0];
@@ -80,7 +80,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task DeleteVendorHandler_InvalidId_ThrowsNotFoundException()
+        public async Task DeleteVendorHandlerAsync_InvalidId_ThrowsNotFoundException()
         {
             //Arrange
             _unitOfWorkMock.GetVendorById(null);
@@ -98,7 +98,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task GetVendorHandler_ValidParameters_ReturnsVendorDto()
+        public async Task GetVendorHandlerAsync_ValidParameters_ReturnsVendorDto()
         {
             //Arrange
             var vendor = DataGenerator.Vendors[0];
@@ -119,7 +119,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task GetVendorHandler_InvalidId_ThrowsNotFoundException()
+        public async Task GetVendorHandlerAsync_InvalidId_ThrowsNotFoundException()
         {
             //Arrange
             _unitOfWorkMock.GetVendorById(null);
@@ -137,7 +137,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task GetVendorsHandler_ValidParameters_ReturnsVendorDtoList()
+        public async Task GetVendorsHandlerAsync_ValidParameters_ReturnsVendorDtoList()
         {
             //Arrange
             _unitOfWorkMock.GetAllVendors();
@@ -158,7 +158,7 @@ namespace Catalogs.Tests.HandlersTests
         [Theory]
         [InlineData(0, "Loe")]
         [InlineData(1, "Doow")]
-        public async Task UpdateVendorHandler_ValidParameters_ReturnsNoContent(int id, string newName)
+        public async Task UpdateVendorHandlerAsync_ValidParameters_ReturnsNoContent(int id, string newName)
         {
             //Arrange
             var vendor = DataGenerator.Vendors[0];
@@ -178,7 +178,7 @@ namespace Catalogs.Tests.HandlersTests
         }
 
         [Fact]
-        public async Task UpdateVendorHandler_InvalidId_ThrowsNotFoundException()
+        public async Task UpdateVendorHandlerAsync_InvalidId_ThrowsNotFoundException()
         {
             //Arrange
             var vendorUpdateDto = new VendorManipulateDto("Foo");
