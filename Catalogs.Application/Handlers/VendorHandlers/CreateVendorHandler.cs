@@ -4,14 +4,19 @@ using MediatR;
 
 namespace Catalogs.Application.Handlers.VendorHandlers
 {
-    public sealed class CreateVendorHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<CreateVendorCommand, VendorDto>
+    public sealed class CreateVendorHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<CreateVendorComand, VendorDto>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IMapper _mapper = mapper;
 
-        public async Task<VendorDto> Handle(CreateVendorCommand command, CancellationToken token)
+        public async Task<VendorDto> Handle(CreateVendorComand command, CancellationToken token)
         {
             var vendorExists = await _unitOfWork.Vendor.IsExistAsync(v => v.Name.Equals(command.VendorDto.Name), token);
+
+            if (vendorExists)
+            {
+                throw new BadRequestException(VendorMessages.VendorExists);
+            }
 
             var vendor = _mapper.Map<Vendor>(command.VendorDto);
 

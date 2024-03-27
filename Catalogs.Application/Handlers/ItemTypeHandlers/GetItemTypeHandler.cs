@@ -15,7 +15,7 @@ namespace Catalogs.Application.Handlers.ItemTypeHandlers
 
             if (itemType == null)
             {
-                throw new BadRequestException(ItemTypeMessages.TypeNotFound);
+                throw new NotFoundException(ItemTypeMessages.ItemTypeNotFound);
             }
 
             var itemTypeDto = _mapper.Map<ItemTypeDto>(itemType);

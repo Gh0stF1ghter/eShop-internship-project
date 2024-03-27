@@ -4,5 +4,5 @@ using MediatR;
 
 namespace Catalogs.Application.Comands.VendorCommands
 {
-    public sealed record CreateVendorCommand(VendorManipulateDto VendorDto) : IRequest<VendorDto>;
+    public sealed record CreateVendorComand(VendorManipulateDto VendorDto) : IRequest<VendorDto>;
 }

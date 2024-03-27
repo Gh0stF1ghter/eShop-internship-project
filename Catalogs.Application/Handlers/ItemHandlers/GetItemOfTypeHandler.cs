@@ -15,7 +15,7 @@ namespace Catalogs.Application.Handlers.ItemHandlers
 
             if (!itemTypeExists)
             {
-                throw new NotFoundException(ItemTypeMessages.TypeNotFound);
+                throw new NotFoundException(ItemTypeMessages.ItemTypeNotFound);
             }
 
             var item = await _unitOfWork.Item.GetItemOfTypeByIdAsync(query.TypeId, query.Id, query.TrackChanges, token);

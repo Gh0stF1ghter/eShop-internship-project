@@ -40,7 +40,7 @@ namespace Catalogs.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddItemTypeAsync(ItemTypeManipulateDto itemType, CancellationToken token)
         {
-            var newItemType = await _sender.Send(new CreateItemTypeCommand(itemType), token);
+            var newItemType = await _sender.Send(new CreateItemTypeComand(itemType), token);
 
             return CreatedAtAction("GetItemTypeById", new { newItemType.Id }, newItemType);
         }
@@ -51,7 +51,7 @@ namespace Catalogs.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateItemTypeAsync(int id, ItemTypeManipulateDto itemType, CancellationToken token)
         {
-            await _sender.Send(new UpdateItemTypeCommand(id, itemType, TrackChanges: true), token);
+            await _sender.Send(new UpdateItemTypeComand(id, itemType, TrackChanges: true), token);
 
             return NoContent();
         }

@@ -13,7 +13,7 @@ namespace Catalogs.Application.Handlers.ItemHandlers
 
             if (item == null)
             {
-                throw new BadRequestException(ItemMessages.ItemNotFound);
+                throw new NotFoundException(ItemMessages.ItemNotFound);
             }
 
             _unitOfWork.Item.Delete(item);

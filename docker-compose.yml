@@ -12,3 +12,4 @@ services:
     build:
       context: .
       dockerfile: Identity.API/Dockerfile
+

@@ -40,7 +40,7 @@ namespace Catalogs.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddVendorAsync(VendorManipulateDto vendor, CancellationToken token)
         {
-            var newVendor = await _sender.Send(new CreateVendorCommand(vendor), token);
+            var newVendor = await _sender.Send(new CreateVendorComand(vendor), token);
 
             return CreatedAtAction("GetVendorById", new { newVendor.Id }, newVendor);
         }

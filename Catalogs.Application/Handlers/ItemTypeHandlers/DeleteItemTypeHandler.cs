@@ -13,7 +13,7 @@ namespace Catalogs.Application.Handlers.ItemTypeHandlers
 
             if (brand == null)
             {
-                throw new BadRequestException(ItemTypeMessages.TypeNotFound);
+                throw new NotFoundException(ItemTypeMessages.ItemTypeNotFound);
             }
 
             _unitOfWork.ItemType.Delete(brand);

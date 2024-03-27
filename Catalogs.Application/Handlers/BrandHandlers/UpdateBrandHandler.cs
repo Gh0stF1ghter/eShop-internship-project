@@ -14,7 +14,7 @@ namespace Catalogs.Application.Handlers.BrandHandlers
 
             if (brandToUpdate == null)
             {
-                throw new BadRequestException(BrandMessages.BrandNotFound);
+                throw new NotFoundException(BrandMessages.BrandNotFound);
             }
 
             _mapper.Map(request.Brand, brandToUpdate);
