@@ -14,15 +14,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Baskets.API", "Baskets.API\Baskets.API.csproj", "{1088394E-2266-48EC-8D7A-10DF5BA68C06}"
 	ProjectSection(ProjectDependencies) = postProject
 		{7628493C-81B5-4CDD-A484-34EBFD6FE241} = {7628493C-81B5-4CDD-A484-34EBFD6FE241}
-		{94F2AFCB-C52F-4CCA-B372-9762C22A7F6A} = {94F2AFCB-C52F-4CCA-B372-9762C22A7F6A}
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Baskets.BusinessLogic", "Baskets.BusinessLogic\Baskets.BusinessLogic.csproj", "{7628493C-81B5-4CDD-A484-34EBFD6FE241}"
+	ProjectSection(ProjectDependencies) = postProject
+		{94F2AFCB-C52F-4CCA-B372-9762C22A7F6A} = {94F2AFCB-C52F-4CCA-B372-9762C22A7F6A}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Baskets.DataAccess", "Baskets.DataAccess\Baskets.DataAccess.csproj", "{94F2AFCB-C52F-4CCA-B372-9762C22A7F6A}"
-	ProjectSection(ProjectDependencies) = postProject
-		{7628493C-81B5-4CDD-A484-34EBFD6FE241} = {7628493C-81B5-4CDD-A484-34EBFD6FE241}
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalogs.API", "Catalogs.API\Catalogs.API.csproj", "{875A47A7-24EE-474B-B191-5C9903C58D7D}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -60,7 +59,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4B370850
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalogs.Tests", "Catalogs.Tests\Catalogs.Tests.csproj", "{95BF61DE-543C-4840-86FA-1383258C5D36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Tests", "Identity.Tests\Identity.Tests.csproj", "{22668F84-A42A-4253-BCFC-06522F62878C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.Tests", "Identity.Tests\Identity.Tests.csproj", "{22668F84-A42A-4253-BCFC-06522F62878C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Baskets.UnitTests", "Baskets.UnitTests\Baskets.UnitTests.csproj", "{272D2C66-5DD1-4C7C-87B8-ADD0ED901C1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -120,6 +121,10 @@ Global
 		{22668F84-A42A-4253-BCFC-06522F62878C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22668F84-A42A-4253-BCFC-06522F62878C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22668F84-A42A-4253-BCFC-06522F62878C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{272D2C66-5DD1-4C7C-87B8-ADD0ED901C1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{272D2C66-5DD1-4C7C-87B8-ADD0ED901C1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{272D2C66-5DD1-4C7C-87B8-ADD0ED901C1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{272D2C66-5DD1-4C7C-87B8-ADD0ED901C1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -140,6 +145,7 @@ Global
 		{1D3DF81E-EFB5-4125-8E7C-AB5E08ADAD0D} = {3CB1A8E7-5920-4D6D-9E4F-411C732E02F0}
 		{95BF61DE-543C-4840-86FA-1383258C5D36} = {4B370850-37DD-477D-9EBE-75DA1F9AE911}
 		{22668F84-A42A-4253-BCFC-06522F62878C} = {4B370850-37DD-477D-9EBE-75DA1F9AE911}
+		{272D2C66-5DD1-4C7C-87B8-ADD0ED901C1A} = {4B370850-37DD-477D-9EBE-75DA1F9AE911}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {229DA68A-1E8B-4EA9-9CB5-097ECF241938}
