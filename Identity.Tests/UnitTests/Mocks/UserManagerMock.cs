@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Identity.Tests.Mocks
+namespace Identity.Tests.UnitTests.Mocks
 {
     internal class UserManagerMock : Mock<UserManager<User>>
     {

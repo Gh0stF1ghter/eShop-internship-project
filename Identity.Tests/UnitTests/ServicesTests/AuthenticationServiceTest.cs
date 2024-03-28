@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Identity.BusinessLogic.Mapping;
 using Identity.BusinessLogic.Services.Interfaces;
+using Identity.Tests.UnitTests.Mocks;
 using Microsoft.Extensions.Logging;
 
-namespace Identity.Tests.ServicesTests
+namespace Identity.Tests.UnitTests.ServicesTests
 {
     public class AuthenticationServiceTest
     {
@@ -11,7 +12,7 @@ namespace Identity.Tests.ServicesTests
 
         public AuthenticationServiceTest()
         {
-            var store = new Mock<IUserStore<User>>(); 
+            var store = new Mock<IUserStore<User>>();
 
             _userManagerMock = new(store.Object, null, null, null, null, null, null, null, null);
         }

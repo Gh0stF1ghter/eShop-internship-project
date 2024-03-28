@@ -1,10 +1,10 @@
 ﻿using Catalogs.Application.Comands.VendorCommands;
 using Catalogs.Application.Handlers.VendorHandlers;
 using Catalogs.Application.Queries.VendorQueries;
-using Catalogs.Tests.FakeData;
-using Catalogs.Tests.Mocks;
+using Catalogs.Tests.UnitTests.FakeDataGenerator;
+using Catalogs.Tests.UnitTests.Mocks;
 
-namespace Catalogs.Tests.HandlersTests
+namespace Catalogs.Tests.UnitTests.HandlersTests
 {
     public class VendorHandlersTests
     {

@@ -4,7 +4,7 @@ global using Identity.BusinessLogic.Services.Implementations;
 global using Identity.DataAccess.Entities.Constants;
 global using Identity.DataAccess.Entities.Exceptions;
 global using Identity.DataAccess.Entities.Models;
-global using Identity.Tests.Mocks;
+global using Identity.Tests.UnitTests.Mocks;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.Extensions.Configuration;
 global using Moq;

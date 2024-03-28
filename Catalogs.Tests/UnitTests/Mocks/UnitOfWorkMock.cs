@@ -1,7 +1,7 @@
 ﻿using Catalogs.Domain.RequestFeatures;
 using System.Threading;
 
-namespace Catalogs.Tests.Mocks
+namespace Catalogs.Tests.UnitTests.Mocks
 {
     public class UnitOfWorkMock() : Mock<IUnitOfWork>()
     {
