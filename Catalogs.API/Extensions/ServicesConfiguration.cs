@@ -1,6 +1,6 @@
-﻿using AutoMapper;
-using Catalogs.API.ActionFilters;
+﻿using Catalogs.API.ActionFilters;
 using Catalogs.API.Utility;
+using Catalogs.Application;
 using Catalogs.Application.DataShaping;
 using Catalogs.Application.DataTransferObjects;
 using Catalogs.Domain.Interfaces;
@@ -24,7 +24,7 @@ namespace Catalogs.API.Extensions
 
         public static void AddAutoValidation(this IServiceCollection services)
         {
-            services.AddValidatorsFromAssembly(typeof(Application.AssemblyReference).Assembly);
+            services.AddValidatorsFromAssemblyContaining(typeof(AssemblyReference));
             services.AddFluentValidationAutoValidation();
         }
 

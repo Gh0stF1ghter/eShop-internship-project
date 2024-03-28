@@ -15,7 +15,7 @@ namespace Catalogs.Application.Handlers.VendorHandlers
 
             if (vendorExists)
             {
-                throw new BadRequestException(VendorMessages.VendorExists);
+                throw new AlreadyExistsException(VendorMessages.VendorExists);
             }
 
             var vendor = _mapper.Map<Vendor>(command.VendorDto);

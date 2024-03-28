@@ -59,7 +59,7 @@ namespace Catalogs.Tests.UnitTests.HandlersTests
 
             //Assert
             await response.Should()
-                .ThrowAsync<BadRequestException>()
+                .ThrowAsync<AlreadyExistsException>()
                 .WithMessage(BrandMessages.BrandExists);
         }
 
