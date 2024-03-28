@@ -6,7 +6,7 @@ namespace Baskets.DataAccess.Entities.Models
     public class User
     {
         [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
+        [BsonRepresentation(BsonType.String)]
         public string Id { get; set; } = null!;
 
         public int UserId { get; set; }

@@ -31,7 +31,7 @@ namespace Identity.BusinessLogic.Services.Implementations
             return tokenDto;
         }
 
-        public async Task<bool> RegisterUserAsync(RegisterDTO registerCredentials, CancellationToken token)
+        public async Task<User> RegisterUserAsync(RegisterDTO registerCredentials, CancellationToken token)
         {
             await ValidateRegisterAsync(registerCredentials.Email);
 
@@ -43,7 +43,7 @@ namespace Identity.BusinessLogic.Services.Implementations
 
             await _userManager.AddToRoleAsync(user, Roles.User);
 
-            return true;
+            return user;
         }
 
         private async Task<User> ValidateAuthenticationAsync(string email, string password)

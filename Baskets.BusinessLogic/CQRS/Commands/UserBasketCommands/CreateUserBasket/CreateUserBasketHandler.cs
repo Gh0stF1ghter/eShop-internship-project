@@ -25,14 +25,6 @@ namespace Baskets.BusinessLogic.CQRS.Commands.UserBasketCommands.CreateUserBaske
 
         private async Task FindReferencesAsync(CreateUserBasketCommand comand, CancellationToken cancellationToken)
         {
-            var userExists = await unitOfWork.User
-                .GetByConditionAsync(u => u.Id.Equals(comand.UserId), cancellationToken);
-
-            if (userExists == null)
-            {
-                throw new NotFoundException(UserMessages.NotFound);
-            }
-
             var basketExists = await unitOfWork.Basket
                 .GetByConditionAsync(b => b.UserId.Equals(comand.UserId), cancellationToken);
 
