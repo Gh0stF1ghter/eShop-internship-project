@@ -6,41 +6,16 @@ namespace Baskets.DataAccess.DbContext
 {
     public class SeedTestData(IMongoDatabase database, IOptions<BasketDatabaseSettings> options)
     {
-        private readonly IMongoCollection<User> _users = database.GetCollection<User>(options.Value.UsersCollectionName);
         private readonly IMongoCollection<Item> _items = database.GetCollection<Item>(options.Value.ItemsCollectionName);
 
         public void Seed()
         {
-            var isUsersCollectionFilled = _users.CountDocuments(_ => true);
-
-            if (isUsersCollectionFilled == 0)
-            {
-                AddUsers();
-            }
-
             var isItemsCollectionFilled = _items.CountDocuments(_ => true);
 
             if (isItemsCollectionFilled == 0)
             {
                 AddItems();
             }
-        }
-
-        private void AddUsers()
-        {
-            _users.InsertMany([
-                new User
-                {
-                    UserId = 1,
-                },
-                new User
-                {
-                    UserId = 2
-                },
-                new User
-                {
-                    UserId = 3
-                }]);
         }
 
         private void AddItems()

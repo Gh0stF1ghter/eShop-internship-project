@@ -7,7 +7,6 @@ namespace Baskets.DataAccess.UnitOfWork
     {
         IRepository<UserBasket> Basket { get; }
         IBasketItemRepository BasketItem { get; }
-        IRepository<User> User { get; }
         IRepository<Item> Item { get; }
     }
 }
