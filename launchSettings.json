@@ -12,7 +12,8 @@
         "elasticsearch": "StartWithoutDebugging",
         "kibana": "StartWithoutDebugging",
         "mssql.db": "StartWithoutDebugging",
-        "redis": "StartWithoutDebugging"
+        "redis": "StartWithoutDebugging",
+        "baskets.api": "StartDebugging"
       }
     }
   }

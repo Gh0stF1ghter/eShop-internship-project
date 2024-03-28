@@ -26,8 +26,58 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    depends_on: 
+      - rabbitmq
+      - mssql.db
     networks:
-    - elastic
+      - elastic
+
+  baskets.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+    ports:
+      - "8080"
+      - "8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    depends_on: 
+      - rabbitmq
+      - mongo
+    networks:
+      - elastic
+
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    restart: always
+    networks:
+      - elastic
+
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/
+    networks:
+      - elastic
+
+
+  rabbitmq:
+    container_name: "rabbitmqcontainer"
+    image: rabbitmq:management
+    hostname: "rabbitmq"
+    ports:
+        - '5672:5672'
+        - '15672:15672'
+    networks:
+      - elastic
 
   mssql.db: 
     image: "mcr.microsoft.com/mssql/server:2022-latest"
@@ -48,6 +98,8 @@ services:
     environment:
         - REDIS_PORT=6379
         - REDIS_PASSWORD=A&VeryComplex123Password
+    networks:
+      - elastic
 
   elasticsearch:
    container_name: elasticsearch
