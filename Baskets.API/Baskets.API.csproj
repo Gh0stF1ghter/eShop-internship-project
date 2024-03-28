@@ -7,11 +7,16 @@
     <InvariantGlobalization>true</InvariantGlobalization>
     <UserSecretsId>5541395a-c0f3-4073-9515-acb0b226cdbd</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.0" />
+    <PackageReference Include="MassTransit" Version="8.2.0" />
+    <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
     <PackageReference Include="Serilog" Version="3.1.1" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
     <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
@@ -21,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Baskets.BusinessLogic\Baskets.BusinessLogic.csproj" />
+    <ProjectReference Include="..\RabbitMQ.EventBus\RabbitMQ.EventBus.csproj" />
   </ItemGroup>
 
 </Project>

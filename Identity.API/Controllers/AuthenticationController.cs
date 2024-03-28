@@ -1,12 +1,14 @@
 ﻿using Identity.BusinessLogic.DTOs;
 using Identity.BusinessLogic.Services.Interfaces;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
+using RabbitMQ.EventBus;
 
 namespace Identity.API.Controllers
 {
     [Route("api/authentication")]
     [ApiController]
-    public class AuthenticationController(IAuthenticationService authenticationService) : ControllerBase
+    public class AuthenticationController(IAuthenticationService authenticationService, IPublishEndpoint publishEndpoint) : ControllerBase
     {
         private readonly IAuthenticationService _authenticationService = authenticationService;
 
@@ -27,7 +29,10 @@ namespace Identity.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterDTO register, CancellationToken token = default)
         {
-            await _authenticationService.RegisterUserAsync(register, token);
+            var user = await _authenticationService.RegisterUserAsync(register, token);
+
+            await publishEndpoint.Publish<UserCreated>(new(UserId: user.Id), token);
+            await Console.Out.WriteLineAsync(user.Id + " published");
 
             return Created();
         }

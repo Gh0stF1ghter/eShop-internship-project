@@ -6,6 +6,9 @@ using Identity.BusinessLogic.Services.Interfaces;
 using Identity.BusinessLogic.Validators;
 using Identity.DataAccess.Data;
 using Identity.DataAccess.Entities.Models;
+using Identity.DataAccess.Repositories.Implementations;
+using Identity.DataAccess.Repositories.Interfaces;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -46,7 +49,10 @@ namespace Identity.API.Extensions
         {
             var mapperConfig = new MapperConfiguration(mc =>
             {
-                mc.AddProfile(new MappingProfile());
+                mc.AddProfiles([
+                    new MappingProfile(),
+                    new UserProfile()
+                    ]);
             });
 
             IMapper mapper = mapperConfig.CreateMapper();
@@ -62,7 +68,30 @@ namespace Identity.API.Extensions
         public static void AddDependencies(this IServiceCollection services)
         {
             services.AddTransient<ITokenService, TokenService>();
+            services.AddTransient<IUserService, UserService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+        }
+
+        public static void AddMessageBroker(this IServiceCollection services)
+        {
+            services.AddMassTransit(x =>
+            {
+                x.SetKebabCaseEndpointNameFormatter();
+                x.UsingRabbitMq((context, busFactoryConfigurator) =>
+                {
+                    busFactoryConfigurator.Host("rabbitmq");
+                });
+            });
+        }
+
+        public static void AddMigrations(this IApplicationBuilder builder)
+        {
+            var services = builder.ApplicationServices.CreateScope();
+
+            var context = services.ServiceProvider.GetService<IdentityContext>();
+
+            context?.Database.Migrate();
         }
 
         public static void ApplyMigrations(this IApplicationBuilder builder)

@@ -1,5 +1,6 @@
 using Catalogs.API.Extensions;
 using Identity.API.Extensions;
+using MassTransit;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,8 @@ services.AddMapper();
 
 services.AddAutoValidation();
 
+services.AddMessageBroker();
+
 services.AddDependencies();
 
 services.AddControllers();
@@ -32,6 +35,8 @@ var app = builder.Build();
 app.ApplyMigrations();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+app.AddMigrations();
 
 if (app.Environment.IsDevelopment())
 {

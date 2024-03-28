@@ -3,9 +3,11 @@ using Baskets.DataAccess.DBContext;
 using Baskets.DataAccess.Entities.Models;
 using Baskets.DataAccess.UnitOfWork;
 using FluentValidation;
+using MassTransit;
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Configuration;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
+using System.Reflection;
 
 namespace Baskets.API.Extensions
 {
@@ -24,13 +26,29 @@ namespace Baskets.API.Extensions
             services.AddFluentValidationAutoValidation();
         }
 
+        public static void AddMessageBroker(this IServiceCollection services)
+        {
+            services.AddMassTransit(busCfg =>
+            {
+                var assembly = Assembly.GetExecutingAssembly();
+
+                busCfg.AddConsumers(assembly);
+                busCfg.UsingRabbitMq((context, busFactoryCfg) =>
+                {
+                    busFactoryCfg.Host("rabbitmq", "/");
+
+                    busFactoryCfg.ConfigureEndpoints(context);
+                });
+            });
+        }
+
         public static void ConfigureMongoClient(this IServiceCollection services) =>
             services.AddSingleton<IMongoClient>(_ =>
             {
                 var settings = new MongoClientSettings()
                 {
                     Scheme = ConnectionStringScheme.MongoDB,
-                    Server = new MongoServerAddress("localhost", 27017)
+                    Server = new MongoServerAddress("mongo", 27017)
                 };
 
                 return new MongoClient(settings);
