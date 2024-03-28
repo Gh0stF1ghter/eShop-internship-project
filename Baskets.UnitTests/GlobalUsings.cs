@@ -7,3 +7,4 @@ global using Baskets.UnitTests.Mock;
 global using FluentAssertions;
 global using Moq;
 global using Bogus;
+global using System.Net;
