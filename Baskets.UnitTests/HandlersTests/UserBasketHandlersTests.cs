@@ -60,8 +60,6 @@ namespace Baskets.UnitTests.HandlersTests
             //Arrange
             _unitOfWorkMock.GetBasketByCondition(null);
 
-            _unitOfWorkMock.GetUserByCondition(DataGenerator.Users[0]);
-
             var comand = new CreateUserBasketCommand(It.IsAny<string>());
             var handler = new CreateUserBasketHandler(_unitOfWorkMock.Object, _mapper);
 
@@ -73,29 +71,10 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task CreateUserBasketAsync_InvalidId_ThrowsNotFoundException()
-        {
-            //Arrange
-            _unitOfWorkMock.GetUserByCondition(null);
-
-            var comand = new CreateUserBasketCommand(It.IsAny<string>());
-            var handler = new CreateUserBasketHandler(_unitOfWorkMock.Object, _mapper);
-
-            //Act
-            var response = async () => await handler.Handle(comand, cancellationToken: default);
-
-            //Assert
-            await response.Should()
-                .ThrowAsync<NotFoundException>()
-                .WithMessage(UserMessages.NotFound);
-        }
-
-        [Fact]
         public async Task CreateUserBasketAsync_BasketExists_ThrowsAlreadyExistException()
         {
             //Arrange
             _unitOfWorkMock.GetBasketByCondition(DataGenerator.UserBaskets[0]);
-            _unitOfWorkMock.GetUserByCondition(DataGenerator.Users[0]);
 
             var comand = new CreateUserBasketCommand(It.IsAny<string>());
             var handler = new CreateUserBasketHandler(_unitOfWorkMock.Object, _mapper);
@@ -116,7 +95,6 @@ namespace Baskets.UnitTests.HandlersTests
             var basket = DataGenerator.UserBaskets[0];
 
             _unitOfWorkMock.DeleteBasket(basket);
-            _unitOfWorkMock.GetUserByCondition(null);
 
             var comand = new DeleteUserBasketCommand(It.IsAny<string>());
             var handler = new DeleteUserBasketHandler(_unitOfWorkMock.Object);
@@ -129,30 +107,10 @@ namespace Baskets.UnitTests.HandlersTests
         }
 
         [Fact]
-        public async Task DeleteUserBasketAsync_UserExists_ThrowsBadRequestException()
-        {
-            //Arrange
-            _unitOfWorkMock.GetUserByCondition(DataGenerator.Users[0]);
-
-            var comand = new DeleteUserBasketCommand(It.IsAny<string>());
-            var handler = new DeleteUserBasketHandler(_unitOfWorkMock.Object);
-
-            //Act
-            var response = async () => await handler.Handle(comand, cancellationToken: default);
-
-            //Assert
-            await response.Should()
-                .ThrowAsync<BadRequestException>()
-                .WithMessage(UserBasketMessages.UserExists);
-        }
-
-        [Fact]
         public async Task DeleteUserBasketAsync_InvalidId_ThrowsNotFoundException()
         {
             //Arrange
             _unitOfWorkMock.GetBasketByCondition(null);
-            _unitOfWorkMock.GetUserByCondition(null);
-
 
             var comand = new DeleteUserBasketCommand(It.IsAny<string>());
             var handler = new DeleteUserBasketHandler(_unitOfWorkMock.Object);

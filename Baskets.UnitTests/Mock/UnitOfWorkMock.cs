@@ -33,9 +33,5 @@ namespace Baskets.UnitTests.Mock
         public void GetBasketItemByCondition(BasketItem? basketItem) =>
             Setup(uof => uof.BasketItem.GetByConditionAsync(It.IsAny<Expression<Func<BasketItem, bool>>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(basketItem);
-
-        public void GetUserByCondition(User? user) =>
-            Setup(uof => uof.User.GetByConditionAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(user);
     }
 }

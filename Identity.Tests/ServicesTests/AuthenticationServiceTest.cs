@@ -68,7 +68,7 @@ namespace Identity.Tests.ServicesTests
             var response = await service.RegisterUserAsync(registerDto, token: default);
 
             //Assert
-            response.Should().Be(true);
+            response.UserName.Should().Be(registerDto.Username);
         }
     }
 }

@@ -7,7 +7,6 @@ namespace Baskets.UnitTests.BasketFakeDb
         public static readonly List<BasketItem> BasketItems = [];
         public static readonly List<UserBasket> UserBaskets = [];
         public static readonly List<Item> Items = [];
-        public static readonly List<User> Users = [];
 
         public static void InitBogusData()
         {
@@ -41,10 +40,6 @@ namespace Baskets.UnitTests.BasketFakeDb
                 .RuleFor(i => i.Id, itemId)
                 .RuleFor(i => i.Name, f => f.Commerce.Product());
 
-        private static Faker<User> GetUserGenerator(string userId) =>
-            new Faker<User>()
-                .RuleFor(u => u.Id, userId);
-
         private static Faker<BasketItem> GetBasketItemGenerator() =>
             new Faker<BasketItem>()
                 .RuleFor(bi => bi.UserId, f => f.Random.String(24, minChar: '0', maxChar: 'F'))
@@ -54,18 +49,7 @@ namespace Baskets.UnitTests.BasketFakeDb
 
         private static Faker<UserBasket> GetUserBasketGenerator() =>
             new Faker<UserBasket>()
-                .RuleFor(ub => ub.UserId, f => f.Random.String(24, minChar: '0', maxChar: 'F'))
-                .RuleFor(ub => ub.User, (_, bi) => GetBogusUserData(bi.UserId));
-
-        private static User GetBogusUserData(string userId)
-        {
-            var generator = GetUserGenerator(userId);
-            var user = generator.Generate();
-
-            Users.Add(user);
-
-            return user;
-        }
+                .RuleFor(ub => ub.UserId, f => f.Random.String(24, minChar: '0', maxChar: 'F'));
 
         private static Item GetBogusItemData(string itemId)
         {
