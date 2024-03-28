@@ -61,7 +61,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalogs.Tests", "Catalogs.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.Tests", "Identity.Tests\Identity.Tests.csproj", "{22668F84-A42A-4253-BCFC-06522F62878C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Baskets.UnitTests", "Baskets.UnitTests\Baskets.UnitTests.csproj", "{272D2C66-5DD1-4C7C-87B8-ADD0ED901C1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Baskets.Tests", "Baskets.UnitTests\Baskets.Tests.csproj", "{272D2C66-5DD1-4C7C-87B8-ADD0ED901C1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
