@@ -24,7 +24,7 @@ namespace Catalogs.API.Extensions
 
         public static void AddAutoValidation(this IServiceCollection services)
         {
-            services.AddValidatorsFromAssemblyContaining(typeof(AssemblyReference));
+            services.AddValidatorsFromAssemblyContaining<AssemblyReference>();
             services.AddFluentValidationAutoValidation();
         }
 

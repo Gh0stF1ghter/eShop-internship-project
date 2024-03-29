@@ -11,19 +11,21 @@ using Testcontainers.MsSql;
 
 namespace Identity.Tests.IntegrationTests.ApiFactory
 {
-    public class IdentityApiApplicationFactory : WebApplicationFactory<Program>
+    public class IdentityApiApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
     {
         private const int MsSqlPort = 1433;
         private const string SA_Password = "A&VeryComplex123Password";
 
-        private readonly IContainer _container;
+        private readonly MsSqlContainer _container;
 
         public IdentityApiApplicationFactory()
         {
-            _container = new ContainerBuilder()
+            _container = new MsSqlBuilder()
+                .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
                 .WithPortBinding(MsSqlPort, true)
                 .WithEnvironment("ACCEPT_EULA", "Y")
                 .WithEnvironment("MSSQL_SA_PASSWORD", SA_Password)
+                .WithEnvironment("SQLCMDPASSWORD", SA_Password)
                 .Build();
         }
 
@@ -40,16 +42,18 @@ namespace Identity.Tests.IntegrationTests.ApiFactory
 
                 services.AddDbContext<IdentityContext>(options =>
                 options.UseSqlServer(
-                    $"Server={host},{port}; Database=Catalog; User Id=SA; Password={SA_Password}; TrustServerCertificate=true"));
+                    $"Server={host},{port}; Database=Identity; User Id=SA; Password={SA_Password}; Trusted_Connection=False; MultipleActiveResultSets=true; TrustServerCertificate=true"));
 
-             
+                var provider = services.BuildServiceProvider();
+
+                var context = provider.GetService<IdentityContext>();
+
+                context?.Database.Migrate();
             });
         }
 
-        public async Task InitializeAsync(IApplicationBuilder builder)
+        public async Task InitializeAsync()
         {
-
-
             await _container.StartAsync();
         }
 

@@ -45,9 +45,9 @@ namespace Catalogs.Tests.IntegrationTests.ApiFactory
                 options.UseSqlServer(
                     $"Server={host},{port}; Database=Catalog; User Id=SA; Password={SA_Password}; Trusted_Connection=False; MultipleActiveResultSets=true; TrustServerCertificate=true"));
 
-                var privoder = services.BuildServiceProvider();
+                var provider = services.BuildServiceProvider();
 
-                var context = privoder.GetService<CatalogContext>();
+                var context = provider.GetService<CatalogContext>();
 
                 context?.Database.Migrate();
             });

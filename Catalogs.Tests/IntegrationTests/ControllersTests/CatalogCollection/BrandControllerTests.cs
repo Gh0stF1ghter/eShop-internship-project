@@ -106,13 +106,12 @@ namespace Catalogs.Tests.IntegrationTests.ControllersTests.CatalogCollection
         }
 
         [Theory]
-        [InlineData("", "1")]
-        [InlineData("J", "1")]
-        [InlineData("Jane", "12")]
-        public async Task UpdateBrandAsync_InvalidBrandName_ReturnsBadRequest(string brandName, string brandId)
+        [InlineData("")]
+        [InlineData("J")]
+        public async Task UpdateBrandAsync_InvalidBrandName_ReturnsBadRequest(string brandName)
         {
             //Arrange
-            var route = $"{routeBase}/{brandId}";
+            var route = $"{routeBase}/1";
             var brandToUpdate = new BrandManipulateDto(brandName);
 
             //Act
@@ -120,6 +119,20 @@ namespace Catalogs.Tests.IntegrationTests.ControllersTests.CatalogCollection
 
             //Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
+        [Fact]
+        public async Task UpdateBrandAsync_InvalidBrandId_ReturnsNotFound()
+        {
+            //Arrange
+            var route = $"{routeBase}/12";
+            var brandToUpdate = new BrandManipulateDto("Jane");
+            
+            //Act
+            var response = await _httpClient.PutAsJsonAsync(route, brandToUpdate);
+
+            //Assert
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Fact]

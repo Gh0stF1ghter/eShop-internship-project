@@ -99,10 +99,11 @@ namespace Catalogs.Tests.IntegrationTests.ControllersTests
         public async Task AddItemAsync_ExistingItem_ReturnsConflict()
         {
             //Arrange
+            var route = $"{routeBase}/2/items";
             var itemToCreate = new ItemManipulateDto("Headphones", 15, 49.99, "headphones.jpg", 5, 2);
 
             //Act
-            var response = await _httpClient.PostAsJsonAsync(routeBase, itemToCreate);
+            var response = await _httpClient.PostAsJsonAsync(route, itemToCreate);
 
             //Assert
             response.StatusCode.Should().Be(HttpStatusCode.Conflict);
