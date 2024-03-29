@@ -8,7 +8,7 @@ namespace Identity.API.Controllers
 {
     [Route("api/authentication")]
     [ApiController]
-    public class AuthenticationController(IAuthenticationService authenticationService, IPublishEndpoint publishEndpoint) : ControllerBase
+    public class AuthenticationController(IAuthenticationService authenticationService) : ControllerBase
     {
         private readonly IAuthenticationService _authenticationService = authenticationService;
 
@@ -30,9 +30,6 @@ namespace Identity.API.Controllers
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterDTO register, CancellationToken token = default)
         {
             var user = await _authenticationService.RegisterUserAsync(register, token);
-
-            await publishEndpoint.Publish<UserCreated>(new(UserId: user.Id), token);
-            await Console.Out.WriteLineAsync(user.Id + " published");
 
             return Created();
         }

@@ -4,8 +4,10 @@ using Identity.BusinessLogic.Services.Interfaces;
 using Identity.DataAccess.Entities.Constants;
 using Identity.DataAccess.Entities.Exceptions;
 using Identity.DataAccess.Entities.Models;
+using MassTransit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using RabbitMQ.EventBus;
 
 namespace Identity.BusinessLogic.Services.Implementations
 {
@@ -13,6 +15,7 @@ namespace Identity.BusinessLogic.Services.Implementations
         UserManager<User> userManager,
         ITokenService tokenService,
         IMapper mapper,
+        IPublishEndpoint publishEndpoint,
         ILogger<AuthenticationService> logger
         ) : IAuthenticationService
     {
@@ -42,6 +45,9 @@ namespace Identity.BusinessLogic.Services.Implementations
             _logger.LogInformation("Adding role {role} to user {name}", Roles.User, user.UserName);
 
             await _userManager.AddToRoleAsync(user, Roles.User);
+
+            await publishEndpoint.Publish<UserCreated>(new(UserId: user.Id), token);
+            await Console.Out.WriteLineAsync(user.Id + " published");
 
             return user;
         }

@@ -4,10 +4,12 @@ using Identity.BusinessLogic.Services.Interfaces;
 using Identity.DataAccess.Entities.Constants;
 using Identity.DataAccess.Entities.Exceptions;
 using Identity.DataAccess.Repositories.Interfaces;
+using MassTransit;
+using RabbitMQ.EventBus;
 
 namespace Identity.BusinessLogic.Services.Implementations
 {
-    public class UserService(IUserRepository userRepository, IMapper mapper) : IUserService
+    public class UserService(IUserRepository userRepository, IPublishEndpoint publish, IMapper mapper) : IUserService
     {
         public async Task<IEnumerable<UserDto>> GetAllUsersAsync(CancellationToken cancellationToken)
         {
@@ -42,6 +44,9 @@ namespace Identity.BusinessLogic.Services.Implementations
             }
 
             await userRepository.DeleteAsync(user, cancellationToken);
+
+            await publish.Publish<UserDeleted>(new(UserId: user.Id), cancellationToken);
+            await Console.Out.WriteLineAsync(user + "published to delete");
         }
     }
 }

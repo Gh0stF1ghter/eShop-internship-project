@@ -63,7 +63,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.Tests", "Identity.
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{AFC503E5-8BB4-4840-9BD7-72771E4C21D6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Baskets.UnitTests", "Baskets.UnitTests\Baskets.UnitTests.csproj", "{272D2C66-5DD1-4C7C-87B8-ADD0ED901C1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Baskets.Tests", "Baskets.UnitTests\Baskets.Tests.csproj", "{272D2C66-5DD1-4C7C-87B8-ADD0ED901C1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
