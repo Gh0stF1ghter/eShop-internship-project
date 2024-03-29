@@ -106,13 +106,12 @@ namespace Catalogs.Tests.IntegrationTests.ControllersTests.CatalogCollection
         }
 
         [Theory]
-        [InlineData("", "1")]
-        [InlineData("J", "1")]
-        [InlineData("Jane", "12")]
-        public async Task UpdateVendorAsync_InvalidVendorName_ReturnsBadRequest(string vendorName, string vendorId)
+        [InlineData("")]
+        [InlineData("J")]
+        public async Task UpdateVendorAsync_InvalidVendorName_ReturnsBadRequest(string vendorName)
         {
             //Arrange
-            var route = $"{routeBase}/{vendorId}";
+            var route = $"{routeBase}/1";
             var vendorToUpdate = new VendorManipulateDto(vendorName);
 
             //Act
@@ -121,6 +120,21 @@ namespace Catalogs.Tests.IntegrationTests.ControllersTests.CatalogCollection
             //Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
+
+        [Fact]
+        public async Task UpdateVendorAsync_InvalidVendorId_ReturnsNotFound()
+        {
+            //Arrange
+            var route = $"{routeBase}/12";
+            var vendorToUpdate = new VendorManipulateDto("Jane");
+
+            //Act
+            var response = await _httpClient.PutAsJsonAsync(route, vendorToUpdate);
+
+            //Assert
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
 
         [Fact]
         public async Task DeleteVendorAsync_ValidParameters_ReturnsOk()

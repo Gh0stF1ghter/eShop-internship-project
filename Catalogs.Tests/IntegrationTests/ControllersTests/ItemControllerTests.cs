@@ -22,6 +22,10 @@ namespace Catalogs.Tests.IntegrationTests.ControllersTests
             //Arrange
             var route = $"{routeBase}/2";
 
+            var request = new HttpRequestMessage(HttpMethod.Get, route);
+
+            request.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
             //Act
             var response = await _httpClient.GetAsync(route);
 
@@ -73,26 +77,40 @@ namespace Catalogs.Tests.IntegrationTests.ControllersTests
         }
 
         [Theory]
-        [InlineData("J", 1, 100, 1, 1)]
-        [InlineData("", 1, 100, 1, 1)]
-        [InlineData(".bgkrbfkldjgheurhperuhgidjhfgiperh", 1, 100, 1, 1)]
-        [InlineData("Photo", 0, 100, 1, 1)]
-        [InlineData("Photo", -1, 100, 1, 1)]
-        [InlineData("Photo", 1, 0, 1, 1)]
-        [InlineData("Photo", 1, -1, 1, 1)]
-        [InlineData("Photo", 1, -1, 11, 1)]
-        [InlineData("Photo", 1, -1, 1, 11)]
-        public async Task AddItemAsync_InvalidItemParameters_ReturnsBadRequest(string name, int stock, double price, int vendorId, int brandId)
+        [InlineData("J", 1, 100)]
+        [InlineData("", 1, 100)]
+        [InlineData(".bgkrbfkldjgheurhperuhgidjhfgcvbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbiperh", 1, 100)]
+        [InlineData("Photo", -1, 100)]
+        [InlineData("Photo", 1, 0)]
+        [InlineData("Photo", 1, -1)]
+        public async Task AddItemAsync_InvalidItemParameters_ReturnsBadRequest(string name, int stock, double price)
         {
             //Arrange
             var route = $"{routeBase}/2/items";
-            var itemToCreate = new ItemManipulateDto(name, stock, price, "img.jpg", vendorId, brandId);
+            var itemToCreate = new ItemManipulateDto(name, stock, price, "img.jpg", 1, 1);
 
             //Act
             var response = await _httpClient.PostAsJsonAsync(route, itemToCreate);
 
             //Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
+        [Theory]
+        [InlineData(111, 1, 1)]
+        [InlineData(1, 111, 1)]
+        [InlineData(1, 1, 111)]
+        public async Task AddItemAsync_InvalidIds_ReturnsNotFound(int typeId, int vendorId, int brandId)
+        {
+            //Arrange
+            var route = $"{routeBase}/{typeId}/items";
+            var itemToCreate = new ItemManipulateDto("Photo", 1, 100, "img.jpg", vendorId, brandId);
+
+            //Act
+            var response = await _httpClient.PostAsJsonAsync(route, itemToCreate);
+
+            //Assert
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Fact]
@@ -125,8 +143,7 @@ namespace Catalogs.Tests.IntegrationTests.ControllersTests
         [Theory]
         [InlineData("J", 1, 100, 1, 1)]
         [InlineData("", 1, 100, 1, 1)]
-        [InlineData(".bgkrbfkldjgheurhperuhgidjhfgiperh", 1, 100, 1, 1)]
-        [InlineData("Photo", 0, 100, 1, 1)]
+        [InlineData(".bgkrbfkldjgheurhperuhgidjhfgcvbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbiperh", 1, 100, 1, 1)]
         [InlineData("Photo", -1, 100, 1, 1)]
         [InlineData("Photo", 1, 0, 1, 1)]
         [InlineData("Photo", 1, -1, 1, 1)]

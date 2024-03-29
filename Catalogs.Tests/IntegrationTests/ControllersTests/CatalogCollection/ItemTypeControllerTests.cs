@@ -106,13 +106,12 @@ namespace Catalogs.Tests.IntegrationTests.ControllersTests.CatalogCollection
         }
 
         [Theory]
-        [InlineData("", "1")]
-        [InlineData("J", "1")]
-        [InlineData("Jane", "12")]
-        public async Task UpdateItemTypeAsync_InvalidItemTypeName_ReturnsBadRequest(string ItemTypeName, string ItemTypeId)
+        [InlineData("")]
+        [InlineData("J")]
+        public async Task UpdateItemTypeAsync_InvalidItemTypeName_ReturnsBadRequest(string ItemTypeName)
         {
             //Arrange
-            var route = $"{routeBase}/{ItemTypeId}";
+            var route = $"{routeBase}/1";
             var itemTypeToUpdate = new ItemTypeManipulateDto(ItemTypeName);
 
             //Act
@@ -121,6 +120,21 @@ namespace Catalogs.Tests.IntegrationTests.ControllersTests.CatalogCollection
             //Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
+
+        [Fact]
+        public async Task UpdateItemTypeAsync_InvalidItemTypeId_ReturnsNotFound()
+        {
+            //Arrange
+            var route = $"{routeBase}/12";
+            var itemTypeToUpdate = new ItemTypeManipulateDto("Jane");
+
+            //Act
+            var response = await _httpClient.PutAsJsonAsync(route, itemTypeToUpdate);
+
+            //Assert
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
 
         [Fact]
         public async Task DeleteItemTypeAsync_ValidParameters_ReturnsOk()
