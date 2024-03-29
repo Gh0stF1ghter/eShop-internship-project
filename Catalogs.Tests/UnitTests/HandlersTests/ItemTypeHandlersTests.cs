@@ -1,10 +1,10 @@
 ﻿using Catalogs.Application.Comands.ItemTypeCommands;
 using Catalogs.Application.Handlers.ItemTypeHandlers;
 using Catalogs.Application.Queries.ItemTypeQueries;
-using Catalogs.Tests.FakeData;
-using Catalogs.Tests.Mocks;
+using Catalogs.Tests.UnitTests.FakeDataGenerator;
+using Catalogs.Tests.UnitTests.Mocks;
 
-namespace Catalogs.Tests.HandlersTests
+namespace Catalogs.Tests.UnitTests.HandlersTests
 {
     public class ItemTypeHandlersTests
     {

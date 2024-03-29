@@ -1,6 +1,6 @@
 ﻿using Baskets.DataAccess.Entities.Models;
 
-namespace Baskets.UnitTests.BasketFakeDb
+namespace Baskets.Tests.UnitTests.BasketFakeDb
 {
     internal static class DataGenerator
     {

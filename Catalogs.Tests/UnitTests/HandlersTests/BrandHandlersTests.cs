@@ -1,10 +1,10 @@
 ﻿using Catalogs.Application.Comands.BrandCommands;
 using Catalogs.Application.Handlers.BrandHandlers;
 using Catalogs.Application.Queries.BrandQueries;
-using Catalogs.Tests.FakeData;
-using Catalogs.Tests.Mocks;
+using Catalogs.Tests.UnitTests.FakeDataGenerator;
+using Catalogs.Tests.UnitTests.Mocks;
 
-namespace Catalogs.Tests.HandlersTests
+namespace Catalogs.Tests.UnitTests.HandlersTests
 {
     public class BrandHandlersTests
     {

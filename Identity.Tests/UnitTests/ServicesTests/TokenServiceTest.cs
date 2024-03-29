@@ -1,4 +1,6 @@
-﻿namespace Identity.Tests.ServicesTests
+﻿using Identity.Tests.UnitTests.Mocks;
+
+namespace Identity.Tests.UnitTests.ServicesTests
 {
     public class TokenServiceTest
     {

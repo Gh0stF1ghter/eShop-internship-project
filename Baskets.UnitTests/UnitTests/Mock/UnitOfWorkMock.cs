@@ -2,7 +2,7 @@
 using Baskets.DataAccess.UnitOfWork;
 using System.Linq.Expressions;
 
-namespace Baskets.UnitTests.Mock
+namespace Baskets.Tests.UnitTests.Mock
 {
     internal class UnitOfWorkMock : Mock<IUnitOfWork>
     {

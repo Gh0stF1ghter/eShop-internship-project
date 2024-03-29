@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Identity.BusinessLogic.Mapping;
 using Identity.BusinessLogic.Services.Interfaces;
+using Identity.Tests.UnitTests.Mocks;
+using MassTransit;
 using Microsoft.Extensions.Logging;
 
-namespace Identity.Tests.ServicesTests
+namespace Identity.Tests.UnitTests.ServicesTests
 {
     public class AuthenticationServiceTest
     {
@@ -11,13 +13,14 @@ namespace Identity.Tests.ServicesTests
 
         public AuthenticationServiceTest()
         {
-            var store = new Mock<IUserStore<User>>(); 
+            var store = new Mock<IUserStore<User>>();
 
             _userManagerMock = new(store.Object, null, null, null, null, null, null, null, null);
         }
 
         private readonly Mock<ITokenService> _tokenServiceMock = new();
         private readonly Mock<ILogger<AuthenticationService>> _logger = new();
+        private readonly Mock<IPublishEndpoint> _publishEndpointMock = new();
 
         private readonly Mapper _mapper = new(
             new MapperConfiguration(mc =>
@@ -44,7 +47,7 @@ namespace Identity.Tests.ServicesTests
             _tokenServiceMock.Setup(ts => ts.CreateTokenAsync(user, true))
                 .ReturnsAsync(new TokenDTO("123", "123"));
 
-            var service = new AuthenticationService(_userManagerMock.Object, _tokenServiceMock.Object, _mapper, _logger.Object);
+            var service = new AuthenticationService(_userManagerMock.Object, _tokenServiceMock.Object, _mapper, _publishEndpointMock.Object, _logger.Object);
 
             //Act
             var response = await service.AuthenticateAsync(loginDto, cancellationToken: default);
@@ -62,7 +65,7 @@ namespace Identity.Tests.ServicesTests
             _userManagerMock.FindByEmail(null);
             _userManagerMock.Create(IdentityResult.Success);
 
-            var service = new AuthenticationService(_userManagerMock.Object, _tokenServiceMock.Object, _mapper, _logger.Object);
+            var service = new AuthenticationService(_userManagerMock.Object, _tokenServiceMock.Object, _mapper, _publishEndpointMock.Object, _logger.Object);
 
             //Act
             var response = await service.RegisterUserAsync(registerDto, token: default);

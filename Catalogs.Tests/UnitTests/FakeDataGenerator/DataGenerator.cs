@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using Catalogs.Domain.RequestFeatures;
 
-namespace Catalogs.Tests.FakeData
+namespace Catalogs.Tests.UnitTests.FakeDataGenerator
 {
     internal static class DataGenerator
     {
