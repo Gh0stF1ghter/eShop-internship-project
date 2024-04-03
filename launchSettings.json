@@ -13,7 +13,10 @@
         "kibana": "StartWithoutDebugging",
         "mssql.db": "StartWithoutDebugging",
         "redis": "StartWithoutDebugging",
-        "ocelot.webhost": "StartDebugging"
+        "ocelot.webhost": "StartDebugging",
+        "baskets.api": "StartDebugging",
+        "mongo": "StartWithoutDebugging",
+        "mongo-express": "StartWithoutDebugging"
       }
     }
   }

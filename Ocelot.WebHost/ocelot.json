@@ -1,6 +1,6 @@
 {
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:5003"
+    "BaseUrl": "https://localhost:8081"
   },
   "Routes": [
     //Identity
@@ -11,8 +11,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002
+          "Host": "identity.api",
+          "Port": 8081
         }
       ]
     },
@@ -23,8 +23,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002
+          "Host": "identity.api",
+          "Port": 8081
         }
       ]
     },
@@ -37,8 +37,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "catalogs.api",
+          "Port": 8081
         }
       ]
     },
@@ -49,8 +49,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "catalogs.api",
+          "Port": 8081
         }
       ],
       "AuthenticationOptions": {
@@ -65,8 +65,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "catalogs.api",
+          "Port": 8081
         }
       ]
     },
@@ -77,8 +77,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "catalogs.api",
+          "Port": 8081
         }
       ],
       "AuthenticationOptions": {
@@ -94,8 +94,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "catalogs.api",
+          "Port": 8081
         }
       ]
     },
@@ -106,8 +106,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "catalogs.api",
+          "Port": 8081
         }
       ],
       "AuthenticationOptions": {
@@ -122,8 +122,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "catalogs.api",
+          "Port": 8081
         }
       ]
     },
@@ -134,8 +134,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "catalogs.api",
+          "Port": 8081
         }
       ],
       "AuthenticationOptions": {
@@ -151,8 +151,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "catalogs.api",
+          "Port": 8081
         }
       ]
     },
@@ -163,8 +163,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "catalogs.api",
+          "Port": 8081
         }
       ],
       "AuthenticationOptions": {
@@ -179,8 +179,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "catalogs.api",
+          "Port": 8081
         }
       ]
     },
@@ -191,8 +191,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "catalogs.api",
+          "Port": 8081
         }
       ],
       "AuthenticationOptions": {
@@ -208,8 +208,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "catalogs.api",
+          "Port": 8081
         }
       ]
     },
@@ -220,8 +220,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "catalogs.api",
+          "Port": 8081
         }
       ],
       "AuthenticationOptions": {
@@ -236,8 +236,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "catalogs.api",
+          "Port": 8081
         }
       ]
     },
@@ -248,8 +248,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "catalogs.api",
+          "Port": 8081
         }
       ],
       "AuthenticationOptions": {
@@ -266,8 +266,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "baskets.api",
+          "Port": 8081
         }
       ],
       "AuthenticationOptions": {
@@ -282,8 +282,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "baskets.api",
+          "Port": 8081
         }
       ],
       "AuthenticationOptions": {
@@ -299,8 +299,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "baskets.api",
+          "Port": 8081
         }
       ],
       "AuthenticationOptions": {

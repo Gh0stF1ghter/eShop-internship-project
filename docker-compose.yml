@@ -18,3 +18,9 @@ services:
     build:
       context: .
       dockerfile: Ocelot.WebHost/Dockerfile
+
+  baskets.api:
+    image: ${DOCKER_REGISTRY-}basketsapi
+    build:
+      context: .
+      dockerfile: Baskets.API/Dockerfile
