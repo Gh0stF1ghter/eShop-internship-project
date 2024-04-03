@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using Serilog;
+﻿using Serilog;
 using Serilog.Sinks.Elasticsearch;
 using System.Reflection;
-using System.Text;
 
 namespace Catalogs.API.Extensions
 {

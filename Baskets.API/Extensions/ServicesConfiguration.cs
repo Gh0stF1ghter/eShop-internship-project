@@ -6,7 +6,6 @@ using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
-using MongoDB.Driver.Core.Configuration;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using System.Text;
 
@@ -32,7 +31,8 @@ namespace Baskets.API.Extensions
                 new MongoClient(configuration["BasketDatabaseSettings:ConnectionString"]));
 
         public static void AddAuthentication(this IServiceCollection services, IConfiguration configuration) =>
-            services.AddAuthentication(options => {
+            services.AddAuthentication(options =>
+            {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             })
                 .AddJwtBearer(options =>

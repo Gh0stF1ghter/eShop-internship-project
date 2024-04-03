@@ -11,7 +11,7 @@ namespace Catalogs.Application.Handlers.BrandHandlers
 
         public async Task<BrandDto> Handle(CreateBrandComand command, CancellationToken token)
         {
-            var isBrandExists = await _unitOfWork.Brand.IsExistAsync(b => b.Name.Equals(command.BrandDto.Name, StringComparison.OrdinalIgnoreCase), token);
+            var isBrandExists = await _unitOfWork.Brand.IsExistAsync(b => b.Name.Equals(command.BrandDto.Name), token);
 
             if (isBrandExists)
             {

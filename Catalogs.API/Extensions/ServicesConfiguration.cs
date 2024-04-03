@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Catalogs.API.ActionFilters;
+﻿using Catalogs.API.ActionFilters;
 using Catalogs.API.Utility;
 using Catalogs.Application.DataShaping;
 using Catalogs.Application.DataTransferObjects;
@@ -64,22 +63,23 @@ namespace Catalogs.API.Extensions
         }
 
         public static void AddAuthentication(this IServiceCollection services, IConfiguration configuration) =>
-    services.AddAuthentication(options => {
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    })
-        .AddJwtBearer(options =>
-        {
-            options.TokenValidationParameters = new TokenValidationParameters
+            services.AddAuthentication(options =>
             {
-                ValidateAudience = false,
-                ValidateIssuer = true,
-                ValidIssuer = configuration["Jwt:Identity"],
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"])),
-                ClockSkew = TimeSpan.Zero
-            };
-        });
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = false,
+                        ValidateIssuer = true,
+                        ValidIssuer = configuration["Jwt:Identity"],
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"])),
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
 
         public static void ApplyMigrations(this IApplicationBuilder builder)
         {

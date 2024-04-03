@@ -1,45 +1,19 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
-using System.Text;
+using Ocelot.WebHost.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration
-                .AddJsonFile("ocelot.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"ocelot.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
+var services = builder.Services;
 
-builder.Services.AddOcelot(builder.Configuration);
+services.ConfigureOcelot(builder.Configuration, builder.Environment);
+services.AddAuthentication(builder.Configuration);
+services.ConfigureCors();
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-                    .AddJwtBearer("IdentityApiKey", options =>
-                    {
-                        options.TokenValidationParameters = new TokenValidationParameters
-                        {
-                            ValidAudiences = [
-                                builder.Configuration["Jwt:Baskets"],
-                                builder.Configuration["Jwt:Catalogs"],
-                                builder.Configuration["Jwt:Identity"],
-                            ],
-                            ValidateIssuer = true,
-                            ValidateLifetime = true,
-                            ValidateIssuerSigningKey = true,
-                            ValidIssuer = builder.Configuration["Jwt:Identity"],
-                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
-                            ClockSkew = TimeSpan.Zero
-                        };
-                    });
-
-builder.Services.AddCors();
+services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
+app.UseCors();
 app.UseHttpsRedirection();
 
 app.UseAuthentication().UseOcelot().Wait();

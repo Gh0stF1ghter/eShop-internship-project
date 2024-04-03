@@ -23,7 +23,6 @@ namespace Identity.API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         [Route("register")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
