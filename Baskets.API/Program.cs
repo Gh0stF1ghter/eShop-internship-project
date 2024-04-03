@@ -9,7 +9,7 @@ builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
 
 services.ConfigureDbSettings(builder.Configuration);
 
-services.ConfigureMongoClient();
+services.ConfigureMongoClient(builder.Configuration);
 
 services.ConfigureMediatR();
 
@@ -24,6 +24,8 @@ services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
+services.AddAuthentication(builder.Configuration);
+
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
@@ -36,8 +38,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseAuthorization();
 
 app.Run();

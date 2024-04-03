@@ -26,7 +26,10 @@ namespace Identity.API.Extensions
             .AddDefaultTokenProviders();
 
         public static void AddAuthentication(this IServiceCollection services, IConfiguration configuration) =>
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
                     .AddJwtBearer(options =>
                     {
                         options.TokenValidationParameters = new TokenValidationParameters
@@ -73,6 +76,5 @@ namespace Identity.API.Extensions
 
             context?.Database.Migrate();
         }
-
     }
 }

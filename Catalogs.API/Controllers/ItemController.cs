@@ -6,6 +6,7 @@ using Catalogs.Application.Queries.ItemQueries;
 using Catalogs.Domain.Entities.LinkModels;
 using Catalogs.Domain.RequestFeatures;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Dynamic;
 using System.Text.Json;
@@ -45,6 +46,7 @@ namespace Catalogs.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ActionName("AddItemOfType")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -56,6 +58,7 @@ namespace Catalogs.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         [ActionName("UpdateItemOfType")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -67,6 +70,7 @@ namespace Catalogs.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         [ActionName("DeleteItemOfType")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

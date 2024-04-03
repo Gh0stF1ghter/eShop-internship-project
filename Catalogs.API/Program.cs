@@ -1,9 +1,12 @@
 using Catalogs.API.Extensions;
 using Catalogs.Application;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Sinks.Elasticsearch;
 using System.Reflection;
+using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +33,8 @@ services.AddSwaggerGen();
 
 services.AddCustomMediaTypes();
 
+services.AddAuthentication(builder.Configuration);
+
 var app = builder.Build();
 
 app.ApplyMigrations();
@@ -44,8 +49,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
 app.MapControllers();
+
+app.UseAuthorization();
 
 app.Run();

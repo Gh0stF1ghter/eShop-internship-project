@@ -7,10 +7,13 @@ using Catalogs.Domain.Interfaces;
 using Catalogs.Infrastructure;
 using Catalogs.Infrastructure.Context;
 using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
+using System.Text;
 
 namespace Catalogs.API.Extensions
 {
@@ -59,6 +62,24 @@ namespace Catalogs.API.Extensions
                         .Add("application/vnd.eShopTest.hateoas+json");
             });
         }
+
+        public static void AddAuthentication(this IServiceCollection services, IConfiguration configuration) =>
+    services.AddAuthentication(options => {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = false,
+                ValidateIssuer = true,
+                ValidIssuer = configuration["Jwt:Identity"],
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"])),
+                ClockSkew = TimeSpan.Zero
+            };
+        });
 
         public static void ApplyMigrations(this IApplicationBuilder builder)
         {

@@ -29,7 +29,7 @@ namespace Identity.BusinessLogic.Services.Implementations
 
             if (populateExp)
             {
-                user.RefreshTokenExpireTime = DateTime.UtcNow.AddDays(7);
+                user.RefreshTokenExpireTime = DateTime.UtcNow.AddDays(double.Parse(_configuration["Jwt:RefreshDaysExpire"]));
             }
 
             await _userManager.UpdateAsync(user);
@@ -59,7 +59,7 @@ namespace Identity.BusinessLogic.Services.Implementations
             {
                 Issuer = _configuration["Jwt:Issuer"],
                 Audience = _configuration["Jwt:Audience"],
-                Expires = DateTime.Now.AddMinutes(10),
+                Expires = DateTime.Now.AddMinutes(double.Parse(_configuration["Jwt:AccessMinutesExpire"])),
                 SigningCredentials = new(signingKey, SecurityAlgorithms.HmacSha256),
                 Subject = new(claims)
             };
