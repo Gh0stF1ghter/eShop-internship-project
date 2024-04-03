@@ -1,14 +1,14 @@
 {
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:8081"
+    "BaseUrl": "http://localhost:8080"
   },
   "Routes": [
-    //Identity
+    //identity
     {
       "UpstreamPathTemplate": "/authentication/login",
       "UpstreamHttpMethod": [ "Post" ],
       "DownstreamPathTemplate": "/api/authentication/login",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "identity.api",
@@ -20,7 +20,7 @@
       "UpstreamPathTemplate": "/authentication/register",
       "UpstreamHttpMethod": [ "Post" ],
       "DownstreamPathTemplate": "/api/authentication/register",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "identity.api",
@@ -28,17 +28,17 @@
         }
       ]
     },
-    //Catalogs
+    //catalogs
     //Brands
     {
       "UpstreamPathTemplate": "/catalog/brands",
       "UpstreamHttpMethod": [ "Get" ],
       "DownstreamPathTemplate": "/api/brands",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "catalogs.api",
-          "Port": 8081
+          "Port": 8082
         }
       ]
     },
@@ -46,11 +46,11 @@
       "UpstreamPathTemplate": "/catalog/brands",
       "UpstreamHttpMethod": [ "Post" ],
       "DownstreamPathTemplate": "/api/brands",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "catalogs.api",
-          "Port": 8081
+          "Port": 8082
         }
       ],
       "AuthenticationOptions": {
@@ -62,11 +62,11 @@
       "UpstreamPathTemplate": "/catalog/brands/{id}",
       "UpstreamHttpMethod": [ "Get" ],
       "DownstreamPathTemplate": "/api/brands/{id}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "catalogs.api",
-          "Port": 8081
+          "Port": 8082
         }
       ]
     },
@@ -74,11 +74,11 @@
       "UpstreamPathTemplate": "/catalog/brands/{id}",
       "UpstreamHttpMethod": [ "Put", "Delete" ],
       "DownstreamPathTemplate": "/api/brands/{id}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "catalogs.api",
-          "Port": 8081
+          "Port": 8082
         }
       ],
       "AuthenticationOptions": {
@@ -91,11 +91,11 @@
       "UpstreamPathTemplate": "/catalog/vendors",
       "UpstreamHttpMethod": [ "Get" ],
       "DownstreamPathTemplate": "/api/vendors",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "catalogs.api",
-          "Port": 8081
+          "Port": 8082
         }
       ]
     },
@@ -103,11 +103,11 @@
       "UpstreamPathTemplate": "/catalog/vendors",
       "UpstreamHttpMethod": [ "Post" ],
       "DownstreamPathTemplate": "/api/vendors",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "catalogs.api",
-          "Port": 8081
+          "Port": 8082
         }
       ],
       "AuthenticationOptions": {
@@ -119,11 +119,11 @@
       "UpstreamPathTemplate": "/catalog/vendors/{id}",
       "UpstreamHttpMethod": [ "Get" ],
       "DownstreamPathTemplate": "/api/vendors/{id}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "catalogs.api",
-          "Port": 8081
+          "Port": 8082
         }
       ]
     },
@@ -131,11 +131,11 @@
       "UpstreamPathTemplate": "/catalog/vendors/{id}",
       "UpstreamHttpMethod": [ "Put", "Delete" ],
       "DownstreamPathTemplate": "/api/vendors/{id}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "catalogs.api",
-          "Port": 8081
+          "Port": 8082
         }
       ],
       "AuthenticationOptions": {
@@ -148,11 +148,11 @@
       "UpstreamPathTemplate": "/catalog/types",
       "UpstreamHttpMethod": [ "Get" ],
       "DownstreamPathTemplate": "/api/types",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "catalogs.api",
-          "Port": 8081
+          "Port": 8082
         }
       ]
     },
@@ -160,11 +160,11 @@
       "UpstreamPathTemplate": "/catalog/types",
       "UpstreamHttpMethod": [ "Post" ],
       "DownstreamPathTemplate": "/api/types",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "catalogs.api",
-          "Port": 8081
+          "Port": 8082
         }
       ],
       "AuthenticationOptions": {
@@ -176,11 +176,11 @@
       "UpstreamPathTemplate": "/catalog/types/{id}",
       "UpstreamHttpMethod": [ "Get" ],
       "DownstreamPathTemplate": "/api/types/{id}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "catalogs.api",
-          "Port": 8081
+          "Port": 8082
         }
       ]
     },
@@ -188,11 +188,11 @@
       "UpstreamPathTemplate": "/catalog/types/{id}",
       "UpstreamHttpMethod": [ "Put", "Delete" ],
       "DownstreamPathTemplate": "/api/types/{id}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "catalogs.api",
-          "Port": 8081
+          "Port": 8082
         }
       ],
       "AuthenticationOptions": {
@@ -205,11 +205,11 @@
       "UpstreamPathTemplate": "/catalog/types/{typeId}/items",
       "UpstreamHttpMethod": [ "Get" ],
       "DownstreamPathTemplate": "/api/brands",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "catalogs.api",
-          "Port": 8081
+          "Port": 8082
         }
       ]
     },
@@ -217,11 +217,11 @@
       "UpstreamPathTemplate": "/catalog/types/{typeId}/items",
       "UpstreamHttpMethod": [ "Post" ],
       "DownstreamPathTemplate": "/api/brands",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "catalogs.api",
-          "Port": 8081
+          "Port": 8082
         }
       ],
       "AuthenticationOptions": {
@@ -233,11 +233,11 @@
       "UpstreamPathTemplate": "/catalog/types/{typeId}/items/{id}",
       "UpstreamHttpMethod": [ "Get" ],
       "DownstreamPathTemplate": "/api/brands/{id}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "catalogs.api",
-          "Port": 8081
+          "Port": 8082
         }
       ]
     },
@@ -245,11 +245,11 @@
       "UpstreamPathTemplate": "/catalog/types/{typeId}/items/{id}",
       "UpstreamHttpMethod": [ "Put", "Delete" ],
       "DownstreamPathTemplate": "/api/brands/{id}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "catalogs.api",
-          "Port": 8081
+          "Port": 8082
         }
       ],
       "AuthenticationOptions": {
@@ -257,17 +257,17 @@
         "AllowedScopes": []
       }
     },
-    //Baskets
+    //baskets
     //BasketItem
     {
       "UpstreamPathTemplate": "/{userId}/basket/items",
       "UpstreamHttpMethod": [ "Get", "Post" ],
       "DownstreamPathTemplate": "/api/users/{userId}/basket/items",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "baskets.api",
-          "Port": 8081
+          "Port": 8083
         }
       ],
       "AuthenticationOptions": {
@@ -279,11 +279,11 @@
       "UpstreamPathTemplate": "/{userId}/basket/items/{basketItemId}",
       "UpstreamHttpMethod": [ "Put", "Delete" ],
       "DownstreamPathTemplate": "/api/users/{userId}/basket/items/{basketItemId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "baskets.api",
-          "Port": 8081
+          "Port": 8083
         }
       ],
       "AuthenticationOptions": {
@@ -296,11 +296,11 @@
       "UpstreamPathTemplate": "/{userId}/basket",
       "UpstreamHttpMethod": [ "Get" ],
       "DownstreamPathTemplate": "/api/users/{userId}/basket",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "baskets.api",
-          "Port": 8081
+          "Port": 8083
         }
       ],
       "AuthenticationOptions": {
