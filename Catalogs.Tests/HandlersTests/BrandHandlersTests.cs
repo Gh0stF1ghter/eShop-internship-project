@@ -1,7 +1,10 @@
-﻿using Catalogs.Application.Comands.BrandCommands;
-using Catalogs.Application.Handlers.BrandHandlers;
-using Catalogs.Application.Queries.BrandQueries;
-using Catalogs.Tests.FakeData;
+﻿using Catalogs.Application.CQRS.Commands.BrandCommands.CreateBrand;
+using Catalogs.Application.CQRS.Commands.BrandCommands.DeleteBrand;
+using Catalogs.Application.CQRS.Commands.BrandCommands.UpdateBrand;
+using Catalogs.Application.CQRS.Queries.BrandQueries.GetBrand;
+using Catalogs.Application.CQRS.Queries.BrandQueries.GetBrands;
+using Catalogs.Domain.Entities.Constants.Messages;
+using Catalogs.Tests.FakeDataGenerator;
 using Catalogs.Tests.Mocks;
 
 namespace Catalogs.Tests.HandlersTests
@@ -30,7 +33,7 @@ namespace Catalogs.Tests.HandlersTests
 
             _unitOfWorkMock.IsBrandExists(false);
 
-            var comand = new CreateBrandComand(brandCreateDto);
+            var comand = new CreateBrandCommand(brandCreateDto);
             var handler = new CreateBrandHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act
@@ -51,7 +54,7 @@ namespace Catalogs.Tests.HandlersTests
 
             _unitOfWorkMock.IsBrandExists(true);
 
-            var comand = new CreateBrandComand(brandCreateDto);
+            var comand = new CreateBrandCommand(brandCreateDto);
             var handler = new CreateBrandHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act
@@ -71,7 +74,7 @@ namespace Catalogs.Tests.HandlersTests
 
             _unitOfWorkMock.GetBrandById(brand);
 
-            var comand = new DeleteBrandComand(1, false);
+            var comand = new DeleteBrandCommand(1, false);
             var handler = new DeleteBrandHandler(_unitOfWorkMock.Object);
 
             //Act
@@ -87,7 +90,7 @@ namespace Catalogs.Tests.HandlersTests
             //Arrange
             _unitOfWorkMock.GetBrandById(null);
 
-            var comand = new DeleteBrandComand(1, false);
+            var comand = new DeleteBrandCommand(1, false);
             var handler = new DeleteBrandHandler(_unitOfWorkMock.Object);
 
             //Act
@@ -168,7 +171,7 @@ namespace Catalogs.Tests.HandlersTests
 
             _unitOfWorkMock.GetBrandById(brand);
 
-            var comand = new UpdateBrandComand(0, brandUpdateDto, true);
+            var comand = new UpdateBrandCommand(0, brandUpdateDto, true);
             var handler = new UpdateBrandHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act
@@ -186,7 +189,7 @@ namespace Catalogs.Tests.HandlersTests
 
             _unitOfWorkMock.GetBrandById(null);
 
-            var comand = new UpdateBrandComand(It.IsAny<int>(), brandUpdateDto, true);
+            var comand = new UpdateBrandCommand(It.IsAny<int>(), brandUpdateDto, true);
             var handler = new UpdateBrandHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act

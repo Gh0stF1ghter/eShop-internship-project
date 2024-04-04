@@ -18,4 +18,11 @@
     <ProjectReference Include="..\Catalogs.Domain\Catalogs.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Queries\BrandQueries\" />
+    <Folder Include="Queries\ItemQueries\" />
+    <Folder Include="Queries\ItemTypeQueries\" />
+    <Folder Include="Queries\VendorQueries\" />
+  </ItemGroup>
+
 </Project>

@@ -1,7 +1,10 @@
-﻿using Catalogs.Application.Comands.ItemTypeCommands;
-using Catalogs.Application.Handlers.ItemTypeHandlers;
-using Catalogs.Application.Queries.ItemTypeQueries;
-using Catalogs.Tests.FakeData;
+﻿using Catalogs.Application.CQRS.Commands.ItemTypeCommands.CreateItemType;
+using Catalogs.Application.CQRS.Commands.ItemTypeCommands.DeleteItemType;
+using Catalogs.Application.CQRS.Commands.ItemTypeCommands.UpdateItemType;
+using Catalogs.Application.CQRS.Queries.ItemTypeQueries.GetItemType;
+using Catalogs.Application.CQRS.Queries.ItemTypeQueries.GetItemTypes;
+using Catalogs.Domain.Entities.Constants.Messages;
+using Catalogs.Tests.FakeDataGenerator;
 using Catalogs.Tests.Mocks;
 
 namespace Catalogs.Tests.HandlersTests
@@ -28,7 +31,7 @@ namespace Catalogs.Tests.HandlersTests
 
             _unitOfWorkMock.IsItemTypeExists(false);
 
-            var comand = new CreateItemTypeComand(itemTypeCreateDto);
+            var comand = new CreateItemTypeCommand(itemTypeCreateDto);
             var handler = new CreateItemTypeHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act
@@ -49,7 +52,7 @@ namespace Catalogs.Tests.HandlersTests
 
             _unitOfWorkMock.IsItemTypeExists(true);
 
-            var comand = new CreateItemTypeComand(itemTypeCreateDto);
+            var comand = new CreateItemTypeCommand(itemTypeCreateDto);
             var handler = new CreateItemTypeHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act
@@ -69,7 +72,7 @@ namespace Catalogs.Tests.HandlersTests
 
             _unitOfWorkMock.GetItemTypeById(itemType);
 
-            var comand = new DeleteItemTypeComand(1, false);
+            var comand = new DeleteItemTypeCommand(1, false);
             var handler = new DeleteItemTypeHandler(_unitOfWorkMock.Object);
 
             //Act
@@ -85,7 +88,7 @@ namespace Catalogs.Tests.HandlersTests
             //Arrange
             _unitOfWorkMock.GetItemTypeById(null);
 
-            var comand = new DeleteItemTypeComand(1, false);
+            var comand = new DeleteItemTypeCommand(1, false);
             var handler = new DeleteItemTypeHandler(_unitOfWorkMock.Object);
 
             //Act
@@ -167,7 +170,7 @@ namespace Catalogs.Tests.HandlersTests
 
             _unitOfWorkMock.GetItemTypeById(itemType);
 
-            var comand = new UpdateItemTypeComand(id, itemTypeUpdateDto, true);
+            var comand = new UpdateItemTypeCommand(id, itemTypeUpdateDto, true);
             var handler = new UpdateItemTypeHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act
@@ -185,7 +188,7 @@ namespace Catalogs.Tests.HandlersTests
 
             _unitOfWorkMock.GetItemTypeById(null);
 
-            var comand = new UpdateItemTypeComand(It.IsAny<int>(), itemTypeUpdateDto, true);
+            var comand = new UpdateItemTypeCommand(It.IsAny<int>(), itemTypeUpdateDto, true);
             var handler = new UpdateItemTypeHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act

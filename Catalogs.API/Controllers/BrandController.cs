@@ -1,7 +1,11 @@
-﻿using Catalogs.Application.Comands.BrandCommands;
+﻿using Catalogs.Application.CQRS.Commands.BrandCommands.CreateBrand;
+using Catalogs.Application.CQRS.Commands.BrandCommands.DeleteBrand;
+using Catalogs.Application.CQRS.Commands.BrandCommands.UpdateBrand;
+using Catalogs.Application.CQRS.Queries.BrandQueries.GetBrand;
+using Catalogs.Application.CQRS.Queries.BrandQueries.GetBrands;
 using Catalogs.Application.DataTransferObjects;
 using Catalogs.Application.DataTransferObjects.CreateDTOs;
-using Catalogs.Application.Queries.BrandQueries;
+using Catalogs.Domain.Entities.Constants;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,37 +40,37 @@ namespace Catalogs.API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = UserRoles.Admin)]
         [ActionName("AddBrand")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddBrandAsync(BrandManipulateDto brand, CancellationToken token)
         {
-            var newBrand = await _sender.Send(new CreateBrandComand(brand), token);
+            var newBrand = await _sender.Send(new CreateBrandCommand(brand), token);
 
             return CreatedAtAction("GetBrandById", new { newBrand.Id }, newBrand);
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = UserRoles.Admin)]
         [ActionName("UpdateBrand")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateBrandAsync(int id, BrandManipulateDto brand, CancellationToken token)
         {
-            await _sender.Send(new UpdateBrandComand(id, brand, TrackChanges: true), token);
+            await _sender.Send(new UpdateBrandCommand(id, brand, TrackChanges: true), token);
 
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = UserRoles.Admin)]
         [ActionName("DeleteBrand")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteBrandAsync(int id, CancellationToken token)
         {
-            await _sender.Send(new DeleteBrandComand(id, TrackChanges: false), token);
+            await _sender.Send(new DeleteBrandCommand(id, TrackChanges: false), token);
 
             return NoContent();
         }
