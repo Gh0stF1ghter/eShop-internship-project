@@ -1,6 +1,6 @@
-﻿namespace Identity.DataAccess.Entities.Constants
+﻿namespace Baskets.DataAccess.Entities.Constants
 {
-    public class Roles
+    public static class UserRoles
     {
         public const string Admin = "Admin";
         public const string User = "User";
