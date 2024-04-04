@@ -1,6 +1,5 @@
 ﻿using Identity.BusinessLogic.DTOs;
 using Identity.BusinessLogic.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Identity.API.Controllers

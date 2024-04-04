@@ -1,6 +1,6 @@
 ﻿using Microsoft.OpenApi.Models;
 
-namespace Catalogs.API.Extensions
+namespace Baskets.API.Extensions
 {
     public static class SwaggerConfiguration
     {

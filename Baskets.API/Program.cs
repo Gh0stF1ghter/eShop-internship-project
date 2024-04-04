@@ -1,6 +1,5 @@
 using Baskets.API.Extensions;
 using Baskets.BusinessLogic;
-using Catalogs.API.Extensions;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
