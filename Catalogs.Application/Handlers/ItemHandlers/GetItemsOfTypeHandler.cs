@@ -14,7 +14,7 @@ namespace Catalogs.Application.Handlers.ItemHandlers
 
         public async Task<(LinkResponse linkResponse, MetaData metaData)> Handle(GetItemsOfTypeQuery query, CancellationToken token)
         {
-            var itemTypeExists = await _unitOfWork.ItemType.IsExistAsync(t => t.Id.Equals(query.TypeId), token); 
+            var itemTypeExists = await _unitOfWork.ItemType.IsExistAsync(t => t.Id.Equals(query.TypeId), token);
 
             if (!itemTypeExists)
             {

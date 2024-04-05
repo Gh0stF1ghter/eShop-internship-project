@@ -21,7 +21,7 @@ namespace Baskets.API.Producer
             var json = JsonConvert.SerializeObject(message);
             var body = Encoding.UTF8.GetBytes(json);
 
-            channel.BasicPublish( exchange:"", routingKey:"users", body:body);
+            channel.BasicPublish(exchange: "", routingKey: "users", body: body);
         }
     }
 }

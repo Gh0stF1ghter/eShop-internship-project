@@ -1,9 +1,5 @@
 ﻿using Identity.BusinessLogic.Services.Interfaces;
-using Identity.DataAccess.Data;
-using MassTransit;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RabbitMQ.EventBus;
 
 namespace Identity.API.Controllers
 {

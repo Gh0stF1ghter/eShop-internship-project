@@ -1,5 +1,4 @@
 ﻿using Catalogs.Application.Comands.ItemCommands;
-using Catalogs.Domain.Entities.Models;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.ItemHandlers

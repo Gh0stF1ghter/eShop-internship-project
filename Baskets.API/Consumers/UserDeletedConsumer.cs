@@ -1,5 +1,4 @@
-﻿using Baskets.BusinessLogic.CQRS.Commands.UserBasketCommands.CreateUserBasket;
-using Baskets.BusinessLogic.CQRS.Commands.UserBasketCommands.DeleteUserBasket;
+﻿using Baskets.BusinessLogic.CQRS.Commands.UserBasketCommands.DeleteUserBasket;
 using MassTransit;
 using MediatR;
 using RabbitMQ.EventBus;

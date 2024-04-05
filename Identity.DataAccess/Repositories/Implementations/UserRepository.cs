@@ -1,6 +1,6 @@
 ﻿using Identity.DataAccess.Data;
-using Identity.DataAccess.Repositories.Interfaces;
 using Identity.DataAccess.Entities.Models;
+using Identity.DataAccess.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Identity.DataAccess.Repositories.Implementations

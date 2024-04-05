@@ -1,9 +1,6 @@
 using Catalogs.API.Extensions;
 using Catalogs.Application;
-using Microsoft.AspNetCore.Hosting;
 using Serilog;
-using Serilog.Sinks.Elasticsearch;
-using System.Reflection;
 
 
 var builder = WebApplication.CreateBuilder(args);

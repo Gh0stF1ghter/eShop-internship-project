@@ -1,9 +1,7 @@
 ﻿using Baskets.BusinessLogic.CQRS.Commands.UserBasketCommands.CreateUserBasket;
-using Baskets.BusinessLogic.DataTransferObjects;
 using MassTransit;
 using MediatR;
 using RabbitMQ.EventBus;
-using System.Text.Json;
 
 namespace Baskets.API.Consumers
 {

@@ -1,8 +1,6 @@
 using Baskets.API.Extensions;
 using Baskets.BusinessLogic;
-using MassTransit;
 using Serilog;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;

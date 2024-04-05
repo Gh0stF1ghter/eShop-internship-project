@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Catalogs.API.ActionFilters;
+﻿using Catalogs.API.ActionFilters;
 using Catalogs.API.Utility;
 using Catalogs.Application.DataShaping;
 using Catalogs.Application.DataTransferObjects;

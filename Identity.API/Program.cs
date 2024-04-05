@@ -1,6 +1,5 @@
 using Catalogs.API.Extensions;
 using Identity.API.Extensions;
-using MassTransit;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
