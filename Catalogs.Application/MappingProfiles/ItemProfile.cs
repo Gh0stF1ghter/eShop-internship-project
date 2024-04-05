@@ -1,7 +1,5 @@
-﻿using AutoMapper;
-using Catalogs.Application.DataTransferObjects;
+﻿using Catalogs.Application.DataTransferObjects;
 using Catalogs.Application.DataTransferObjects.CreateDTOs;
-using Catalogs.Domain.Entities.Models;
 
 namespace Catalogs.Application.MappingProfiles
 {
@@ -11,7 +9,7 @@ namespace Catalogs.Application.MappingProfiles
         {
             CreateMap<Item, ItemDto>();
 
-            CreateMap<Item, ItemGrpcService.Item>();
+            CreateMap<ItemDto, ItemGrpcService.Item>();
 
             CreateMap<ItemManipulateDto, Item>();
         }

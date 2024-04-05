@@ -1,4 +1,5 @@
 using Catalogs.API.Extensions;
+using Catalogs.API.GrpcServices;
 using Catalogs.Application;
 using Serilog;
 
@@ -21,6 +22,7 @@ services.AddAutoMapper(typeof(AssemblyReference));
 services.ConfigureCors();
 
 services.AddControllers();
+services.AddGrpc();
 
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
@@ -44,5 +46,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapGrpcService<ItemGrpcController>();
 
 app.Run();
