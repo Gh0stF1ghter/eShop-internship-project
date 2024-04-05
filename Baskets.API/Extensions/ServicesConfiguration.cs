@@ -3,8 +3,6 @@ using Baskets.DataAccess.DBContext;
 using Baskets.DataAccess.Entities.Models;
 using Baskets.DataAccess.UnitOfWork;
 using FluentValidation;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using System.Text;
