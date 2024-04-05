@@ -12,7 +12,7 @@ WORKDIR /src
 COPY ["Baskets.API/Baskets.API.csproj", "Baskets.API/"]
 COPY ["Baskets.BusinessLogic/Baskets.BusinessLogic.csproj", "Baskets.BusinessLogic/"]
 COPY ["Baskets.DataAccess/Baskets.DataAccess.csproj", "Baskets.DataAccess/"]
-RUN dotnet restore "./Baskets.API/./Baskets.API.csproj"
+RUN dotnet restore "./Baskets.API/Baskets.API.csproj"
 COPY . .
 WORKDIR "/src/Baskets.API"
 RUN dotnet build "./Baskets.API.csproj" -c $BUILD_CONFIGURATION -o /app/build

@@ -59,7 +59,7 @@ namespace Catalogs.API.Controllers
         [HttpDelete("{id}")]
         [ActionName("DeleteVendor")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteVendorAsync(int id, CancellationToken token)
         {
             await _sender.Send(new DeleteVendorComand(id, TrackChanges: false), token);

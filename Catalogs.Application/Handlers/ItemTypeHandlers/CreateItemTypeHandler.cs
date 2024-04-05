@@ -1,5 +1,5 @@
-﻿using Catalogs.Application.DataTransferObjects;
-using Catalogs.Application.Comands.ItemTypeCommands;
+﻿using Catalogs.Application.Comands.ItemTypeCommands;
+using Catalogs.Application.DataTransferObjects;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.ItemTypeHandlers
@@ -11,11 +11,11 @@ namespace Catalogs.Application.Handlers.ItemTypeHandlers
 
         public async Task<ItemTypeDto> Handle(CreateItemTypeComand command, CancellationToken token)
         {
-            var itemmTypeExists = await _unitOfWork.ItemType.IsExistAsync(it => it.Name.Equals(command.ItemTypeDto.Name, StringComparison.OrdinalIgnoreCase), token);
+            var itemmTypeExists = await _unitOfWork.ItemType.IsExistAsync(it => it.Name.Equals(command.ItemTypeDto.Name), token);
 
             if (itemmTypeExists)
             {
-                throw new BadRequestException(ItemTypeMessages.ItemTypeExists);
+                throw new AlreadyExistsException(ItemTypeMessages.ItemTypeExists);
             }
 
             var itemType = _mapper.Map<ItemType>(command.ItemTypeDto);

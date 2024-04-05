@@ -1,7 +1,5 @@
-﻿using Baskets.DataAccess.DBContext;
 using Baskets.DataAccess.Entities.Models;
 using Baskets.DataAccess.Repositories.Interfaces;
-using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using System.Linq.Expressions;
 

@@ -1,5 +1,4 @@
-﻿using Catalogs.Application.DataTransferObjects;
-using Catalogs.Application.DataTransferObjects.CreateDTOs;
+﻿using Catalogs.Application.DataTransferObjects.CreateDTOs;
 using FluentValidation;
 
 namespace Catalogs.Application.Validators
@@ -32,7 +31,7 @@ namespace Catalogs.Application.Validators
 
         private bool IsValidUri(string uri)
         {
-            var isValid = Uri.IsWellFormedUriString(uri, UriKind.Absolute);
+            var isValid = Uri.IsWellFormedUriString(uri, UriKind.Relative);
 
             return isValid;
         }

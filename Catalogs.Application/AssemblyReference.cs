@@ -1,4 +1,4 @@
 ﻿namespace Catalogs.Application
 {
-    public static class AssemblyReference;
+    public class AssemblyReference;
 }

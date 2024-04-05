@@ -1,4 +1,4 @@
-﻿using Baskets.BusinessLogic.CQRS.Commands.UserBasketCommands.CreateUserBasket;
+using Baskets.BusinessLogic.CQRS.Commands.UserBasketCommands.CreateUserBasket;
 using Baskets.BusinessLogic.CQRS.Commands.UserBasketCommands.DeleteUserBasket;
 using Baskets.BusinessLogic.CQRS.Queries.UserBasketQueries.GetUserBasket;
 using MediatR;

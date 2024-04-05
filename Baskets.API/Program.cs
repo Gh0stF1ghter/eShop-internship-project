@@ -9,7 +9,7 @@ builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
 
 services.ConfigureDbSettings(builder.Configuration);
 
-services.ConfigureMongoClient();
+services.ConfigureMongoClient(builder.Configuration);
 
 services.ConfigureMediatR();
 
@@ -41,3 +41,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program;

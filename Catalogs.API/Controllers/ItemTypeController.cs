@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Catalogs.API.Controllers
 {
     [ApiController]
-    [Route("api/itemTypes")]
+    [Route("api/types")]
     public class ItemTypeController(ISender sender) : ControllerBase
     {
         private readonly ISender _sender = sender;

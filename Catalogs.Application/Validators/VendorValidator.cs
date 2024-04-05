@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Catalogs.Application.Validators
 {
-    internal class VendorValidator : AbstractValidator<VendorManipulateDto>
+    public class VendorValidator : AbstractValidator<VendorManipulateDto>
     {
         public VendorValidator()
         {

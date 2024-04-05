@@ -1,6 +1,5 @@
 ﻿using Catalogs.Application.DataTransferObjects;
 using Catalogs.Domain.Entities.LinkModels;
-using Catalogs.Domain.Entities.Models;
 using Catalogs.Domain.Interfaces;
 using Microsoft.Net.Http.Headers;
 using System.Dynamic;

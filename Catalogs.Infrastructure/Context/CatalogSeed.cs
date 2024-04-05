@@ -42,7 +42,6 @@ namespace Catalogs.Infrastructure.Context
 
         private void AddVendors()
         {
-
             _builder.Entity<Vendor>().HasData(
                 new Vendor { Id = 1, Name = "Amazon" },
                 new Vendor { Id = 2, Name = "Walmart" },
@@ -50,7 +49,6 @@ namespace Catalogs.Infrastructure.Context
                 new Vendor { Id = 4, Name = "Netflix" },
                 new Vendor { Id = 5, Name = "MediaMarkt" }
                 );
-
         }
 
         private void AddItems()

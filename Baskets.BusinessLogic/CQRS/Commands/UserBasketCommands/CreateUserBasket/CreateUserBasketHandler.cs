@@ -38,7 +38,7 @@ namespace Baskets.BusinessLogic.CQRS.Commands.UserBasketCommands.CreateUserBaske
 
             if (basketExists != null)
             {
-                throw new BadRequestException(UserBasketMessages.Exists);
+                throw new AlreadyExistsException(UserBasketMessages.Exists);
             }
         }
     }

@@ -52,7 +52,7 @@ namespace Catalogs.API.Controllers
         {
             var newItem = await _sender.Send(new CreateItemComand(item, typeId, TrackChanges: false), token);
 
-            return CreatedAtRoute("GetItemOfType", new { typeId, id = newItem.Id }, newItem);
+            return CreatedAtAction("GetItemOfType", new { typeId, id = newItem.Id }, newItem);
         }
 
         [HttpPut("{id}")]
