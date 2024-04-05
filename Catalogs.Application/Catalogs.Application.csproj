@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="FluentValidation" Version="11.9.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.62.0" />
     <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
     <PackageReference Include="Serilog" Version="3.1.1" />
@@ -18,4 +19,7 @@
     <ProjectReference Include="..\Catalogs.Domain\Catalogs.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Protobuf Include="Protos\item-service.proto" GrpcServices="Server" />
+  </ItemGroup>
 </Project>

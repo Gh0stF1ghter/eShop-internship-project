@@ -11,6 +11,8 @@ namespace Catalogs.Application.MappingProfiles
         {
             CreateMap<Item, ItemDto>();
 
+            CreateMap<Item, ItemGrpcService.Item>();
+
             CreateMap<ItemManipulateDto, Item>();
         }
     }
