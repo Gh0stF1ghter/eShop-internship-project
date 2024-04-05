@@ -1,7 +1,4 @@
 ﻿using Catalogs.Infrastructure.Context;
-using DotNet.Testcontainers.Builders;
-using DotNet.Testcontainers.Containers;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;

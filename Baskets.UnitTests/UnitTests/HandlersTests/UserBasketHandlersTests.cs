@@ -2,8 +2,6 @@ using Baskets.BusinessLogic.CQRS.Commands.UserBasketCommands.CreateUserBasket;
 using Baskets.BusinessLogic.CQRS.Commands.UserBasketCommands.DeleteUserBasket;
 using Baskets.BusinessLogic.CQRS.Queries.UserBasketQueries.GetUserBasket;
 using Baskets.BusinessLogic.DataTransferObjects;
-using Baskets.Tests.UnitTests.BasketFakeDb;
-using Baskets.Tests.UnitTests.Mock;
 
 namespace Baskets.Tests.UnitTests.HandlersTests
 {

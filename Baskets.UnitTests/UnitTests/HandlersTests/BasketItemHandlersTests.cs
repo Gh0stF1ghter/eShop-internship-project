@@ -3,8 +3,6 @@ using Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.DeleteBasketItem;
 using Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.UpdateBasketItem;
 using Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItem;
 using Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItems;
-using Baskets.Tests.UnitTests.BasketFakeDb;
-using Baskets.Tests.UnitTests.Mock;
 
 namespace Baskets.Tests.UnitTests.HandlersTests
 {

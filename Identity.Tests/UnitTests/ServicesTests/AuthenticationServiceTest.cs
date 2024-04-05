@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Identity.BusinessLogic.Mapping;
 using Identity.BusinessLogic.Services.Interfaces;
-using Identity.Tests.UnitTests.Mocks;
 using Microsoft.Extensions.Logging;
 
 namespace Identity.Tests.UnitTests.ServicesTests

@@ -37,7 +37,7 @@ namespace Baskets.Tests.IntegrationTests.ApiFactory
 
         public async Task InitializeAsync()
         {
-           await _mongodbContainer.StartAsync();
+            await _mongodbContainer.StartAsync();
         }
 
         public new async Task DisposeAsync()

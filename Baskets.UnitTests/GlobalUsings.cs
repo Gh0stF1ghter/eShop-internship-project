@@ -4,7 +4,7 @@ global using Baskets.BusinessLogic.MappingProfiles;
 global using Baskets.DataAccess.Entities.Constants.Messages;
 global using Baskets.Tests.UnitTests.BasketFakeDb;
 global using Baskets.Tests.UnitTests.Mock;
+global using Bogus;
 global using FluentAssertions;
 global using Moq;
-global using Bogus;
 global using System.Net;

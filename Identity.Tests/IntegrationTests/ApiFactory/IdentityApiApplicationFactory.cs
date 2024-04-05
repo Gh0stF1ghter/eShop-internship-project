@@ -1,7 +1,4 @@
-﻿using DotNet.Testcontainers.Builders;
-using DotNet.Testcontainers.Containers;
-using Identity.DataAccess.Data;
-using Microsoft.AspNetCore.Builder;
+﻿using Identity.DataAccess.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;

@@ -1,5 +1,5 @@
-﻿using Catalogs.Application.DataTransferObjects;
-using Catalogs.Application.Comands.ItemCommands;
+﻿using Catalogs.Application.Comands.ItemCommands;
+using Catalogs.Application.DataTransferObjects;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.ItemHandlers

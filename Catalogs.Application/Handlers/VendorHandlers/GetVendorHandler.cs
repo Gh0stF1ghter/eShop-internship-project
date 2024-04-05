@@ -1,6 +1,5 @@
 ﻿using Catalogs.Application.DataTransferObjects;
 using Catalogs.Application.Queries.VendorQueries;
-using Catalogs.Domain.Entities.Models;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.VendorHandlers

@@ -127,7 +127,7 @@ namespace Catalogs.Tests.IntegrationTests.ControllersTests.CatalogCollection
             //Arrange
             var route = $"{routeBase}/12";
             var brandToUpdate = new BrandManipulateDto("Jane");
-            
+
             //Act
             var response = await _httpClient.PutAsJsonAsync(route, brandToUpdate);
 
