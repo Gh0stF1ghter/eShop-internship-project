@@ -45,7 +45,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers();
 app.MapGrpcService<ItemGrpcController>();
+app.MapControllers();
 
 app.Run();

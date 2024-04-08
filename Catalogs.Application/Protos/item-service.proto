@@ -3,13 +3,14 @@ syntax = "proto3";
 option csharp_namespace = "ItemGrpcService";
 
 message Item {
-    string id = 1;
-    string brandId = 2;
-    string vendorId = 3; 
-    string name = 4;
-    int32 stock = 5;
-    double price = 6;
-    string imageUrl = 7;
+    int32 id = 1;
+    int32 brandId = 2;
+    int32 vendorId = 3; 
+    int32 typeId = 4;
+    string name = 5;
+    int32 stock = 6;
+    double price = 7;
+    string imageUrl = 8;
 }
 
 service ItemService {
@@ -18,7 +19,6 @@ service ItemService {
 
 message GetItemRequest {
     int32 id = 1;
-    int32 typeId = 2; 
 }
 
 message GetItemResponse {
