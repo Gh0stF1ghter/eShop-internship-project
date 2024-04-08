@@ -23,4 +23,7 @@ message GetItemRequest {
 
 message GetItemResponse {
     Item item = 1;
+
+    string statusCode = 2;
+    string message = 3;
 }

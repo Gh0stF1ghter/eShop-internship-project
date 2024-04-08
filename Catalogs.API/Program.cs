@@ -22,7 +22,7 @@ services.AddAutoMapper(typeof(AssemblyReference));
 services.ConfigureCors();
 
 services.AddControllers();
-services.AddGrpc();
+services.AddGrpc(c => c.Interceptors.Add<ExceptionHandlingInterceptor>());
 
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
