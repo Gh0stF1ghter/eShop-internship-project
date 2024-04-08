@@ -1,14 +1,19 @@
-﻿using Catalogs.Application.Comands.ItemTypeCommands;
+﻿using Catalogs.Application.CQRS.Commands.ItemTypeCommands.CreateItemType;
+using Catalogs.Application.CQRS.Commands.ItemTypeCommands.DeleteItemType;
+using Catalogs.Application.CQRS.Commands.ItemTypeCommands.UpdateItemType;
+using Catalogs.Application.CQRS.Queries.ItemTypeQueries.GetItemType;
+using Catalogs.Application.CQRS.Queries.ItemTypeQueries.GetItemTypes;
 using Catalogs.Application.DataTransferObjects;
 using Catalogs.Application.DataTransferObjects.CreateDTOs;
-using Catalogs.Application.Queries.ItemTypeQueries;
+using Catalogs.Domain.Entities.Constants;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Catalogs.API.Controllers
 {
     [ApiController]
-    [Route("api/itemTypes")]
+    [Route("api/types")]
     public class ItemTypeController(ISender sender) : ControllerBase
     {
         private readonly ISender _sender = sender;
@@ -35,34 +40,37 @@ namespace Catalogs.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = UserRoles.Admin)]
         [ActionName("AddItemType")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddItemTypeAsync(ItemTypeManipulateDto itemType, CancellationToken token)
         {
-            var newItemType = await _sender.Send(new CreateItemTypeComand(itemType), token);
+            var newItemType = await _sender.Send(new CreateItemTypeCommand(itemType), token);
 
             return CreatedAtAction("GetItemTypeById", new { newItemType.Id }, newItemType);
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = UserRoles.Admin)]
         [ActionName("UpdateItemType")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateItemTypeAsync(int id, ItemTypeManipulateDto itemType, CancellationToken token)
         {
-            await _sender.Send(new UpdateItemTypeComand(id, itemType, TrackChanges: true), token);
+            await _sender.Send(new UpdateItemTypeCommand(id, itemType, TrackChanges: true), token);
 
             return NoContent();
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = UserRoles.Admin)]
         [ActionName("DeleteItemType")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteItemTypeAsync(int id, CancellationToken token)
         {
-            await _sender.Send(new DeleteItemTypeComand(id, TrackChanges: false), token);
+            await _sender.Send(new DeleteItemTypeCommand(id, TrackChanges: false), token);
 
             return NoContent();
         }

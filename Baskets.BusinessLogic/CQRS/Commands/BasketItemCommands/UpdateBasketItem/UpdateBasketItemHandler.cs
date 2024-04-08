@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Baskets.BusinessLogic.Exceptions;
+﻿using Baskets.BusinessLogic.Exceptions;
 using Baskets.DataAccess.UnitOfWork;
 
 namespace Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.UpdateBasketItem

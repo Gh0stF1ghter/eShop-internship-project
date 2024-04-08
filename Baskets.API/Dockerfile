@@ -3,16 +3,15 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 8083
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
-WORKDIR /src
+WORKDIR /src/Baskets
 COPY ["Baskets.API/Baskets.API.csproj", "Baskets.API/"]
 COPY ["Baskets.BusinessLogic/Baskets.BusinessLogic.csproj", "Baskets.BusinessLogic/"]
 COPY ["Baskets.DataAccess/Baskets.DataAccess.csproj", "Baskets.DataAccess/"]
-RUN dotnet restore "./Baskets.API/./Baskets.API.csproj"
+RUN dotnet restore "./Baskets.API/Baskets.API.csproj"
 COPY . .
 WORKDIR "/src/Baskets.API"
 RUN dotnet build "./Baskets.API.csproj" -c $BUILD_CONFIGURATION -o /app/build

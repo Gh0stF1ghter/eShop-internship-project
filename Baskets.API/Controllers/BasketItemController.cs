@@ -4,12 +4,15 @@ using Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.UpdateBasketItem;
 using Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItem;
 using Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItems;
 using Baskets.BusinessLogic.DataTransferObjects.CreateDTOs;
+using Baskets.DataAccess.Entities.Constants;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Baskets.API.Controllers
 {
     [ApiController]
+    [Authorize(Roles = UserRoles.User)]
     [Route("api/users/{userId}/basket/items")]
     public class BasketItemController(ISender sender) : ControllerBase
     {

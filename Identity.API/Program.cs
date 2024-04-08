@@ -1,4 +1,3 @@
-using Catalogs.API.Extensions;
 using Identity.API.Extensions;
 using Serilog;
 
@@ -10,22 +9,16 @@ SerilogConfiguration.ConfigureLogging();
 builder.Host.UseSerilog();
 
 services.AddIdentityDbContext(builder.Configuration);
-
 services.AddIdentitySupport();
-
+services.AddMapper();
+services.AddAutoValidation();
+services.AddDependencies();
+services.ConfigureSwagger();
+services.ConfigureCors();
 services.AddAuthentication(builder.Configuration);
 
-services.AddMapper();
-
-services.AddAutoValidation();
-
-services.AddDependencies();
-
 services.AddControllers();
-
 services.AddEndpointsApiExplorer();
-
-services.ConfigureSwagger();
 
 var app = builder.Build();
 
@@ -33,16 +26,11 @@ app.ApplyMigrations();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

@@ -1,8 +1,13 @@
-﻿using Catalogs.Application.Comands.VendorCommands;
+﻿using Catalogs.Application.CQRS.Commands.VendorCommands.CreateVendor;
+using Catalogs.Application.CQRS.Commands.VendorCommands.DeleteVendor;
+using Catalogs.Application.CQRS.Commands.VendorCommands.UpdateVendor;
+using Catalogs.Application.CQRS.Queries.VendorQueries.GetVendor;
+using Catalogs.Application.CQRS.Queries.VendorQueries.GetVendors;
 using Catalogs.Application.DataTransferObjects;
 using Catalogs.Application.DataTransferObjects.CreateDTOs;
-using Catalogs.Application.Queries.VendorQueries;
+using Catalogs.Domain.Entities.Constants;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Catalogs.API.Controllers
@@ -35,34 +40,38 @@ namespace Catalogs.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = UserRoles.Admin)]
         [ActionName("AddVendor")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddVendorAsync(VendorManipulateDto vendor, CancellationToken token)
         {
-            var newVendor = await _sender.Send(new CreateVendorComand(vendor), token);
+            var newVendor = await _sender.Send(new CreateVendorCommand(vendor), token);
 
             return CreatedAtAction("GetVendorById", new { newVendor.Id }, newVendor);
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = UserRoles.Admin)]
         [ActionName("UpdateVendor")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateVendorAsync(int id, VendorManipulateDto vendor, CancellationToken token)
         {
-            await _sender.Send(new UpdateVendorComand(id, vendor, TrackChanges: true), token);
+            await _sender.Send(new UpdateVendorCommand(id, vendor, TrackChanges: true), token);
 
             return NoContent();
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = UserRoles.Admin)]
         [ActionName("DeleteVendor")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteVendorAsync(int id, CancellationToken token)
         {
-            await _sender.Send(new DeleteVendorComand(id, TrackChanges: false), token);
+            await _sender.Send(new DeleteVendorCommand(id, TrackChanges: false), token);
 
             return NoContent();
         }

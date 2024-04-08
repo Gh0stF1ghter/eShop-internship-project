@@ -17,6 +17,10 @@
                 .Returns("localhost");
             _configurationMock.Setup(c => c["Jwt:SecretKey"])
                 .Returns("S0meS3cretesfeoopi#210932erf3fwr32e#r32ejiwoKey");
+            _configurationMock.Setup(c => c["Jwt:AccessMinutesExpire"])
+                .Returns("60");
+            _configurationMock.Setup(c => c["Jwt:RefreshDaysExpire"])
+                .Returns("7");
 
             _userManagerMock.Setup(um => um.GetRolesAsync(It.IsAny<User>()))
                 .ReturnsAsync(["admin"]);

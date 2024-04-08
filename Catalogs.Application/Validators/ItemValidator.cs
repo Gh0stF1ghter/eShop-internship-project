@@ -1,5 +1,4 @@
-﻿using Catalogs.Application.DataTransferObjects;
-using Catalogs.Application.DataTransferObjects.CreateDTOs;
+﻿using Catalogs.Application.DataTransferObjects.CreateDTOs;
 using FluentValidation;
 
 namespace Catalogs.Application.Validators

@@ -39,9 +39,9 @@ namespace Identity.BusinessLogic.Services.Implementations
 
             await CreateUserAsync(user, registerCredentials.Password);
 
-            _logger.LogInformation("Adding role {role} to user {name}", Roles.User, user.UserName);
+            _logger.LogInformation("Adding role {role} to user {name}", UserRoles.User, user.UserName);
 
-            await _userManager.AddToRoleAsync(user, Roles.User);
+            await _userManager.AddToRoleAsync(user, UserRoles.User);
 
             return true;
         }

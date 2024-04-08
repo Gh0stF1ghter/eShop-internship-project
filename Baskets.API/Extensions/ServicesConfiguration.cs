@@ -4,8 +4,8 @@ using Baskets.DataAccess.Entities.Models;
 using Baskets.DataAccess.UnitOfWork;
 using FluentValidation;
 using MongoDB.Driver;
-using MongoDB.Driver.Core.Configuration;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
+using System.Text;
 
 namespace Baskets.API.Extensions
 {
@@ -24,17 +24,28 @@ namespace Baskets.API.Extensions
             services.AddFluentValidationAutoValidation();
         }
 
-        public static void ConfigureMongoClient(this IServiceCollection services) =>
+        public static void ConfigureMongoClient(this IServiceCollection services, IConfiguration configuration) =>
             services.AddSingleton<IMongoClient>(_ =>
-            {
-                var settings = new MongoClientSettings()
-                {
-                    Scheme = ConnectionStringScheme.MongoDB,
-                    Server = new MongoServerAddress("localhost", 27017)
-                };
+                new MongoClient(configuration["BasketDatabaseSettings:ConnectionString"]));
 
-                return new MongoClient(settings);
-            });
+        public static void AddAuthentication(this IServiceCollection services, IConfiguration configuration) =>
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = false,
+                        ValidateIssuer = true,
+                        ValidIssuer = configuration["Jwt:Identity"],
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"])),
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
 
         public static void AddCustomDependencies(this IServiceCollection services)
         {
