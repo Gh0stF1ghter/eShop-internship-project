@@ -4,18 +4,23 @@ using Baskets.DataAccess.UnitOfWork;
 
 namespace Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.CreateBasketItem
 {
-    public class CreateBasketItemHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public class CreateBasketItemHandler(IUnitOfWork unitOfWork, ItemGrpcService.ItemService.ItemServiceClient client, IMapper mapper)
         : IRequestHandler<CreateBasketItemCommand, BasketItemDto>
     {
         public async Task<BasketItemDto> Handle(CreateBasketItemCommand comand, CancellationToken cancellationToken)
         {
-            var item = await unitOfWork.Item
-                .GetByConditionAsync(i => i.Id.Equals(comand.CreateBasketItemDto.ItemId), cancellationToken);
+            var itemRequest = new ItemGrpcService.GetItemRequest { Id = comand.CreateBasketItemDto.ItemId };
 
-            if (item == null)
+            var itemResponse = await client.GetItemAsync(itemRequest, cancellationToken: cancellationToken);
+
+            var grpcItem = itemResponse.Item;
+
+            if (grpcItem == null)
             {
                 throw new NotFoundException(ItemMessages.NotFound);
             }
+
+            var item = mapper.Map<ItemGrpcService.Item, Item>(grpcItem);
 
             var basket = await unitOfWork.Basket
                 .GetByConditionAsync(u => u.UserId.Equals(comand.UserId), cancellationToken);

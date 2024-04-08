@@ -4,23 +4,24 @@ using Baskets.DataAccess.UnitOfWork;
 
 namespace Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.UpdateBasketItem
 {
-    public class UpdateBasketItemHandler(IUnitOfWork unitOfWork) : IRequestHandler<UpdateBasketItemCommand>
+    public class UpdateBasketItemHandler(IUnitOfWork unitOfWork, ItemGrpcService.ItemService.ItemServiceClient client, IMapper mapper) : IRequestHandler<UpdateBasketItemCommand>
     {
         public async Task Handle(UpdateBasketItemCommand comand, CancellationToken cancellationToken)
         {
             var basket = await FindBasket(comand, cancellationToken);
 
-            var itemToUpdate = await FindInBasket(comand, cancellationToken);
+            var basketItemToUpdate = await FindInBasket(comand, cancellationToken);
+            basketItemToUpdate.Item = await FindCatalogItemAsync(basketItemToUpdate.ItemId, cancellationToken);
 
-            basket.TotalPrice -= itemToUpdate.SumPrice;
+            basket.TotalPrice -= basketItemToUpdate.SumPrice;
 
-            itemToUpdate.Quantity = comand.Quantity;
-            itemToUpdate.SumPrice = itemToUpdate.Item.Price * comand.Quantity;
+            basketItemToUpdate.Quantity = comand.Quantity;
+            basketItemToUpdate.SumPrice = basketItemToUpdate.Item.Price * comand.Quantity;
 
             await unitOfWork.BasketItem
-                .UpdateAsync(bi => bi.BasketItemId.Equals(comand.BasketItemId), itemToUpdate, cancellationToken);
+                .UpdateAsync(bi => bi.BasketItemId.Equals(comand.BasketItemId), basketItemToUpdate, cancellationToken);
 
-            await UpdateTotalCost(basket, itemToUpdate, cancellationToken);
+            await UpdateTotalCost(basket, basketItemToUpdate, cancellationToken);
         }
 
         private async Task<UserBasket> FindBasket(UpdateBasketItemCommand comand, CancellationToken cancellationToken)
@@ -56,6 +57,24 @@ namespace Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.UpdateBasketIte
 
             await unitOfWork.Basket
                 .UpdateAsync(u => u.UserId.Equals(basket.UserId), basket, cancellationToken);
+        }
+
+        private async Task<Item> FindCatalogItemAsync(int itemId, CancellationToken cancellationToken = default)
+        {
+            var itemRequest = new ItemGrpcService.GetItemRequest { Id = itemId };
+
+            var itemResponse = await client.GetItemAsync(itemRequest, cancellationToken: cancellationToken);
+
+            var grpcItem = itemResponse.Item;
+
+            if (grpcItem == null)
+            {
+                throw new NotFoundException(ItemMessages.NotFound);
+            }
+
+            var item = mapper.Map<Item>(grpcItem);
+
+            return item;
         }
     }
 }

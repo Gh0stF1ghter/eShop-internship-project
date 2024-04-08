@@ -48,21 +48,21 @@ namespace Baskets.DataAccess.DbContext
             _items.InsertMany([
                 new Item
                 {
-                    ItemId = 1,
+                    Id = 1,
                     Name = "phone",
                     Price = 500.00,
                     ImageUrl = "phone.jpeg"
                 },
                 new Item
                 {
-                    ItemId = 2,
+                    Id = 2,
                     Name = "tablet",
                     Price = 750.00,
                     ImageUrl = "tablet.jpeg"
                 },
                 new Item
                 {
-                    ItemId = 3,
+                    Id = 3,
                     Name = "book",
                     Price = 25.00,
                     ImageUrl = "book.jpeg"

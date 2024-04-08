@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option csharp_namespace = "ItemGrpcService";
+
+message Item {
+    int32 id = 1;
+    int32 brandId = 2;
+    int32 vendorId = 3; 
+    int32 typeId = 4;
+    string name = 5;
+    int32 stock = 6;
+    double price = 7;
+    string imageUrl = 8;
+}
+
+service ItemService {
+    rpc GetItem(GetItemRequest) returns (GetItemResponse);
+}
+
+message GetItemRequest {
+    int32 id = 1;
+}
+
+message GetItemResponse {
+    Item item = 1;
+}

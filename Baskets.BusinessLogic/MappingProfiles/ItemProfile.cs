@@ -7,6 +7,8 @@ namespace Baskets.BusinessLogic.MappingProfiles
         public ItemProfile()
         {
             CreateMap<Item, ItemDto>();
+
+            CreateMap<ItemGrpcService.Item, Item>();
         }
     }
 }

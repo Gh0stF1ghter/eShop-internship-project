@@ -5,11 +5,12 @@ namespace Baskets.DataAccess.Entities.Models
 {
     public class Item
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; } = null!;
+        public int Id { get; set; }
 
-        public int ItemId { get; set; }
+        public int BrandId { get; set; }
+        public int VendorId { get; set; }
+        public int TypeId { get; set; }
+
         public required string Name { get; set; }
         public double Price { get; set; }
         public string? ImageUrl { get; set; }

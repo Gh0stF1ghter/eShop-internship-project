@@ -17,8 +17,8 @@ namespace Baskets.DataAccess.Entities.Models
         [BsonIgnore]
         public UserBasket CustomerBasket { get; set; } = null!;
 
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string ItemId { get; set; } = null!;
+        [BsonRepresentation(BsonType.Int32)]
+        public int ItemId { get; set; }
         [BsonIgnore]
         public Item Item { get; set; } = null!;
     }
