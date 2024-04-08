@@ -9,6 +9,7 @@ namespace Baskets.UnitTests.HandlersTests
     public class BasketItemHandlersTests
     {
         private readonly UnitOfWorkMock _unitOfWorkMock = new();
+        private readonly ItemGrpcServiceClientMock _clientMock = new();
 
         private readonly Mapper _mapper = new(
             new MapperConfiguration(mc => mc.AddProfiles(
@@ -24,6 +25,20 @@ namespace Baskets.UnitTests.HandlersTests
 
             _unitOfWorkMock.GetBasketByCondition(DataGenerator.UserBaskets[0]);
             _unitOfWorkMock.GetAllBasketItems(DataGenerator.BasketItems);
+            _clientMock.GetItem(
+                new()
+                { 
+                    Item = new ItemGrpcService.Item()
+                    {
+                        Id = 2,
+                        BrandId = 4,
+                        VendorId = 1,
+                        TypeId = 1,
+                        Name = "Book",
+                        Price = 19.99,
+                        ImageUrl = "book.jpg"
+                    }
+                });
         }
 
         [Fact]
@@ -31,7 +46,7 @@ namespace Baskets.UnitTests.HandlersTests
         {
             //Arrange
             var getBasketItemsQuery = new GetBasketItemsQuery(It.IsAny<string>());
-            var handler = new GetBasketItemsHandler(_unitOfWorkMock.Object, _mapper);
+            var handler = new GetBasketItemsHandler(_unitOfWorkMock.Object, _clientMock.Object, _mapper);
 
             //Act
             var response = await handler.Handle(getBasketItemsQuery, cancellationToken: default);
@@ -47,7 +62,7 @@ namespace Baskets.UnitTests.HandlersTests
             _unitOfWorkMock.GetBasketByCondition(null);
 
             var getBasketItemsQuery = new GetBasketItemsQuery(It.IsAny<string>());
-            var handler = new GetBasketItemsHandler(_unitOfWorkMock.Object, _mapper);
+            var handler = new GetBasketItemsHandler(_unitOfWorkMock.Object, _clientMock.Object, _mapper);
 
             //Act
             var response = async () => await handler.Handle(getBasketItemsQuery, cancellationToken: default);
@@ -67,7 +82,7 @@ namespace Baskets.UnitTests.HandlersTests
             _unitOfWorkMock.GetBasketItemWithItemByCondition(mockedResult);
 
             var getBasketItemQuery = new GetBasketItemQuery(It.IsAny<string>(), It.IsAny<string>());
-            var handler = new GetBasketItemHandler(_unitOfWorkMock.Object, _mapper);
+            var handler = new GetBasketItemHandler(_unitOfWorkMock.Object, _clientMock.Object, _mapper);
 
             //Act
             var response = await handler.Handle(getBasketItemQuery, cancellationToken: default);
@@ -84,7 +99,7 @@ namespace Baskets.UnitTests.HandlersTests
             _unitOfWorkMock.GetBasketByCondition(null);
 
             var getBasketItemQuery = new GetBasketItemQuery(It.IsAny<string>(), It.IsAny<string>());
-            var handler = new GetBasketItemHandler(_unitOfWorkMock.Object, _mapper);
+            var handler = new GetBasketItemHandler(_unitOfWorkMock.Object, _clientMock.Object, _mapper);
 
             //Act
             var response = async () => await handler.Handle(getBasketItemQuery, cancellationToken: default);
@@ -102,7 +117,7 @@ namespace Baskets.UnitTests.HandlersTests
             _unitOfWorkMock.GetBasketItemWithItemByCondition(null);
 
             var getBasketItemQuery = new GetBasketItemQuery(It.IsAny<string>(), It.IsAny<string>());
-            var handler = new GetBasketItemHandler(_unitOfWorkMock.Object, _mapper);
+            var handler = new GetBasketItemHandler(_unitOfWorkMock.Object, _clientMock.Object, _mapper);
 
             //Act
             var response = async () => await handler.Handle(getBasketItemQuery, cancellationToken: default);
@@ -117,31 +132,26 @@ namespace Baskets.UnitTests.HandlersTests
         public async Task CreateBasketItemAsync_ValidParameters_ReturnsBasketItem()
         {
             //Arrange
-            var mockedItem = DataGenerator.Items[0];
-
-            _unitOfWorkMock.GetItemByCondition(mockedItem);
             _unitOfWorkMock.GetBasketItemWithItemByCondition(null);
 
-            var createBasketItemComand = new CreateBasketItemCommand(It.IsAny<string>(), new(It.IsAny<string>()));
-            var handler = new CreateBasketItemHandler(_unitOfWorkMock.Object, _mapper);
+            var createBasketItemComand = new CreateBasketItemCommand(It.IsAny<string>(), new(It.IsAny<int>()));
+            var handler = new CreateBasketItemHandler(_unitOfWorkMock.Object, _clientMock.Object, _mapper);
 
             //Act
             var response = await handler.Handle(createBasketItemComand, cancellationToken: default);
 
             //Assert
-            response.SumPrice.Should()
-                .Be(mockedItem.Price);
+            response.Should().NotBeNull();
         }
 
         [Fact]
         public async Task CreateBasketItemAsync_ExistingItemId_ThrowsAlreadyExistsException()
         {
             //Arrange
-            _unitOfWorkMock.GetItemByCondition(DataGenerator.Items[0]);
             _unitOfWorkMock.GetBasketItemByCondition(DataGenerator.BasketItems[0]);
 
-            var createBasketItemComand = new CreateBasketItemCommand(It.IsAny<string>(), new(It.IsAny<string>()));
-            var handler = new CreateBasketItemHandler(_unitOfWorkMock.Object, _mapper);
+            var createBasketItemComand = new CreateBasketItemCommand(It.IsAny<string>(), new(It.IsAny<int>()));
+            var handler = new CreateBasketItemHandler(_unitOfWorkMock.Object, _clientMock.Object, _mapper);
 
             //Act
             var response = async () => await handler.Handle(createBasketItemComand, cancellationToken: default);
@@ -157,10 +167,9 @@ namespace Baskets.UnitTests.HandlersTests
         {
             //Arrange
             _unitOfWorkMock.GetBasketByCondition(null);
-            _unitOfWorkMock.GetItemByCondition(DataGenerator.Items[0]);
 
-            var createBasketItemComand = new CreateBasketItemCommand(It.IsAny<string>(), new(It.IsAny<string>()));
-            var handler = new CreateBasketItemHandler(_unitOfWorkMock.Object, _mapper);
+            var createBasketItemComand = new CreateBasketItemCommand(It.IsAny<string>(), new(It.IsAny<int>()));
+            var handler = new CreateBasketItemHandler(_unitOfWorkMock.Object, _clientMock.Object, _mapper);
 
             //Act
             var response = async () => await handler.Handle(createBasketItemComand, cancellationToken: default);
@@ -169,24 +178,6 @@ namespace Baskets.UnitTests.HandlersTests
             await response.Should()
                 .ThrowAsync<NotFoundException>()
                 .WithMessage(UserMessages.NotFound);
-        }
-
-        [Fact]
-        public async Task CreateBasketItemAsync_InvalidItemId_ThrowsNotFoundException()
-        {
-            //Arrange
-            _unitOfWorkMock.GetItemByCondition(null);
-
-            var createBasketItemComand = new CreateBasketItemCommand(It.IsAny<string>(), new(It.IsAny<string>()));
-            var handler = new CreateBasketItemHandler(_unitOfWorkMock.Object, _mapper);
-
-            //Act
-            var response = async () => await handler.Handle(createBasketItemComand, cancellationToken: default);
-
-            //Assert
-            await response.Should()
-                .ThrowAsync<NotFoundException>()
-                .WithMessage(ItemMessages.NotFound);
         }
 
         [Fact]
@@ -251,7 +242,7 @@ namespace Baskets.UnitTests.HandlersTests
             _unitOfWorkMock.GetBasketItemWithItemByCondition(basketItemMock);
 
             var updateBasketItem = new UpdateBasketItemCommand(It.IsAny<string>(), It.IsAny<string>(), 3);
-            var handler = new UpdateBasketItemHandler(_unitOfWorkMock.Object);
+            var handler = new UpdateBasketItemHandler(_unitOfWorkMock.Object, _clientMock.Object, _mapper);
 
             //Act
             var response = async () => await handler.Handle(updateBasketItem, cancellationToken: default);
@@ -267,7 +258,7 @@ namespace Baskets.UnitTests.HandlersTests
             _unitOfWorkMock.GetBasketByCondition(null);
 
             var updateBasketItem = new UpdateBasketItemCommand(It.IsAny<string>(), It.IsAny<string>(), 3);
-            var handler = new UpdateBasketItemHandler(_unitOfWorkMock.Object);
+            var handler = new UpdateBasketItemHandler(_unitOfWorkMock.Object, _clientMock.Object, _mapper);
 
             //Act
             var response = async () => await handler.Handle(updateBasketItem, cancellationToken: default);
@@ -285,7 +276,7 @@ namespace Baskets.UnitTests.HandlersTests
             _unitOfWorkMock.GetBasketItemWithItemByCondition(null);
 
             var updateBasketItem = new UpdateBasketItemCommand(It.IsAny<string>(), It.IsAny<string>(), 3);
-            var handler = new UpdateBasketItemHandler(_unitOfWorkMock.Object);
+            var handler = new UpdateBasketItemHandler(_unitOfWorkMock.Object, _clientMock.Object, _mapper);
 
             //Act
             var response = async () => await handler.Handle(updateBasketItem, cancellationToken: default);

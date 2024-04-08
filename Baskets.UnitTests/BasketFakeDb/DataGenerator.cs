@@ -36,7 +36,7 @@ namespace Baskets.UnitTests.BasketFakeDb
             BasketItems.AddRange(basket);
         }
 
-        private static Faker<Item> GetItemGenerator(string itemId) =>
+        private static Faker<Item> GetItemGenerator(int itemId) =>
             new Faker<Item>()
                 .RuleFor(i => i.Id, itemId)
                 .RuleFor(i => i.Name, f => f.Commerce.Product());
@@ -49,9 +49,7 @@ namespace Baskets.UnitTests.BasketFakeDb
             new Faker<BasketItem>()
                 .RuleFor(bi => bi.UserId, f => f.Random.String(24, minChar: '0', maxChar: 'F'))
                 .RuleFor(bi => bi.BasketItemId, f => f.Random.String(24, minChar: '0', maxChar: 'F'))
-                .RuleFor(bi => bi.ItemId, f => f.Random.String(24, minChar: '0', maxChar: 'F'))
-                .RuleFor(bi => bi.Item, (_, bi) => GetBogusItemData(bi.ItemId));
-
+                .RuleFor(bi => bi.ItemId, f => f.Random.Int());
         private static Faker<UserBasket> GetUserBasketGenerator() =>
             new Faker<UserBasket>()
                 .RuleFor(ub => ub.UserId, f => f.Random.String(24, minChar: '0', maxChar: 'F'))
@@ -67,7 +65,7 @@ namespace Baskets.UnitTests.BasketFakeDb
             return user;
         }
 
-        private static Item GetBogusItemData(string itemId)
+        private static Item GetBogusItemData(int itemId)
         {
             var generator = GetItemGenerator(itemId);
             var user = generator.Generate();
