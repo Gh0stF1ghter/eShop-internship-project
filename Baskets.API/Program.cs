@@ -10,10 +10,19 @@ builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
 
 services.ConfigureDbSettings(builder.Configuration);
 
-services.ConfigureMongoClient();
+services.ConfigureMongoClient(builder.Configuration);
 
 services.AddGrpcClient<ItemService.ItemServiceClient>(options =>
-options.Address = new Uri("https://localhost:7279"));
+options.Address = new Uri(builder.Configuration["Grpc"])).ConfigurePrimaryHttpMessageHandler(() =>
+{
+    var handler = new HttpClientHandler
+    {
+        ServerCertificateCustomValidationCallback =
+        HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+    };
+
+    return handler;
+});
 
 services.ConfigureMediatR();
 

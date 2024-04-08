@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-  catalogs.api:
+  baskets.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
@@ -9,6 +9,22 @@ services:
     ports:
       - "8080"
       - "8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    depends_on:
+      - mongo 
+    networks: 
+      - elastic
+
+  catalogs.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=5012
+    ports:
+      - "8080"
+      - "5012:5012"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
@@ -39,6 +55,26 @@ services:
         - MSSQL_SA_PASSWORD=A&VeryComplex123Password
     networks:
     - elastic
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+    - 27017:27017
+    networks:
+    - elastic
+
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/
+    networks:
+    - elastic
+
 
   redis:
     image: redis:latest

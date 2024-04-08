@@ -24,17 +24,9 @@ namespace Baskets.API.Extensions
             services.AddFluentValidationAutoValidation();
         }
 
-        public static void ConfigureMongoClient(this IServiceCollection services) =>
+        public static void ConfigureMongoClient(this IServiceCollection services, IConfiguration configuration) =>
             services.AddSingleton<IMongoClient>(_ =>
-            {
-                var settings = new MongoClientSettings()
-                {
-                    Scheme = ConnectionStringScheme.MongoDB,
-                    Server = new MongoServerAddress("localhost", 27017)
-                };
-
-                return new MongoClient(settings);
-            });
+                new MongoClient(configuration["BasketDatabaseSettings:ConnectionString"]));
 
         public static void AddCustomDependencies(this IServiceCollection services)
         {

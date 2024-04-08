@@ -4,7 +4,9 @@ using Baskets.DataAccess.UnitOfWork;
 
 namespace Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItems
 {
-    public class GetBasketItemsHandler(IUnitOfWork unitOfWork, ItemGrpcService.ItemService.ItemServiceClient client, IMapper mapper)
+    public class GetBasketItemsHandler(IUnitOfWork unitOfWork,
+        ItemGrpcService.ItemService.ItemServiceClient client,
+        IMapper mapper)
         : IRequestHandler<GetBasketItemsQuery, IEnumerable<BasketItemDto>>
     {
         public async Task<IEnumerable<BasketItemDto>> Handle(GetBasketItemsQuery query, CancellationToken cancellationToken)

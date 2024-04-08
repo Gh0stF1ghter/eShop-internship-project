@@ -4,7 +4,9 @@ using Baskets.DataAccess.UnitOfWork;
 
 namespace Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.CreateBasketItem
 {
-    public class CreateBasketItemHandler(IUnitOfWork unitOfWork, ItemGrpcService.ItemService.ItemServiceClient client, IMapper mapper)
+    public class CreateBasketItemHandler(IUnitOfWork unitOfWork,
+        ItemGrpcService.ItemService.ItemServiceClient client,
+        IMapper mapper)
         : IRequestHandler<CreateBasketItemCommand, BasketItemDto>
     {
         public async Task<BasketItemDto> Handle(CreateBasketItemCommand comand, CancellationToken cancellationToken)
@@ -13,12 +15,12 @@ namespace Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.CreateBasketIte
 
             var itemResponse = await client.GetItemAsync(itemRequest, cancellationToken: cancellationToken);
 
-            var grpcItem = itemResponse.Item;
-
-            if (grpcItem == null)
+            if (itemResponse.StatusCode == "2")
             {
                 throw new NotFoundException(ItemMessages.NotFound);
             }
+
+            var grpcItem = itemResponse.Item;
 
             var item = mapper.Map<ItemGrpcService.Item, Item>(grpcItem);
 
