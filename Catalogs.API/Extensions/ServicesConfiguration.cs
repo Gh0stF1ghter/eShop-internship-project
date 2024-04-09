@@ -6,6 +6,7 @@ using Catalogs.Domain.Interfaces;
 using Catalogs.Infrastructure;
 using Catalogs.Infrastructure.Context;
 using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
