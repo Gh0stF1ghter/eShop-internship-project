@@ -12,17 +12,7 @@ services.ConfigureDbSettings(builder.Configuration);
 
 services.ConfigureMongoClient(builder.Configuration);
 
-services.AddGrpcClient<ItemService.ItemServiceClient>(options =>
-options.Address = new Uri(builder.Configuration["Grpc"])).ConfigurePrimaryHttpMessageHandler(() =>
-{
-    var handler = new HttpClientHandler
-    {
-        ServerCertificateCustomValidationCallback =
-        HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-    };
-
-    return handler;
-});
+services.ConfigureGrpc(builder.Configuration);
 
 services.ConfigureMediatR();
 

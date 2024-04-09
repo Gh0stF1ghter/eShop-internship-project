@@ -1,5 +1,4 @@
 ﻿using Catalogs.Domain.Entities.Models;
-using Catalogs.Infrastructure.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Catalogs.Infrastructure.Context

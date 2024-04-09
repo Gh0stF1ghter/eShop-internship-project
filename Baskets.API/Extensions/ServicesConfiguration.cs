@@ -4,7 +4,6 @@ using Baskets.DataAccess.Entities.Models;
 using Baskets.DataAccess.UnitOfWork;
 using FluentValidation;
 using MongoDB.Driver;
-using MongoDB.Driver.Core.Configuration;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 
 namespace Baskets.API.Extensions
@@ -27,6 +26,19 @@ namespace Baskets.API.Extensions
         public static void ConfigureMongoClient(this IServiceCollection services, IConfiguration configuration) =>
             services.AddSingleton<IMongoClient>(_ =>
                 new MongoClient(configuration["BasketDatabaseSettings:ConnectionString"]));
+
+        public static void ConfigureGrpc(this IServiceCollection services, IConfiguration configuration) =>
+            services.AddGrpcClient<ItemGrpcService.ItemService.ItemServiceClient>(options =>
+                options.Address = new Uri(configuration["Grpc"])).ConfigurePrimaryHttpMessageHandler(() =>
+                {
+                    var handler = new HttpClientHandler
+                    {
+                        ServerCertificateCustomValidationCallback =
+                        HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                    };
+                
+                    return handler;
+                });
 
         public static void AddCustomDependencies(this IServiceCollection services)
         {

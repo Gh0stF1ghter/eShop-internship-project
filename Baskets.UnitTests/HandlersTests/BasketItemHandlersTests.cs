@@ -27,7 +27,7 @@ namespace Baskets.UnitTests.HandlersTests
             _unitOfWorkMock.GetAllBasketItems(DataGenerator.BasketItems);
             _clientMock.GetItem(
                 new()
-                { 
+                {
                     Item = new ItemGrpcService.Item()
                     {
                         Id = 2,

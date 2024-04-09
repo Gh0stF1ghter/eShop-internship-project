@@ -11,7 +11,7 @@ namespace Identity.Tests.ServicesTests
 
         public AuthenticationServiceTest()
         {
-            var store = new Mock<IUserStore<User>>(); 
+            var store = new Mock<IUserStore<User>>();
 
             _userManagerMock = new(store.Object, null, null, null, null, null, null, null, null);
         }

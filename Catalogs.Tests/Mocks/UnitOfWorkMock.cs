@@ -1,5 +1,4 @@
 ﻿using Catalogs.Domain.RequestFeatures;
-using System.Threading;
 
 namespace Catalogs.Tests.Mocks
 {

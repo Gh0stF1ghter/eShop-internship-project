@@ -40,10 +40,10 @@ namespace Catalogs.Tests.HandlersTests
 
             var comand = new DeleteItemComand(1, 1, false);
             var handle = new DeleteItemHandler(_unitOfWorkMock.Object);
-            
+
             //Act
             var response = async () => await handle.Handle(comand, token: default);
-            
+
             //Assert
             await response.Should()
                     .NotThrowAsync();
@@ -148,7 +148,7 @@ namespace Catalogs.Tests.HandlersTests
 
             //Act
             var response = await handle.Handle(query, token: default);
-            
+
             //Assert
             response.Should()
                 .BeOfType<ItemDto>()
