@@ -59,7 +59,6 @@ namespace Catalogs.Infrastructure.Repositories
             else
             {
                 item = await GetByCondition(b => b.Id.Equals(id), trackChanges)
-                    .Include(b => b.Items)
                     .SingleOrDefaultAsync(token);
 
                 var serializedItem = JsonConvert.SerializeObject(item);

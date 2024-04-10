@@ -1,12 +1,10 @@
 ﻿using Catalogs.Domain.Entities.Models;
 using Catalogs.Domain.Interfaces.Repositories;
-using Catalogs.Domain.RequestFeatures;
 using Catalogs.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using System.Text;
-using System;
 
 namespace Catalogs.Infrastructure.Repositories
 {
@@ -44,7 +42,7 @@ namespace Catalogs.Infrastructure.Repositories
             return itemTypes;
         }
 
-        public async Task<ItemType?> GetItemTypeByIdAsync(int id, bool trackChanges, CancellationToken token) 
+        public async Task<ItemType?> GetItemTypeByIdAsync(int id, bool trackChanges, CancellationToken token)
         {
             var cacheKey = $"Type{id}";
 
