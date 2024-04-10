@@ -9,6 +9,7 @@ builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
 
 services.ConfigureDbSettings(builder.Configuration);
 services.ConfigureMongoClient(builder.Configuration);
+services.ConfigureRedisCache(builder.Configuration);
 services.ConfigureMediatR();
 services.AddAutoValidation();
 services.AddCustomDependencies();

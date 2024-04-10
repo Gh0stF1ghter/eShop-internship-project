@@ -76,6 +76,8 @@ services:
     environment:
         - REDIS_PORT=6379
         - REDIS_PASSWORD=A&VeryComplex123Password
+    networks:
+        - elastic
 
   elasticsearch:
    container_name: elasticsearch

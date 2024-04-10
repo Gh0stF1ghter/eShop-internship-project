@@ -19,7 +19,14 @@ namespace Catalogs.API.Extensions
     public static class ServicesConfiguration
     {
         public static void CongigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
-            services.AddDbContext<CatalogContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly("Catalogs.Infrastructure")));
+            services.AddDbContext<CatalogContext>(options =>
+            options.UseSqlServer(
+                configuration.GetConnectionString("DefaultConnection"),
+                x => x.MigrationsAssembly("Catalogs.Infrastructure")));
+
+        public static void ConfigureRedisCache(this IServiceCollection services, IConfiguration configuration) =>
+            services.AddStackExchangeRedisCache(options =>
+            options.Configuration = configuration.GetConnectionString("Redis"));
 
         public static void ConfigureMediatR(this IServiceCollection services) =>
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Application.AssemblyReference).Assembly));
