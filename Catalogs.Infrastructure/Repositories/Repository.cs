@@ -10,7 +10,7 @@ namespace Catalogs.Infrastructure.Repositories
         private readonly CatalogContext _context = context;
 
         public IQueryable<TEntity> GetAll(bool trackChanges) =>
-            trackChanges ? _context.Set<TEntity>() : _context.Set<TEntity>().AsNoTracking();
+        trackChanges ? _context.Set<TEntity>() : _context.Set<TEntity>().AsNoTracking();
 
         public IQueryable<TEntity> GetByCondition(Expression<Func<TEntity, bool>> predicate, bool trackChanges) =>
             trackChanges ? _context.Set<TEntity>().Where(predicate) : _context.Set<TEntity>().Where(predicate).AsNoTracking();
