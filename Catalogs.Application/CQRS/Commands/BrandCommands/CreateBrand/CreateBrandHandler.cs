@@ -20,7 +20,7 @@ namespace Catalogs.Application.CQRS.Commands.BrandCommands.CreateBrand
 
             var brand = _mapper.Map<Brand>(command.BrandDto);
 
-            _unitOfWork.Brand.Add(brand);
+            await _unitOfWork.Brand.AddBrandAsync(brand, token);
 
             await _unitOfWork.SaveChangesAsync(token);
 

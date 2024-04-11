@@ -4,75 +4,112 @@ using Catalogs.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Text;
 
 namespace Catalogs.Infrastructure.Repositories
 {
     public sealed class BrandRepository(CatalogContext context, IDistributedCache distributedCache) : Repository<Brand>(context), IBrandRepository
     {
+        private const string allCacheKey = "AllBrands";
+
         public async Task<IEnumerable<Brand>> GetAllBrandsAsync(bool trackChanges, CancellationToken token) 
         {
-            var cacheKey = $"AllBrands";
+            var brandsCache = await distributedCache.GetAsync(allCacheKey, token);
 
-            var itemsCache = await distributedCache.GetAsync(cacheKey, token);
+            var brands = new List<Brand>();
 
-            var itemTypes = new List<Brand>();
-
-            if (itemsCache != null)
+            if (brandsCache != null)
             {
-                var serializedItems = Encoding.UTF8.GetString(itemsCache);
-                itemTypes = JsonConvert.DeserializeObject<List<Brand>>(serializedItems);
+                var serializedBrands = Encoding.UTF8.GetString(brandsCache);
+                brands = JsonConvert.DeserializeObject<List<Brand>>(serializedBrands);
             }
             else
             {
-                itemTypes = await GetAll(trackChanges)
+                brands = await GetAll(trackChanges)
                     .OrderBy(b => b.Name)
                     .ToListAsync(token);
 
-                var serializedItems = JsonConvert.SerializeObject(itemTypes);
+                var serializedBrands = JsonConvert.SerializeObject(brands);
 
-                itemsCache = Encoding.UTF8.GetBytes(serializedItems);
+                brandsCache = Encoding.UTF8.GetBytes(serializedBrands);
 
                 var cachingOptions = new DistributedCacheEntryOptions()
                     .SetSlidingExpiration(TimeSpan.FromMinutes(2))
                     .SetAbsoluteExpiration(DateTime.Now.AddMinutes(10));
 
-                await distributedCache.SetAsync(cacheKey, itemsCache, cachingOptions, token);
+                await distributedCache.SetAsync(allCacheKey, brandsCache, cachingOptions, token);
             }
 
-            return itemTypes;
+            return brands;
         }
 
         public async Task<Brand?> GetBrandByIdAsync(int id, bool trackChanges, CancellationToken token)
         {
             var cacheKey = $"Brand{id}";
 
-            var itemCache = await distributedCache.GetAsync(cacheKey, token);
+            var brandCache = await distributedCache.GetAsync(cacheKey, token);
 
-            var item = new Brand();
+            var brand = new Brand();
 
-            if (itemCache != null)
+            if (brandCache != null)
             {
-                var serializedItems = Encoding.UTF8.GetString(itemCache);
-                item = JsonConvert.DeserializeObject<Brand>(serializedItems);
+                var serializedBrand = Encoding.UTF8.GetString(brandCache);
+                brand = JsonConvert.DeserializeObject<Brand>(serializedBrand);
             }
             else
             {
-                item = await GetByCondition(b => b.Id.Equals(id), trackChanges)
+                brand = await GetByCondition(b => b.Id.Equals(id), trackChanges)
                     .SingleOrDefaultAsync(token);
 
-                var serializedItem = JsonConvert.SerializeObject(item);
+                var serializedBrand = JsonConvert.SerializeObject(brand);
 
-                itemCache = Encoding.UTF8.GetBytes(serializedItem);
+                brandCache = Encoding.UTF8.GetBytes(serializedBrand);
 
                 var cachingOptions = new DistributedCacheEntryOptions()
                     .SetSlidingExpiration(TimeSpan.FromMinutes(2))
                     .SetAbsoluteExpiration(DateTime.Now.AddMinutes(10));
 
-                await distributedCache.SetAsync(cacheKey, itemCache, cachingOptions, token);
+                await distributedCache.SetAsync(cacheKey, brandCache, cachingOptions, token);
             }
 
-            return item;
+            return brand;
+        }
+
+        public async Task<Brand> GetBrandToUpdateAsync(int id, CancellationToken token)
+        {
+            var brand = await GetBrandByIdAsync(id, trackChanges: true, token);
+
+            var cacheKey = $"Brand{brand.Id}";
+
+            await RemoveAllCacheAsync(cacheKey, token);
+
+            return brand;
+        }
+
+        public async Task AddBrandAsync(Brand brand, CancellationToken token)
+        {
+            var cacheKey = $"Brand{brand.Id}";
+
+            await RemoveAllCacheAsync(cacheKey, token);
+
+            Add(brand);
+        }
+
+        public async Task DeleteBrandAsync(Brand brand, CancellationToken token)
+        {
+            var cacheKey = $"Brand{brand.Id}";
+
+            await RemoveAllCacheAsync(cacheKey, token);
+
+            Delete(brand);
+        }
+
+        private async Task RemoveAllCacheAsync(string objectCacheKey, CancellationToken token)
+        {
+            await distributedCache.RemoveAsync(allCacheKey, token);
+            await distributedCache.RemoveAsync(objectCacheKey + "True", token);
+            await distributedCache.RemoveAsync(objectCacheKey + "False", token);
         }
     }
 }

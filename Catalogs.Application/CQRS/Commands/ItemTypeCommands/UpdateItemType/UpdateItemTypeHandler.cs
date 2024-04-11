@@ -10,7 +10,7 @@ namespace Catalogs.Application.CQRS.Commands.ItemTypeCommands.UpdateItemType
 
         public async Task Handle(UpdateItemTypeCommand request, CancellationToken token)
         {
-            var itemTypeToUpdate = await _unitOfWork.ItemType.GetItemTypeByIdAsync(request.Id, request.TrackChanges, token);
+            var itemTypeToUpdate = await _unitOfWork.ItemType.GetItemTypeToUpdateAsync(request.Id, token);
 
             if (itemTypeToUpdate == null)
             {

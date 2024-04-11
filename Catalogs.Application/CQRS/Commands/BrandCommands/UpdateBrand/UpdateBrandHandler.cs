@@ -10,7 +10,7 @@ namespace Catalogs.Application.CQRS.Commands.BrandCommands.UpdateBrand
 
         public async Task Handle(UpdateBrandCommand request, CancellationToken token)
         {
-            var brandToUpdate = await _unitOfWork.Brand.GetBrandByIdAsync(request.Id, request.TrackChanges, token);
+            var brandToUpdate = await _unitOfWork.Brand.GetBrandToUpdateAsync(request.Id, token);
 
             if (brandToUpdate == null)
             {

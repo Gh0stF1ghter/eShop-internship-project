@@ -16,7 +16,7 @@ namespace Catalogs.Application.CQRS.Commands.VendorCommands.DeleteVendor
                 throw new NotFoundException(VendorMessages.VendorNotFound);
             }
 
-            _unitOfWork.Vendor.Delete(vendor);
+            await _unitOfWork.Vendor.DeleteVendorAsync(vendor, token);
 
             await _unitOfWork.SaveChangesAsync(token);
         }

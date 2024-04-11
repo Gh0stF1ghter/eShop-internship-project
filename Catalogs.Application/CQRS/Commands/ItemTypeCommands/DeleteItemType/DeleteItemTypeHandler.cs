@@ -16,7 +16,7 @@ namespace Catalogs.Application.CQRS.Commands.ItemTypeCommands.DeleteItemType
                 throw new NotFoundException(ItemTypeMessages.ItemTypeNotFound);
             }
 
-            _unitOfWork.ItemType.Delete(brand);
+            await _unitOfWork.ItemType.DeleteItemTypeAsync(brand, token);
 
             await _unitOfWork.SaveChangesAsync(token);
         }
