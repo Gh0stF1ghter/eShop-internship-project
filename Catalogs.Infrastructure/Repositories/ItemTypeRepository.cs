@@ -10,11 +10,12 @@ namespace Catalogs.Infrastructure.Repositories
 {
     public sealed class ItemTypeRepository(CatalogContext context, IDistributedCache distributedCache) : Repository<ItemType>(context), IItemTypeRepository
     {
-        private const string allCacheKey = "AllTypes";
+        private const string _allCacheKey = "AllTypes";
+        private const string _cacheKeyBase = "Type";
 
         public async Task<IEnumerable<ItemType>> GetAllItemTypesAsync(bool trackChanges, CancellationToken token)
         {
-            var itemsCache = await distributedCache.GetAsync(allCacheKey, token);
+            var itemsCache = await distributedCache.GetAsync(_allCacheKey, token);
 
             var itemTypes = new List<ItemType>();
 
@@ -36,7 +37,7 @@ namespace Catalogs.Infrastructure.Repositories
                     .SetSlidingExpiration(TimeSpan.FromMinutes(2))
                     .SetAbsoluteExpiration(DateTime.Now.AddMinutes(10));
 
-                await distributedCache.SetAsync(allCacheKey, itemsCache, cachingOptions, token);
+                await distributedCache.SetAsync(_allCacheKey, itemsCache, cachingOptions, token);
             }
 
             return itemTypes;
@@ -44,7 +45,7 @@ namespace Catalogs.Infrastructure.Repositories
 
         public async Task<ItemType?> GetItemTypeByIdAsync(int id, bool trackChanges, CancellationToken token)
         {
-            var cacheKey = $"Type{id}{trackChanges}";
+            var cacheKey = _cacheKeyBase + id + trackChanges;
 
             var itemCache = await distributedCache.GetAsync(cacheKey, token);
 
@@ -78,7 +79,7 @@ namespace Catalogs.Infrastructure.Repositories
         {
             var itemType = await GetItemTypeByIdAsync(id, trackChanges: true, token);
 
-            var cacheKey = $"Type{itemType.Id}";
+            var cacheKey = _cacheKeyBase + id;
 
             await RemoveAllCacheAsync(cacheKey, token);
                 
@@ -87,14 +88,14 @@ namespace Catalogs.Infrastructure.Repositories
 
         public async Task AddItemTypeAsync(ItemType itemType, CancellationToken token)
         {            
-            await distributedCache.RemoveAsync(allCacheKey, token);
+            await distributedCache.RemoveAsync(_allCacheKey, token);
 
             Add(itemType);
         }
 
         public async Task DeleteItemTypeAsync(ItemType itemType, CancellationToken token)
         {
-            var cacheKey = $"Type{itemType.Id}";
+            var cacheKey = _cacheKeyBase + itemType.Id;
 
             await RemoveAllCacheAsync(cacheKey, token);
 
@@ -103,7 +104,7 @@ namespace Catalogs.Infrastructure.Repositories
 
         private async Task RemoveAllCacheAsync(string objectCacheKey, CancellationToken token)
         {
-            await distributedCache.RemoveAsync(allCacheKey, token);
+            await distributedCache.RemoveAsync(_allCacheKey, token);
             await distributedCache.RemoveAsync(objectCacheKey + "True", token);
             await distributedCache.RemoveAsync(objectCacheKey + "False", token);
         }

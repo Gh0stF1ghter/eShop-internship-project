@@ -13,6 +13,7 @@ namespace Catalogs.Infrastructure.Repositories
 {
     public sealed class ItemRepository(CatalogContext context, IDistributedCache distributedCache) : Repository<Item>(context), IItemRepository
     {
+        public const string _cacheKeyBase = "ItemOfIds";
         public async Task<PagedList<Item>> GetAllItemsOfTypeAsync(int typeId, ItemParameters itemParameters, bool trackChanges, CancellationToken token)
         {
             var items = await GetByCondition(i => i.TypeId.Equals(typeId), trackChanges)
@@ -26,7 +27,7 @@ namespace Catalogs.Infrastructure.Repositories
 
         public async Task<Item?> GetItemOfTypeByIdAsync(int typeId, int id, bool trackChanges, CancellationToken token)
         {
-            var cacheKey = $"ItemOfType{typeId}AndId{id}{trackChanges}";
+            var cacheKey = _cacheKeyBase + typeId + id + trackChanges;
 
             var itemCache = await distributedCache.GetAsync(cacheKey, token);
 
@@ -60,7 +61,7 @@ namespace Catalogs.Infrastructure.Repositories
         {
             var item = await GetItemOfTypeByIdAsync(typeId, id, trackChanges: true, token);
 
-            var cacheKey = $"ItemOfType{item.TypeId}AndId{item.Id}";
+            var cacheKey = _cacheKeyBase + typeId + id;
 
             await RemoveAllCacheAsync(cacheKey, token);
 
@@ -75,7 +76,7 @@ namespace Catalogs.Infrastructure.Repositories
         
         public async Task DeleteItemAsync(Item item, CancellationToken token)
         {
-            var cacheKey = $"ItemOfType{item.TypeId}AndId{item.Id}";
+            var cacheKey = _cacheKeyBase + item.TypeId + item.Id;
 
             await RemoveAllCacheAsync(cacheKey, token);
 

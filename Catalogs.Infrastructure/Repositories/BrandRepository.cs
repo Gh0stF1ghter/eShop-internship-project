@@ -11,11 +11,12 @@ namespace Catalogs.Infrastructure.Repositories
 {
     public sealed class BrandRepository(CatalogContext context, IDistributedCache distributedCache) : Repository<Brand>(context), IBrandRepository
     {
-        private const string allCacheKey = "AllBrands";
+        private const string _allCacheKey = "AllBrands";
+        private const string _cacheKeyBase = "Brand";
 
         public async Task<IEnumerable<Brand>> GetAllBrandsAsync(bool trackChanges, CancellationToken token) 
         {
-            var brandsCache = await distributedCache.GetAsync(allCacheKey, token);
+            var brandsCache = await distributedCache.GetAsync(_allCacheKey, token);
 
             var brands = new List<Brand>();
 
@@ -38,7 +39,7 @@ namespace Catalogs.Infrastructure.Repositories
                     .SetSlidingExpiration(TimeSpan.FromMinutes(2))
                     .SetAbsoluteExpiration(DateTime.Now.AddMinutes(10));
 
-                await distributedCache.SetAsync(allCacheKey, brandsCache, cachingOptions, token);
+                await distributedCache.SetAsync(_allCacheKey, brandsCache, cachingOptions, token);
             }
 
             return brands;
@@ -46,7 +47,7 @@ namespace Catalogs.Infrastructure.Repositories
 
         public async Task<Brand?> GetBrandByIdAsync(int id, bool trackChanges, CancellationToken token)
         {
-            var cacheKey = $"Brand{id}";
+            var cacheKey = _cacheKeyBase + id + trackChanges;
 
             var brandCache = await distributedCache.GetAsync(cacheKey, token);
 
@@ -80,7 +81,7 @@ namespace Catalogs.Infrastructure.Repositories
         {
             var brand = await GetBrandByIdAsync(id, trackChanges: true, token);
 
-            var cacheKey = $"Brand{brand.Id}";
+            var cacheKey = _cacheKeyBase + id;
 
             await RemoveAllCacheAsync(cacheKey, token);
 
@@ -89,7 +90,7 @@ namespace Catalogs.Infrastructure.Repositories
 
         public async Task AddBrandAsync(Brand brand, CancellationToken token)
         {
-            var cacheKey = $"Brand{brand.Id}";
+            var cacheKey = _cacheKeyBase + brand.Id;
 
             await RemoveAllCacheAsync(cacheKey, token);
 
@@ -98,7 +99,7 @@ namespace Catalogs.Infrastructure.Repositories
 
         public async Task DeleteBrandAsync(Brand brand, CancellationToken token)
         {
-            var cacheKey = $"Brand{brand.Id}";
+            var cacheKey = _cacheKeyBase + brand.Id;
 
             await RemoveAllCacheAsync(cacheKey, token);
 
@@ -107,7 +108,7 @@ namespace Catalogs.Infrastructure.Repositories
 
         private async Task RemoveAllCacheAsync(string objectCacheKey, CancellationToken token)
         {
-            await distributedCache.RemoveAsync(allCacheKey, token);
+            await distributedCache.RemoveAsync(_allCacheKey, token);
             await distributedCache.RemoveAsync(objectCacheKey + "True", token);
             await distributedCache.RemoveAsync(objectCacheKey + "False", token);
         }

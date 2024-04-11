@@ -11,11 +11,12 @@ namespace Catalogs.Infrastructure.Repositories
 {
     public sealed class VendorRepository(CatalogContext context, IDistributedCache distributedCache) : Repository<Vendor>(context), IVendorRepository
     {
-        private const string allCacheKey = "AllVendors";
+        private const string _allCacheKey = "AllVendors";
+        private const string _cacheKeyBase = "Vendor";
 
         public async Task<IEnumerable<Vendor>> GetAllVendorsAsync(bool trackChanges, CancellationToken token)
         {
-            var vendorsCache = await distributedCache.GetAsync(allCacheKey, token);
+            var vendorsCache = await distributedCache.GetAsync(_allCacheKey, token);
 
             var vendors = new List<Vendor>();
 
@@ -37,7 +38,7 @@ namespace Catalogs.Infrastructure.Repositories
                     .SetSlidingExpiration(TimeSpan.FromMinutes(2))
                     .SetAbsoluteExpiration(DateTime.Now.AddMinutes(10));
 
-                await distributedCache.SetAsync(allCacheKey, vendorsCache, cachingOptions, token);
+                await distributedCache.SetAsync(_allCacheKey, vendorsCache, cachingOptions, token);
             }
 
             return vendors;
@@ -46,7 +47,7 @@ namespace Catalogs.Infrastructure.Repositories
 
         public async Task<Vendor?> GetVendorByIdAsync(int id, bool trackChanges, CancellationToken token)
         {
-            var cacheKey = $"Vendor{id}";
+            var cacheKey = _cacheKeyBase + id + trackChanges;
 
             var vendorCache = await distributedCache.GetAsync(cacheKey, token);
 
@@ -80,7 +81,7 @@ namespace Catalogs.Infrastructure.Repositories
         {
             var vendor = await GetVendorByIdAsync(id, trackChanges: true, token);
 
-            var cacheKey = $"Vendor{vendor.Id}";
+            var cacheKey = _cacheKeyBase + id;
 
             await RemoveAllCacheAsync(cacheKey, token);
 
@@ -89,14 +90,14 @@ namespace Catalogs.Infrastructure.Repositories
 
         public async Task AddVendorAsync(Vendor vendor, CancellationToken token)
         {
-            await distributedCache.RemoveAsync(allCacheKey, token);
+            await distributedCache.RemoveAsync(_allCacheKey, token);
 
             Add(vendor);
         }
 
         public async Task DeleteVendorAsync(Vendor vendor, CancellationToken token)
         {
-            var cacheKey = $"Type{vendor.Id}";
+            var cacheKey = _cacheKeyBase + vendor.Id;
 
             await RemoveAllCacheAsync(cacheKey, token);
 
@@ -105,7 +106,7 @@ namespace Catalogs.Infrastructure.Repositories
 
         private async Task RemoveAllCacheAsync(string objectCacheKey, CancellationToken token)
         {
-            await distributedCache.RemoveAsync(allCacheKey, token);
+            await distributedCache.RemoveAsync(_allCacheKey, token);
             await distributedCache.RemoveAsync(objectCacheKey + "True", token);
             await distributedCache.RemoveAsync(objectCacheKey + "False", token);
         }
