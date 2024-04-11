@@ -1,13 +1,4 @@
-﻿using Catalogs.Domain.Entities.Models;
-using Catalogs.Domain.Interfaces.Repositories;
-using Catalogs.Infrastructure.Context;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
-using System.Text;
-using System;
-
-namespace Catalogs.Infrastructure.Repositories
+﻿namespace Catalogs.Infrastructure.Repositories
 {
     public sealed class VendorRepository(CatalogContext context, IDistributedCache distributedCache) : Repository<Vendor>(context), IVendorRepository
     {
@@ -22,27 +13,19 @@ namespace Catalogs.Infrastructure.Repositories
 
             if (vendorsCache is not null)
             {
-                var serializedVendors = Encoding.UTF8.GetString(vendorsCache);
-                vendors = JsonConvert.DeserializeObject<List<Vendor>>(serializedVendors);
+                vendors = Cache<List<Vendor>>.GetDataFromCache(vendorsCache);
             }
             else
             {
                 vendors = await GetAll(trackChanges)
                         .ToListAsync(token);
 
-                var serializedVendors = JsonConvert.SerializeObject(vendors);
+                vendorsCache = Cache<List<Vendor>>.ConvertDataForCaching(vendors, out var options);
 
-                vendorsCache = Encoding.UTF8.GetBytes(serializedVendors);
-
-                var cachingOptions = new DistributedCacheEntryOptions()
-                    .SetSlidingExpiration(TimeSpan.FromMinutes(2))
-                    .SetAbsoluteExpiration(DateTime.Now.AddMinutes(10));
-
-                await distributedCache.SetAsync(_allCacheKey, vendorsCache, cachingOptions, token);
+                await distributedCache.SetAsync(_allCacheKey, vendorsCache, options, token);
             }
 
             return vendors;
-
         }
 
         public async Task<Vendor?> GetVendorByIdAsync(int id, bool trackChanges, CancellationToken token)
@@ -55,23 +38,16 @@ namespace Catalogs.Infrastructure.Repositories
 
             if (vendorCache is not null)
             {
-                var serializedItems = Encoding.UTF8.GetString(vendorCache);
-                vendor = JsonConvert.DeserializeObject<Vendor>(serializedItems);
+                vendor = Cache<Vendor>.GetDataFromCache(vendorCache);
             }
             else
             {
                 vendor = await GetByCondition(v => v.Id.Equals(id), trackChanges)
                 .SingleOrDefaultAsync(token);
 
-                var serializedVendor = JsonConvert.SerializeObject(vendor);
+                vendorCache = Cache<Vendor>.ConvertDataForCaching(vendor, out var options);
 
-                vendorCache = Encoding.UTF8.GetBytes(serializedVendor);
-
-                var cachingOptions = new DistributedCacheEntryOptions()
-                    .SetSlidingExpiration(TimeSpan.FromMinutes(2))
-                    .SetAbsoluteExpiration(DateTime.Now.AddMinutes(10));
-
-                await distributedCache.SetAsync(cacheKey, vendorCache, cachingOptions, token);
+                await distributedCache.SetAsync(cacheKey, vendorCache, options, token);
             }
 
             return vendor;

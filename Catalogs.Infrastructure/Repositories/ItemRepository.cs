@@ -1,13 +1,5 @@
-﻿using Catalogs.Domain.Entities.Models;
-using Catalogs.Domain.Interfaces.Repositories;
-using Catalogs.Domain.RequestFeatures;
-using Catalogs.Infrastructure.Context;
+﻿using Catalogs.Domain.RequestFeatures;
 using Catalogs.Infrastructure.Repositories.Extensions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
-using System;
-using System.Text;
 
 namespace Catalogs.Infrastructure.Repositories
 {
@@ -33,25 +25,18 @@ namespace Catalogs.Infrastructure.Repositories
 
             var item = new Item();
 
-            if (itemCache != null)
+            if (itemCache is not null)
             {
-                var serializedItems = Encoding.UTF8.GetString(itemCache);
-                item = JsonConvert.DeserializeObject<Item>(serializedItems);
+                item = Cache<Item>.GetDataFromCache(itemCache);
             }
             else
             {
                 item = await GetByCondition(i => i.Id.Equals(id) && i.TypeId.Equals(typeId), trackChanges)
                     .SingleOrDefaultAsync(token);
 
-                var serializedItem = JsonConvert.SerializeObject(item);
+                itemCache = Cache<Item>.ConvertDataForCaching(item, out var options);
 
-                itemCache = Encoding.UTF8.GetBytes(serializedItem);
-
-                var cachingOptions = new DistributedCacheEntryOptions()
-                    .SetSlidingExpiration(TimeSpan.FromMinutes(2))
-                    .SetAbsoluteExpiration(DateTime.Now.AddMinutes(10));
-
-                await distributedCache.SetAsync(cacheKey, itemCache, cachingOptions, token);
+                await distributedCache.SetAsync(cacheKey, itemCache, options, token);
             }
 
             return item;
@@ -73,7 +58,7 @@ namespace Catalogs.Infrastructure.Repositories
             item.TypeId = typeId;
             Add(item);
         }
-        
+
         public async Task DeleteItemAsync(Item item, CancellationToken token)
         {
             var cacheKey = _cacheKeyBase + item.TypeId + item.Id;

@@ -1,12 +1,4 @@
-﻿using Catalogs.Domain.Entities.Models;
-using Catalogs.Domain.Interfaces.Repositories;
-using Catalogs.Infrastructure.Context;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
-using System.Text;
-
-namespace Catalogs.Infrastructure.Repositories
+﻿namespace Catalogs.Infrastructure.Repositories
 {
     public sealed class ItemTypeRepository(CatalogContext context, IDistributedCache distributedCache) : Repository<ItemType>(context), IItemTypeRepository
     {
@@ -15,29 +7,22 @@ namespace Catalogs.Infrastructure.Repositories
 
         public async Task<IEnumerable<ItemType>> GetAllItemTypesAsync(bool trackChanges, CancellationToken token)
         {
-            var itemsCache = await distributedCache.GetAsync(_allCacheKey, token);
+            var itemTypesCache = await distributedCache.GetAsync(_allCacheKey, token);
 
             var itemTypes = new List<ItemType>();
 
-            if (itemsCache != null)
+            if (itemTypesCache is not null)
             {
-                var serializedItems = Encoding.UTF8.GetString(itemsCache);
-                itemTypes = JsonConvert.DeserializeObject<List<ItemType>>(serializedItems);
+                itemTypes = Cache<List<ItemType>>.GetDataFromCache(itemTypesCache);
             }
             else
             {
                 itemTypes = await GetAll(trackChanges)
                     .ToListAsync(token);
 
-                var serializedItems = JsonConvert.SerializeObject(itemTypes);
+                itemTypesCache = Cache<List<ItemType>>.ConvertDataForCaching(itemTypes, out var options);
 
-                itemsCache = Encoding.UTF8.GetBytes(serializedItems);
-
-                var cachingOptions = new DistributedCacheEntryOptions()
-                    .SetSlidingExpiration(TimeSpan.FromMinutes(2))
-                    .SetAbsoluteExpiration(DateTime.Now.AddMinutes(10));
-
-                await distributedCache.SetAsync(_allCacheKey, itemsCache, cachingOptions, token);
+                await distributedCache.SetAsync(_allCacheKey, itemTypesCache, options, token);
             }
 
             return itemTypes;
@@ -47,32 +32,25 @@ namespace Catalogs.Infrastructure.Repositories
         {
             var cacheKey = _cacheKeyBase + id + trackChanges;
 
-            var itemCache = await distributedCache.GetAsync(cacheKey, token);
+            var itemTypeCache = await distributedCache.GetAsync(cacheKey, token);
 
-            var item = new ItemType();
+            var itemType = new ItemType();
 
-            if (itemCache != null)
+            if (itemTypeCache != null)
             {
-                var serializedItems = Encoding.UTF8.GetString(itemCache);
-                item = JsonConvert.DeserializeObject<ItemType>(serializedItems);
+                itemType = Cache<ItemType>.GetDataFromCache(itemTypeCache);
             }
             else
             {
-                item = await GetByCondition(t => t.Id.Equals(id), trackChanges)
+                itemType = await GetByCondition(t => t.Id.Equals(id), trackChanges)
                     .SingleOrDefaultAsync(token);
 
-                var serializedItem = JsonConvert.SerializeObject(item);
+                itemTypeCache = Cache<ItemType>.ConvertDataForCaching(itemType, out var options);
 
-                itemCache = Encoding.UTF8.GetBytes(serializedItem);
-
-                var cachingOptions = new DistributedCacheEntryOptions()
-                    .SetSlidingExpiration(TimeSpan.FromMinutes(2))
-                    .SetAbsoluteExpiration(DateTime.Now.AddMinutes(10));
-
-                await distributedCache.SetAsync(cacheKey, itemCache, cachingOptions, token);
+                await distributedCache.SetAsync(cacheKey, itemTypeCache, options, token);
             }
 
-            return item;
+            return itemType;
         }
 
         public async Task<ItemType> GetItemTypeToUpdateAsync(int id, CancellationToken token)
@@ -82,12 +60,12 @@ namespace Catalogs.Infrastructure.Repositories
             var cacheKey = _cacheKeyBase + id;
 
             await RemoveAllCacheAsync(cacheKey, token);
-                
+
             return itemType;
         }
 
         public async Task AddItemTypeAsync(ItemType itemType, CancellationToken token)
-        {            
+        {
             await distributedCache.RemoveAsync(_allCacheKey, token);
 
             Add(itemType);

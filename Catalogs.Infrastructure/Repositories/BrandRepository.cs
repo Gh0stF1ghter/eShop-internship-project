@@ -1,29 +1,19 @@
-﻿using Catalogs.Domain.Entities.Models;
-using Catalogs.Domain.Interfaces.Repositories;
-using Catalogs.Infrastructure.Context;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Text;
-
-namespace Catalogs.Infrastructure.Repositories
+﻿namespace Catalogs.Infrastructure.Repositories
 {
     public sealed class BrandRepository(CatalogContext context, IDistributedCache distributedCache) : Repository<Brand>(context), IBrandRepository
     {
         private const string _allCacheKey = "AllBrands";
         private const string _cacheKeyBase = "Brand";
 
-        public async Task<IEnumerable<Brand>> GetAllBrandsAsync(bool trackChanges, CancellationToken token) 
+        public async Task<IEnumerable<Brand>> GetAllBrandsAsync(bool trackChanges, CancellationToken token)
         {
             var brandsCache = await distributedCache.GetAsync(_allCacheKey, token);
 
             var brands = new List<Brand>();
 
-            if (brandsCache != null)
+            if (brandsCache is not null)
             {
-                var serializedBrands = Encoding.UTF8.GetString(brandsCache);
-                brands = JsonConvert.DeserializeObject<List<Brand>>(serializedBrands);
+                brands = Cache<List<Brand>>.GetDataFromCache(brandsCache);
             }
             else
             {
@@ -31,15 +21,9 @@ namespace Catalogs.Infrastructure.Repositories
                     .OrderBy(b => b.Name)
                     .ToListAsync(token);
 
-                var serializedBrands = JsonConvert.SerializeObject(brands);
+                brandsCache = Cache<List<Brand>>.ConvertDataForCaching(brands, out var options);
 
-                brandsCache = Encoding.UTF8.GetBytes(serializedBrands);
-
-                var cachingOptions = new DistributedCacheEntryOptions()
-                    .SetSlidingExpiration(TimeSpan.FromMinutes(2))
-                    .SetAbsoluteExpiration(DateTime.Now.AddMinutes(10));
-
-                await distributedCache.SetAsync(_allCacheKey, brandsCache, cachingOptions, token);
+                await distributedCache.SetAsync(_allCacheKey, brandsCache, options, token);
             }
 
             return brands;
@@ -55,23 +39,16 @@ namespace Catalogs.Infrastructure.Repositories
 
             if (brandCache != null)
             {
-                var serializedBrand = Encoding.UTF8.GetString(brandCache);
-                brand = JsonConvert.DeserializeObject<Brand>(serializedBrand);
+                brand = Cache<Brand>.GetDataFromCache(brandCache);
             }
             else
             {
                 brand = await GetByCondition(b => b.Id.Equals(id), trackChanges)
                     .SingleOrDefaultAsync(token);
 
-                var serializedBrand = JsonConvert.SerializeObject(brand);
+                brandCache = Cache<Brand>.ConvertDataForCaching(brand, out var options);
 
-                brandCache = Encoding.UTF8.GetBytes(serializedBrand);
-
-                var cachingOptions = new DistributedCacheEntryOptions()
-                    .SetSlidingExpiration(TimeSpan.FromMinutes(2))
-                    .SetAbsoluteExpiration(DateTime.Now.AddMinutes(10));
-
-                await distributedCache.SetAsync(cacheKey, brandCache, cachingOptions, token);
+                await distributedCache.SetAsync(cacheKey, brandCache, options, token);
             }
 
             return brand;
