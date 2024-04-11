@@ -1,5 +1,4 @@
-﻿using Catalogs.Domain.Entities.Models;
-using Catalogs.Domain.RequestFeatures;
+﻿using Catalogs.Domain.RequestFeatures;
 
 namespace Catalogs.Infrastructure.Repositories.Extensions
 {

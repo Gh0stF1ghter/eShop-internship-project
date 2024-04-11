@@ -1,8 +1,5 @@
 ﻿using Catalogs.Domain.Interfaces;
-using Catalogs.Domain.Interfaces.Repositories;
-using Catalogs.Infrastructure.Context;
 using Catalogs.Infrastructure.Repositories;
-using Microsoft.Extensions.Caching.Distributed;
 
 namespace Catalogs.Infrastructure
 {

@@ -1,7 +1,4 @@
-﻿using Catalogs.Domain.Interfaces.Repositories;
-using Catalogs.Infrastructure.Context;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace Catalogs.Infrastructure.Repositories
 {

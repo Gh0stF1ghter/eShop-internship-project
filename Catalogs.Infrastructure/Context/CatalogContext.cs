@@ -1,7 +1,4 @@
-﻿using Catalogs.Domain.Entities.Models;
-using Microsoft.EntityFrameworkCore;
-
-namespace Catalogs.Infrastructure.Context
+﻿namespace Catalogs.Infrastructure.Context
 {
     public class CatalogContext(DbContextOptions options) : DbContext(options)
     {
