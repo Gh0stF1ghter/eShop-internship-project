@@ -10,6 +10,7 @@ builder.Host.UseSerilog();
 var services = builder.Services;
 
 services.CongigureSqlContext(builder.Configuration);
+services.ConfigureRedisCache(builder.Configuration);
 services.AddCustomDependencies();
 services.ConfigureMediatR();
 services.AddAutoValidation();

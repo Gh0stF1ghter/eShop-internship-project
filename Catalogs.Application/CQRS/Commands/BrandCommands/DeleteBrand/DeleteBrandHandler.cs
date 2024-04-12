@@ -16,7 +16,7 @@ namespace Catalogs.Application.CQRS.Commands.BrandCommands.DeleteBrand
                 throw new NotFoundException(BrandMessages.BrandNotFound);
             }
 
-            _unitOfWork.Brand.Delete(brand);
+            await _unitOfWork.Brand.DeleteBrandAsync(brand, token);
 
             await _unitOfWork.SaveChangesAsync(token);
         }

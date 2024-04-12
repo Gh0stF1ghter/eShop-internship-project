@@ -20,7 +20,7 @@ namespace Catalogs.Application.CQRS.Commands.ItemTypeCommands.CreateItemType
 
             var itemType = _mapper.Map<ItemType>(command.ItemTypeDto);
 
-            _unitOfWork.ItemType.Add(itemType);
+            await _unitOfWork.ItemType.AddItemTypeAsync(itemType, token);
             await _unitOfWork.SaveChangesAsync(token);
 
             var itemTypeToReturn = _mapper.Map<ItemTypeDto>(itemType);

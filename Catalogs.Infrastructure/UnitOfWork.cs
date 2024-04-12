@@ -1,6 +1,4 @@
 ﻿using Catalogs.Domain.Interfaces;
-using Catalogs.Domain.Interfaces.Repositories;
-using Catalogs.Infrastructure.Context;
 using Catalogs.Infrastructure.Repositories;
 
 namespace Catalogs.Infrastructure
@@ -14,13 +12,13 @@ namespace Catalogs.Infrastructure
         private readonly Lazy<IItemTypeRepository> _itemTypeRepository;
         private readonly Lazy<IVendorRepository> _vendorRepository;
 
-        public UnitOfWork(CatalogContext context)
+        public UnitOfWork(CatalogContext context, IDistributedCache distributedCache)
         {
             _context = context;
-            _brandRepository = new Lazy<IBrandRepository>(new BrandRepository(_context));
-            _itemRepository = new Lazy<IItemRepository>(new ItemRepository(_context));
-            _itemTypeRepository = new Lazy<IItemTypeRepository>(new ItemTypeRepository(_context));
-            _vendorRepository = new Lazy<IVendorRepository>(new VendorRepository(_context));
+            _brandRepository = new Lazy<IBrandRepository>(new BrandRepository(_context, distributedCache));
+            _itemRepository = new Lazy<IItemRepository>(new ItemRepository(_context, distributedCache));
+            _itemTypeRepository = new Lazy<IItemTypeRepository>(new ItemTypeRepository(_context, distributedCache));
+            _vendorRepository = new Lazy<IVendorRepository>(new VendorRepository(_context, distributedCache));
         }
 
         public IBrandRepository Brand => _brandRepository.Value;

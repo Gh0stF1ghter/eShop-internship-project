@@ -16,7 +16,7 @@ namespace Catalogs.Application.CQRS.Commands.ItemCommands.DeleteItem
                 throw new NotFoundException(ItemMessages.ItemNotFound);
             }
 
-            _unitOfWork.Item.Delete(item);
+            await _unitOfWork.Item.DeleteItemAsync(item, token);
 
             await _unitOfWork.SaveChangesAsync(token);
         }

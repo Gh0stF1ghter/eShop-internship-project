@@ -6,5 +6,9 @@ namespace Catalogs.Domain.Interfaces.Repositories
     {
         Task<IEnumerable<ItemType>> GetAllItemTypesAsync(bool trackChanges, CancellationToken token);
         Task<ItemType?> GetItemTypeByIdAsync(int id, bool trackChanges, CancellationToken token);
+        Task<ItemType> GetItemTypeToUpdateAsync(int id, CancellationToken token);
+
+        Task AddItemTypeAsync(ItemType itemType, CancellationToken token);
+        Task DeleteItemTypeAsync(ItemType itemType, CancellationToken token);
     }
 }

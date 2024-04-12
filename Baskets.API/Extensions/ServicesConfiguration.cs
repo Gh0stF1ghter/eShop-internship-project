@@ -17,6 +17,10 @@ namespace Baskets.API.Extensions
             services.Configure<BasketDatabaseSettings>(
                 configuration.GetSection(nameof(BasketDatabaseSettings)));
 
+        public static void ConfigureRedisCache(this IServiceCollection services, IConfiguration configuration) =>
+            services.AddStackExchangeRedisCache(options =>
+            options.Configuration = configuration["Redis"]);
+
         public static void ConfigureMediatR(this IServiceCollection services) =>
                     services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(BLLAssemblyReference).Assembly));
 

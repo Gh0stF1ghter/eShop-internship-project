@@ -5,7 +5,7 @@ EXPOSE 8082
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
-WORKDIR /src/Catalogs/
+WORKDIR /src/Catalogs
 COPY ["Catalogs.API/Catalogs.API.csproj", "Catalogs.API/"]
 COPY ["Catalogs.Infrastructure/Catalogs.Infrastructure.csproj", "Catalogs.Infrastructure/"]
 COPY ["Catalogs.Application/Catalogs.Application.csproj", "Catalogs.Application/"]

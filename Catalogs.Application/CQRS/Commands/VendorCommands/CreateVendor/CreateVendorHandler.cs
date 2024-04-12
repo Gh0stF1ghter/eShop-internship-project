@@ -20,7 +20,7 @@ namespace Catalogs.Application.CQRS.Commands.VendorCommands.CreateVendor
 
             var vendor = _mapper.Map<Vendor>(command.VendorDto);
 
-            _unitOfWork.Vendor.Add(vendor);
+            await _unitOfWork.Vendor.AddVendorAsync(vendor, token);
             await _unitOfWork.SaveChangesAsync(token);
 
             var vendorToReturn = _mapper.Map<VendorDto>(vendor);

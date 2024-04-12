@@ -12,7 +12,7 @@ namespace Catalogs.Application.CQRS.Commands.ItemCommands.UpdateItem
         {
             await FindReferences(comand, token);
 
-            var itemToUpdate = await _unitOfWork.Item.GetItemOfTypeByIdAsync(comand.TypeId, comand.Id, comand.TrackChanges, token);
+            var itemToUpdate = await _unitOfWork.Item.GetItemOfTypeToUpdateAsync(comand.TypeId, comand.Id, token);
 
             if (itemToUpdate == null)
             {

@@ -10,7 +10,7 @@ namespace Catalogs.Application.CQRS.Commands.VendorCommands.UpdateVendor
 
         public async Task Handle(UpdateVendorCommand request, CancellationToken token)
         {
-            var vendorToUpdate = await _unitOfWork.Vendor.GetVendorByIdAsync(request.Id, request.TrackChanges, token);
+            var vendorToUpdate = await _unitOfWork.Vendor.GetVendorToUpdateAsync(request.Id, token);
 
             if (vendorToUpdate == null)
             {

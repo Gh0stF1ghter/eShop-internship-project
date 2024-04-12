@@ -6,7 +6,9 @@ namespace Catalogs.Domain.Interfaces.Repositories
     {
         Task<IEnumerable<Vendor>> GetAllVendorsAsync(bool trackChanges, CancellationToken token);
         Task<Vendor?> GetVendorByIdAsync(int id, bool trackChanges, CancellationToken token);
+        Task<Vendor> GetVendorToUpdateAsync(int id, CancellationToken token);
 
-        void DeleteVendor(Vendor vendor);
+        Task AddVendorAsync(Vendor vendor, CancellationToken token);
+        Task DeleteVendorAsync(Vendor vendor, CancellationToken token);
     }
 }
