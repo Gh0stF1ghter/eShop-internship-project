@@ -1,5 +1,6 @@
 ﻿using Catalogs.Application.DataTransferObjects;
 using Catalogs.Application.Queries.ItemQueries;
+using Catalogs.Domain.Entities.Constants.Messages;
 using Catalogs.Domain.Entities.LinkModels;
 using Catalogs.Domain.RequestFeatures;
 using MediatR;

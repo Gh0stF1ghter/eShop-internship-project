@@ -1,5 +1,6 @@
 ﻿using Catalogs.Application.Comands.VendorCommands;
 using Catalogs.Application.DataTransferObjects;
+using Catalogs.Domain.Entities.Constants.Messages;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.VendorHandlers

@@ -1,6 +1,7 @@
 ﻿using Catalogs.Domain.Entities.Exceptions;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
+using Catalogs.Domain.Entities.Constants.StatusCodes;
 
 namespace Catalogs.API.Extensions
 {
@@ -16,14 +17,15 @@ namespace Catalogs.API.Extensions
             }
             catch (NotFoundException e)
             {
-                var responseVm = new GrpcExceptionResponse("2", e.Message);
+                var responseVm = new GrpcExceptionResponse(GrpcStatusCodes.NotFound, e.Message);
+
                 return MapResponse<TRequest, TResponse>(responseVm);
             }
             catch (Exception e)
             {
                 logger.LogError("Error {error} occured with message {message}", e, e.Message);
 
-                var responseVm = new GrpcExceptionResponse("99999", "Server error");
+                var responseVm = new GrpcExceptionResponse(GrpcStatusCodes.InternalError, "Server error");
 
                 return MapResponse<TRequest, TResponse>(responseVm);
             }

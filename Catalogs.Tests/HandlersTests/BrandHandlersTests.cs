@@ -1,7 +1,8 @@
 ﻿using Catalogs.Application.Comands.BrandCommands;
 using Catalogs.Application.Handlers.BrandHandlers;
 using Catalogs.Application.Queries.BrandQueries;
-using Catalogs.Tests.FakeData;
+using Catalogs.Domain.Entities.Constants.Messages;
+using Catalogs.Tests.FakeDataGenerator;
 using Catalogs.Tests.Mocks;
 
 namespace Catalogs.Tests.HandlersTests

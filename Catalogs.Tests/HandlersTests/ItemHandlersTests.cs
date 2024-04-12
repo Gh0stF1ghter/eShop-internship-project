@@ -1,9 +1,10 @@
 ﻿using Catalogs.Application.Comands.ItemCommands;
 using Catalogs.Application.Handlers.ItemHandlers;
 using Catalogs.Application.Queries.ItemQueries;
+using Catalogs.Domain.Entities.Constants.Messages;
 using Catalogs.Domain.Entities.LinkModels;
 using Catalogs.Domain.RequestFeatures;
-using Catalogs.Tests.FakeData;
+using Catalogs.Tests.FakeDataGenerator;
 using Catalogs.Tests.Mocks;
 using Microsoft.AspNetCore.Http;
 

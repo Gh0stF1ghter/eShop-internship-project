@@ -2,7 +2,7 @@
 using Serilog.Sinks.Elasticsearch;
 using System.Reflection;
 
-namespace Catalogs.API.Extensions
+namespace Identity.API.Extensions
 {
     public static class SerilogConfiguration
     {

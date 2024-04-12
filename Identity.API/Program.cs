@@ -1,4 +1,3 @@
-using Catalogs.API.Extensions;
 using Identity.API.Extensions;
 using Serilog;
 

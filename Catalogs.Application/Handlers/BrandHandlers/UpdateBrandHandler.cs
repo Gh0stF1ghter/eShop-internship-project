@@ -1,4 +1,5 @@
 ﻿using Catalogs.Application.Comands.BrandCommands;
+using Catalogs.Domain.Entities.Constants.Messages;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.BrandHandlers

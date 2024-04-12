@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Baskets.BusinessLogic.Exceptions;
+using Baskets.DataAccess.Entities.Constants.StatusCodes;
 using Baskets.DataAccess.UnitOfWork;
 
 namespace Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.CreateBasketItem
@@ -15,7 +16,7 @@ namespace Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.CreateBasketIte
 
             var itemResponse = await client.GetItemAsync(itemRequest, cancellationToken: cancellationToken);
 
-            if (itemResponse.StatusCode == "2")
+            if (itemResponse.StatusCode == GrpcStatusCodes.NotFound)
             {
                 throw new NotFoundException(ItemMessages.NotFound);
             }

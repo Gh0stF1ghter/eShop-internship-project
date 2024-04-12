@@ -1,7 +1,8 @@
 ﻿using Catalogs.Application.Comands.VendorCommands;
 using Catalogs.Application.Handlers.VendorHandlers;
 using Catalogs.Application.Queries.VendorQueries;
-using Catalogs.Tests.FakeData;
+using Catalogs.Domain.Entities.Constants.Messages;
+using Catalogs.Tests.FakeDataGenerator;
 using Catalogs.Tests.Mocks;
 
 namespace Catalogs.Tests.HandlersTests

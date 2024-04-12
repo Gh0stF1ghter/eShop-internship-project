@@ -1,7 +1,8 @@
 ﻿using Catalogs.Application.Comands.ItemTypeCommands;
 using Catalogs.Application.Handlers.ItemTypeHandlers;
 using Catalogs.Application.Queries.ItemTypeQueries;
-using Catalogs.Tests.FakeData;
+using Catalogs.Domain.Entities.Constants.Messages;
+using Catalogs.Tests.FakeDataGenerator;
 using Catalogs.Tests.Mocks;
 
 namespace Catalogs.Tests.HandlersTests

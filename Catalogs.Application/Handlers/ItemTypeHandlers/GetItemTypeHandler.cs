@@ -1,5 +1,6 @@
 ﻿using Catalogs.Application.DataTransferObjects;
 using Catalogs.Application.Queries.ItemTypeQueries;
+using Catalogs.Domain.Entities.Constants.Messages;
 using MediatR;
 
 namespace Catalogs.Application.Handlers.ItemTypeHandlers

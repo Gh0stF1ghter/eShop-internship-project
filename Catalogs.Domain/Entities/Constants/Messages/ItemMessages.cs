@@ -1,4 +1,4 @@
-﻿namespace Catalogs.Domain.Entities.Constants
+﻿namespace Catalogs.Domain.Entities.Constants.Messages
 {
     public static class ItemMessages
     {
