@@ -6,6 +6,7 @@ namespace Catalogs.Infrastructure.Repositories
     public sealed class ItemRepository(CatalogContext context, IDistributedCache distributedCache) : Repository<Item>(context), IItemRepository
     {
         public const string _cacheKeyBase = "ItemOfIds";
+
         public async Task<PagedList<Item>> GetAllItemsOfTypeAsync(int typeId, ItemParameters itemParameters, bool trackChanges, CancellationToken token)
         {
             var items = await GetByCondition(i => i.TypeId.Equals(typeId), trackChanges)
