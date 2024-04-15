@@ -1,24 +1,38 @@
-﻿<h1 id="tableLabel">Weather forecast</h1>
+﻿<header>
+  <app-top-bar></app-top-bar>
+</header>
 
-<p>This component demonstrates fetching data from the server.</p>
+<main>
+  <h1 class="font-extrabold" id="tableLabel">Weather forecast</h1>
 
-<p *ngIf="!forecasts"><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationangular">https://aka.ms/jspsintegrationangular</a> for more details.</em></p>
+  <p class="font-extrabold">This component demonstrates fetching data from the server.</p>
 
-<table *ngIf="forecasts">
+  <p *ngIf="!forecasts">
+    <em
+      >Loading... Please refresh once the ASP.NET backend has started. See
+      <a href="https://aka.ms/jspsintegrationangular"
+        >https://aka.ms/jspsintegrationangular</a
+      >
+      for more details.</em
+    >
+  </p>
+
+  <table *ngIf="forecasts">
     <thead>
-        <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
-        </tr>
+      <tr>
+        <th>Date</th>
+        <th>Temp. (C)</th>
+        <th>Temp. (F)</th>
+        <th>Summary</th>
+      </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let forecast of forecasts">
-            <td>{{ forecast.date }}</td>
-            <td>{{ forecast.temperatureC }}</td>
-            <td>{{ forecast.temperatureF }}</td>
-            <td>{{ forecast.summary }}</td>
-        </tr>
+      <tr *ngFor="let forecast of forecasts">
+        <td>{{ forecast.date }}</td>
+        <td>{{ forecast.temperatureC }}</td>
+        <td>{{ forecast.temperatureF }}</td>
+        <td>{{ forecast.summary }}</td>
+      </tr>
     </tbody>
-</table>
+  </table>
+</main>

@@ -1,0 +1,29 @@
+<nav class="flex-between">
+  <a [routerLink]="['/']" class="logo flex-center m-2">
+    <img
+      src="./logo.svg"
+      alt="logo"
+      width="{30}"
+      height="{30}"
+      class="logo_img"
+    />
+    <p class="logo_text">IFindIt</p>
+  </a>
+
+  <a [routerLink]="['/catalog']" class="link">Browse</a>
+  <a [routerLink]="['/catalog/brands']" class="link">Brands</a>
+  <a [routerLink]="['/catalog/vendors']" class="link">Vendors</a>
+
+  <!-- Desktop Navigation -->
+  <div class="hidden sm:flex">
+    <button type="button" class="black_btn">Sign In</button>
+  </div>
+
+  <!-- Mobile  -->
+  <div class="relative flex sm:hidden">
+    <!-- Dropdown Menu -->
+    <button type="button" key="{provider.name}" class="black_btn sm:hidden">
+      Sign In
+    </button>
+  </div>
+</nav>
