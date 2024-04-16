@@ -10,7 +10,13 @@
     <p class="logo_text">IFindIt</p>
   </a>
 
-  <a [routerLink]="['/catalog']" class="link">Browse</a>
+  <div class="flex-col">
+    <a class="link text-xl font-bold" (click)="toggleTypes()">Browse</a>
+    <div *ngIf="typesOpen" class="absolute bg-[#ccc] p-2 rounded-xl gap-1">
+      <app-type-dropdown></app-type-dropdown>
+    </div>
+  </div>
+
   <a [routerLink]="['/catalog/brands']" class="link">Brands</a>
   <a [routerLink]="['/catalog/vendors']" class="link">Vendors</a>
 

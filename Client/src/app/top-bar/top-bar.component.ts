@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrl: './top-bar.component.css'
 })
 export class TopBarComponent {
+    typesOpen = false;
 
+    toggleTypes() {
+      this.typesOpen = !this.typesOpen;
+    }
 }
