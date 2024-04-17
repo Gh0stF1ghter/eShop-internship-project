@@ -1,14 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { TypeService } from '../services/type.service';
+import typeModel from '../models/typeModel';
 
 @Component({
   selector: 'app-top-bar',
   templateUrl: './top-bar.component.html',
-  styleUrl: './top-bar.component.css'
+  styleUrl: './top-bar.component.css',
 })
-export class TopBarComponent {
-    typesOpen = false;
+export class TopBarComponent implements OnInit {
+  constructor(private typeService: TypeService) {}
 
-    toggleTypes() {
-      this.typesOpen = !this.typesOpen;
-    }
+  types: typeModel[] = [];
+  
+  ngOnInit(): void {
+    this.getTypes();
+  }
+
+  getTypes() {
+    this.typeService.getTypes().subscribe((types) => (this.types = types));
+  }
+
+  typesOpen = false;
+
+  toggleTypes() {
+    this.typesOpen = !this.typesOpen;
+  }
 }
