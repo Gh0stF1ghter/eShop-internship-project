@@ -13,8 +13,9 @@ services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
-app.UseCors();
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthentication().UseOcelot().Wait();
 

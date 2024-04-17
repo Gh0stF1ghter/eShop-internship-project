@@ -204,7 +204,7 @@
     {
       "UpstreamPathTemplate": "/catalog/types/{typeId}/items",
       "UpstreamHttpMethod": [ "Get" ],
-      "DownstreamPathTemplate": "/api/brands",
+      "DownstreamPathTemplate": "/api/types/{typeId}/items",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -216,7 +216,7 @@
     {
       "UpstreamPathTemplate": "/catalog/types/{typeId}/items",
       "UpstreamHttpMethod": [ "Post" ],
-      "DownstreamPathTemplate": "/api/brands",
+      "DownstreamPathTemplate": "/api/types/{typeId}/items",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -232,7 +232,7 @@
     {
       "UpstreamPathTemplate": "/catalog/types/{typeId}/items/{id}",
       "UpstreamHttpMethod": [ "Get" ],
-      "DownstreamPathTemplate": "/api/brands/{id}",
+      "DownstreamPathTemplate": "/api/types/{typeId}/items/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -244,7 +244,7 @@
     {
       "UpstreamPathTemplate": "/catalog/types/{typeId}/items/{id}",
       "UpstreamHttpMethod": [ "Put", "Delete" ],
-      "DownstreamPathTemplate": "/api/brands/{id}",
+      "DownstreamPathTemplate": "/api/types/{typeId}/items/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {

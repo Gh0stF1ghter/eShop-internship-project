@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HeroComponent } from './hero/hero.component';
-import { CatalogComponent } from './catalog/catalog/catalog.component';
 
 const routes: Routes = [
   { 

@@ -47,7 +47,8 @@ namespace Ocelot.WebHost.Extensions
                 options.AddDefaultPolicy(builder =>
                     builder.AllowAnyOrigin()
                         .AllowAnyMethod()
-                        .AllowAnyHeader());
+                        .AllowAnyHeader()
+                        .WithExposedHeaders("Pagination"));
             });
     }
 }

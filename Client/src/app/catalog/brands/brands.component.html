@@ -1,5 +1,13 @@
-<h2>Brands</h2>
+<h2 class="ml-9 m-3 text-4xl">Brands</h2>
 
-<div *ngFor="let brand of brands" class="flex gap-3">
-    {{brand.name}}
+<div class="flex ml-3">
+  <div class="flex-col p-4 flex rounded-lg gap-1 bg-slate-200 mr-3">
+    <div *ngFor="let brand of brands" class="gap-3">
+      <a [routerLink]="[brand.id]">
+        {{ brand.name }}
+      </a>
+    </div>
+  </div>
+
+  <router-outlet></router-outlet>
 </div>

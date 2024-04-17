@@ -7,8 +7,6 @@ import { CatalogComponent } from './catalog/catalog.component';
 import { BrandComponent } from './brands/brand/brand.component';
 import { VendorComponent } from './vendors/vendor/vendor.component';
 
-
-
 const catalogRoutes: Routes = [
   {
     path: '',
@@ -24,9 +22,9 @@ const catalogRoutes: Routes = [
         children: [
           {
             path: ':brandId',
-            component: BrandComponent
-          }
-        ]
+            component: BrandComponent,
+          },
+        ],
       },
       {
         path: 'vendors',
@@ -34,20 +32,16 @@ const catalogRoutes: Routes = [
         children: [
           {
             path: ':vendorId',
-            component: VendorComponent
-          }
-        ]
-      }
-    ]
-  }
+            component: VendorComponent,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(catalogRoutes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forChild(catalogRoutes)],
+  exports: [RouterModule],
 })
-export class CatalogRoutingModule { }
+export class CatalogRoutingModule {}
