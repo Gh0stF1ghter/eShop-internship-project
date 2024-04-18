@@ -77,7 +77,7 @@ namespace Catalogs.Application.DataShaping
             foreach (var property in properties)
             {
                 var objectPropertyValue = property.GetValue(entity);
-                shapedObject.Entity.TryAdd(property.Name, objectPropertyValue);
+                shapedObject.Entity.TryAdd(property.Name.ToLower(), objectPropertyValue);
             }
 
             var objectProperty = entity.GetType().GetProperty("Id");
