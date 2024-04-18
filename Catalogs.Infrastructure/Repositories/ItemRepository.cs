@@ -9,6 +9,17 @@ namespace Catalogs.Infrastructure.Repositories
 {
     public sealed class ItemRepository(CatalogContext context) : Repository<Item>(context), IItemRepository
     {
+        public async Task<PagedList<Item>> GetAllItemsAsync(ItemParameters itemParameters, CancellationToken cancellationToken)
+        {
+            var items = await GetAll(trackChanges: false)
+                .FilterItems(itemParameters)
+                .Search(itemParameters.SearchTerm)
+                .ToListAsync(cancellationToken);
+
+            return PagedList<Item>
+                    .ToPagedList(items, itemParameters.PageNumber, itemParameters.PageSize);
+        }
+
         public async Task<PagedList<Item>> GetAllItemsOfTypeAsync(int typeId, ItemParameters itemParameters, bool trackChanges, CancellationToken token)
         {
             var items = await GetByCondition(i => i.TypeId.Equals(typeId), trackChanges)
