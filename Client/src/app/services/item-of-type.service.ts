@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import item from '../models/itemModel';
-import { endpoints } from '../constants/environment';
+import { catalogEndpoints } from '../constants/environment';
+import { paramsKeys, pagination } from '../constants/queryParams';
 
 @Injectable({
   providedIn: 'root',
@@ -9,14 +10,27 @@ import { endpoints } from '../constants/environment';
 export class ItemOfTypeService {
   constructor(private http: HttpClient) {}
 
+  getItems(searchTerm: string) {
+      let params = new HttpParams()
+        .set(paramsKeys.search, searchTerm);
+
+    return this.http.get<item[]>(catalogEndpoints.items, {
+      observe: 'response',
+      headers: { Accept: 'application/json' },
+      params: params
+    });
+  }
+
   getItemsOfType(typeId: number) {
-    return this.http.get<item[]>(`${endpoints.types}/${typeId}/items`, {
+    return this.http.get<item[]>(`${catalogEndpoints.types}/${typeId}/items`, {
       observe: 'response',
       headers: { Accept: 'application/json' },
     });
   }
 
   getItemsOfTypeById(typeId: number, itemId: number) {
-    return this.http.get<item>(`${endpoints.types}/${typeId}/items/${itemId}`);
+    return this.http.get<item>(
+      `${catalogEndpoints.types}/${typeId}/items/${itemId}`
+    );
   }
 }

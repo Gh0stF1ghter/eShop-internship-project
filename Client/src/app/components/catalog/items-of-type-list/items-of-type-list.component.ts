@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { TypeService } from '../../services/type.service';
-import typeModel from '../../models/typeModel';
-import item from '../../models/itemModel';
 import { ActivatedRoute } from '@angular/router';
-import { ItemOfTypeService } from '../../services/item-of-type.service';
-import pagination from '../../models/pagination';
+import typeModel from '../../../models/typeModel';
+import item from '../../../models/itemModel';
+import pagination from '../../../models/pagination';
+import { TypeService } from '../../../services/type.service';
+import { ItemOfTypeService } from '../../../services/item-of-type.service';
 
 @Component({
   selector: 'app-items-of-type-list',

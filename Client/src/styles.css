@@ -84,6 +84,12 @@ table {
 .flex-between {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+}
+
+.flex-around {
+  display: flex;
+  align-items: center;
   justify-content: space-around;
 }
 
@@ -136,8 +142,6 @@ table {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
   text-align: center;
-  font-size: 0.875rem /* 14px */;
-  line-height: 1.25rem /* 20px */;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -166,8 +170,6 @@ table {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
   text-align: center;
-  font-size: 0.875rem /* 14px */;
-  line-height: 1.25rem /* 20px */;
   display: flex;
   align-items: center;
   justify-content: center;

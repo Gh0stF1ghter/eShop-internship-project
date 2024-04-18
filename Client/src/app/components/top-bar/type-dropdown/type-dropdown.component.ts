@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, Type } from '@angular/core';
-import typeModel from '../../models/typeModel';
-import { TypeService } from '../../services/type.service';
+import typeModel from '../../../models/typeModel';
 
 @Component({
   selector: 'app-type-dropdown',

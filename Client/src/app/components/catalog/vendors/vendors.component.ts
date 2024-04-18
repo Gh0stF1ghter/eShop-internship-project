@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import vendor from '../../models/vendorModel';
-import { VendorService } from '../../services/vendor.service';
+import vendor from '../../../models/vendorModel';
+import { VendorService } from '../../../services/vendor.service';
 
 @Component({
   selector: 'app-vendors',

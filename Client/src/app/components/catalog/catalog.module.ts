@@ -5,7 +5,8 @@ import { VendorsComponent } from './vendors/vendors.component';
 import { CatalogRoutingModule } from './catalog-routing.module';
 import { BrandComponent } from './brands/brand/brand.component';
 import { VendorComponent } from './vendors/vendor/vendor.component';
-import { ItemsOfTypeListComponent } from './items-of-type-list/items-of-type-list.component';
+import { ItemsOfTypeListComponent } from './/items-of-type-list/items-of-type-list.component';
+import { CatalogComponent } from './catalog/catalog.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,7 @@ import { ItemsOfTypeListComponent } from './items-of-type-list/items-of-type-lis
     BrandsComponent,
     BrandComponent,
     VendorsComponent,
-    VendorComponent,
+    VendorComponent
   ],
   imports: [CommonModule, CatalogRoutingModule],
 })

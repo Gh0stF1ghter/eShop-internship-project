@@ -202,6 +202,18 @@
     },
     //Items
     {
+      "UpstreamPathTemplate": "/catalog/items",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/items",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalogs.api",
+          "Port": 8082
+        }
+      ]
+    },
+    {
       "UpstreamPathTemplate": "/catalog/types/{typeId}/items",
       "UpstreamHttpMethod": [ "Get" ],
       "DownstreamPathTemplate": "/api/types/{typeId}/items",

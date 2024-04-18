@@ -1,6 +1,6 @@
 {
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:5003"
+    "BaseUrl": "https://localhost:7201"
   },
   "Routes": [
     //Identity
@@ -201,6 +201,18 @@
       }
     },
     //Items
+    {
+      "UpstreamPathTemplate": "/catalog/items",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/items",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ]
+    },
     {
       "UpstreamPathTemplate": "/catalog/types/{typeId}/items",
       "UpstreamHttpMethod": [ "Get" ],
