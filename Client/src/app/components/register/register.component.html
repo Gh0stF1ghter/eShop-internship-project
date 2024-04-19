@@ -1,24 +1,51 @@
 <section class="flex-col w-full max-w-full flex-center">
   <div class="w-auto p-3 min-w-min rounded-xl bg-slate-200">
-    <h1 class="text-[32px] mb-4 text-center">Sign Up</h1>
+    <form [formGroup]="form">
+      <h1 class="text-[32px] mb-4 text-center">Sign Up</h1>
 
-    <div class="flex flex-col gap-3">
-      <div class="p-2 mx-5 bg-white rounded-lg">
-        <input placeholder="Email" type="email" class="text-lg" />
-      </div>
-      <div class="p-2 mx-5 bg-white rounded-lg">
-        <input placeholder="Username" type="text" class="text-lg" />
-      </div>
-      <div class="p-2 mx-5 bg-white rounded-lg">
-        <input placeholder="Password" type="password" class="text-lg" />
-      </div>
-      <div class="p-2 mx-5 bg-white rounded-lg">
-        <input placeholder="Confirm Password" type="password" class="text-lg" />
-      </div>
+      <div class="flex flex-col gap-3">
+        <div class="p-2 mx-5 bg-white rounded-lg">
+          <input
+            formControlName="email"
+            placeholder="Email"
+            type="email"
+            class="text-lg"
+          />
+        </div>
+        <div class="p-2 mx-5 bg-white rounded-lg">
+          <input
+            formControlName="username"
+            placeholder="Username"
+            type="text"
+            class="text-lg"
+          />
+        </div>
+        <div class="p-2 mx-5 bg-white rounded-lg">
+          <input
+            formControlName="password"
+            placeholder="Password"
+            type="password"
+            class="text-lg"
+          />
+        </div>
+        <div class="p-2 mx-5 bg-white rounded-lg">
+          <input
+            formControlName="confirmPassword"
+            placeholder="Confirm Password"
+            type="password"
+            class="text-lg"
+          />
+        </div>
 
-      <div class="flex-center">
-        <button class="w-40 h-10 p-3 m-3 text-lg black_btn">Sign Up</button>
+        <div class="flex-center">
+          <button
+            class="w-40 h-10 p-3 m-3 text-lg black_btn"
+            (click)="register()"
+          >
+            Sign Up
+          </button>
+        </div>
       </div>
-    </div>
+    </form>
   </div>
 </section>
