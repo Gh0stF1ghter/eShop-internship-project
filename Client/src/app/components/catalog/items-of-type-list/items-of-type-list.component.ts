@@ -12,10 +12,11 @@ import { ItemOfTypeService } from '../../../services/item-of-type.service';
   styleUrl: './items-of-type-list.component.css',
 })
 export class ItemsOfTypeListComponent implements OnInit {
-  type: typeModel | undefined
-  items: item[] = []
+  type: typeModel | undefined;
+  items: item[] = [];
+  typeId: number | undefined;
 
-  pagination: pagination | undefined
+  pagination: pagination | undefined;
 
   constructor(
     private typeService: TypeService,
@@ -24,30 +25,37 @@ export class ItemsOfTypeListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const routeParams = this.route.snapshot.paramMap
-    const typeId = Number(routeParams.get('typeId'))
+    const routeParams = this.route.params;
 
-    this.getType(typeId)
-    this.getItemsOfType(typeId)
+    routeParams.subscribe((params) => {
+      this.typeId = params['typeId'];
+
+      console.log('subscribe');
+
+      if (this.typeId) {
+        this.getType(this.typeId);
+        this.getItemsOfType(this.typeId);
+      }
+    });
   }
 
   getType(typeId: number) {
     this.typeService
       .getTypeById(typeId)
-      .subscribe((type) => (this.type = type))
+      .subscribe((type) => (this.type = type));
   }
 
   getItemsOfType(typeId: number) {
     this.itemService.getItemsOfType(typeId).subscribe((response) => {
       if (response.body) {
         this.items = response.body;
-        
+
         let pageString = response.headers.get('Pagination');
-        
+
         if (pageString) {
           this.pagination = JSON.parse(pageString);
         }
       }
-    })
+    });
   }
 }

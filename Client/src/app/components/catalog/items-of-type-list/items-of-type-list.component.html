@@ -2,9 +2,8 @@
   {{ type?.name }}
 </h2>
 
-<div class="flex gap-2">
-
-  <div *ngFor="let item of items" class="bg-slate-200 p-2 rounded-lg">
+<div class="flex gap-2 mb-2">
+  <div *ngFor="let item of items" class="p-2 rounded-lg bg-slate-200">
     <p>
       {{ item.name }}
     </p>
@@ -16,16 +15,18 @@
   </div>
 </div>
 
-<div *ngIf="pagination" class="bg-slate-200 p-2 rounded-lg">
-  <div>
-    {{ pagination.currentPage }}
-  </div>
-  <div>
-    Page size
-    {{ pagination.pageSize }}
-  </div>
-  <div>
-    Total
-    {{ pagination.totalPages }}
+<div>
+  <div *ngIf="pagination" class="p-2 rounded-lg bg-slate-200">
+    <div>
+      {{ pagination.CurrentPage }}
+    </div>
+    <div>
+      Page size
+      {{ pagination.PageSize }}
+    </div>
+    <div>
+      Total Items
+      {{ pagination.TotalPages }}
+    </div>
   </div>
 </div>

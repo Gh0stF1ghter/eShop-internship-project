@@ -22,7 +22,7 @@ namespace Identity.BusinessLogic.Validators
                     .Matches(@"[A-Z]+").WithMessage("Password field must contain at least one uppercase letter")
                     .Matches(@"[a-z]+").WithMessage("Password field must contain at least one lowercase letter")
                     .Matches(@"[0-9]+").WithMessage("Password field must contain at least one digit")
-                    .Matches(@"[\!\?\*\.]+").WithMessage("Password field must contain at least one special character");
+                    .Matches(@"(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~|])").WithMessage("Password field must contain at least one special character");
 
             RuleFor(r => r.ConfirmPassword)
                 .Equal(r => r.Password).WithMessage("This field must match to Password");

@@ -9,5 +9,6 @@ export const catalogEndpoints = {
 
 export const identityEndpoints = {
     login: `${gateway}/authentication/login`,
-    register: `${gateway}/authentication/register`
+    register: `${gateway}/authentication/register`,
+    refreshToken: `${gateway}/token/refresh`
 }
