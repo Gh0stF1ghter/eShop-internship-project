@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -12,6 +12,7 @@ import { TypeDropdownComponent } from './components/top-bar/type-dropdown/type-d
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ItemsDropdownComponent } from './components/top-bar/items-dropdown/items-dropdown.component';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { ItemsDropdownComponent } from './components/top-bar/items-dropdown/item
     ReactiveFormsModule,
     RouterLink,
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

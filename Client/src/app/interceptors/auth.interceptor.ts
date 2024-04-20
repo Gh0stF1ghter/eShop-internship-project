@@ -8,7 +8,9 @@ import { AuthService } from '../services/auth.service';
 import { Observable, catchError, throwError } from 'rxjs';
 import userTokens from '../models/userTokens';
 import { Router } from '@angular/router';
+import { Injectable } from '@angular/core';
 
+@Injectable({ providedIn: 'root' })
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService, private router: Router) {}
 
