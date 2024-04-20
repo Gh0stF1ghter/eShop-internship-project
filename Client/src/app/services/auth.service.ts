@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import userTokens from '../models/userTokens';
 import { identityEndpoints } from '../constants/environment';
 import moment from 'moment';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, tap } from 'rxjs';
 import signUp from '../models/signupModel';
 
 @Injectable({
@@ -57,24 +57,14 @@ export class AuthService {
     return localStorage.getItem('refresh_token');
   }
 
-  async refreshToken() {
+  refreshToken() {
     let accessToken = this.getAccessToken();
     let refreshToken = this.getRefreshToken();
 
-    const refreshedTokens = await firstValueFrom(
-      this.http.post<userTokens>(identityEndpoints.refreshToken, {
-        accessToken,
-        refreshToken,
-      })
-    ).catch(() => {});
-
-    if (refreshedTokens) {
-      this.SetSession(refreshedTokens);
-
-      return true;
-    }
-
-    return false;
+    return this.http.post<userTokens>(identityEndpoints.refreshToken, {
+      accessToken,
+      refreshToken
+    })
   }
 
   getFromToken(token: string) {

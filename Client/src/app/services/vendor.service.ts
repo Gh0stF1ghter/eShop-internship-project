@@ -17,4 +17,16 @@ export class VendorService {
   getVendorById(vendorId: number) : Observable<vendor> {
     return this.http.get<vendor>(`${catalogEndpoints.vendors}/${vendorId}`);
   }
+
+  addVendor(name: string) {
+    return this.http.post<vendor>(catalogEndpoints.vendors, { name })
+  }
+
+  updateVendor(vendorId: number, name: string) {
+    return this.http.put(`${catalogEndpoints.vendors}/${vendorId}`, { name })
+  }
+
+  deleteVendor(vendorId: number) {
+    return this.http.delete(`${catalogEndpoints.vendors}/${vendorId}`)
+  }
 }

@@ -17,4 +17,16 @@ export class TypeService {
   getTypeById(typeId: number) : Observable<typeModel> {
     return this.http.get<typeModel>(`${catalogEndpoints.types}/${typeId}`);
   }
+
+  addType(name: string) {
+    return this.http.post<typeModel>(catalogEndpoints.types, { name })
+  }
+
+  updateType(typeId: number, name: string) {
+    return this.http.put(`${catalogEndpoints.types}/${typeId}`, { name })
+  }
+
+  deleteType(typeId: number) {
+    return this.http.delete(`${catalogEndpoints.types}/${typeId}`)
+  }
 }

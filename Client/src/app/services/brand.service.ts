@@ -17,4 +17,16 @@ export class BrandService {
   getBrandById(brandId: number) {
     return this.http.get<brand>(`${catalogEndpoints.brands}/${brandId}`);
   }
+
+  addBrand(name: string) {
+    return this.http.post<brand>(catalogEndpoints.brands, { name })
+  }
+
+  updateBrand(brandId: number, name: string) {
+    return this.http.put(`${catalogEndpoints.brands}/${brandId}`, { name })
+  }
+
+  deleteBrand(brandId: number) {
+    return this.http.delete(`${catalogEndpoints.brands}/${brandId}`)
+  }
 }
