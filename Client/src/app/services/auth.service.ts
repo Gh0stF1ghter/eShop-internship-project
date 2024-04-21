@@ -84,4 +84,28 @@ export class AuthService {
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('token_expires');
   }
+
+  getUserRole() {
+    const accessToken = this.getAccessToken();
+
+    if (accessToken) {
+      const { role } = this.getFromToken(accessToken) as { role: string };
+
+      return role;
+    }
+
+    return null;
+  }
+
+  getUserId() {
+    const accessToken = this.getAccessToken();
+
+    if (accessToken) {
+      const { unique_name } = this.getFromToken(accessToken) as { unique_name: string };
+
+      return unique_name;
+    }
+
+    return null;
+  }
 }
