@@ -5,7 +5,7 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, map, tap, throwError } from 'rxjs';
 import userTokens from '../models/userTokens';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
@@ -21,21 +21,21 @@ export class AuthInterceptor implements HttpInterceptor {
     const accessToken = this.authService.getAccessToken();
 
     if (accessToken) {
-      const isLogged = this.authService.isLogged();
-
-      if (isLogged) {
-        req = this.setAuthorizationHeader(req, accessToken);
-      } else {
-        return this.tryRefresh(req, next);
-      }
+      req = this.setAuthorizationHeader(req, accessToken);
     }
 
     return next.handle(req).pipe(
       catchError((error) => {
-        if (error.status == 401) {
-          this.goToSignIn();
-        } else if (error.status == 403) {
-          console.log('Not permitted to perform the request');
+        if (!this.authService.tokenRefreshing) {
+          if (error.status == 401) {
+            if (accessToken) {
+              this.tryRefresh(req, next);
+            } else {
+              this.goToSignIn();
+            }
+          } else if (error.status == 403) {
+            console.log('Not permitted to perform the request');
+          }
         }
 
         return throwError(() => error);

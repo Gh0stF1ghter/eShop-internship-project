@@ -12,6 +12,8 @@ import signUp from '../models/signupModel';
 export class AuthService {
   constructor(private http: HttpClient) {}
 
+  tokenRefreshing = false;
+
   async register(userCredentials: signUp) {
       return this.http.post(identityEndpoints.register, userCredentials)
   }
@@ -32,11 +34,11 @@ export class AuthService {
   SetSession(tokens: userTokens) {
     const dataFromToken = this.getFromToken(tokens.accessToken);
 
-    const expires = moment().add(dataFromToken.exp);
+    const expiresAt = dataFromToken.exp * 1000
 
     localStorage.setItem('access_token', tokens.accessToken);
     localStorage.setItem('refresh_token', tokens.refreshToken);
-    localStorage.setItem('token_expires', JSON.stringify(expires.valueOf()));
+    localStorage.setItem('token_expires', JSON.stringify(expiresAt));
   }
 
   isLogged() {
@@ -44,7 +46,9 @@ export class AuthService {
 
     if (expiration) {
       const expiresAt = JSON.parse(expiration);
-      return moment().isBefore(expiresAt);
+
+      const currentTime = Date.now()
+      return currentTime <= expiresAt;
     }
 
     return false;
@@ -61,10 +65,14 @@ export class AuthService {
     let accessToken = this.getAccessToken();
     let refreshToken = this.getRefreshToken();
 
+    this.tokenRefreshing = true
+
     return this.http.post<userTokens>(identityEndpoints.refreshToken, {
       accessToken,
       refreshToken
-    })
+    }).pipe(tap(() => {
+      this.tokenRefreshing = false
+    }))
   }
 
   getFromToken(token: string) {
