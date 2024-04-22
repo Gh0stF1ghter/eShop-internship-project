@@ -1,0 +1,23 @@
+<div class="p-2 rounded-lg bg-slate-300">
+    <div *ngIf="item" class="flex gap-2 p-2 rounded-lg bg-slate-300">
+      <div class="p-2 rounded-lg bg-slate-200">
+        <p>
+          {{ item.name }}
+        </p>
+        <p>{{ item.stock }} in stock</p>
+        <div class="mt-4">
+          <p>Price</p>
+          <p>{{ item.price }} $</p>
+        </div>
+      </div>
+    </div>  
+  
+    <div class="flex flex-col gap-1">
+      <a class="outline_btn">
+          Rename
+      </a>
+      <a class="red_btn">
+          Delete
+      </a>
+    </div>
+  </div>

@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { userRoles } from '../../constants/userRoles';
 
 @Component({
   selector: 'app-login',
@@ -34,7 +31,11 @@ export class LoginComponent {
     );
 
     if (loggedIn) {
-      this.router.navigate(['/']);
+      if (this.authService.getUserRole() === userRoles.admin) {
+        this.router.navigate(['/admin']);
+      } else {
+        this.router.navigate(['/']);
+      }
     } else {
       this.loginValid = false;
     }

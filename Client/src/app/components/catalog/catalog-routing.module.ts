@@ -22,7 +22,7 @@ const catalogRoutes: Routes = [
         children: [
           {
             path: ':brandId',
-            component: BrandComponent,      
+            component: BrandComponent,
           },
         ],
       },

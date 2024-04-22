@@ -10,14 +10,15 @@ import { paramsKeys, pagination } from '../constants/queryParams';
 export class ItemOfTypeService {
   constructor(private http: HttpClient) {}
 
-  getItems(searchTerm: string) {
-      let params = new HttpParams()
-        .set(paramsKeys.search, searchTerm);
+  getItems(searchTerm?: string | undefined) {
+    let params = searchTerm
+      ? new HttpParams().set(paramsKeys.search, searchTerm)
+      : new HttpParams();
 
     return this.http.get<item[]>(catalogEndpoints.items, {
       observe: 'response',
       headers: { Accept: 'application/json' },
-      params: params
+      params: params,
     });
   }
 

@@ -18,9 +18,16 @@ const routes: Routes = [
     component: RegisterComponent,
   },
   {
+    path: 'admin',
+    loadChildren: () =>
+      import('./components/admin/admin.module').then((m) => m.AdminModule),
+  },
+  {
     path: 'catalog',
     loadChildren: () =>
-      import('./components/catalog/catalog.module').then((m) => m.CatalogModule),
+      import('./components/catalog/catalog.module').then(
+        (m) => m.CatalogModule
+      ),
   },
   {
     path: ':userId/basket',

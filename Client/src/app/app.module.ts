@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ItemsDropdownComponent } from './components/top-bar/items-dropdown/items-dropdown.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { AdminComponent } from './components/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     CatalogComponent,
     RegisterComponent,
     LoginComponent,
-    ItemsDropdownComponent
+    ItemsDropdownComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

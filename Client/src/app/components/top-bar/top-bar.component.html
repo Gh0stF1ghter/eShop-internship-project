@@ -1,5 +1,8 @@
 <nav class="py-3 rounded-b-3xl flex-around bg-slate-200">
-  <a [routerLink]="['/']" class="m-2 logo flex-center">
+  <ng-template #adminLink>
+    <a [routerLink]="['admin']" class="m-2 logo_text flex-center"> Dashboard </a>
+  </ng-template>
+  <a *ngIf="!isAdmin; else adminLink" [routerLink]="['/']" class="m-2 logo flex-center">
     <img
       src="./logo.svg"
       alt="logo"
@@ -28,7 +31,7 @@
   <ng-template #basketBlock>
     <div class="relative flex gap-5">
       <a [routerLink]="['/basket']" class="outline_btn"> Basket </a>
-      <button (click)="(logOut())" class="black_btn">Sign Out</button>
+      <button (click)="logOut()" class="black_btn">Sign Out</button>
     </div>
   </ng-template>
 </nav>
@@ -39,8 +42,17 @@
       class="z-0 w-screen text-center rounded-3xl h-7 max-w-80 bg-slate-200 focus:bg-white"
       placeholder="Search"
     />
-    <button (click)="startSearch(search.value)" type="submit" class="z-10 p-1 rounded-r-3xl hover:bg-slate-100">Search</button>
+    <button
+      (click)="startSearch(search.value)"
+      type="submit"
+      class="z-10 p-1 rounded-r-3xl hover:bg-slate-100"
+    >
+      Search
+    </button>
   </div>
 
-  <app-items-dropdown *ngIf="search.value" [searchTerm]="searchTerm"></app-items-dropdown>
+  <app-items-dropdown
+    *ngIf="search.value"
+    [searchTerm]="searchTerm"
+  ></app-items-dropdown>
 </div>

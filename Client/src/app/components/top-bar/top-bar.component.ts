@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TypeService } from '../../services/type.service';
 import typeModel from '../../models/typeModel';
 import { AuthService } from '../../services/auth.service';
+import { userRoles } from '../../constants/userRoles';
 
 @Component({
   selector: 'app-top-bar',
@@ -39,6 +40,10 @@ export class TopBarComponent implements OnInit {
 
       this.searchTerm = input;
     }
+  }
+
+  isAdmin() {
+    return this.authService.getUserRole() === userRoles.admin
   }
 
   logOut() {
