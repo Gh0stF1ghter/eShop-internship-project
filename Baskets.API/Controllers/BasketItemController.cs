@@ -1,4 +1,5 @@
-﻿using Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.CreateBasketItem;
+﻿using Baskets.API.Hubs;
+using Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.CreateBasketItem;
 using Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.DeleteBasketItem;
 using Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.UpdateBasketItem;
 using Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItem;
@@ -8,6 +9,7 @@ using Baskets.DataAccess.Entities.Constants;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Baskets.API.Controllers
 {
@@ -18,6 +20,7 @@ namespace Baskets.API.Controllers
     {
         [HttpGet]
         [ActionName("GetBasketItems")]
+        //transfer to hub
         public async Task<IActionResult> GetBasketItemsAsync([FromRoute] string userId, CancellationToken cancellationToken)
         {
             var basketItems = await sender.Send(new GetBasketItemsQuery(userId), cancellationToken);

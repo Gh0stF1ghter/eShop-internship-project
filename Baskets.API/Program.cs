@@ -18,6 +18,7 @@ services.ConfigureSwagger();
 services.AddAutoMapper(typeof(BLLAssemblyReference));
 services.AddControllers();
 services.AddEndpointsApiExplorer();
+services.AddSignalR();
 
 var app = builder.Build();
 
