@@ -14,6 +14,7 @@ import { RouterLink } from '@angular/router';
 import { ItemsDropdownComponent } from './components/top-bar/items-dropdown/items-dropdown.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { AdminComponent } from './components/admin/admin.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { AdminComponent } from './components/admin/admin.component';
     AdminComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,

@@ -1,5 +1,6 @@
 <div class="p-2 rounded-lg bg-slate-300">
   <h4 class="ml-2 text-lg">
+    {{ brand?.id }}
     {{ brand?.name }}
   </h4>
 
@@ -17,11 +18,18 @@
   </div>
 
   <div class="flex flex-col gap-1">
-    <a class="outline_btn">
-        Rename
-    </a>
-    <a class="red_btn">
-        Delete
-    </a>
+    <button type="button" class="outline_btn" (click)="inputOpened = true"> Rename </button>
+    <div *ngIf="inputOpened">
+      <input type="text" placeholder="name" [(ngModel)]="editName">
+      <div class="flex gap-1">
+        <button class="black_btn" (click)="updateBrand()">
+          Save
+        </button>
+        <button class="outline_btn" (click)="inputOpened = false">
+          Cancel
+        </button>
+      </div>
+    </div>
+    <button class="red_btn" [hidden]="inputOpened" type="button" (click)="deleteBrand()"> Delete </button>
   </div>
 </div>

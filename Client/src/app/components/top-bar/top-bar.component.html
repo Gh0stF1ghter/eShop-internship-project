@@ -1,8 +1,14 @@
 <nav class="py-3 rounded-b-3xl flex-around bg-slate-200">
   <ng-template #adminLink>
-    <a [routerLink]="['admin']" class="m-2 logo_text flex-center"> Dashboard </a>
+    <a [routerLink]="['admin']" class="m-2  flex-center">
+      Dashboard
+    </a>
   </ng-template>
-  <a *ngIf="!isAdmin; else adminLink" [routerLink]="['/']" class="m-2 logo flex-center">
+  <a
+    *ngIf="!isAdmin; else adminLink"
+    [routerLink]="['/']"
+    class="m-2 logo flex-center"
+  >
     <img
       src="./logo.svg"
       alt="logo"

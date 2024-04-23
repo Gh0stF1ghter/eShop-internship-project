@@ -2,17 +2,18 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BrandService } from '../../../../../services/brand.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { VendorService } from '../../../../../services/vendor.service';
 
 @Component({
-  selector: 'app-create-brand',
-  templateUrl: './create-brand.component.html',
-  styleUrl: './create-brand.component.css',
+  selector: 'app-create-vendor',
+  templateUrl: './create-vendor.component.html',
+  styleUrl: './create-vendor.component.css',
 })
-export class CreateBrandComponent {
+export class CreateVendorComponent {
   form: FormGroup;
 
   constructor(
-    private authService: BrandService,
+    private vendorService: VendorService,
     private route: ActivatedRoute,
     private router: Router,
     formBuilder: FormBuilder
@@ -23,7 +24,7 @@ export class CreateBrandComponent {
   }
 
   async createBrand() {
-    let brand = await this.authService.addBrand(this.form.value.name);
+    let brand = await this.vendorService.addVendor(this.form.value.name);
 
     if (brand) {
       this.router.navigate(['../', brand.id], { relativeTo: this.route });

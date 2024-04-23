@@ -41,7 +41,7 @@ namespace Identity.BusinessLogic.Services.Implementations
         {
             var principal = GetPrincipalFromExpiredToken(tokenDto.AccessToken);
 
-            var user = await _userManager.FindByNameAsync(principal.Identity.Name);
+            var user = await _userManager.FindByIdAsync(principal.Identity.Name);
 
             if (user is null || user.RefreshToken != tokenDto.RefreshToken || user.RefreshTokenExpireTime <= DateTime.Now)
             {

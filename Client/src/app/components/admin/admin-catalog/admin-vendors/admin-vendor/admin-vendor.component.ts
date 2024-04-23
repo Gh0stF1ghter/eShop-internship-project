@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import vendor from '../../../../../models/vendorModel';
 import { VendorService } from '../../../../../services/vendor.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-vendor',
@@ -12,9 +12,13 @@ export class AdminVendorComponent implements OnInit {
   vendor: vendor | undefined;
   vendorId: number | undefined;
 
+  inputOpened= false
+  editName = '';
+
   constructor(
     private vendorService: VendorService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   //Replace to other lifecycle hook
@@ -36,5 +40,33 @@ export class AdminVendorComponent implements OnInit {
     this.vendorService
       .getVendorById(vendorId)
       .subscribe((vendor) => (this.vendor = vendor));
+  }
+
+  updateBrand() {
+    if (this.vendorId) {
+      if (this.editName !== this.vendor?.name) {
+        this.vendorService
+          .updateVendor(this.vendorId, this.editName)
+          .subscribe((response) => {
+            if (response.status === 204) {
+              console.log('updated');
+              this.router.navigate(['../', this.vendorId], {
+                relativeTo: this.route,
+              });
+            }
+          });
+      }
+    }
+  }
+
+  deleteBrand() {
+    if (this.vendorId) {
+      this.vendorService.deleteVendor(this.vendorId).subscribe((response) => {
+        if (response.status === 204) {
+          console.log('deleted');
+          this.router.navigate(['../'], { relativeTo: this.route });
+        }
+      });
+    }
   }
 }

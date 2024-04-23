@@ -11,6 +11,9 @@ import { AdminItemsComponent } from './admin-items/admin-items.component';
 import { AdminItemComponent } from './admin-items/admin-item/admin-item.component';
 import { AdminCatalogComponent } from './admin-catalog.component';
 import { CreateBrandComponent } from './admin-brands/create-brand/create-brand.component';
+import { CreateVendorComponent } from './admin-vendors/create-vendor/create-vendor.component';
+import { CreateItemComponent } from './admin-items/create-item/create-item.component';
+import { CreateTypeComponent } from './admin-types/create-type/create-type.component';
 
 const catalogRoutes: Routes = [
   {
@@ -22,6 +25,10 @@ const catalogRoutes: Routes = [
         path: 'types',
         component: AdminTypesComponent,
         children: [
+          {
+            path:'create',
+            component: CreateTypeComponent
+          },
           {
             path: ':typeId',
             component: AdminTypeComponent,
@@ -47,6 +54,10 @@ const catalogRoutes: Routes = [
         component: AdminVendorsComponent,
         children: [
           {
+            path: 'create',
+            component: CreateVendorComponent
+          },
+          {
             path: ':vendorId',
             component: AdminVendorComponent,
           },
@@ -56,6 +67,10 @@ const catalogRoutes: Routes = [
         path: 'items',
         component: AdminItemsComponent,
         children: [
+          {
+            path: 'create',
+            component: CreateItemComponent
+          },
           {
             path: ':typeId/:itemId',
             component: AdminItemComponent,

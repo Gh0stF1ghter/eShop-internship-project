@@ -1,32 +1,44 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import typeModel from '../models/typeModel';
 import { catalogEndpoints } from '../constants/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TypeService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getTypes() : Observable<typeModel[]> {
+  getTypes(): Observable<typeModel[]> {
     return this.http.get<typeModel[]>(catalogEndpoints.types);
   }
 
-  getTypeById(typeId: number) : Observable<typeModel> {
+  getTypeById(typeId: number): Observable<typeModel> {
     return this.http.get<typeModel>(`${catalogEndpoints.types}/${typeId}`);
   }
 
-  addType(name: string) {
-    return this.http.post<typeModel>(catalogEndpoints.types, { name })
+  async addType(name: string) {
+    let type = await firstValueFrom(
+      this.http.post<typeModel>(catalogEndpoints.types, { name })
+    ).catch(() => {});
+
+    if (type) {
+      return type;
+    }
+
+    return null;
   }
 
   updateType(typeId: number, name: string) {
-    return this.http.put(`${catalogEndpoints.types}/${typeId}`, { name })
+    return this.http.put(`${catalogEndpoints.types}/${typeId}`, { name }, {
+      observe: 'response',
+    });
   }
 
   deleteType(typeId: number) {
-    return this.http.delete(`${catalogEndpoints.types}/${typeId}`)
+    return this.http.delete(`${catalogEndpoints.types}/${typeId}`, {
+      observe: 'response',
+    });
   }
 }

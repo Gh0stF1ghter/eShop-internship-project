@@ -27,14 +27,18 @@ export class BrandService {
       return brand;
     }
 
-    return false;
+    return null;
   }
 
   updateBrand(brandId: number, name: string) {
-    return this.http.put(`${catalogEndpoints.brands}/${brandId}`, { name });
+    return this.http.put(`${catalogEndpoints.brands}/${brandId}`, { name }, {
+      observe: 'response',
+    });
   }
 
   deleteBrand(brandId: number) {
-    return this.http.delete(`${catalogEndpoints.brands}/${brandId}`);
+    return this.http.delete(`${catalogEndpoints.brands}/${brandId}`, {
+      observe: 'response',
+    });
   }
 }
