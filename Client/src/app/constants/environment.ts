@@ -12,3 +12,5 @@ export const identityEndpoints = {
     register: `${gateway}/authentication/register`,
     refreshToken: `${gateway}/token/refresh`
 }
+
+export const hub = `https://localhost:5004/basket`
