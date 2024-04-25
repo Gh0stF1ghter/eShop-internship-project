@@ -1,1 +1,27 @@
-<p>basket works!</p>
+<h2 class="ml-9 m-3 text-4xl">Basket</h2>
+
+<div
+  *ngIf="signalrService.userBasket"
+  class="flex ml-3 rounded-lg bg-slate-300"
+>
+  <div>
+    <p>{{ signalrService.userBasket.totalPrice }} $</p>
+    <div class="flex-col flex gap-3 mr-3">
+      <div
+        *ngFor="let basketItem of signalrService.basketItems"
+        class="p-4 flex rounded-lg gap-1 bg-slate-200"
+      >
+        <p>
+          {{ basketItem.item.name }}
+        </p>
+        <p>
+          {{ basketItem.item.price }}
+        </p>
+        <p>
+          {{ basketItem.quantity }}
+        </p>
+        <p>{{ basketItem.sumPrice }} $</p>
+      </div>
+    </div>
+  </div>
+</div>

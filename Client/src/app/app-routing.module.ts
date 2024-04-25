@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HeroComponent } from './components/hero/hero.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { BasketComponent } from './components/basket/basket.component';
 
 const routes: Routes = [
   {
@@ -31,8 +32,7 @@ const routes: Routes = [
   },
   {
     path: ':userId/basket',
-    loadChildren: () =>
-      import('./components/basket/basket.module').then((m) => m.BasketModule),
+    component: BasketComponent
   },
 ];
 
