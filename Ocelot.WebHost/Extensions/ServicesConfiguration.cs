@@ -45,9 +45,10 @@ namespace Ocelot.WebHost.Extensions
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(builder =>
-                    builder.AllowAnyOrigin()
+                    builder.WithOrigins("http://localhost:4200")
                         .AllowAnyMethod()
                         .AllowAnyHeader()
+                        .AllowCredentials()
                         .WithExposedHeaders("Pagination"));
             });
     }

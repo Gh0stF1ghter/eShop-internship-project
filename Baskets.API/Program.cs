@@ -1,4 +1,5 @@
 using Baskets.API.Extensions;
+using Baskets.API.Hubs;
 using Baskets.BusinessLogic;
 using Serilog;
 
@@ -14,7 +15,7 @@ services.AddAutoValidation();
 services.AddCustomDependencies();
 services.AddAuthentication(builder.Configuration);
 services.ConfigureSwagger();
-
+services.ConfigureCors();
 services.AddAutoMapper(typeof(BLLAssemblyReference));
 services.AddControllers();
 services.AddEndpointsApiExplorer();
@@ -28,7 +29,11 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
+
+app.UseCors("CorsPolicy");
+
 app.UseAuthorization();
 app.MapControllers();
+app.MapHub<BasketHub>("/basket");
 
 app.Run();
