@@ -1,10 +1,10 @@
-<h2 class="ml-9 m-3 text-4xl">Basket</h2>
+<h2 class="m-3 text-4xl ml-9">Basket</h2>
 
 <div *ngIf="signalrService.userBasket" class="flex ml-3">
-  <div class="flex-col p-4 flex rounded-lg gap-3 bg-slate-200 mr-3">
+  <div class="flex flex-col gap-3 p-4 mr-3 rounded-lg bg-slate-200">
     <div
       *ngFor="let basketItem of signalrService.basketItems"
-      class="p-4 flex flex-col rounded-lg gap-1 bg-slate-100"
+      class="flex flex-col gap-1 p-4 rounded-lg bg-slate-100"
     >
       <p>
         {{ basketItem.item.name }}
@@ -12,7 +12,7 @@
       <p>{{ basketItem.item.price }} $</p>
 
       <button
-        class="rounded-full"
+        class="rounded-full bg-slate-200"
         type="button"
         (click)="updateQuantity(basketItem, basketItem.quantity - 1)"
       >
@@ -21,7 +21,7 @@
       <p>{{ basketItem.quantity }} items</p>
 
       <button
-        class="rounded-full"
+        class="rounded-full bg-slate-200"
         type="button"
         (click)="updateQuantity(basketItem, basketItem.quantity + 1)"
       >
@@ -30,6 +30,14 @@
       <div class="mt-4">
         <p>{{ basketItem.sumPrice }} $</p>
       </div>
+
+      <button
+        class="rounded-full bg-slate-200"
+        type="button"
+        (click)="deleteItem(basketItem.basketItemId)"
+      >
+        Delete
+      </button>
     </div>
     Total Cost
     {{ signalrService.userBasket.totalPrice }} $

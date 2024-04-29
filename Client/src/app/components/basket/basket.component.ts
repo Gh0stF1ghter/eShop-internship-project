@@ -43,4 +43,10 @@ export class BasketComponent implements OnInit {
       );
     }
   }
+
+  async deleteItem(basketItemId: string) {
+    if (this.userId) {
+      await this.signalrService.deleteBasketItem(this.userId, basketItemId)
+    }
+  }
 }

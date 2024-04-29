@@ -49,4 +49,8 @@ export class SignalrService {
   public async updateBasketItemQuantity(basketItem: basketItem, userId: string, quantity: number) {
     await this.hubConnection?.invoke('updateBasketItemQuantity', userId, basketItem.basketItemId, quantity)
   }
+
+  public async deleteBasketItem(userId: string, basketItemId: string) {
+    await this.hubConnection?.invoke('deleteBasketItem', userId, basketItemId)
+  }
 }

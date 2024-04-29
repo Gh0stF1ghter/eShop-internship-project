@@ -1,4 +1,5 @@
-﻿using Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.UpdateBasketItem;
+﻿using Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.DeleteBasketItem;
+using Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.UpdateBasketItem;
 using Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItem;
 using Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItems;
 using Baskets.BusinessLogic.CQRS.Queries.UserBasketQueries.GetUserBasket;
@@ -38,6 +39,14 @@ namespace Baskets.API.Hubs
         public async Task UpdateBasketItemQuantity(string userId, string basketItemId, uint quantity)
         {
             await sender.Send(new UpdateBasketItemCommand(userId, basketItemId, (int)quantity), cancellationToken: default);
+
+            await GetUserBasket(userId);
+            await GetBasketItems(userId);
+        }
+
+        public async Task DeleteBasketItem(string userId, string basketItemId)
+        {
+            await sender.Send(new DeleteBasketItemCommand(userId, basketItemId), cancellationToken: default);
 
             await GetUserBasket(userId);
             await GetBasketItems(userId);
