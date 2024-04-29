@@ -37,9 +37,10 @@ export class AdminTypeComponent implements OnInit {
   }
 
   getType(typeId: number) {
-    this.typeService
-      .getTypeById(typeId)
-      .subscribe((vendor) => (this.type = vendor));
+    this.typeService.getTypeById(typeId).subscribe((vendor) => {
+      this.type = vendor;
+      this.editName = vendor.name;
+    });
   }
 
   updateBrand() {

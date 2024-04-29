@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import userBasket from '../../models/basket/userBasket';
 import basketItem from '../../models/basket/basketItemModel';
 import { SignalrService } from '../../services/signalr.service';
-import { HttpClient } from '@microsoft/signalr';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -19,7 +17,6 @@ export class BasketComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     const routeParams = this.route.params;
 
     routeParams.subscribe((params) => {
@@ -28,14 +25,22 @@ export class BasketComponent implements OnInit {
       if (this.userId) {
         this.signalrService.startConnection(this.userId);
         this.signalrService.addUserBasketListener();
-        this.signalrService.addBasketItemsListener();  
+        this.signalrService.addBasketItemsListener();
       }
     });
   }
 
-  startHttpConnection(userId: string) {
-    this.signalrService.getUserBasket(userId)
+  async updateQuantity(basketItem: basketItem, quantity: number) {
+    if (this.userId) {
+      if (quantity <= 0) {
+        quantity = 1;
+      }
 
-    this.signalrService.GetBasketItems(userId)
+      await this.signalrService.updateBasketItemQuantity(
+        basketItem,
+        this.userId,
+        quantity
+      );
+    }
   }
 }

@@ -23,28 +23,24 @@ namespace Baskets.API.Hubs
             await Clients.Caller.SendAsync("basketItemsReceived", basketItems);
         }
 
-        public async Task CreateBasketItemAsync(string userId, string basketItemId, CancellationToken cancellationToken)
+        public async Task CreateBasketItem(string userId, string basketItemId, CancellationToken cancellationToken)
         {
             var basketItem = await sender.Send(new GetBasketItemQuery(userId, basketItemId), cancellationToken);
 
             await Clients.Caller.SendAsync("BasketItemCreated", basketItem, cancellationToken);
         }
 
-        //replace to user with userId
         public async Task CreateBasketItemNotification()
         {
             await Clients.Caller.SendAsync("CreateBasketItemNotificationReceived");
         }
 
-        //Changing Item quantity will change summary cost
-        public async Task UpdateBasketItemQuantity(string userId, string basketItemId, uint quantity, CancellationToken cancellationToken)
+        public async Task UpdateBasketItemQuantity(string userId, string basketItemId, uint quantity)
         {
-            await sender.Send(new UpdateBasketItemCommand(userId, basketItemId, (int)quantity), cancellationToken);
+            await sender.Send(new UpdateBasketItemCommand(userId, basketItemId, (int)quantity), cancellationToken: default);
 
-            var basketItem = await sender.Send(new GetBasketItemQuery(userId, basketItemId), cancellationToken);
-
-            await Clients.Caller.SendAsync("ItemUpdated", basketItem, cancellationToken);
+            await GetUserBasket(userId);
+            await GetBasketItems(userId);
         }
-        //Transfer UpdateBasketItem endpoint functionallity
     }
 }

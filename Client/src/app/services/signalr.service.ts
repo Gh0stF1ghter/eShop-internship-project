@@ -25,7 +25,6 @@ export class SignalrService {
 
         this.hubConnection?.send('getUserBasket', userId);
         this.hubConnection?.send('getBasketItems', userId);
-
       })
       .catch((err) =>
         console.log('Error while establishing connection: ' + err)
@@ -47,9 +46,7 @@ export class SignalrService {
       });
   };
 
-  public getUserBasket(userId: string) {
-  }
-
-  public GetBasketItems(userId: string) {
+  public async updateBasketItemQuantity(basketItem: basketItem, userId: string, quantity: number) {
+    await this.hubConnection?.invoke('updateBasketItemQuantity', userId, basketItem.basketItemId, quantity)
   }
 }

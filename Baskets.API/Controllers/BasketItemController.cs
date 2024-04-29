@@ -20,7 +20,6 @@ namespace Baskets.API.Controllers
     {
         [HttpGet]
         [ActionName("GetBasketItems")]
-        //transfer to hub
         public async Task<IActionResult> GetBasketItemsAsync([FromRoute] string userId, CancellationToken cancellationToken)
         {
             var basketItems = await sender.Send(new GetBasketItemsQuery(userId), cancellationToken);
