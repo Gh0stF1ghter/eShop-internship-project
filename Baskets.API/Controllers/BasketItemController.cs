@@ -17,7 +17,7 @@ namespace Baskets.API.Controllers
     [ApiController]
     [Authorize(Roles = UserRoles.User)]
     [Route("api/users/{userId}/basket/items")]
-    public class BasketItemController(ISender sender) : ControllerBase
+    public class BasketItemController(ISender sender, IRecurringJobManager jobManager) : ControllerBase
     {
         [HttpGet]
         [ActionName("GetBasketItems")]
@@ -42,6 +42,8 @@ namespace Baskets.API.Controllers
         public async Task<IActionResult> CreateBasketItemAsync([FromRoute] string userId, [FromBody] CreateBasketItemDto createBasketItemDto, CancellationToken cancellationToken)
         {
             var basketItem = await sender.Send(new CreateBasketItemCommand(userId, createBasketItemDto), cancellationToken);
+
+            jobManager.AddOrUpdate($"basketItemsExistNotification-{userId}", () => Console.WriteLine("vsdasdwa"), Cron.Minutely);
 
             return CreatedAtAction("GetBasketItemById", new { userId, basketItemId = basketItem.BasketItemId }, basketItem);
         }

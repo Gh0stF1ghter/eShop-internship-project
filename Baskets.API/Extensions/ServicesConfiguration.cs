@@ -50,7 +50,11 @@ namespace Baskets.API.Extensions
                 config.UseRecommendedSerializerSettings();
                 config.UseMongoStorage(configuration["BasketDatabaseSettings:ConnectionString"],
                     configuration["BasketDatabaseSettings:DatabaseName"],
-                    new MongoStorageOptions { MigrationOptions = migrationOptions });
+                    new MongoStorageOptions
+                    {
+                        MigrationOptions = migrationOptions,
+                        CheckQueuedJobsStrategy = CheckQueuedJobsStrategy.TailNotificationsCollection
+                    });
             });
 
             services.AddHangfireServer();
@@ -79,7 +83,7 @@ namespace Baskets.API.Extensions
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder => builder
-                    .WithOrigins("http://localhost:4200")
+                    .WithOrigins("http://localhost:4200", "https://localhost:5004")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());
