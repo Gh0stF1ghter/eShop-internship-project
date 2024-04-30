@@ -6,6 +6,7 @@ using Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItem;
 using Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItems;
 using Baskets.BusinessLogic.DataTransferObjects.CreateDTOs;
 using Baskets.DataAccess.Entities.Constants;
+using Hangfire;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

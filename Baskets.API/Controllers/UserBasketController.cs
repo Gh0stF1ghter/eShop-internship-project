@@ -3,6 +3,7 @@ using Baskets.BusinessLogic.CQRS.Commands.UserBasketCommands.CreateUserBasket;
 using Baskets.BusinessLogic.CQRS.Commands.UserBasketCommands.DeleteUserBasket;
 using Baskets.BusinessLogic.CQRS.Queries.UserBasketQueries.GetUserBasket;
 using Baskets.DataAccess.Entities.Constants;
+using Hangfire;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

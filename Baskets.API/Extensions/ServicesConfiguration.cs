@@ -3,6 +3,10 @@ using Baskets.DataAccess.DBContext;
 using Baskets.DataAccess.Entities.Models;
 using Baskets.DataAccess.UnitOfWork;
 using FluentValidation;
+using Hangfire;
+using Hangfire.Mongo;
+using Hangfire.Mongo.Migration.Strategies;
+using Hangfire.Mongo.Migration.Strategies.Backup;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
@@ -29,6 +33,28 @@ namespace Baskets.API.Extensions
         public static void ConfigureMongoClient(this IServiceCollection services, IConfiguration configuration) =>
             services.AddSingleton<IMongoClient>(_ =>
                 new MongoClient(configuration["BasketDatabaseSettings:ConnectionString"]));
+
+        public static void ConfigureHangfire(this IServiceCollection services, IConfiguration configuration)
+        {
+            var migrationOptions = new MongoMigrationOptions
+            {
+                MigrationStrategy = new DropMongoMigrationStrategy(),
+                BackupStrategy = new CollectionMongoBackupStrategy()
+            };
+
+            services.AddHangfire(config =>
+            {
+                config.UseSerilogLogProvider();
+                config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170);
+                config.UseSimpleAssemblyNameTypeSerializer();
+                config.UseRecommendedSerializerSettings();
+                config.UseMongoStorage(configuration["BasketDatabaseSettings:ConnectionString"],
+                    configuration["BasketDatabaseSettings:DatabaseName"],
+                    new MongoStorageOptions { MigrationOptions = migrationOptions });
+            });
+
+            services.AddHangfireServer();
+        }
 
         public static void AddAuthentication(this IServiceCollection services, IConfiguration configuration) =>
             services.AddAuthentication(options =>

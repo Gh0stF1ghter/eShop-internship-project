@@ -53,4 +53,11 @@ export class SignalrService {
   public async deleteBasketItem(userId: string, basketItemId: string) {
     await this.hubConnection?.invoke('deleteBasketItem', userId, basketItemId)
   }
+
+  public addNotificationListener = () => {
+    if (this.hubConnection)
+      this.hubConnection.on('CreateBasketItemNotificationReceived', () => {
+        alert('you have items in basket');
+      });
+  };
 }

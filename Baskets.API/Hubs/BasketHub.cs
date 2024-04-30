@@ -3,16 +3,22 @@ using Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.UpdateBasketItem;
 using Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItem;
 using Baskets.BusinessLogic.CQRS.Queries.BasketItemQueries.GetBasketItems;
 using Baskets.BusinessLogic.CQRS.Queries.UserBasketQueries.GetUserBasket;
+using Hangfire;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Baskets.API.Hubs
 {
-    public class BasketHub(ISender sender) : Hub
+    public class BasketHub(ISender sender, IRecurringJobManager jobManager) : Hub
     {
         public async Task GetUserBasket(string userId)
         {
             var basket = await sender.Send(new GetUserBasketQuery(userId));
+
+            if (basket.TotalPrice == 0)
+            {
+                jobManager.RemoveIfExists($"basketItemsExistNotification-{userId}");
+            }
 
             await Clients.Caller.SendAsync("userBasketReceived", basket);
         }
@@ -27,6 +33,8 @@ namespace Baskets.API.Hubs
         public async Task CreateBasketItem(string userId, string basketItemId, CancellationToken cancellationToken)
         {
             var basketItem = await sender.Send(new GetBasketItemQuery(userId, basketItemId), cancellationToken);
+
+            jobManager.AddOrUpdate($"basketItemsExistNotification-{userId}", () => CreateBasketItemNotification(), Cron.Weekly);
 
             await Clients.Caller.SendAsync("BasketItemCreated", basketItem, cancellationToken);
         }
@@ -50,6 +58,11 @@ namespace Baskets.API.Hubs
 
             await GetUserBasket(userId);
             await GetBasketItems(userId);
+        }
+
+        public async Task Subscribe()
+        {
+
         }
     }
 }
