@@ -17,6 +17,14 @@ services.ConfigureSwagger();
 services.ConfigureCors();
 services.AddAuthentication(builder.Configuration);
 
+services.AddMapper();
+
+services.AddAutoValidation();
+
+services.AddMessageBroker();
+
+services.AddDependencies();
+
 services.AddControllers();
 services.AddEndpointsApiExplorer();
 

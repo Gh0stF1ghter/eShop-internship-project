@@ -8,9 +8,7 @@ namespace Baskets.DataAccess.Entities.Models
         public double TotalPrice { get; set; } = 0;
 
         [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
+        [BsonRepresentation(BsonType.String)]
         public string UserId { get; set; } = null!;
-        [BsonIgnore]
-        public User User { get; set; } = null!;
     }
 }
