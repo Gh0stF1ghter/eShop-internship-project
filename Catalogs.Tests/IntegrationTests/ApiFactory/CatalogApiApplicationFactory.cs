@@ -35,7 +35,6 @@ namespace Catalogs.Tests.IntegrationTests.ApiFactory
 
             builder.ConfigureServices(services =>
             {
-
                 services.RemoveAll(typeof(DbContextOptions<CatalogContext>));
 
                 services.AddDbContext<CatalogContext>(options =>
@@ -48,8 +47,6 @@ namespace Catalogs.Tests.IntegrationTests.ApiFactory
 
                 context?.Database.Migrate();
             });
-
-
         }
 
         public async Task InitializeAsync()
