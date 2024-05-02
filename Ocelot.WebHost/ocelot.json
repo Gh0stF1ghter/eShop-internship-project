@@ -1,0 +1,312 @@
+{
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:8080"
+  },
+  "Routes": [
+    //identity
+    {
+      "UpstreamPathTemplate": "/authentication/login",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/api/authentication/login",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "identity.api",
+          "Port": 8081
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/authentication/register",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/api/authentication/register",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "identity.api",
+          "Port": 8081
+        }
+      ]
+    },
+    //catalogs
+    //Brands
+    {
+      "UpstreamPathTemplate": "/catalog/brands",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/brands",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalogs.api",
+          "Port": 8082
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/catalog/brands",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/api/brands",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalogs.api",
+          "Port": 8082
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKeys": [ "IdentityApiKey" ],
+        "AllowedScopes": []
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/catalog/brands/{id}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/brands/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalogs.api",
+          "Port": 8082
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/catalog/brands/{id}",
+      "UpstreamHttpMethod": [ "Put", "Delete" ],
+      "DownstreamPathTemplate": "/api/brands/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalogs.api",
+          "Port": 8082
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKeys": [ "IdentityApiKey" ],
+        "AllowedScopes": []
+      }
+    },
+    //Vendors
+    {
+      "UpstreamPathTemplate": "/catalog/vendors",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/vendors",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalogs.api",
+          "Port": 8082
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/catalog/vendors",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/api/vendors",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalogs.api",
+          "Port": 8082
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKeys": [ "IdentityApiKey" ],
+        "AllowedScopes": []
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/catalog/vendors/{id}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/vendors/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalogs.api",
+          "Port": 8082
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/catalog/vendors/{id}",
+      "UpstreamHttpMethod": [ "Put", "Delete" ],
+      "DownstreamPathTemplate": "/api/vendors/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalogs.api",
+          "Port": 8082
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKeys": [ "IdentityApiKey" ],
+        "AllowedScopes": []
+      }
+    },
+    //Types
+    {
+      "UpstreamPathTemplate": "/catalog/types",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/types",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalogs.api",
+          "Port": 8082
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/catalog/types",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/api/types",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalogs.api",
+          "Port": 8082
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKeys": [ "IdentityApiKey" ],
+        "AllowedScopes": []
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/catalog/types/{id}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/types/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalogs.api",
+          "Port": 8082
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/catalog/types/{id}",
+      "UpstreamHttpMethod": [ "Put", "Delete" ],
+      "DownstreamPathTemplate": "/api/types/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalogs.api",
+          "Port": 8082
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKeys": [ "IdentityApiKey" ],
+        "AllowedScopes": []
+      }
+    },
+    //Items
+    {
+      "UpstreamPathTemplate": "/catalog/types/{typeId}/items",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/brands",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalogs.api",
+          "Port": 8082
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/catalog/types/{typeId}/items",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/api/brands",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalogs.api",
+          "Port": 8082
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKeys": [ "IdentityApiKey" ],
+        "AllowedScopes": []
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/catalog/types/{typeId}/items/{id}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/brands/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalogs.api",
+          "Port": 8082
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/catalog/types/{typeId}/items/{id}",
+      "UpstreamHttpMethod": [ "Put", "Delete" ],
+      "DownstreamPathTemplate": "/api/brands/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalogs.api",
+          "Port": 8082
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKeys": [ "IdentityApiKey" ],
+        "AllowedScopes": []
+      }
+    },
+    //baskets
+    //BasketItem
+    {
+      "UpstreamPathTemplate": "/{userId}/basket/items",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "DownstreamPathTemplate": "/api/users/{userId}/basket/items",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "baskets.api",
+          "Port": 8083
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKeys": [ "IdentityApiKey" ],
+        "AllowedScopes": []
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/{userId}/basket/items/{basketItemId}",
+      "UpstreamHttpMethod": [ "Put", "Delete" ],
+      "DownstreamPathTemplate": "/api/users/{userId}/basket/items/{basketItemId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "baskets.api",
+          "Port": 8083
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKeys": [ "IdentityApiKey" ],
+        "AllowedScopes": []
+      }
+    },
+    //UserBasket
+    {
+      "UpstreamPathTemplate": "/{userId}/basket",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/users/{userId}/basket",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "baskets.api",
+          "Port": 8083
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKeys": [ "IdentityApiKey" ],
+        "AllowedScopes": []
+      }
+    }
+  ]
+}

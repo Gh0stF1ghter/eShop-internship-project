@@ -13,6 +13,12 @@ services:
       context: .
       dockerfile: Identity.API/Dockerfile
 
+  ocelot.webhost:
+    image: ${DOCKER_REGISTRY-}ocelotwebhost
+    build:
+      context: .
+      dockerfile: Ocelot.WebHost/Dockerfile
+
   baskets.api:
     image: ${DOCKER_REGISTRY-}basketsapi
     build:

@@ -1,8 +1,11 @@
-﻿using Catalogs.Application.Comands.VendorCommands;
-using Catalogs.Application.Handlers.VendorHandlers;
-using Catalogs.Application.Queries.VendorQueries;
-using Catalogs.Tests.UnitTests.FakeDataGenerator;
-using Catalogs.Tests.UnitTests.Mocks;
+using Catalogs.Application.CQRS.Commands.VendorCommands.CreateVendor;
+using Catalogs.Application.CQRS.Commands.VendorCommands.DeleteVendor;
+using Catalogs.Application.CQRS.Commands.VendorCommands.UpdateVendor;
+using Catalogs.Application.CQRS.Queries.VendorQueries.GetVendor;
+using Catalogs.Application.CQRS.Queries.VendorQueries.GetVendors;
+using Catalogs.Domain.Entities.Constants.Messages;
+using Catalogs.Tests.FakeDataGenerator;
+using Catalogs.Tests.Mocks;
 
 namespace Catalogs.Tests.UnitTests.HandlersTests
 {
@@ -28,7 +31,7 @@ namespace Catalogs.Tests.UnitTests.HandlersTests
 
             _unitOfWorkMock.IsVendorExists(false);
 
-            var comand = new CreateVendorComand(vendorCreateDto);
+            var comand = new CreateVendorCommand(vendorCreateDto);
             var handler = new CreateVendorHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act
@@ -49,7 +52,7 @@ namespace Catalogs.Tests.UnitTests.HandlersTests
 
             _unitOfWorkMock.IsVendorExists(true);
 
-            var comand = new CreateVendorComand(vendorCreateDto);
+            var comand = new CreateVendorCommand(vendorCreateDto);
             var handler = new CreateVendorHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act
@@ -69,7 +72,7 @@ namespace Catalogs.Tests.UnitTests.HandlersTests
 
             _unitOfWorkMock.GetVendorById(vendor);
 
-            var comand = new DeleteVendorComand(1, false);
+            var comand = new DeleteVendorCommand(1, false);
             var handler = new DeleteVendorHandler(_unitOfWorkMock.Object);
 
             //Act
@@ -85,7 +88,7 @@ namespace Catalogs.Tests.UnitTests.HandlersTests
             //Arrange
             _unitOfWorkMock.GetVendorById(null);
 
-            var comand = new DeleteVendorComand(1, false);
+            var comand = new DeleteVendorCommand(1, false);
             var handler = new DeleteVendorHandler(_unitOfWorkMock.Object);
 
             //Act
@@ -167,7 +170,7 @@ namespace Catalogs.Tests.UnitTests.HandlersTests
 
             _unitOfWorkMock.GetVendorById(vendor);
 
-            var comand = new UpdateVendorComand(id, endorUpdateDto, true);
+            var comand = new UpdateVendorCommand(id, endorUpdateDto, true);
             var handler = new UpdateVendorHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act
@@ -185,7 +188,7 @@ namespace Catalogs.Tests.UnitTests.HandlersTests
 
             _unitOfWorkMock.GetVendorById(null);
 
-            var comand = new UpdateVendorComand(It.IsAny<int>(), vendorUpdateDto, true);
+            var comand = new UpdateVendorCommand(It.IsAny<int>(), vendorUpdateDto, true);
             var handler = new UpdateVendorHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act

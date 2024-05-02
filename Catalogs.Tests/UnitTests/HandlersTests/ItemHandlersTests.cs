@@ -1,6 +1,9 @@
-﻿using Catalogs.Application.Comands.ItemCommands;
-using Catalogs.Application.Handlers.ItemHandlers;
-using Catalogs.Application.Queries.ItemQueries;
+﻿using Catalogs.Application.CQRS.Commands.ItemCommands.CreateItem;
+using Catalogs.Application.CQRS.Commands.ItemCommands.DeleteItem;
+using Catalogs.Application.CQRS.Commands.ItemCommands.UpdateItem;
+using Catalogs.Application.CQRS.Queries.ItemQueries.GetItemOfType;
+using Catalogs.Application.CQRS.Queries.ItemQueries.GetItemsOfType;
+using Catalogs.Domain.Entities.Constants.Messages;
 using Catalogs.Domain.Entities.LinkModels;
 using Catalogs.Domain.RequestFeatures;
 using Catalogs.Tests.UnitTests.FakeDataGenerator;
@@ -38,7 +41,7 @@ namespace Catalogs.Tests.UnitTests.HandlersTests
 
             _unitOfWorkMock.GetItemById(item);
 
-            var comand = new DeleteItemComand(1, 1, false);
+            var comand = new DeleteItemCommand(1, 1, false);
             var handle = new DeleteItemHandler(_unitOfWorkMock.Object);
 
             //Act
@@ -55,7 +58,7 @@ namespace Catalogs.Tests.UnitTests.HandlersTests
             //Arrange
             _unitOfWorkMock.GetItemById(null);
 
-            var comand = new DeleteItemComand(1, 1, false);
+            var comand = new DeleteItemCommand(1, 1, false);
             var handle = new DeleteItemHandler(_unitOfWorkMock.Object);
 
             //Act
@@ -75,7 +78,7 @@ namespace Catalogs.Tests.UnitTests.HandlersTests
 
             _unitOfWorkMock.IsItemExists(false);
 
-            var comand = new CreateItemComand(itemCreateDto, 1, false);
+            var comand = new CreateItemCommand(itemCreateDto, 1, false);
             var handle = new CreateItemHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act
@@ -103,7 +106,7 @@ namespace Catalogs.Tests.UnitTests.HandlersTests
             _unitOfWorkMock.IsBrandExists(brandExists);
             _unitOfWorkMock.IsVendorExists(vendorExists);
 
-            var comand = new CreateItemComand(itemCreateDto, 1, false);
+            var comand = new CreateItemCommand(itemCreateDto, 1, false);
             var handle = new CreateItemHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act
@@ -123,7 +126,7 @@ namespace Catalogs.Tests.UnitTests.HandlersTests
 
             _unitOfWorkMock.IsItemExists(true);
 
-            var comand = new CreateItemComand(itemCreateDto, 1, false);
+            var comand = new CreateItemCommand(itemCreateDto, 1, false);
             var handle = new CreateItemHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act
@@ -226,7 +229,7 @@ namespace Catalogs.Tests.UnitTests.HandlersTests
 
             _unitOfWorkMock.GetItemById(item);
 
-            var comand = new UpdateItemComand(1, 1, itemUpdateDto, true);
+            var comand = new UpdateItemCommand(1, 1, itemUpdateDto, true);
             var handle = new UpdateItemHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act
@@ -249,7 +252,7 @@ namespace Catalogs.Tests.UnitTests.HandlersTests
             _unitOfWorkMock.IsBrandExists(brandExists);
             _unitOfWorkMock.IsVendorExists(vendorExists);
 
-            var comand = new UpdateItemComand(1, 1, itemCreateDto, true);
+            var comand = new UpdateItemCommand(1, 1, itemCreateDto, true);
             var handle = new UpdateItemHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act
@@ -268,7 +271,7 @@ namespace Catalogs.Tests.UnitTests.HandlersTests
 
             _unitOfWorkMock.GetItemById(null);
 
-            var comand = new UpdateItemComand(1, 1, itemCreateDto, true);
+            var comand = new UpdateItemCommand(1, 1, itemCreateDto, true);
             var handle = new UpdateItemHandler(_unitOfWorkMock.Object, _mapper);
 
             //Act
