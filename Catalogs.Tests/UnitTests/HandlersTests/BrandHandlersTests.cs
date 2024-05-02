@@ -4,8 +4,8 @@ using Catalogs.Application.CQRS.Commands.BrandCommands.UpdateBrand;
 using Catalogs.Application.CQRS.Queries.BrandQueries.GetBrand;
 using Catalogs.Application.CQRS.Queries.BrandQueries.GetBrands;
 using Catalogs.Domain.Entities.Constants.Messages;
-using Catalogs.Tests.FakeDataGenerator;
-using Catalogs.Tests.Mocks;
+using Catalogs.Tests.UnitTests.FakeDataGenerator;
+using Catalogs.Tests.UnitTests.Mocks;
 
 namespace Catalogs.Tests.UnitTests.HandlersTests
 {

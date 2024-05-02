@@ -4,8 +4,8 @@ using Catalogs.Application.CQRS.Commands.VendorCommands.UpdateVendor;
 using Catalogs.Application.CQRS.Queries.VendorQueries.GetVendor;
 using Catalogs.Application.CQRS.Queries.VendorQueries.GetVendors;
 using Catalogs.Domain.Entities.Constants.Messages;
-using Catalogs.Tests.FakeDataGenerator;
-using Catalogs.Tests.Mocks;
+using Catalogs.Tests.UnitTests.FakeDataGenerator;
+using Catalogs.Tests.UnitTests.Mocks;
 
 namespace Catalogs.Tests.UnitTests.HandlersTests
 {

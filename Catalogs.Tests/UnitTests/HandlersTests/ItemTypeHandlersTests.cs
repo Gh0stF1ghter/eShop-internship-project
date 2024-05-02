@@ -4,8 +4,8 @@ using Catalogs.Application.CQRS.Commands.ItemTypeCommands.UpdateItemType;
 using Catalogs.Application.CQRS.Queries.ItemTypeQueries.GetItemType;
 using Catalogs.Application.CQRS.Queries.ItemTypeQueries.GetItemTypes;
 using Catalogs.Domain.Entities.Constants.Messages;
-using Catalogs.Tests.FakeDataGenerator;
-using Catalogs.Tests.Mocks;
+using Catalogs.Tests.UnitTests.FakeDataGenerator;
+using Catalogs.Tests.UnitTests.Mocks;
 
 namespace Catalogs.Tests.UnitTests.HandlersTests
 {

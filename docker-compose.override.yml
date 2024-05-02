@@ -30,18 +30,12 @@ services:
 
   baskets.api:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_HTTP_PORTS=8083
     ports:
-      - "8080"
-      - "8081"
+      - "7233:8083"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-    depends_on: 
-      - rabbitmq
-      - mongo
     networks:
       - elastic
 
@@ -77,17 +71,6 @@ services:
     networks:
       - elastic
 
-  baskets.api:
-    environment:
-      - ASPNETCORE_HTTP_PORTS=8083
-    ports:
-      - "7233:8083"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-    networks:
-      - elastic
-
   ocelot.webhost:
     environment:
       - ASPNETCORE_HTTP_PORTS=8080
@@ -109,18 +92,6 @@ services:
         - MSSQL_SA_PASSWORD=A&VeryComplex123Password
     networks:
     - elastic
-
-  mongo:
-    image: mongo
-    restart: always
-
-  mongo-express:
-    image: mongo-express
-    restart: always
-    ports:
-      - 2701:2701
-    environment:
-      ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/
 
   redis:
     image: redis:latest

@@ -1,5 +1,4 @@
 ﻿using Catalogs.Application.DataTransferObjects;
-using Catalogs.Application.Queries.VendorQueries;
 using Catalogs.Domain.Entities.Constants.Messages;
 using MediatR;
 

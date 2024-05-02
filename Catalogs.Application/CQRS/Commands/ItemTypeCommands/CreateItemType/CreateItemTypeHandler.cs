@@ -1,4 +1,3 @@
-using Catalogs.Application.Comands.ItemTypeCommands;
 using Catalogs.Application.DataTransferObjects;
 using Catalogs.Domain.Entities.Constants.Messages;
 using MediatR;
