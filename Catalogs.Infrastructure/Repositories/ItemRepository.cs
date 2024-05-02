@@ -24,10 +24,13 @@ namespace Catalogs.Infrastructure.Repositories
             await GetByCondition(i => i.Id.Equals(id) && i.TypeId.Equals(typeId), trackChanges)
                 .SingleOrDefaultAsync(token);
 
-        public async Task<Item?> GetItemByIdAsync(int id, CancellationToken token) =>
-            await GetByCondition(i => i.Id.Equals(id), trackChanges: false)
-                .SingleOrDefaultAsync(token);
+        public async Task<Item?> GetItemByIdAsync(int id, CancellationToken token)
+        {
+            var item = await GetByCondition(i => i.Id.Equals(id), trackChanges: false)
+              .SingleOrDefaultAsync(token);
 
+            return item;
+        }
         public void AddItem(int typeId, Item item)
         {
             item.TypeId = typeId;

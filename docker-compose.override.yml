@@ -66,7 +66,6 @@ services:
     networks:
     - elastic
 
-
   mongo-express:
     image: mongo-express
     restart: always

@@ -3,8 +3,9 @@ using Catalogs.Application.Queries.ItemQueries;
 using Grpc.Core;
 using ItemGrpcService;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
-namespace Catalogs.API.GrpcServices
+namespace Catalogs.Infrastructure.GrpcServices
 {
     public class ItemGrpcController(ISender sender, IMapper mapper, ILogger<ItemGrpcController> logger) : ItemService.ItemServiceBase
     {

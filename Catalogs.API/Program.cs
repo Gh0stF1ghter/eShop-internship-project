@@ -1,6 +1,6 @@
 using Catalogs.API.Extensions;
-using Catalogs.API.GrpcServices;
 using Catalogs.Application;
+using Catalogs.Infrastructure.GrpcServices;
 using Serilog;
 
 

@@ -31,7 +31,7 @@ namespace Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.UpdateBasketIte
             var basket = await unitOfWork.Basket
                 .GetByConditionAsync(b => b.UserId.Equals(comand.UserId), cancellationToken);
 
-            if (basket == null)
+            if (basket is null)
             {
                 throw new NotFoundException(UserBasketMessages.NotFound);
             }
@@ -45,7 +45,7 @@ namespace Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.UpdateBasketIte
                 .GetBasketItemByConditionAsync(bi => bi.BasketItemId.Equals(comand.BasketItemId)
                 && bi.UserId.Equals(comand.UserId), cancellationToken);
 
-            if (itemInBasket == null)
+            if (itemInBasket is null)
             {
                 throw new NotFoundException(BasketItemMessages.NotFound);
             }
@@ -69,7 +69,7 @@ namespace Baskets.BusinessLogic.CQRS.Commands.BasketItemCommands.UpdateBasketIte
 
             var grpcItem = itemResponse.Item;
 
-            if (grpcItem == null)
+            if (grpcItem is null)
             {
                 throw new NotFoundException(ItemMessages.NotFound);
             }
