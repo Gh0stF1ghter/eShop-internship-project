@@ -37,7 +37,7 @@
 
             var brand = new Brand();
 
-            if (brandCache != null)
+            if (brandCache is not null)
             {
                 brand = Cache<Brand>.GetDataFromCache(brandCache);
             }
