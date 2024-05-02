@@ -10,12 +10,14 @@ namespace Identity.DataAccess.Repositories.Implementations
         public async Task<IEnumerable<User>> GetAllUsersAsync(CancellationToken cancellationToken)
         {
             var user = await context.Users.ToListAsync(cancellationToken);
+
             return user;
         }
 
         public async Task<User?> GetUserByIdAsync(string id, CancellationToken cancellationToken)
         {
-            var user = await context.Users.Where(u => u.Id.Equals(id)).SingleOrDefaultAsync(cancellationToken);
+            var user = await context.Users.Where(u => u.Id.Equals(id)).FirstOrDefaultAsync(cancellationToken);
+
             return user;
         }
 

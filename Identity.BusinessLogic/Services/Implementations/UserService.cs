@@ -24,7 +24,7 @@ namespace Identity.BusinessLogic.Services.Implementations
         {
             var user = await userRepository.GetUserByIdAsync(id, cancellationToken);
 
-            if (user == null)
+            if (user is null)
             {
                 throw new NotFoundException(UserMessages.UserNotFound);
             }
@@ -38,7 +38,7 @@ namespace Identity.BusinessLogic.Services.Implementations
         {
             var user = await userRepository.GetUserByIdAsync(id, cancellationToken);
 
-            if (user == null)
+            if (user is null)
             {
                 throw new NotFoundException(UserMessages.UserNotFound);
             }

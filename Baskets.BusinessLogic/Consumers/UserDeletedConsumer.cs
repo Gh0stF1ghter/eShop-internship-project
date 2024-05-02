@@ -3,7 +3,7 @@ using MassTransit;
 using MediatR;
 using RabbitMQ.EventBus;
 
-namespace Baskets.API.Consumers
+namespace Baskets.BusinessLogic.Consumers
 {
     public class UserDeletedConsumer(ISender sender) : IConsumer<UserDeleted>
     {
