@@ -16,6 +16,13 @@ services.AddAuthentication(builder.Configuration);
 services.ConfigureSwagger();
 
 services.AddAutoMapper(typeof(BLLAssemblyReference));
+
+services.AddAutoValidation();
+
+services.AddMessageBroker();
+
+services.AddCustomDependencies();
+
 services.AddControllers();
 services.AddEndpointsApiExplorer();
 

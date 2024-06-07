@@ -10,12 +10,10 @@ namespace Baskets.DataAccess.UnitOfWork
     {
         private readonly Lazy<IRepository<UserBasket>> BasketRepository = new(new Repository<UserBasket>(context.GetCollection<UserBasket>(options.Value.BasketsCollectionName)));
         private readonly Lazy<IBasketItemRepository> BasketItemRepository = new(new BasketItemRepository(context.GetCollection<BasketItem>(options.Value.BasketItemsCollectionName), context.GetCollection<Item>(options.Value.ItemsCollectionName)));
-        private readonly Lazy<IRepository<User>> UserRepository = new(new Repository<User>(context.GetCollection<User>(options.Value.UsersCollectionName)));
         private readonly Lazy<IRepository<Item>> ItemRepository = new(new Repository<Item>(context.GetCollection<Item>(options.Value.ItemsCollectionName)));
 
         public IRepository<UserBasket> Basket => BasketRepository.Value;
         public IBasketItemRepository BasketItem => BasketItemRepository.Value;
-        public IRepository<User> User => UserRepository.Value;
         public IRepository<Item> Item => ItemRepository.Value;
     }
 }

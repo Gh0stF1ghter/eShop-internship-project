@@ -27,7 +27,7 @@ namespace Identity.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterDTO register, CancellationToken token = default)
         {
-            await _authenticationService.RegisterUserAsync(register, token);
+            var user = await _authenticationService.RegisterUserAsync(register, token);
 
             return Created();
         }
