@@ -44,10 +44,11 @@ namespace Ocelot.WebHost.Extensions
         public static void ConfigureCors(this IServiceCollection services) =>
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy", builder =>
+                options.AddDefaultPolicy(builder =>
                     builder.AllowAnyOrigin()
                         .AllowAnyMethod()
-                        .AllowAnyHeader());
+                        .AllowAnyHeader()
+                        .WithExposedHeaders("Pagination"));
             });
     }
 }

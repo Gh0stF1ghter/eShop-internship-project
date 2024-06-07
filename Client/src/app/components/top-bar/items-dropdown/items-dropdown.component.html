@@ -1,0 +1,16 @@
+<div class="absolute flex flex-col gap-2 p-1 rounded-b-lg bg-slate-200">
+  <div class="p-2 rounded-lg bg-slate-300" *ngFor="let item of items">
+    <div class="flex flex-between w-44">
+      <span>
+        {{ item.name }}
+      </span>
+      <span>
+        {{ item.id }}
+      </span>
+    </div>
+    <div class="flex flex-between">
+      <span> {{ item.stock }} left </span>
+      <span> {{ item.price }} $ </span>
+    </div>
+  </div>
+</div>

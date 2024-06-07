@@ -112,7 +112,6 @@ namespace Identity.API.Extensions
                 options.AddPolicy("CorsPolicy", builder =>
                     builder.AllowAnyOrigin()
                         .AllowAnyMethod()
-                        .AllowCredentials()
                         .AllowAnyHeader());
             });
     }

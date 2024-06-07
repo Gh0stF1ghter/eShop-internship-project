@@ -1,0 +1,64 @@
+<nav class="py-3 rounded-b-3xl flex-around bg-slate-200">
+  <ng-template #adminLink>
+    <a [routerLink]="['admin']" class="m-2  flex-center">
+      Dashboard
+    </a>
+  </ng-template>
+  <a
+    *ngIf="!isAdmin; else adminLink"
+    [routerLink]="['/']"
+    class="m-2 logo flex-center"
+  >
+    <img
+      src="./logo.svg"
+      alt="logo"
+      width="{30}"
+      height="{30}"
+      class="logo_img"
+    />
+    <p class="logo_text">IFindIt</p>
+  </a>
+
+  <div class="flex-col" *ngIf="types">
+    <a class="text-xl font-bold link" (click)="toggleTypes()">Browse</a>
+    <div *ngIf="typesOpen" class="absolute gap-1 p-2 bg-slate-200 rounded-xl">
+      <app-type-dropdown [types]="types"></app-type-dropdown>
+    </div>
+  </div>
+
+  <a [routerLink]="['/catalog/brands']" class="link">Brands</a>
+  <a [routerLink]="['/catalog/vendors']" class="link">Vendors</a>
+
+  <div *ngIf="!isLogged; else basketBlock" class="relative flex gap-1">
+    <a [routerLink]="['/login']" class="black_btn"> Sign In </a>
+    <a [routerLink]="['/register']" class="black_btn"> Sign Up </a>
+  </div>
+
+  <ng-template #basketBlock>
+    <div class="relative flex gap-5">
+      <a [routerLink]="['/basket']" class="outline_btn"> Basket </a>
+      <button (click)="logOut()" class="black_btn">Sign Out</button>
+    </div>
+  </ng-template>
+</nav>
+<div class="flex-col flex-center">
+  <div class="px-5 pb-2 rounded-b-3xl bg-slate-200">
+    <input
+      #search
+      class="z-0 w-screen text-center rounded-3xl h-7 max-w-80 bg-slate-200 focus:bg-white"
+      placeholder="Search"
+    />
+    <button
+      (click)="startSearch(search.value)"
+      type="submit"
+      class="z-10 p-1 rounded-r-3xl hover:bg-slate-100"
+    >
+      Search
+    </button>
+  </div>
+
+  <app-items-dropdown
+    *ngIf="search.value"
+    [searchTerm]="searchTerm"
+  ></app-items-dropdown>
+</div>

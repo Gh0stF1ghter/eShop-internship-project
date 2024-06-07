@@ -1,0 +1,15 @@
+<h2 class="m-3 text-4xl ml-9">Types</h2>
+
+<div class="flex ml-3">
+  <div class="flex flex-col gap-1 p-4 mr-3 rounded-lg bg-slate-200">
+    <div *ngFor="let type of types" class="gap-3">
+      <a [routerLink]="[type.id]">
+        {{ type.name }}
+      </a>
+    </div>
+
+    <a class="black_btn" [routerLink]="['create']">Create new</a>
+  </div>
+
+  <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,53 @@
+<div class="p-2 rounded-lg bg-slate-300">
+  <div *ngIf="item" class="flex gap-2 p-2 rounded-lg bg-slate-300">
+    <div class="p-2 rounded-lg bg-slate-200">
+      <p>
+        {{ item.name }}
+      </p>
+      <p>{{ item.stock }} in stock</p>
+      <div class="mt-4">
+        <p>Price</p>
+        <p>{{ item.price }} $</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-1">
+    <button type="button" class="outline_btn" (click)="inputOpened = true">
+      Rename
+    </button>
+    <div *ngIf="inputOpened">
+      <div>
+        <p>Name</p>
+        <input type="text" placeholder="name" [(ngModel)]="editItem.name" />
+      </div>
+      <div>
+        <p>Stock</p>
+        <input type="number" placeholder="stock" [(ngModel)]="editItem.stock" />
+      </div>
+      <div>
+        <p>Price</p>
+        <input
+          type="number"
+          placeholder="number"
+          [(ngModel)]="editItem.price"
+        />
+      </div>
+
+      <div class="flex gap-1">
+        <button class="black_btn" (click)="updateBrand()">Save</button>
+        <button class="outline_btn" (click)="inputOpened = false">
+          Cancel
+        </button>
+      </div>
+    </div>
+    <button
+      class="red_btn"
+      [hidden]="inputOpened"
+      type="button"
+      (click)="deleteBrand()"
+    >
+      Delete
+    </button>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="p-2 rounded-lg bg-slate-300">
+  <form class="flex flex-col gap-1" [formGroup]="form">
+    <div>
+      <p>Name</p>
+
+      <input
+        name="name"
+        formControlName="name"
+        placeholder="Name"
+        type="text"
+        class="text-lg"
+      />
+    </div>
+    <div>
+      <p>typeId</p>
+      <input
+        name="typeId"
+        formControlName="typeId"
+        placeholder="typeId"
+        type="number"
+        class="text-lg"
+      />
+    </div>
+    <div>
+      <p>brandId</p>
+
+      <input
+        name="brandId"
+        formControlName="brandId"
+        placeholder="brandId"
+        type="number"
+        class="text-lg"
+      />
+    </div>
+    <div>
+      <p>vendorId</p>
+
+      <input
+        name="vendorId"
+        formControlName="vendorId"
+        placeholder="vendorId"
+        type="number"
+        class="text-lg"
+      />
+    </div>
+    <div>
+      <p>stock</p>
+
+      <input
+        name="stock"
+        formControlName="stock"
+        placeholder="stock"
+        type="number"
+        class="text-lg"
+      />
+    </div>
+    <div>
+      <p>price</p>
+
+      <input
+        name="price"
+        formControlName="price"
+        placeholder="price"
+        type="number"
+        class="text-lg"
+      />
+    </div>
+    <button class="w-40 h-10 p-3 m-3 text-lg black_btn" (click)="createBrand()">
+      Create
+    </button>
+  </form>
+</div>

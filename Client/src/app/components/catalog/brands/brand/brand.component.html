@@ -1,0 +1,18 @@
+<h4 class="ml-2 text-lg">
+  {{ brand?.name }}
+</h4>
+
+<div class="flex gap-2">
+  <div *ngFor="let item of brand?.items" class="bg-slate-200 p-2 rounded-lg">
+    <p>
+      {{ item.name }}
+    </p>
+    <p>{{ item.stock }} in stock</p>
+    <div class="mt-4">
+      Price
+      <p>
+        {{ item.price }} $
+      </p>
+    </div>
+  </div>
+</div>

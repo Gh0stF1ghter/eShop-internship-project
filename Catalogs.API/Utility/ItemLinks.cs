@@ -45,7 +45,7 @@ namespace Catalogs.API.Utility
             for (var i = 0; i < itemDtoList.Count; i++)
             {
                 var itemLinks = CreateLinksForItem(httpContext, typeId, itemDtoList[i].Id, fields);
-                shapedItems[i].TryAdd("Links", itemLinks);
+                shapedItems[i].TryAdd("links", itemLinks);
             }
 
             var itemCollection = new LinkCollectionWrapper<ExpandoObject>(shapedItems);

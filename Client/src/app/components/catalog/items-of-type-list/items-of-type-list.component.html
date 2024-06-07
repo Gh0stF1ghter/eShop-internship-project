@@ -1,0 +1,32 @@
+<h2 class="ml-2 text-lg">
+  {{ type?.name }}
+</h2>
+
+<div class="flex gap-2 mb-2">
+  <div *ngFor="let item of items" class="p-2 rounded-lg bg-slate-200">
+    <p>
+      {{ item.name }}
+    </p>
+    <p>{{ item.stock }} in stock</p>
+    <div class="mt-4">
+      Price
+      <p>{{ item.price }} $</p>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div *ngIf="pagination" class="p-2 rounded-lg bg-slate-200">
+    <div>
+      {{ pagination.CurrentPage }}
+    </div>
+    <div>
+      Page size
+      {{ pagination.PageSize }}
+    </div>
+    <div>
+      Total Items
+      {{ pagination.TotalPages }}
+    </div>
+  </div>
+</div>

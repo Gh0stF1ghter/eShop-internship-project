@@ -1,0 +1,15 @@
+<h2 class="m-3 text-4xl ml-9">Vendors</h2>
+
+<div class="flex ml-3">
+  <div class="flex flex-col gap-1 p-4 mr-3 rounded-lg bg-slate-200">
+    <div *ngFor="let vendor of vendors">
+      <a [routerLink]="[vendor.id]" class="text-lg">
+        {{ vendor.name }}
+      </a>
+    </div>
+
+    <a class="black_btn" [routerLink]="['create']">Create new</a>
+  </div>
+
+  <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,5 @@
+<div *ngFor="let type of types" class="text-start py-1 px-2 rounded-lg transition-colors duration-200 hover:bg-[#e5e5e5]">
+    <a [routerLink]="['catalog/types/', type.id]">
+        {{type.name}}
+    </a>
+</div>

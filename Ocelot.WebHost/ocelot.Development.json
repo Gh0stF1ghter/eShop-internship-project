@@ -1,6 +1,6 @@
 {
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:5003"
+    "BaseUrl": "https://localhost:7201"
   },
   "Routes": [
     //Identity
@@ -20,6 +20,18 @@
       "UpstreamPathTemplate": "/authentication/register",
       "UpstreamHttpMethod": [ "Post" ],
       "DownstreamPathTemplate": "/api/authentication/register",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5002
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/token/refresh",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/api/token/refresh",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -202,9 +214,21 @@
     },
     //Items
     {
+      "UpstreamPathTemplate": "/catalog/items",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/items",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ]
+    },
+    {
       "UpstreamPathTemplate": "/catalog/types/{typeId}/items",
       "UpstreamHttpMethod": [ "Get" ],
-      "DownstreamPathTemplate": "/api/brands",
+      "DownstreamPathTemplate": "/api/types/{typeId}/items",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -216,7 +240,7 @@
     {
       "UpstreamPathTemplate": "/catalog/types/{typeId}/items",
       "UpstreamHttpMethod": [ "Post" ],
-      "DownstreamPathTemplate": "/api/brands",
+      "DownstreamPathTemplate": "/api/types/{typeId}/items",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -232,7 +256,7 @@
     {
       "UpstreamPathTemplate": "/catalog/types/{typeId}/items/{id}",
       "UpstreamHttpMethod": [ "Get" ],
-      "DownstreamPathTemplate": "/api/brands/{id}",
+      "DownstreamPathTemplate": "/api/types/{typeId}/items/{id}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -244,7 +268,7 @@
     {
       "UpstreamPathTemplate": "/catalog/types/{typeId}/items/{id}",
       "UpstreamHttpMethod": [ "Put", "Delete" ],
-      "DownstreamPathTemplate": "/api/brands/{id}",
+      "DownstreamPathTemplate": "/api/types/{typeId}/items/{id}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {

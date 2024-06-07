@@ -41,7 +41,7 @@ namespace Identity.BusinessLogic.Services.Implementations
         {
             var principal = GetPrincipalFromExpiredToken(tokenDto.AccessToken);
 
-            var user = await _userManager.FindByNameAsync(principal.Identity.Name);
+            var user = await _userManager.FindByIdAsync(principal.Identity.Name);
 
             if (user is null || user.RefreshToken != tokenDto.RefreshToken || user.RefreshTokenExpireTime <= DateTime.Now)
             {
@@ -117,13 +117,9 @@ namespace Identity.BusinessLogic.Services.Implementations
 
             var userClaims = new List<Claim>
             {
-                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new(ClaimTypes.Name, user.Id)
             };
-
-            if (user.UserName is not null)
-            {
-                userClaims.Add(new Claim(ClaimTypes.Name, user.UserName));
-            }
 
             userRoles
                 .ToList()

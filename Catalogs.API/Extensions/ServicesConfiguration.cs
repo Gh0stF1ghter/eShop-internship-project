@@ -41,10 +41,9 @@ namespace Catalogs.API.Extensions
         public static void ConfigureCors(this IServiceCollection services) =>
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy", builder =>
+                options.AddPolicy("Policy", builder =>
                     builder.AllowAnyOrigin()
                         .AllowAnyMethod()
-                        .AllowCredentials()
                         .AllowAnyHeader()
                         .WithExposedHeaders("Pagination"));
             });
