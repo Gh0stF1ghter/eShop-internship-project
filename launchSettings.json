@@ -3,6 +3,9 @@
     "Docker Compose": {
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "identity.api",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/swagger",
       "serviceActions": {
         "identity.api": "StartDebugging",
         "catalogs.api": "StartDebugging",
@@ -10,8 +13,8 @@
         "kibana": "StartWithoutDebugging",
         "mssql.db": "StartWithoutDebugging",
         "redis": "StartWithoutDebugging",
-        "ocelot.webhost": "StartDebugging",
         "baskets.api": "StartDebugging",
+        "ocelot.webhost": "StartDebugging",
         "mongo": "StartWithoutDebugging",
         "mongo-express": "StartWithoutDebugging"
       }

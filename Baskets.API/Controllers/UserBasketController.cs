@@ -24,23 +24,5 @@ namespace Baskets.API.Controllers
 
             return Ok(basket);
         }
-
-        [HttpPost]
-        [ActionName("CreateUserBasket")]
-        public async Task<IActionResult> CreateUserBasketAsync([FromRoute] string userId, CancellationToken cancelationToken)
-        {
-            var basket = await sender.Send(new CreateUserBasketCommand(userId), cancelationToken);
-
-            return CreatedAtAction("GetUserBasket", new { userId }, basket);
-        }
-
-        [HttpDelete]
-        [ActionName("DeleteUserBasket")]
-        public async Task<IActionResult> DeleteUserBasketAsync([FromRoute] string userId, CancellationToken cancellationToken)
-        {
-            await sender.Send(new DeleteUserBasketCommand(userId), cancellationToken);
-
-            return NoContent();
-        }
     }
 }

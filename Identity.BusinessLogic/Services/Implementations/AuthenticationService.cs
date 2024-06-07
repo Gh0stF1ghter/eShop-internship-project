@@ -4,8 +4,10 @@ using Identity.BusinessLogic.Services.Interfaces;
 using Identity.DataAccess.Entities.Constants;
 using Identity.DataAccess.Entities.Exceptions;
 using Identity.DataAccess.Entities.Models;
+using MassTransit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using RabbitMQ.EventBus;
 
 namespace Identity.BusinessLogic.Services.Implementations
 {
@@ -13,6 +15,7 @@ namespace Identity.BusinessLogic.Services.Implementations
         UserManager<User> userManager,
         ITokenService tokenService,
         IMapper mapper,
+        IPublishEndpoint publishEndpoint,
         ILogger<AuthenticationService> logger
         ) : IAuthenticationService
     {
@@ -31,7 +34,7 @@ namespace Identity.BusinessLogic.Services.Implementations
             return tokenDto;
         }
 
-        public async Task<bool> RegisterUserAsync(RegisterDTO registerCredentials, CancellationToken token)
+        public async Task<User> RegisterUserAsync(RegisterDTO registerCredentials, CancellationToken token)
         {
             await ValidateRegisterAsync(registerCredentials.Email);
 
@@ -43,7 +46,10 @@ namespace Identity.BusinessLogic.Services.Implementations
 
             await _userManager.AddToRoleAsync(user, UserRoles.User);
 
-            return true;
+            await publishEndpoint.Publish<UserCreated>(new(UserId: user.Id), token);
+            await Console.Out.WriteLineAsync(user.Id + " published");
+
+            return user;
         }
 
         private async Task<User> ValidateAuthenticationAsync(string email, string password)

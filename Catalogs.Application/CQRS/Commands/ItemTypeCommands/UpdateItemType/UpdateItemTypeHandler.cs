@@ -1,4 +1,4 @@
-﻿using Catalogs.Domain.Entities.Constants.Messages;
+using Catalogs.Domain.Entities.Constants.Messages;
 using MediatR;
 
 namespace Catalogs.Application.CQRS.Commands.ItemTypeCommands.UpdateItemType
