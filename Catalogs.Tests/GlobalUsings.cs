@@ -1,0 +1,10 @@
+﻿global using AutoMapper;
+global using Catalogs.Application.DataTransferObjects;
+global using Catalogs.Application.DataTransferObjects.CreateDTOs;
+global using Catalogs.Application.MappingProfiles;
+global using Catalogs.Domain.Entities.Exceptions;
+global using Catalogs.Domain.Entities.Models;
+global using Catalogs.Domain.Interfaces;
+global using FluentAssertions;
+global using Moq;
+global using System.Linq.Expressions;
