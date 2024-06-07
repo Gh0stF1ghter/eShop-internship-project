@@ -39,7 +39,10 @@ export class AdminVendorComponent implements OnInit {
   getVendor(vendorId: number) {
     this.vendorService
       .getVendorById(vendorId)
-      .subscribe((vendor) => (this.vendor = vendor));
+      .subscribe((vendor) => {
+        this.vendor = vendor
+        this.editName = vendor.name
+      });
   }
 
   updateBrand() {

@@ -3,6 +3,10 @@ using Baskets.DataAccess.DBContext;
 using Baskets.DataAccess.Entities.Models;
 using Baskets.DataAccess.UnitOfWork;
 using FluentValidation;
+using Hangfire;
+using Hangfire.Mongo;
+using Hangfire.Mongo.Migration.Strategies;
+using Hangfire.Mongo.Migration.Strategies.Backup;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -48,6 +52,32 @@ namespace Baskets.API.Extensions
             services.AddSingleton<IMongoClient>(_ =>
                 new MongoClient(configuration["BasketDatabaseSettings:ConnectionString"]));
 
+        public static void ConfigureHangfire(this IServiceCollection services, IConfiguration configuration)
+        {
+            var migrationOptions = new MongoMigrationOptions
+            {
+                MigrationStrategy = new DropMongoMigrationStrategy(),
+                BackupStrategy = new CollectionMongoBackupStrategy()
+            };
+
+            services.AddHangfire(config =>
+            {
+                config.UseSerilogLogProvider();
+                config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170);
+                config.UseSimpleAssemblyNameTypeSerializer();
+                config.UseRecommendedSerializerSettings();
+                config.UseMongoStorage(configuration["BasketDatabaseSettings:ConnectionString"],
+                    configuration["BasketDatabaseSettings:DatabaseName"],
+                    new MongoStorageOptions
+                    {
+                        MigrationOptions = migrationOptions,
+                        CheckQueuedJobsStrategy = CheckQueuedJobsStrategy.TailNotificationsCollection
+                    });
+            });
+
+            services.AddHangfireServer();
+        }
+
         public static void AddAuthentication(this IServiceCollection services, IConfiguration configuration) =>
             services.AddAuthentication(options =>
             {
@@ -66,6 +96,17 @@ namespace Baskets.API.Extensions
                         ClockSkew = TimeSpan.Zero
                     };
                 });
+        public static void ConfigureCors(this IServiceCollection services)
+        {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder => builder
+                    .WithOrigins("http://localhost:4200", "https://localhost:5004")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+        }
 
         public static void AddCustomDependencies(this IServiceCollection services)
         {
